@@ -4,7 +4,7 @@
 
 ## 一句话理解
 
-**同源策略**是浏览器的安全机制：默认只允许页面访问**同一来源**的资源。当前端请求的 API 域名/端口/协议与页面不一致时，就会遇到**跨域（Cross-Origin）**问题。
+**同源策略**是浏览器的安全机制：默认只允许页面访问**同一来源**的资源。当前端请求的 API 协议/域名/端口与页面不一致时，就会遇到**跨域（Cross-Origin）**问题。
 
 ---
 
@@ -118,7 +118,7 @@ Access-Control-Request-Headers: Content-Type, Authorization
 Access-Control-Allow-Origin: https://app.example.com
 Access-Control-Allow-Methods: GET, POST, PUT, DELETE
 Access-Control-Allow-Headers: Content-Type, Authorization
-Access-Control-Max-Age: 86400
+Access-Control-Max-Age: 86400 在周期内 只会发送异常跨域预请求options
 ```
 
 ### 带 Cookie 的跨域
