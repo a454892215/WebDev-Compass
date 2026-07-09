@@ -8,7 +8,7 @@
 ## 如何使用本地图
 
 - **按阶段学习**：从阶段 0 开始，逐阶段推进；每完成一项可在 `[ ]` 中打勾为 `[x]`。
-- **对照笔记与示例**：每个知识点在 `notes/` 与 `examples/` 中应有对应文档与可运行代码（随项目逐步补充）。
+- **对照笔记与示例**：每个知识点链接到 `notes/` 中的详情笔记与 `examples/` 中的配套代码。
 - **移动端对照**：文中标注 **📱 移动端对照** 的条目，帮助你用已有经验快速理解 Web 概念。
 - **能力锚点**：阶段 4 结束时，应达到 README 所述「中级 Web 开发工程师」能力。
 
@@ -27,16 +27,16 @@ flowchart LR
     S6 --> S7[阶段7 部署运维与进阶]
 ```
 
-| 阶段 | 主题 | 核心产出 |
-|------|------|----------|
-| 0 | 环境与心智模型 | 能搭建开发环境，理解 Web 应用运行方式 |
-| 1 | HTML / CSS / JS 基础 | 能独立实现静态页面与基础交互 |
-| 2 | JS 深入与浏览器原理 | 理解事件循环、DOM、网络与存储 |
-| 3 | 工程化与 TypeScript | 能使用现代工具链组织中型项目 |
-| 4 | 框架与状态管理 | 能用主流框架开发 SPA 应用 |
-| 5 | 全栈协作与认证 | 能对接 API、处理登录与权限 |
-| 6 | 性能、安全与可访问性 | 能优化体验并规避常见安全风险 |
-| 7 | 部署运维与进阶 | 能完成构建发布，了解 SSR 等进阶方向 |
+| 阶段  | 主题                 | 核心产出                  |
+| --- | ------------------ | --------------------- |
+| 0   | 环境与心智模型            | 能搭建开发环境，理解 Web 应用运行方式 |
+| 1   | HTML / CSS / JS 基础 | 能独立实现静态页面与基础交互        |
+| 2   | JS 深入与浏览器原理        | 理解事件循环、DOM、网络与存储      |
+| 3   | 工程化与 TypeScript    | 能使用现代工具链组织中型项目        |
+| 4   | 框架与状态管理            | 能用主流框架开发 SPA 应用       |
+| 5   | 全栈协作与认证            | 能对接 API、处理登录与权限       |
+| 6   | 性能、安全与可访问性         | 能优化体验并规避常见安全风险        |
+| 7   | 部署运维与进阶            | 能完成构建发布，了解 SSR 等进阶方向  |
 
 ---
 
@@ -44,11 +44,13 @@ flowchart LR
 
 ### 0.1 Web 应用是什么
 
-- [ ] 理解 **客户端—服务器（C/S）** 模型与 **请求—响应** 循环
-- [ ] 理解 **浏览器** 的角色：HTML/CSS/JS 解析、渲染、执行
-- [ ] 理解 **单页应用（SPA）** vs **多页应用（MPA）** 的区别与适用场景
-- [ ] 理解 **同源策略** 与 **跨域** 问题的来源
-- [ ] 📱 移动端对照：浏览器 ≈ WebView / 系统浏览器；SPA ≈ 单 Activity + Fragment 导航
+> 📖 本章笔记：[notes/00-environment/0.1-what-is-web-app/](./notes/00-environment/0.1-what-is-web-app/README.md)
+
+- [ ] 理解 **[客户端—服务器（C/S）模型与请求—响应循环](./notes/00-environment/0.1-what-is-web-app/client-server-model.md)**
+- [ ] 理解 **[浏览器的角色：HTML/CSS/JS 解析、渲染、执行](./notes/00-environment/0.1-what-is-web-app/browser-role.md)**
+- [ ] 理解 **[单页应用（SPA）vs 多页应用（MPA）的区别与适用场景](./notes/00-environment/0.1-what-is-web-app/spa-vs-mpa.md)**
+- [ ] 理解 **[同源策略与跨域问题的来源](./notes/00-environment/0.1-what-is-web-app/same-origin-policy.md)**
+- [ ] 📱 移动端对照：[浏览器 ≈ WebView / 系统浏览器；SPA ≈ 单 Activity + Fragment 导航](./notes/00-environment/0.1-what-is-web-app/mobile-comparison.md)
 
 ### 0.2 开发环境
 
@@ -650,22 +652,18 @@ flowchart LR
 WebDev_Compass/
 ├── README.md                 # 项目总览
 ├── KNOWLEDGE_MAP.md          # 本文件：知识库地图
-├── roadmap/                  # 分阶段学习路线图详解
-├── notes/                    # 各知识点笔记
-│   ├── html/
-│   ├── css/
-│   ├── javascript/
-│   ├── typescript/
-│   ├── react/
-│   ├── vue/
+├── notes/                    # 各知识点详情笔记（点击地图中链接跳转）
+│   ├── README.md
+│   ├── 00-environment/       # 阶段 0
+│   │   └── 0.1-what-is-web-app/  ✅
+│   ├── 01-html/              # 待补充
 │   └── ...
 ├── examples/                 # 可运行代码示例
-│   ├── 01-html-css/
-│   ├── 02-javascript/
+│   ├── README.md
+│   ├── 00-environment/
+│   │   └── 0.1-what-is-web-app/  ✅
 │   └── ...
-└── projects/                 # 框架工程化完整示例
-    ├── react-vite-admin/
-    └── vue-vite-admin/
+└── projects/                 # 框架工程化完整示例（待补充）
 ```
 
 ---
@@ -678,4 +676,4 @@ WebDev_Compass/
 
 ---
 
-**下一步**：从 [阶段 0](#阶段-0环境与心智模型) 开始，在 `notes/` 与 `examples/` 中逐步补充每个知识点的笔记与示例代码。
+**下一步**：从 [阶段 0](#阶段-0环境与心智模型) 开始，点击知识点链接阅读 `notes/` 笔记并运行 `examples/` 示例。

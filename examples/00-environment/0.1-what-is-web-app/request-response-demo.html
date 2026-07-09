@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>请求—响应循环演示</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 { margin-bottom: 8px; }
+    .subtitle { color: #666; margin-bottom: 24px; }
+    .card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover { background: #0056b3; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    #log {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px;
+      border-radius: 6px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      min-height: 200px;
+      margin-top: 12px;
+    }
+    .tip {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .user-list { list-style: none; margin-top: 12px; }
+    .user-list li {
+      padding: 8px 12px;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>请求—响应循环演示</h1>
+  <p class="subtitle">对应笔记：<a href="../../../notes/00-environment/0.1-what-is-web-app/client-server-model.md">客户端—服务器模型</a></p>
+
+  <div class="tip">
+    💡 打开 DevTools（F12）→ <strong>Network</strong> 面板，然后点击下方按钮，观察 HTTP 请求与响应。
+  </div>
+
+  <div class="card">
+    <h3>1. 获取用户列表（GET 请求）</h3>
+    <p>向公共 API 发起 GET 请求，获取 JSON 数据并渲染到页面。</p>
+    <button id="btn-users">获取用户列表</button>
+    <ul id="user-list" class="user-list"></ul>
+  </div>
+
+  <div class="card">
+    <h3>2. 创建帖子（POST 请求）</h3>
+    <p>向公共 API 发起 POST 请求，提交 JSON 数据。</p>
+    <button id="btn-post">发送 POST 请求</button>
+  </div>
+
+  <div class="card">
+    <h3>请求日志</h3>
+    <div id="log">等待操作...</div>
+  </div>
+
+  <script>
+    const log = document.getElementById('log');
+
+    function appendLog(text) {
+      const time = new Date().toLocaleTimeString();
+      log.textContent += `\n[${time}] ${text}`;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    log.textContent = '准备就绪。请点击上方按钮发起请求。';
+
+    // GET 请求示例
+    document.getElementById('btn-users').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-users');
+      const list = document.getElementById('user-list');
+      btn.disabled = true;
+      list.innerHTML = '';
+      appendLog('─── GET 请求开始 ───');
+      appendLog('请求: GET https://jsonplaceholder.typicode.com/users');
+
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/users');
+        appendLog(`响应状态: ${res.status} ${res.statusText}`);
+        appendLog(`响应头 Content-Type: ${res.headers.get('content-type')}`);
+
+        const users = await res.json();
+        appendLog(`响应体: 收到 ${users.length} 条用户数据（JSON 数组）`);
+
+        users.slice(0, 5).forEach(user => {
+          const li = document.createElement('li');
+          li.textContent = `${user.name} — ${user.email}`;
+          list.appendChild(li);
+        });
+        appendLog('浏览器将 JSON 渲染为 DOM 列表 ✓');
+      } catch (err) {
+        appendLog(`错误: ${err.message}`);
+      } finally {
+        btn.disabled = false;
+        appendLog('─── GET 请求结束 ───\n');
+      }
+    });
+
+    // POST 请求示例
+    document.getElementById('btn-post').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-post');
+      btn.disabled = true;
+      appendLog('─── POST 请求开始 ───');
+
+      const body = { title: 'Hello Web', body: '这是我的第一篇帖子', userId: 1 };
+      appendLog(`请求: POST https://jsonplaceholder.typicode.com/posts`);
+      appendLog(`请求体: ${JSON.stringify(body)}`);
+
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        appendLog(`响应状态: ${res.status} ${res.statusText}`);
+
+        const data = await res.json();
+        appendLog(`响应体: ${JSON.stringify(data)}`);
+        appendLog('服务器返回了新创建资源的 ID ✓');
+      } catch (err) {
+        appendLog(`错误: ${err.message}`);
+      } finally {
+        btn.disabled = false;
+        appendLog('─── POST 请求结束 ───\n');
+      }
+    });
+  </script>
+</body>
+</html>

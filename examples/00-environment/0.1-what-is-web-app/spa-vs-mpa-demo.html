@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPA vs MPA 对比演示</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 { margin-bottom: 8px; }
+    .subtitle { color: #666; margin-bottom: 24px; }
+    .tip {
+      background: #e7f3ff;
+      border: 1px solid #007bff;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
+    .card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .card h3 { margin-bottom: 8px; }
+    .card.mpa { border-top: 3px solid #dc3545; }
+    .card.spa { border-top: 3px solid #28a745; }
+    nav { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+    nav a, nav button {
+      padding: 6px 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #333;
+      background: #f8f9fa;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    nav a:hover, nav button:hover { background: #e9ecef; }
+    nav a.active, nav button.active { background: #007bff; color: white; border-color: #007bff; }
+    .view {
+      background: #f8f9fa;
+      border-radius: 6px;
+      padding: 16px;
+      min-height: 120px;
+      margin-top: 8px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .badge-mpa { background: #f8d7da; color: #721c24; }
+    .badge-spa { background: #d4edda; color: #155724; }
+    #spa-log {
+      font-family: monospace;
+      font-size: 12px;
+      color: #666;
+      margin-top: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>SPA vs MPA 对比演示</h1>
+  <p class="subtitle">对应笔记：<a href="../../../notes/00-environment/0.1-what-is-web-app/spa-vs-mpa.md">SPA vs MPA</a></p>
+
+  <div class="tip">
+    💡 打开 DevTools → <strong>Network</strong> 面板。对比两种模式下页面切换时是否重新加载 HTML。
+  </div>
+
+  <div class="compare">
+    <!-- MPA 模拟 -->
+    <div class="card mpa">
+      <span class="badge badge-mpa">MPA 模式</span>
+      <h3>多页应用（全页刷新）</h3>
+      <p style="font-size:14px;color:#666;margin-bottom:8px">点击链接会重新加载整个页面</p>
+      <nav>
+        <a href="?mpa=home" class="mpa-link">首页</a>
+        <a href="?mpa=about" class="mpa-link">关于</a>
+        <a href="?mpa=contact" class="mpa-link">联系</a>
+      </nav>
+      <div class="view" id="mpa-view">
+        <p>这是 MPA 的「首页」。注意：点击导航时页面会<strong>整体刷新</strong>（白屏闪烁）。</p>
+      </div>
+    </div>
+
+    <!-- SPA 模拟 -->
+    <div class="card spa">
+      <span class="badge badge-spa">SPA 模式</span>
+      <h3>单页应用（无刷新切换）</h3>
+      <p style="font-size:14px;color:#666;margin-bottom:8px">点击按钮只替换内容区域，页面不刷新</p>
+      <nav>
+        <button class="spa-nav active" data-page="home">首页</button>
+        <button class="spa-nav" data-page="about">关于</button>
+        <button class="spa-nav" data-page="contact">联系</button>
+      </nav>
+      <div class="view" id="spa-view">
+        <p>这是 SPA 的「首页」。切换页面时<strong>不会刷新</strong>，只有内容区域变化。</p>
+      </div>
+      <div id="spa-log"></div>
+    </div>
+  </div>
+
+  <script>
+    // ── MPA 模拟：通过 URL 参数切换，触发页面内容替换（模拟全页刷新效果） ──
+    const mpaPages = {
+      home: '<p>这是 MPA 的「首页」。注意：点击导航时页面会<strong>整体刷新</strong>（白屏闪烁）。</p>',
+      about: '<p>这是 MPA 的「关于」页面。服务器返回了新的 HTML，浏览器重新渲染了整个页面。</p>',
+      contact: '<p>这是 MPA 的「联系」页面。每次切换都重新加载了 CSS 和 JS。</p>',
+    };
+
+    function renderMpa() {
+      const params = new URLSearchParams(location.search);
+      const page = params.get('mpa') || 'home';
+      document.getElementById('mpa-view').innerHTML = mpaPages[page] || mpaPages.home;
+      document.querySelectorAll('.mpa-link').forEach(link => {
+        link.classList.toggle('active', link.href.includes(`mpa=${page}`));
+      });
+    }
+    renderMpa();
+
+    // ── SPA 模拟：JS 切换视图，不刷新页面 ──
+    const spaPages = {
+      home: '<p>这是 SPA 的「首页」。切换页面时<strong>不会刷新</strong>，只有内容区域变化。</p>',
+      about: '<p>这是 SPA 的「关于」页面。JavaScript 替换了 DOM 内容，没有请求新 HTML。</p><p style="color:#28a745">✓ 无白屏闪烁</p>',
+      contact: '<p>这是 SPA 的「联系」页面。可能同时发起了 API 请求获取数据。</p><p style="color:#28a745">✓ 无白屏闪烁</p>',
+    };
+
+    const spaLog = document.getElementById('spa-log');
+    let navCount = 0;
+
+    document.querySelectorAll('.spa-nav').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = btn.dataset.page;
+        navCount++;
+
+        // 模拟 History API 修改 URL
+        history.pushState({ page }, '', `#${page}`);
+
+        // 替换视图（不刷新页面）
+        document.getElementById('spa-view').innerHTML = spaPages[page];
+
+        // 更新导航高亮
+        document.querySelectorAll('.spa-nav').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // 模拟 API 请求
+        spaLog.textContent =
+          `[SPA 路由] pushState → #${page}\n` +
+          `[SPA 渲染] 替换 #spa-view 内容（无页面刷新）\n` +
+          `[API 请求] fetch('/api/${page}') — 仅获取 JSON 数据\n` +
+          `导航次数: ${navCount}，页面刷新次数: 0`;
+      });
+    });
+
+    // 处理浏览器前进/后退
+    window.addEventListener('popstate', (e) => {
+      if (e.state?.page) {
+        document.getElementById('spa-view').innerHTML = spaPages[e.state.page];
+        document.querySelectorAll('.spa-nav').forEach(b => {
+          b.classList.toggle('active', b.dataset.page === e.state.page);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

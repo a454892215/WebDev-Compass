@@ -1,0 +1,221 @@
+# 同源策略与跨域问题的来源
+
+> [← 返回 0.1 目录](./README.md) · [知识库地图](../../../KNOWLEDGE_MAP.md#01-web-应用是什么)
+
+## 一句话理解
+
+**同源策略**是浏览器的安全机制：默认只允许页面访问**同一来源**的资源。当前端请求的 API 域名/端口/协议与页面不一致时，就会遇到**跨域（Cross-Origin）**问题。
+
+---
+
+## 什么是「源」（Origin）
+
+一个源由 **协议 + 域名 + 端口** 三部分组成：
+
+```
+https://www.example.com:443/api/users
+└─┬──┘ └──────┬──────┘└┬┘
+ 协议        域名      端口（HTTPS 默认 443，通常省略）
+```
+
+### 同源判定
+
+| URL A | URL B | 是否同源 | 原因 |
+|-------|-------|----------|------|
+| `https://example.com/a` | `https://example.com/b` | ✅ 同源 | 协议、域名、端口相同 |
+| `https://example.com` | `http://example.com` | ❌ 跨域 | 协议不同（https vs http） |
+| `https://example.com` | `https://api.example.com` | ❌ 跨域 | 域名不同 |
+| `https://example.com` | `https://example.com:8080` | ❌ 跨域 | 端口不同 |
+| `https://example.com` | `https://example.com:443` | ✅ 同源 | 443 是 HTTPS 默认端口 |
+
+> 注意：**子域名不同即跨域**。`www.example.com` 和 `api.example.com` 是不同源。
+
+---
+
+## 同源策略限制了什么
+
+浏览器默认禁止以下跨源行为：
+
+| 限制 | 说明 |
+|------|------|
+| **DOM 访问** | A 页面的 JS 不能读写 B 页面的 DOM（如 iframe 跨域） |
+| **Ajax / Fetch** | JS 发起的 HTTP 请求不能读取跨源响应 |
+| **Cookie / Storage** | JS 不能读取其他源的 Cookie 和本地存储 |
+| **部分 Web API** | 如 Canvas 导出跨域图片等 |
+
+### 不受同源策略限制的
+
+- `<img src>`、`<script src>`、`<link href>` 加载跨域**静态资源**（但 JS 不能读其内容）
+- `<form action>` 提交到跨域地址（但无法读取响应）
+- 页面**导航**到跨域 URL（变成那个源下的页面）
+
+---
+
+## 为什么会有跨域问题
+
+### 场景
+
+你的前端页面部署在 `https://app.example.com`，API 在 `https://api.example.com`：
+
+```javascript
+// 在 app.example.com 的页面中执行
+const res = await fetch('https://api.example.com/users');
+const data = await res.json(); // ❌ 浏览器拦截响应
+```
+
+浏览器会发出请求（你在 Network 面板能看到），但 JS **无法读取响应体**，Console 报错：
+
+```
+Access to fetch at 'https://api.example.com/users' from origin
+'https://app.example.com' has been blocked by CORS policy
+```
+
+### 为什么浏览器要这样做
+
+假设没有同源策略：
+
+1. 你登录了 `bank.com`，浏览器存有 Session Cookie
+2. 你访问了恶意网站 `evil.com`
+3. `evil.com` 的 JS 偷偷向 `bank.com` 发请求转走你的钱
+4. 浏览器自动带上 `bank.com` 的 Cookie → 攻击成功
+
+**同源策略保护用户**：防止恶意网站冒用你在其他网站的身份。
+
+---
+
+## CORS：官方的跨域解决方案
+
+**CORS（Cross-Origin Resource Sharing）** 不是绕过安全，而是让**服务器明确声明**「我允许哪些源访问我」。
+
+### 简单请求
+
+服务器在响应头中添加：
+
+```http
+Access-Control-Allow-Origin: https://app.example.com
+```
+
+或允许所有源（不推荐生产环境）：
+
+```http
+Access-Control-Allow-Origin: *
+```
+
+### 预检请求（Preflight）
+
+对 `POST` + `Content-Type: application/json` 等非简单请求，浏览器会**先发 OPTIONS**：
+
+```
+OPTIONS /users HTTP/1.1
+Origin: https://app.example.com
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: Content-Type, Authorization
+```
+
+服务器正确响应后，浏览器才发真正的 POST：
+
+```http
+Access-Control-Allow-Origin: https://app.example.com
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Allow-Headers: Content-Type, Authorization
+Access-Control-Max-Age: 86400
+```
+
+### 带 Cookie 的跨域
+
+还需要：
+
+```http
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Origin: https://app.example.com  （不能是 *）
+```
+
+客户端：
+
+```javascript
+fetch('https://api.example.com/users', {
+  credentials: 'include'  // 携带 Cookie
+});
+```
+
+---
+
+## 开发中常见的跨域解决方式
+
+| 方式 | 适用场景 | 说明 |
+|------|----------|------|
+| **服务端配置 CORS** | 生产环境标准方案 | 后端加响应头，推荐 |
+| **开发代理（Proxy）** | 本地开发 | Vite/Webpack dev server 代理 API |
+| **Nginx 反向代理** | 部署时同源 | 前后端通过同一域名访问 |
+| **JSONP** | 老旧方案 | 仅 GET，已过时，了解即可 |
+
+### Vite 开发代理示例
+
+```javascript
+// vite.config.js
+export default {
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://api.example.com',
+        changeOrigin: true,
+      }
+    }
+  }
+}
+```
+
+前端请求 `/api/users` → Vite 转发到 `https://api.example.com/users`，浏览器认为是同源。
+
+---
+
+## 跨域 vs 移动端
+
+### 为什么移动端没有 CORS
+
+| | Web 浏览器 | Android / iOS App |
+|--|-----------|-------------------|
+| 运行环境 | 浏览器（有同源策略） | 原生 App（无此限制） |
+| 请求方式 | `fetch` / `axios` 受 CORS 约束 | OkHttp / Dio 直接请求任何 URL |
+| 安全模型 | 浏览器强制 | 由 App 权限和网络配置决定 |
+
+📱 **这是 Web 开发独有的问题**。你在 Android 用 Retrofit 调任何 API 都不会遇到 CORS，但 Web 前端必须处理。
+
+### WebView 中的跨域
+
+Android/iOS WebView 加载的 H5 页面**同样受同源策略约束**。App 内嵌 H5 调原生 API 时，跨域问题依然需要 CORS 或代理解决。
+
+---
+
+## 实践
+
+打开示例，在 Console 中观察跨域错误：
+
+👉 [same-origin-demo.html](../../../examples/00-environment/0.1-what-is-web-app/same-origin-demo.html)
+
+**操作步骤**：
+
+1. 用浏览器打开示例（`file://` 或 `http://localhost` 均可）
+2. 打开 DevTools → Console
+3. 点击「发起跨域请求」按钮
+4. 观察 CORS 错误信息，对照本文理解报错含义
+5. 阅读代码中的注释，了解同源请求 vs 跨域请求的区别
+
+---
+
+## 常见误区
+
+| 误区 | 正确理解 |
+|------|----------|
+| 「跨域 = 请求发不出去」 | 请求通常发出去了，是**响应被浏览器拦截** |
+| 「CORS 是前端配置」 | CORS 主要靠**后端**设置响应头；前端只能配置 `credentials` 等 |
+| 「开发时关掉浏览器安全就行」 | 仅作临时调试；生产必须正确配置 CORS |
+| 「用 * 允许所有源最安全」 | 恰好相反，生产应明确指定允许的源 |
+
+---
+
+## 延伸阅读
+
+- 上一节：[SPA vs MPA](./spa-vs-mpa.md)
+- 下一节：[移动端对照总览](./mobile-comparison.md)
+- 阶段 5：[CORS 与认证详解](../../05-fullstack/cors-and-auth.md)（待补充）

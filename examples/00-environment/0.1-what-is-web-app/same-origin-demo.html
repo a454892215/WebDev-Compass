@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>同源策略演示</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    h1 { margin-bottom: 8px; }
+    .subtitle { color: #666; margin-bottom: 24px; }
+    .card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 8px;
+      margin-top: 8px;
+    }
+    button.danger { background: #dc3545; }
+    button.success { background: #28a745; }
+    button:hover { opacity: 0.9; }
+    #log {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px;
+      border-radius: 6px;
+      font-family: 'Menlo', 'Consolas', monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      min-height: 240px;
+      margin-top: 12px;
+    }
+    .error { color: #f48771; }
+    .success { color: #89d185; }
+    .info { color: #6cb6ff; }
+    code {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    th, td { border: 1px solid #e0e0e0; padding: 8px; text-align: left; }
+    th { background: #f8f9fa; }
+  </style>
+</head>
+<body>
+  <h1>同源策略演示</h1>
+  <p class="subtitle">对应笔记：<a href="../../../notes/00-environment/0.1-what-is-web-app/same-origin-policy.md">同源策略与跨域</a></p>
+
+  <div class="card">
+    <h3>当前页面的源（Origin）</h3>
+    <table>
+      <tr><th>协议</th><td id="origin-protocol"></td></tr>
+      <tr><th>域名</th><td id="origin-host"></td></tr>
+      <tr><th>端口</th><td id="origin-port"></td></tr>
+      <tr><th>完整源</th><td id="origin-full"><code></code></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>实验：发起请求并观察结果</h3>
+    <p style="font-size:14px;color:#666;margin-bottom:4px">
+      打开 DevTools → <strong>Console</strong> 查看完整错误信息。
+    </p>
+    <button class="success" id="btn-same">同源请求（应该成功）</button>
+    <button class="danger" id="btn-cross">跨域请求（会被 CORS 拦截）</button>
+    <button id="btn-clear">清空日志</button>
+    <div id="log"></div>
+  </div>
+
+  <script>
+    const log = document.getElementById('log');
+
+    // 显示当前源信息
+    document.getElementById('origin-protocol').textContent = location.protocol;
+    document.getElementById('origin-host').textContent = location.hostname || '(空 — file:// 协议)';
+    document.getElementById('origin-port').textContent = location.port || '(默认端口)';
+    document.getElementById('origin-full').querySelector('code').textContent = location.origin || 'null (file:// 协议无 origin)';
+
+    function appendLog(text, type = '') {
+      const time = new Date().toLocaleTimeString();
+      const cls = type ? ` class="${type}"` : '';
+      log.innerHTML += `<span${cls}>[${time}] ${text}</span>\n`;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    appendLog('页面已加载。当前源: ' + (location.origin || 'null'), 'info');
+    appendLog('提示: 用 Live Server 启动（http://localhost）效果更佳\n', 'info');
+
+    // 同源请求：请求当前域名下的资源（这里用公共 API 模拟，实际同源需同域名）
+    // 使用 jsonplaceholder 演示 — 它是允许 CORS 的，所以我们演示一个不允许的场景
+    document.getElementById('btn-same').addEventListener('click', async () => {
+      appendLog('─── 允许 CORS 的请求（模拟成功场景）───', 'info');
+      appendLog('请求: GET https://jsonplaceholder.typicode.com/users/1');
+      appendLog('目标源: https://jsonplaceholder.typicode.com');
+      appendLog('该 API 返回了 Access-Control-Allow-Origin: *', 'info');
+
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/users/1');
+        const data = await res.json();
+        appendLog(`✓ 成功! 状态 ${res.status}，用户: ${data.name}`, 'success');
+        appendLog('服务器正确配置了 CORS，浏览器允许 JS 读取响应\n', 'success');
+      } catch (err) {
+        appendLog(`✗ 失败: ${err.message}`, 'error');
+      }
+    });
+
+    // 跨域请求：请求一个不允许 CORS 的资源
+    document.getElementById('btn-cross').addEventListener('click', async () => {
+      appendLog('─── 跨域请求（会被拦截）───', 'info');
+      appendLog('请求: GET https://www.baidu.com');
+      appendLog(`当前源: ${location.origin || 'null'}`, 'info');
+      appendLog('目标源: https://www.baidu.com （不同源）', 'info');
+      appendLog('baidu.com 未返回 Access-Control-Allow-Origin 头', 'info');
+
+      try {
+        const res = await fetch('https://www.baidu.com');
+        appendLog(`状态: ${res.status}`, 'success');
+      } catch (err) {
+        appendLog(`✗ CORS 错误: ${err.message}`, 'error');
+        appendLog('请求已发出，但浏览器阻止了 JS 读取响应', 'error');
+        appendLog('Console 中可见完整的 CORS policy 报错信息', 'error');
+        appendLog('', '');
+        appendLog('解决方案:', 'info');
+        appendLog('1. 后端添加 Access-Control-Allow-Origin 响应头', 'info');
+        appendLog('2. 开发环境使用 Vite/Webpack 代理', 'info');
+        appendLog('3. 部署时用 Nginx 反向代理使前后端同源\n', 'info');
+      }
+    });
+
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      log.innerHTML = '';
+      appendLog('日志已清空。', 'info');
+    });
+  </script>
+</body>
+</html>

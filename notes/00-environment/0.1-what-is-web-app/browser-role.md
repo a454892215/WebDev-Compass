@@ -1,0 +1,185 @@
+# 浏览器的角色：HTML / CSS / JS 解析、渲染、执行
+
+> [← 返回 0.1 目录](./README.md) · [知识库地图](../../../KNOWLEDGE_MAP.md#01-web-应用是什么)
+
+## 一句话理解
+
+浏览器是 Web 的「运行时环境」——它负责**下载资源、解析代码、渲染界面、执行脚本**，相当于移动端里的 App 壳 + 渲染引擎 + JS 引擎的组合体。
+
+---
+
+## 浏览器是什么
+
+浏览器（Browser）是运行在用户设备上的**客户端程序**，常见有 Chrome、Safari、Firefox、Edge。
+
+你可以把它理解为：
+
+```
+浏览器 = 网络模块 + 渲染引擎 + JavaScript 引擎 + UI 壳
+```
+
+| 模块 | 职责 |
+|------|------|
+| **网络模块** | 发起 HTTP/HTTPS 请求，管理 Cookie、缓存 |
+| **渲染引擎** | 解析 HTML/CSS，计算布局，绘制像素到屏幕 |
+| **JavaScript 引擎** | 解析并执行 JS（Chrome 用 V8，Safari 用 JavaScriptCore） |
+| **UI 壳** | 地址栏、标签页、书签、DevTools 等 |
+
+---
+
+## 三件套各自的分工
+
+Web 页面由三种核心技术构成，浏览器对它们的处理方式不同：
+
+### HTML — 结构（Structure）
+
+- **作用**：描述页面的**内容和语义结构**（标题、段落、按钮、表单等）
+- **浏览器处理**：解析 HTML → 构建 **DOM 树**（Document Object Model）
+
+```html
+<article>
+  <h1>文章标题</h1>
+  <p>这是一段正文。</p>
+  <button id="like-btn">点赞</button>
+</article>
+```
+
+解析后形成树形结构：
+
+```
+article
+├── h1  → "文章标题"
+├── p   → "这是一段正文。"
+└── button#like-btn → "点赞"
+```
+
+📱 **对照**：HTML 类似 Android 的 XML Layout、Flutter 的 Widget 树——都是描述 UI 结构，但 HTML 更侧重**语义**（告诉浏览器「这是导航」「这是主内容」）。
+
+### CSS — 表现（Presentation）
+
+- **作用**：控制页面的**视觉样式**（颜色、字体、布局、动画）
+- **浏览器处理**：解析 CSS → 构建 **CSSOM**（CSS Object Model）→ 与 DOM 合并为**渲染树** → 布局 → 绘制
+
+```css
+article { max-width: 640px; margin: 0 auto; }
+h1 { font-size: 2rem; color: #333; }
+button { background: #007bff; color: white; border-radius: 8px; }
+```
+
+📱 **对照**：CSS 类似 Flutter 的 `Theme` + `BoxDecoration`，或 Android 的 `styles.xml`。Web 的布局系统（Flexbox、Grid）与 Flutter/RN 的 Flex 思路相近。
+
+### JavaScript — 行为（Behavior）
+
+- **作用**：为页面添加**交互与逻辑**（点击响应、表单验证、API 调用、动态更新 DOM）
+- **浏览器处理**：JS 引擎**逐行编译执行**，可通过 DOM API 操作页面
+
+```javascript
+document.getElementById('like-btn').addEventListener('click', async () => {
+  const res = await fetch('/api/like', { method: 'POST' });
+  if (res.ok) alert('点赞成功！');
+});
+```
+
+📱 **对照**：JavaScript 类似 Kotlin/Swift/Dart 中写的业务逻辑。有 React Native 经验的话，JS 语法本身已熟悉；区别在于 Web 中可直接操作 **DOM**（RN 中对应的是 Virtual DOM / Bridge）。
+
+---
+
+## 浏览器渲染流水线（简化版）
+
+```
+HTML  ──解析──►  DOM 树  ──┐
+                           ├──► 渲染树 ──► 布局 ──► 绘制 ──► 屏幕
+CSS   ──解析──►  CSSOM   ──┘
+                           ▲
+JavaScript ──可修改 DOM/CSSOM──┘
+```
+
+### 关键步骤
+
+1. **解析 HTML**：边下载边解析（流式），遇到 `<script>` 可能阻塞解析
+2. **解析 CSS**：构建 CSSOM，样式规则级联计算
+3. **构建渲染树**：DOM + CSSOM 合并，排除 `display: none` 的元素
+4. **布局（Layout / Reflow）**：计算每个元素的位置和大小
+5. **绘制（Paint）**：将元素绘制到图层
+6. **合成（Composite）**：GPU 将图层合成最终画面
+
+> 阶段 2 会深入渲染原理与性能优化，此处建立概念即可。
+
+---
+
+## JavaScript 的执行时机
+
+| 加载方式 | 行为 |
+|----------|------|
+| `<script src="app.js">` | 阻塞 HTML 解析，下载并立即执行 |
+| `<script defer src="app.js">` | 异步下载，HTML 解析完后执行 |
+| `<script async src="app.js">` | 异步下载，下载完立即执行 |
+| ES Module `<script type="module">` | 默认 defer 行为 |
+
+**最佳实践**：将 `<script>` 放在 `</body>` 前，或使用 `defer` / `type="module"`，避免阻塞首屏渲染。
+
+---
+
+## 浏览器还负责什么
+
+除了三件套解析渲染，浏览器还提供：
+
+| 能力 | 说明 |
+|------|------|
+| **Cookie / Storage** | 持久化存储用户数据 |
+| **同源策略** | 限制跨站资源访问（安全机制） |
+| **DevTools** | 开发者调试工具 |
+| **Web API** | `fetch`、`localStorage`、`Geolocation` 等 |
+| **安全沙箱** | 限制 JS 访问本地文件系统等 |
+
+---
+
+## 📱 移动端对照
+
+| 概念 | Web（浏览器） | Android | Flutter | React Native |
+|------|--------------|---------|---------|--------------|
+| UI 结构 | HTML / DOM | XML Layout / Compose | Widget Tree | JSX → Native Views |
+| 样式 | CSS | styles.xml / Theme | Theme / Decoration | StyleSheet |
+| 逻辑 | JavaScript | Kotlin / Java | Dart | JavaScript |
+| 渲染引擎 | Blink / WebKit | Android Framework | Skia (Impeller) | Yoga + Native |
+| JS 引擎 | V8 等 | 无（或用 WebView 内 V8） | 无 | Hermes / JSC |
+| 调试工具 | Chrome DevTools | Android Studio | Flutter DevTools | React Native Debugger |
+
+**关键差异**：
+
+1. **Web 有 DOM**：可以直接用 JS 操作页面节点；Flutter 没有 DOM，RN 通过 Bridge 间接操作
+2. **Web 渲染依赖浏览器**：同一份代码在不同浏览器可能有细微差异（需做兼容性测试）
+3. **WebView**：Android/iOS 的 WebView 本质上就是内嵌了一个浏览器引擎，用 Web 技术渲染 App 内页面
+
+---
+
+## 实践
+
+打开以下示例，右键「检查」打开 DevTools：
+
+👉 [request-response-demo.html](../../../examples/00-environment/0.1-what-is-web-app/request-response-demo.html)
+
+**建议操作**：
+
+1. **Elements 面板**：查看 HTML 对应的 DOM 树，尝试修改节点文本，观察页面实时变化
+2. **Styles 面板**：选中元素，查看应用的 CSS 规则，尝试修改颜色
+3. **Console 面板**：输入 `document.title` 或 `document.querySelector('button')`，感受 JS 操作 DOM
+
+---
+
+## 常见误区
+
+| 误区 | 正确理解 |
+|------|----------|
+| 「HTML 是编程语言」 | HTML 是**标记语言**，描述结构；逻辑由 JS 负责 |
+| 「CSS 只是好看」 | CSS 也负责**布局**，是现代响应式页面的核心 |
+| 「JS 只能写在 HTML 里」 | 现代项目 JS 通常是独立 `.js` / `.ts` 文件，由构建工具打包 |
+| 「浏览器只做显示」 | 浏览器还负责网络、存储、安全策略，是完整的客户端运行时 |
+
+---
+
+## 延伸阅读
+
+- 上一节：[客户端—服务器模型](./client-server-model.md)
+- 下一节：[SPA vs MPA](./spa-vs-mpa.md)
+- 阶段 2：[浏览器渲染流水线详解](../../02-browser/rendering-pipeline.md)（待补充）
