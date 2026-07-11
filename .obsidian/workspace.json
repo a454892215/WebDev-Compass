@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "KNOWLEDGE_MAP.md",
+                "file": "notes/00-environment/0.1-what-is-web-app/spa-vs-mpa.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "KNOWLEDGE_MAP"
+              "title": "spa-vs-mpa"
             }
           }
         ]
@@ -185,6 +185,9 @@
   },
   "active": "a5d3e816efb1183e",
   "lastOpenFiles": [
+    "notes/00-environment/0.1-what-is-web-app/browser-role.md",
+    "notes/00-environment/0.1-what-is-web-app/client-server-model.md",
+    "KNOWLEDGE_MAP.md",
     "README.md"
   ]
 }

@@ -46,11 +46,11 @@ flowchart LR
 
 > 📖 本章笔记：[notes/00-environment/0.1-what-is-web-app/](./notes/00-environment/0.1-what-is-web-app/README.md)
 
-- [ ] 理解 **[客户端—服务器（C/S）模型与请求—响应循环](./notes/00-environment/0.1-what-is-web-app/client-server-model.md)**
-- [ ] 理解 **[浏览器的角色：HTML/CSS/JS 解析、渲染、执行](./notes/00-environment/0.1-what-is-web-app/browser-role.md)**
-- [ ] 理解 **[单页应用（SPA）vs 多页应用（MPA）的区别与适用场景](./notes/00-environment/0.1-what-is-web-app/spa-vs-mpa.md)**
-- [ ] 理解 **[同源策略与跨域问题的来源](./notes/00-environment/0.1-what-is-web-app/same-origin-policy.md)**
-- [ ] 📱 移动端对照：[浏览器 ≈ WebView / 系统浏览器；SPA ≈ 单 Activity + Fragment 导航](./notes/00-environment/0.1-what-is-web-app/mobile-comparison.md)
+- [ ] 理解 **[1.客户端—服务器（C/S）模型与请求—响应循环](./notes/00-environment/0.1-what-is-web-app/1.client-server-model.md)**
+- [ ] 理解 **[2.浏览器的角色：HTML/CSS/JS 解析、渲染、执行](./notes/00-environment/0.1-what-is-web-app/2.browser-role.md)**
+- [ ] 理解 **[3.单页应用（SPA）vs 多页应用（MPA）的区别与适用场景](./notes/00-environment/0.1-what-is-web-app/3.spa-vs-mpa.md)**
+- [ ] 理解 **[4.同源策略与跨域问题的来源](./notes/00-environment/0.1-what-is-web-app/4.same-origin-policy.md)**
+- [ ] 📱 移动端对照：[5.浏览器 ≈ WebView / 系统浏览器；SPA ≈ 单 Activity + Fragment 导航](./notes/00-environment/0.1-what-is-web-app/5.mobile-comparison.md)
 
 ### 0.2 开发环境
 
