@@ -1,20 +1,14 @@
 # 示例代码目录
 
-本目录存放与 [notes/](../notes/) 中知识点配套的**可运行示例**。
+本目录存放与 [notes/](../notes/) 中知识点配套的**可运行示例**。文件名序号与知识地图、笔记保持一致。
 
-## 目录结构
-
-按学习阶段编号，与 `notes/` 目录对应：
+## 命名规范
 
 ```
-examples/
-├── 00-environment/
-│   └── 0.1-what-is-web-app/
-│       ├── request-response-demo.html
-│       ├── spa-vs-mpa-demo.html
-│       └── same-origin-demo.html
-└── ...
+examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 ```
+
+示例：`examples/00-environment/0.1-what-is-web-app/0.1.1.request-response-demo.html` 对应知识点 **0.1.1**。
 
 ## 如何运行
 
@@ -23,6 +17,8 @@ examples/
 
 ## 当前进度
 
-| 阶段 | 示例 | 状态 |
-|------|------|------|
-| 0.1 | Web 应用是什么（3 个示例） | ✅ 已完成 |
+| 序号 | 示例 | 状态 |
+| --- | --- | --- |
+| 0.1.1 | request-response-demo | ✅ |
+| 0.1.3 | spa-vs-mpa-demo | ✅ |
+| 0.1.4 | same-origin-demo | ✅ |

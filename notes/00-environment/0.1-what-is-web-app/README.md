@@ -6,25 +6,17 @@
 
 ## 知识点列表
 
-| # | 知识点 | 笔记 |
-|---|--------|------|
-| 1 | 客户端—服务器（C/S）模型与请求—响应循环 | [client-server-model.md](./client-server-model.md) |
-| 2 | 浏览器的角色：HTML/CSS/JS 解析、渲染、执行 | [browser-role.md](./browser-role.md) |
-| 3 | 单页应用（SPA）vs 多页应用（MPA） | [spa-vs-mpa.md](./spa-vs-mpa.md) |
-| 4 | 同源策略与跨域问题的来源 | [same-origin-policy.md](./same-origin-policy.md) |
-| 5 | 📱 移动端对照总览 | [mobile-comparison.md](./mobile-comparison.md) |
+| 序号 | 知识点 | 笔记 | 示例 |
+| --- | --- | --- | --- |
+| 0.1.1 | 客户端—服务器（C/S）模型与请求—响应循环 | [0.1.1.client-server-model.md](./0.1.1.client-server-model.md) | [0.1.1.request-response-demo.html](../../../examples/00-environment/0.1-what-is-web-app/0.1.1.request-response-demo.html) |
+| 0.1.2 | 浏览器的角色：HTML/CSS/JS 解析、渲染、执行 | [0.1.2.browser-role.md](./0.1.2.browser-role.md) | — |
+| 0.1.3 | 单页应用（SPA）vs 多页应用（MPA） | [0.1.3.spa-vs-mpa.md](./0.1.3.spa-vs-mpa.md) | [0.1.3.spa-vs-mpa-demo.html](../../../examples/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa-demo.html) |
+| 0.1.4 | 同源策略与跨域问题的来源 | [0.1.4.same-origin-policy.md](./0.1.4.same-origin-policy.md) | [0.1.4.same-origin-demo.html](../../../examples/00-environment/0.1-what-is-web-app/0.1.4.same-origin-demo.html) |
+| 0.1.5 | 📱 移动端对照总览 | [0.1.5.mobile-comparison.md](./0.1.5.mobile-comparison.md) | — |
 
 ## 学习建议
 
-按上表顺序阅读。第 1、2 节是地基；第 3 节在理解浏览器之后更容易消化；第 4 节会在后续 API 对接中反复遇到；第 5 节帮助你用已有移动端经验加速理解。
-
-## 配套示例
-
-| 示例 | 说明 |
-|------|------|
-| [request-response-demo.html](../../examples/00-environment/0.1-what-is-web-app/request-response-demo.html) | 观察浏览器发起 HTTP 请求与响应 |
-| [spa-vs-mpa-demo.html](../../examples/00-environment/0.1-what-is-web-app/spa-vs-mpa-demo.html) | 对比 SPA 与 MPA 的页面跳转行为 |
-| [same-origin-demo.html](../../examples/00-environment/0.1-what-is-web-app/same-origin-demo.html) | 在控制台体验同源策略限制 |
+按上表顺序阅读。0.1.1、0.1.2 是地基；0.1.3 在理解浏览器之后更容易消化；0.1.4 会在后续 API 对接中反复遇到；0.1.5 帮助你用已有移动端经验加速理解。
 
 ## 学完后自测
 
