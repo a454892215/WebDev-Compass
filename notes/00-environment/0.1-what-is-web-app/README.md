@@ -1,6 +1,6 @@
 # 0.1 Web 应用是什么
 
-> [← 返回阶段 0](../README.md) · [← 返回知识库地图](../../KNOWLEDGE_MAP.md#01-web-应用是什么)
+> [← 返回阶段 0](../README.md) · [← 返回知识库地图](../../knowledge-map/01-foundation-stages-0-2.md#01-web-应用是什么)
 
 在进入 HTML、CSS、JavaScript 之前，需要先建立对 **Web 应用整体运作方式** 的正确心智模型。本节涵盖 Web 世界最基本的五个概念。
 

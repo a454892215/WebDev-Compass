@@ -35,7 +35,7 @@
 | 平台 | 12 | 测试策略与设计系统 | 定义测试策略，主导 Design Token 与 Storybook |
 | 平台 | 13 | 平台化工程 | 维护 Monorepo、发布流水线与兼容策略 |
 | 平台 | 14 | BFF / Node / Edge 运行时 | 设计与实现 BFF、SSR 运行时与 Edge 中间层 |
-| 领导 | 15 | 技术领导力与迁移 | 主导遗留迁移、带人与跨团队技术决策 |
+| 交付 | 15 | 项目整合与工程管理 | 主导遗留迁移、跨团队整合与项目治理 |
 
 ```mermaid
 flowchart TB
@@ -63,8 +63,8 @@ flowchart TB
         S12 --> S13[平台化工程]
         S13 --> S14[BFF与Edge]
     end
-    subgraph lead [领导力 阶段15]
-        S14 --> S15[技术领导力]
+    subgraph delivery [交付层 阶段15]
+        S14 --> S15[项目整合与工程管理]
     end
 ```
 

@@ -29,7 +29,7 @@ INDEX_TAIL = """## 知识点索引（按领域）
 | 设计系统 | 4、12 | 组件库、Storybook、Token 流水线 |
 | 部署运维 | 7、11 | 静态托管、Nginx、CI/CD、Docker、K8s |
 | BFF / 运行时 | 14 | Node、Edge、SSR 深入 |
-| 领导力 | 7、15 | Review、迁移、带人、i18n 生产级 |
+| 项目整合 | 7、15 | Review、迁移、协作治理、i18n 生产级 |
 
 ---
 
@@ -69,7 +69,7 @@ INDEX_TAIL = """## 知识点索引（按领域）
 
 ### 里程碑 9：高级 Web 工程师综合达标（阶段 14–15，约 4–8 周）
 
-- 产出：实现 **BFF 原型** + 主导一次 **模块迁移** + 完成 **Onboarding 文档**
+- 产出：实现 **BFF 原型** + 主导一次 **模块迁移整合** + 完成 **项目 Onboarding 文档**
 
 ---
 
@@ -151,6 +151,7 @@ def main() -> None:
     content = header + "\n" + stages_0_7 + "\n\n---\n\n" + senior_stages + "\n\n---\n\n" + INDEX_TAIL
     (ROOT / "KNOWLEDGE_MAP.md").write_text(content, encoding="utf-8")
     print("Merged map written:", len(content.splitlines()), "lines")
+    print("Run: python3 scripts/split_knowledge_map.py  # to regenerate knowledge-map/ parts")
 
 
 if __name__ == "__main__":

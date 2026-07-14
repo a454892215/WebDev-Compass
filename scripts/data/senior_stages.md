@@ -368,63 +368,63 @@
 
 ---
 
-## 阶段 15：技术领导力与遗留系统治理
+## 阶段 15：项目整合、治理与工程管理
 
 ### 15.1 技术决策与协作
 
-- [ ] [15.1.1 **技术选型** 流程：PoC、Spike、评审会、决策记录](./notes/15-leadership/15.1-tech-decisions/15.1.1.item-15-1-1.md)
-- [ ] [15.1.2 **Build vs Buy**：自研组件库 vs 采购 SaaS / 开源方案](./notes/15-leadership/15.1-tech-decisions/15.1.2.build-vs-buy.md)
-- [ ] [15.1.3 **跨团队 API 契约** 协作：Mock First、OpenAPI、联调节奏](./notes/15-leadership/15.1-tech-decisions/15.1.3.api.md)
-- [ ] [15.1.4 与 **设计 / 产品 / 后端 / QA / SRE** 的协作界面定义](./notes/15-leadership/15.1-tech-decisions/15.1.4.qa-sre.md)
-- [ ] [15.1.5 **Estimation**：Story 拆分、风险缓冲、Unknown Unknowns](./notes/15-leadership/15.1-tech-decisions/15.1.5.estimation.md)
+- [ ] [15.1.1 **技术选型** 流程：PoC、Spike、评审会、决策记录](./notes/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md)
+- [ ] [15.1.2 **Build vs Buy**：自研组件库 vs 采购 SaaS / 开源方案](./notes/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md)
+- [ ] [15.1.3 **跨团队 API 契约** 协作：Mock First、OpenAPI、联调节奏](./notes/15-project-delivery/15.1-tech-decisions/15.1.3.api.md)
+- [ ] [15.1.4 与 **设计 / 产品 / 后端 / QA / SRE** 的协作界面定义](./notes/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre.md)
+- [ ] [15.1.5 **Estimation**：Story 拆分、风险缓冲、Unknown Unknowns](./notes/15-project-delivery/15.1-tech-decisions/15.1.5.estimation.md)
 
 ### 15.2 Code Review 与质量文化
 
-- [ ] [15.2.1 **Review 清单**：正确性、边界、性能、安全、a11y、可测试性](./notes/15-leadership/15.2-code-review/15.2.1.review.md)
-- [ ] [15.2.2 **Review 规模** 控制与 LGTM 文化](./notes/15-leadership/15.2-code-review/15.2.2.review.md)
-- [ ] [15.2.3 **技术债务** 识别、量化（Hotspot）与偿还计划](./notes/15-leadership/15.2-code-review/15.2.3.item-15-2-3.md)
-- [ ] [15.2.4 **Boy Scout Rule** 与渐进式重构](./notes/15-leadership/15.2-code-review/15.2.4.boy-scout-rule.md)
+- [ ] [15.2.1 **Review 清单**：正确性、边界、性能、安全、a11y、可测试性](./notes/15-project-delivery/15.2-code-review/15.2.1.review.md)
+- [ ] [15.2.2 **Review 规模** 控制与 LGTM 文化](./notes/15-project-delivery/15.2-code-review/15.2.2.review.md)
+- [ ] [15.2.3 **技术债务** 识别、量化（Hotspot）与偿还计划](./notes/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3.md)
+- [ ] [15.2.4 **Boy Scout Rule** 与渐进式重构](./notes/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule.md)
 
-### 15.3 带人与团队建设
+### 15.3 工程管理与团队协作
 
-- [ ] [15.3.1 **Mentoring**：Junior → Mid 成长路径设计](./notes/15-leadership/15.3-mentoring/15.3.1.mentoring.md)
-- [ ] [15.3.2 **Pair Programming / Mob** 在前端场景的运用](./notes/15-leadership/15.3-mentoring/15.3.2.pair-programming-mob.md)
-- [ ] [15.3.3 **知识分享** 机制：Tech Talk、内部 Wiki、Onboarding 文档](./notes/15-leadership/15.3-mentoring/15.3.3.item-15-3-3.md)
-- [ ] [15.3.4 **面试体系**：前端体系化题库与 Live Coding 设计](./notes/15-leadership/15.3-mentoring/15.3.4.item-15-3-4.md)
-- [ ] [15.3.5 **Onboarding Checklist** for 新成员](./notes/15-leadership/15.3-mentoring/15.3.5.onboarding-checklist.md)
+- [ ] [15.3.1 **任务拆分与协作分工**：Story 分解、联调节奏、模块 Owner](./notes/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md)
+- [ ] [15.3.2 **Pair Programming / Mob** 在前端场景的运用](./notes/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md)
+- [ ] [15.3.3 **知识分享** 机制：Tech Talk、内部 Wiki、Onboarding 文档](./notes/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3.md)
+- [ ] [15.3.4 **前端能力评估维度**：用于排期、Review 与模块分工（工程视角，非招聘）](./notes/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment.md)
+- [ ] [15.3.5 **Onboarding Checklist** for 新成员](./notes/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist.md)
 
 ### 15.4 遗留系统与迁移
 
-- [ ] [15.4.1 **Strangler Fig** 渐进式替换模式](./notes/15-leadership/15.4-legacy-migration/15.4.1.strangler-fig.md)
-- [ ] [15.4.2 **jQuery / 老 MPA → React/Vue** 迁移策略](./notes/15-leadership/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md)
-- [ ] [15.4.3 **双跑（Parallel Run）** 与 Feature Flag 切流](./notes/15-leadership/15.4-legacy-migration/15.4.3.parallel-run.md)
-- [ ] [15.4.4 **CSS 遗留债务** 治理：全局命名空间、!important、层叠上下文](./notes/15-leadership/15.4-legacy-migration/15.4.4.css.md)
-- [ ] [15.4.5 **Big Bang vs Incremental** 迁移风险评估](./notes/15-leadership/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md)
-- [ ] [15.4.6 **Codemod + 自动化测试** 保障迁移安全](./notes/15-leadership/15.4-legacy-migration/15.4.6.codemod.md)
+- [ ] [15.4.1 **Strangler Fig** 渐进式替换模式](./notes/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md)
+- [ ] [15.4.2 **jQuery / 老 MPA → React/Vue** 迁移策略](./notes/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md)
+- [ ] [15.4.3 **双跑（Parallel Run）** 与 Feature Flag 切流](./notes/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run.md)
+- [ ] [15.4.4 **CSS 遗留债务** 治理：全局命名空间、!important、层叠上下文](./notes/15-project-delivery/15.4-legacy-migration/15.4.4.css.md)
+- [ ] [15.4.5 **Big Bang vs Incremental** 迁移风险评估](./notes/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md)
+- [ ] [15.4.6 **Codemod + 自动化测试** 保障迁移安全](./notes/15-project-delivery/15.4-legacy-migration/15.4.6.codemod.md)
 
 ### 15.5 国际化与无障碍（生产级）
 
-- [ ] [15.5.1 **i18n 架构**：namespace 懒加载、ICU MessageFormat、复数与性别](./notes/15-leadership/15.5-i18n-a11y-prod/15.5.1.i18n.md)
-- [ ] [15.5.2 **RTL** 生产级：逻辑属性、镜像图标、BiDi 混排](./notes/15-leadership/15.5-i18n-a11y-prod/15.5.2.rtl.md)
-- [ ] [15.5.3 **时区**：`Intl.DateTimeFormat`、dayjs timezone、服务端 UTC 约定](./notes/15-leadership/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md)
-- [ ] [15.5.4 **WCAG 2.2 AA** 达标流程与 VPAT 报告基础](./notes/15-leadership/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md)
-- [ ] [15.5.5 **SPA 路由切换** 焦点管理：`focus-trap`、skip link、live region](./notes/15-leadership/15.5-i18n-a11y-prod/15.5.5.spa.md)
-- [ ] [15.5.6 复杂组件 a11y：**Combobox、DatePicker、Modal** WAI-ARIA 模式](./notes/15-leadership/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md)
+- [ ] [15.5.1 **i18n 架构**：namespace 懒加载、ICU MessageFormat、复数与性别](./notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md)
+- [ ] [15.5.2 **RTL** 生产级：逻辑属性、镜像图标、BiDi 混排](./notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md)
+- [ ] [15.5.3 **时区**：`Intl.DateTimeFormat`、dayjs timezone、服务端 UTC 约定](./notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md)
+- [ ] [15.5.4 **WCAG 2.2 AA** 达标流程与 VPAT 报告基础](./notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md)
+- [ ] [15.5.5 **SPA 路由切换** 焦点管理：`focus-trap`、skip link、live region](./notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa.md)
+- [ ] [15.5.6 复杂组件 a11y：**Combobox、DatePicker、Modal** WAI-ARIA 模式](./notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md)
 
 ### 15.6 Web 平台进阶（按业务选学）
 
-- [ ] [15.6.1 **View Transitions API** 与 SPA 路由动画](./notes/15-leadership/15.6-web-platform-advanced/15.6.1.view-transitions-api.md)
-- [ ] [15.6.2 **Navigation API**](./notes/15-leadership/15.6-web-platform-advanced/15.6.2.navigation-api.md)
-- [ ] [15.6.3 **OPFS（Origin Private File System）**](./notes/15-leadership/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md)
-- [ ] [15.6.4 **WebRTC** 基础（音视频场景）](./notes/15-leadership/15.6-web-platform-advanced/15.6.4.webrtc.md)
-- [ ] [15.6.5 **WebAuthn / Payment Request API**](./notes/15-leadership/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md)
-- [ ] [15.6.6 **Import Maps** 与原生 ESM CDN](./notes/15-leadership/15.6-web-platform-advanced/15.6.6.import-maps.md)
-- [ ] [15.6.7 **WebAssembly** 线程、SIMD、与 JS 边界](./notes/15-leadership/15.6-web-platform-advanced/15.6.7.webassembly.md)
-- [ ] [15.6.8 **WebGL / Three.js** 3D 场景 — 可视化选学](./notes/15-leadership/15.6-web-platform-advanced/15.6.8.webgl-three.js.md)
+- [ ] [15.6.1 **View Transitions API** 与 SPA 路由动画](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md)
+- [ ] [15.6.2 **Navigation API**](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md)
+- [ ] [15.6.3 **OPFS（Origin Private File System）**](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md)
+- [ ] [15.6.4 **WebRTC** 基础（音视频场景）](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc.md)
+- [ ] [15.6.5 **WebAuthn / Payment Request API**](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md)
+- [ ] [15.6.6 **Import Maps** 与原生 ESM CDN](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps.md)
+- [ ] [15.6.7 **WebAssembly** 线程、SIMD、与 JS 边界](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly.md)
+- [ ] [15.6.8 **WebGL / Three.js** 3D 场景 — 可视化选学](./notes/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js.md)
 
 ### 15.7 能力锚点（阶段 15）
 
 - 能主导一次 **遗留模块迁移** 从方案到上线
-- 能进行 **技术分享 / RFC 评审** 并推动团队达成共识
+- 能输出 **迁移与整合方案文档**，协调跨团队评审与落地
 
 ---

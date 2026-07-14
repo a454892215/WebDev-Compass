@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply hierarchical numbering to KNOWLEDGE_MAP.md."""
+"""Apply hierarchical numbering to knowledge-map part files."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-MAP_PATH = ROOT / "KNOWLEDGE_MAP.md"
+MAP_DIR = ROOT / "knowledge-map"
 
 STAGE_FOLDERS = {
     0: "00-environment",
@@ -25,7 +25,7 @@ STAGE_FOLDERS = {
     12: "12-testing-design-system",
     13: "13-platform",
     14: "14-bff-runtime",
-    15: "15-leadership",
+    15: "15-project-delivery",
 }
 
 SECTION_SLUG_OVERRIDES = {
@@ -99,7 +99,7 @@ SECTION_SLUG_OVERRIDES = {
     "14.6": "14.6-file-upload",
     "15.1": "15.1-tech-decisions",
     "15.2": "15.2-code-review",
-    "15.3": "15.3-mentoring",
+    "15.3": "15.3-team-collaboration",
     "15.4": "15.4-legacy-migration",
     "15.5": "15.5-i18n-a11y-prod",
     "15.6": "15.6-web-platform-advanced",
@@ -254,10 +254,20 @@ def process_map(content: str) -> tuple[str, int]:
 
 
 def main() -> None:
-    content = MAP_PATH.read_text(encoding="utf-8")
-    new_content, count = process_map(content)
-    MAP_PATH.write_text(new_content, encoding="utf-8")
-    print(f"Numbered {count} knowledge points in KNOWLEDGE_MAP.md")
+    total = 0
+    for part_file in sorted(MAP_DIR.glob("*.md")):
+        content = part_file.read_text(encoding="utf-8")
+        # skip part header before first stage
+        stage_idx = content.find("## 阶段 ")
+        if stage_idx == -1:
+            continue
+        header = content[:stage_idx]
+        body = content[stage_idx:]
+        new_body, count = process_map(body)
+        part_file.write_text(header + new_body, encoding="utf-8")
+        total += count
+        print(f"Numbered {count} items in {part_file.name}")
+    print(f"Total: {total} knowledge points")
 
 
 if __name__ == "__main__":
