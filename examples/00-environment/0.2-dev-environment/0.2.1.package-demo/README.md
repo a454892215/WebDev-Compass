@@ -22,3 +22,4 @@ npm run info
 
 - 在 `dependencies` 添加 `dayjs`，在 `index.js` 打印当前时间
 - 新增 script `"hello": "echo hello from npm script"` 并运行 `npm run hello`
+              注释：npm run hello 会把这段当作 shell 命令执行。shell 把第一个词当成命令名
