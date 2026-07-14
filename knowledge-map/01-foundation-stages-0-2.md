@@ -23,11 +23,11 @@
 
 ### 0.2 开发环境
 
-- [ ] [0.2.1 安装与配置：**Node.js**、**npm / yarn / pnpm](./notes/00-environment/0.2-dev-environment/0.2.1.node.js.md)**
-- [ ] [0.2.2 熟练使用 **VS Code / Cursor** 及 Web 相关插件（ESLint、Prettier、Live Server 等）](./notes/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md)
-- [ ] [0.2.3 熟练使用 **Chrome DevTools**（Elements、Console、Network、Sources、Performance、Application）](./notes/00-environment/0.2-dev-environment/0.2.3.chrome-devtools.md)
-- [ ] [0.2.4 了解 **Git** 基础：clone、branch、commit、merge、rebase、PR 工作流](./notes/00-environment/0.2-dev-environment/0.2.4.git.md)
-- [ ] [0.2.5 📱 移动端对照：npm ≈ pub / CocoaPods / Gradle 依赖管理；Vite dev server ≈ Hot Reload](./notes/00-environment/0.2-dev-environment/0.2.5.npm-pub-cocoapods-gradle-vite.md)
+- [x] [0.2.1 安装与配置：**Node.js**、**npm / yarn / pnpm**](./notes/00-environment/0.2-dev-environment/0.2.1.node.js.md)
+- [x] [0.2.2 熟练使用 **VS Code / Cursor** 及 Web 相关插件（ESLint、Prettier、Live Server 等）](./notes/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md)
+- [x] [0.2.3 熟练使用 **Chrome DevTools**（Elements、Console、Network、Sources、Performance、Application）](./notes/00-environment/0.2-dev-environment/0.2.3.chrome-devtools.md)
+- [x] [0.2.4 了解 **Git** 基础：clone、branch、commit、merge、rebase、PR 工作流](./notes/00-environment/0.2-dev-environment/0.2.4.git.md)
+- [x] [0.2.5 📱 移动端对照：npm ≈ pub / CocoaPods / Gradle 依赖管理；Vite dev server ≈ Hot Reload](./notes/00-environment/0.2-dev-environment/0.2.5.npm-pub-cocoapods-gradle-vite.md)
 
 
 

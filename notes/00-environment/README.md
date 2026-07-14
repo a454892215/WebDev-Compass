@@ -5,5 +5,5 @@
 | 小节 | 说明 | 索引 |
 | --- | --- | --- |
 | 0.1 | Web 应用是什么 | [README](./0.1-what-is-web-app/README.md) |
-| 0.2 | 开发环境 | 待补充 |
+| 0.2 | 开发环境 | [README](./0.2-dev-environment/README.md) ✅ |
 | 0.3 | 网络基础 | 待补充 |

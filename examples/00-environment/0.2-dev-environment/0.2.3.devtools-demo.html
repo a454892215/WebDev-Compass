@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>0.2.3 Chrome DevTools 练习</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 32px auto;
+      padding: 0 20px 60px;
+      line-height: 1.6;
+      color: #222;
+    }
+    h1 { margin-bottom: 8px; font-size: 1.5rem; }
+    .subtitle { color: #666; margin-bottom: 24px; font-size: 14px; }
+    .tip {
+      background: #e8f4fd;
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .card h2 { font-size: 1.1rem; margin-bottom: 8px; color: #1565c0; }
+    .card .task { font-size: 13px; color: #555; margin-bottom: 12px; }
+    button {
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 8px;
+      margin-top: 4px;
+    }
+    button:hover { background: #1565c0; }
+    button.secondary { background: #5c6bc0; }
+    #demo-box {
+      width: 120px;
+      height: 80px;
+      background: #ff9800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin-top: 12px;
+      transition: background 0.2s;
+    }
+    #demo-box:hover { background: #f57c00; }
+    #user-list { list-style: none; margin-top: 10px; }
+    #user-list li { padding: 6px 0; border-bottom: 1px solid #eee; }
+    #log-area {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 12px;
+      min-height: 80px;
+      margin-top: 10px;
+    }
+    .badge {
+      display: inline-block;
+      background: #eee;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chrome DevTools 六项面板练习</h1>
+  <p class="subtitle">对应笔记 0.2.3 · 请用 Live Server 以 http:// 打开，按 F12 开始</p>
+
+  <div class="tip">
+    <strong>开始前：</strong>打开 DevTools → Network 勾选 <strong>Disable cache</strong>；
+    Console 可勾选 <strong>Preserve log</strong>（跳转场景用，本页可选）。
+  </div>
+
+  <!-- 1. Elements -->
+  <div class="card" id="section-elements">
+    <h2><span class="badge">Elements</span>1. 元素与样式</h2>
+    <p class="task">
+      任务：用选择器 (<kbd>Cmd+Shift+C</kbd>) 选中下方橙色方块 → 在 Styles 里把
+      <code>background</code> 改成 <code>#4caf50</code> → 在 :hov 勾选 :hover 预览悬停色。
+    </p>
+    <div id="demo-box">方块</div>
+  </div>
+
+  <!-- 2. Console -->
+  <div class="card" id="section-console">
+    <h2><span class="badge">Console</span>2. 控制台</h2>
+    <p class="task">
+      任务：点击下方按钮，在 Console 查看 log / table；在 Console 输入 <code>$0</code>（需先在 Elements 选中元素）。
+    </p>
+    <button type="button" id="btn-console">输出调试信息</button>
+    <button type="button" id="btn-error" class="secondary">触发 console.error</button>
+    <div id="log-area">Console 输出也会 mirror 到这里（可选对照）</div>
+  </div>
+
+  <!-- 3. Network -->
+  <div class="card" id="section-network">
+    <h2><span class="badge">Network</span>3. 网络请求</h2>
+    <p class="task">
+      任务：打开 Network 面板 → 点击「获取用户」→ 点开请求查看 Headers / Preview / Timing。
+    </p>
+    <button type="button" id="btn-fetch">获取用户 (GET)</button>
+    <ul id="user-list"></ul>
+  </div>
+
+  <!-- 4. Sources -->
+  <div class="card" id="section-sources">
+    <h2><span class="badge">Sources</span>4. 源码与断点</h2>
+    <p class="task">
+      任务：打开 Sources → 找到本页脚本 → 在 <code>debuggerDemo</code> 函数内行号处设断点 → 点击按钮，观察 Scope 与 Call Stack。
+    </p>
+    <button type="button" id="btn-debug">运行 debuggerDemo()</button>
+  </div>
+
+  <!-- 5. Performance -->
+  <div class="card" id="section-performance">
+    <h2><span class="badge">Performance</span>5. 性能录制</h2>
+    <p class="task">
+      任务：Performance → Record → 点击「模拟重计算」→ Stop → 在 Main 线程查看长任务（黄色/红色区域）。
+    </p>
+    <button type="button" id="btn-heavy">模拟重计算 (~200ms)</button>
+  </div>
+
+  <!-- 6. Application -->
+  <div class="card" id="section-application">
+    <h2><span class="badge">Application</span>6. 存储</h2>
+    <p class="task">
+      任务：点击「写入 localStorage」→ Application → Local Storage → 本页 origin → 查看键
+      <code>compass-demo-theme</code>；再点「清除」验证。
+    </p>
+    <button type="button" id="btn-storage-set">写入 localStorage</button>
+    <button type="button" id="btn-storage-clear" class="secondary">清除</button>
+    <p id="storage-status" style="margin-top:10px;font-size:14px;color:#666;">当前：未设置</p>
+  </div>
+
+  <script>
+    const logArea = document.getElementById('log-area');
+
+    function mirrorLog(msg) {
+      logArea.textContent += msg + '\n';
+    }
+
+    // --- Console ---
+    document.getElementById('btn-console').addEventListener('click', () => {
+      const data = [{ id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }];
+      console.log('[0.2.3] 普通 log', { time: Date.now() });
+      console.table(data);
+      console.warn('[0.2.3] 这是一条 warn');
+      mirrorLog('已在 Console 输出 log / table / warn');
+    });
+
+    document.getElementById('btn-error').addEventListener('click', () => {
+      console.error('[0.2.3] 模拟错误：用于练习 Console 过滤 Error 级别');
+      mirrorLog('已输出 console.error');
+    });
+
+    // --- Network ---
+    document.getElementById('btn-fetch').addEventListener('click', async () => {
+      const list = document.getElementById('user-list');
+      list.innerHTML = '<li>加载中…</li>';
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/users?_limit=3');
+        console.log('[Network] status', res.status, res.statusText);
+        const users = await res.json();
+        list.innerHTML = users.map((u) => `<li>${u.name} — ${u.email}</li>`).join('');
+      } catch (e) {
+        list.innerHTML = `<li style="color:red">${e.message}</li>`;
+      }
+    });
+
+    // --- Sources breakpoint demo ---
+    function debuggerDemo() {
+      const secret = 42;
+      const message = '在此行设断点可查看 secret 与 message';
+      console.log(message, secret);
+      return secret * 2;
+    }
+
+    document.getElementById('btn-debug').addEventListener('click', () => {
+      const result = debuggerDemo();
+      console.log('debuggerDemo 返回', result);
+    });
+
+    // --- Performance ---
+    document.getElementById('btn-heavy').addEventListener('click', () => {
+      console.time('heavy-loop');
+      let sum = 0;
+      for (let i = 0; i < 25_000_000; i++) {
+        sum += i % 7;
+      }
+      console.timeEnd('heavy-loop');
+      console.log('计算完成 sum =', sum);
+    });
+
+    // --- Application / localStorage ---
+    const STORAGE_KEY = 'compass-demo-theme';
+
+    function updateStorageStatus() {
+      const val = localStorage.getItem(STORAGE_KEY);
+      document.getElementById('storage-status').textContent =
+        val ? `当前：${STORAGE_KEY} = "${val}"` : '当前：未设置';
+    }
+
+    document.getElementById('btn-storage-set').addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY, 'dark-' + Date.now());
+      sessionStorage.setItem('compass-session', 'active');
+      updateStorageStatus();
+      console.log('[Application] 已写入 localStorage 与 sessionStorage');
+    });
+
+    document.getElementById('btn-storage-clear').addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem('compass-session');
+      updateStorageStatus();
+      console.log('[Application] 已清除演示键');
+    });
+
+    updateStorageStatus();
+    console.log('[0.2.3] DevTools 练习页就绪。按卡片顺序完成六项任务。');
+  </script>
+</body>
+</html>

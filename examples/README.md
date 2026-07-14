@@ -22,3 +22,7 @@ examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 | 0.1.1 | request-response-demo | ✅ |
 | 0.1.3 | spa-vs-mpa-demo | ✅ |
 | 0.1.4 | same-origin-demo | ✅ |
+| 0.2.1 | package-demo | ✅ |
+| 0.2.2 | vscode-config | ✅ |
+| 0.2.3 | devtools-demo | ✅ |
+| 0.2.4 | git-workflow | ✅ |
