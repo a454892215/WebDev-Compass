@@ -3,6 +3,7 @@
  * 运行：npm install && npm start
  */
 import chalk from 'chalk';
+import dayjs from 'dayjs';
 
 const pkg = {
   name: '0.2.1-package-demo',
@@ -12,6 +13,7 @@ const pkg = {
 console.log(chalk.cyan.bold('\n=== WebDev Compass · 0.2.1 Node/npm 演示 ===\n'));
 console.log(chalk.green('✓ Node 版本:'), process.version);
 console.log(chalk.green('✓ 当前目录:'), process.cwd());
+console.log(chalk.green('✓ 当前时间:'), dayjs().format('YYYY-MM-DD HH:mm:ss'));
 console.log(chalk.yellow('\n项目信息:'));
 console.log(JSON.stringify(pkg, null, 2));
 

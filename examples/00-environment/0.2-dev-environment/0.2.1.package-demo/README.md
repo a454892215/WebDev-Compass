@@ -14,6 +14,7 @@ npm run info
 ## 观察要点
 
 1. `npm install` 根据 `package.json` 安装 `chalk`，生成 `node_modules/` 与 `package-lock.json`
+                 总结：在项目根目录执行 npm install，会根据 package.json 安装其中声明的依赖（默认包括 dependencies 和 devDependencies），生成 node_modules/，并尽量按 package-lock.json 锁定版本。
 2. `npm start` 执行 `scripts.start` → `node index.js`
 3. `chalk` 在 `dependencies` 中声明，代码里 `import chalk from 'chalk'` 即可使用
 
