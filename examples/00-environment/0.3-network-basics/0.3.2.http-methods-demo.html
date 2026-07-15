@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0.3.2 HTTP 方法与状态码演示</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      color: #222;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 6px; }
+    .sub { color: #666; margin-bottom: 16px; }
+    .tip {
+      background: #fff8e6;
+      border: 1px solid #ffe08a;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+    .card {
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .card p { color: #555; font-size: 0.9rem; margin-bottom: 10px; }
+    button {
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    button.warn { background: #dc3545; }
+    button:disabled { opacity: 0.6; cursor: wait; }
+    #log {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 14px;
+      border-radius: 6px;
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 12.5px;
+      white-space: pre-wrap;
+      min-height: 220px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>HTTP 方法与状态码</h1>
+  <p class="sub">对应笔记：<a href="../../../notes/00-environment/0.3-network-basics/0.3.2.http-https.md">0.3.2 HTTP/HTTPS</a></p>
+
+  <div class="tip">
+    打开 DevTools → <strong>Network</strong>，再点下方按钮。示例使用公共 API
+    <code>jsonplaceholder.typicode.com</code>（需联网）。注意：<code>fetch</code> 对 4xx/5xx <strong>不抛异常</strong>，需检查 <code>res.ok</code>。
+  </div>
+
+  <div class="card">
+    <h3>GET / POST</h3>
+    <p>观察 Method、Status、Request Payload、Response。</p>
+    <button id="btn-get">GET 用户 #1</button>
+    <button id="btn-post">POST 新建帖子</button>
+  </div>
+
+  <div class="card">
+    <h3>状态码分支</h3>
+    <p>对比成功与「资源不存在」。</p>
+    <button id="btn-ok">GET 200</button>
+    <button id="btn-404" class="warn">GET 故意 404</button>
+  </div>
+
+  <div class="card">
+    <h3>请求日志</h3>
+    <div id="log">等待操作…</div>
+  </div>
+
+  <script>
+    const logEl = document.getElementById('log');
+    const base = 'https://jsonplaceholder.typicode.com';
+
+    function log(msg) {
+      const line = typeof msg === 'string' ? msg : JSON.stringify(msg, null, 2);
+      logEl.textContent = `[${new Date().toLocaleTimeString()}] ${line}\n\n` + logEl.textContent;
+    }
+
+    async function run(label, fn) {
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach((b) => (b.disabled = true));
+      try {
+        log(`→ ${label}`);
+        await fn();
+      } catch (e) {
+        log(`网络/解析错误: ${e.message}`);
+      } finally {
+        buttons.forEach((b) => (b.disabled = false));
+      }
+    }
+
+    document.getElementById('btn-get').addEventListener('click', () =>
+      run('GET /users/1', async () => {
+        const res = await fetch(`${base}/users/1`);
+        const body = await res.json();
+        log({ method: 'GET', status: res.status, ok: res.ok, contentType: res.headers.get('content-type'), body });
+      }),
+    );
+
+    document.getElementById('btn-post').addEventListener('click', () =>
+      run('POST /posts', async () => {
+        const payload = { title: 'webdev-compass', body: 'http demo', userId: 1 };
+        const res = await fetch(`${base}/posts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const body = await res.json();
+        log({ method: 'POST', status: res.status, ok: res.ok, requestBody: payload, responseBody: body });
+      }),
+    );
+
+    document.getElementById('btn-ok').addEventListener('click', () =>
+      run('GET /posts/1 → expect 200', async () => {
+        const res = await fetch(`${base}/posts/1`);
+        log({ status: res.status, ok: res.ok, note: res.ok ? '业务上可继续 json()' : '应走错误分支' });
+      }),
+    );
+
+    document.getElementById('btn-404').addEventListener('click', () =>
+      run('GET /posts/999999 → expect 404', async () => {
+        const res = await fetch(`${base}/posts/999999`);
+        // fetch 不会因 404 throw
+        log({
+          status: res.status,
+          ok: res.ok,
+          note: 'fetch 未抛错；必须用 if (!res.ok) 自行处理',
+        });
+      }),
+    );
+  </script>
+</body>
+</html>

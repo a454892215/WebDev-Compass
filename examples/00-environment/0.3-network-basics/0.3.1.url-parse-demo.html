@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0.3.1 URL 解析演示</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 720px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+      color: #222;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 6px; }
+    .sub { color: #666; margin-bottom: 20px; font-size: 0.95rem; }
+    .tip {
+      background: #eef6ff;
+      border: 1px solid #b6d4fe;
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+    .row { margin: 12px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.secondary { background: #6c757d; }
+    button:hover { filter: brightness(0.95); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #e5e5e5;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f7f7f7; width: 28%; }
+    td code {
+      font-family: ui-monospace, Menlo, monospace;
+      word-break: break-all;
+    }
+    .err { color: #b00020; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1>URL 结构解析</h1>
+  <p class="sub">对应笔记：<a href="../../../notes/00-environment/0.3-network-basics/0.3.1.url.md">0.3.1 URL</a></p>
+
+  <div class="tip">
+    使用浏览器 <code>URL</code> 与 <code>URLSearchParams</code> API 拆解地址各部分。注意：<strong>hash 不会发送到服务器</strong>。
+  </div>
+
+  <label for="url">输入 URL</label>
+  <input id="url" type="text" value="https://user:pass@www.example.com:8443/api/users?q=%E4%B8%AD%E6%96%87&page=2#profile" />
+
+  <div class="row">
+    <button id="parse">解析</button>
+    <button id="sample" class="secondary" type="button">填入示例</button>
+    <button id="bump" class="secondary" type="button">page + 1</button>
+  </div>
+
+  <p id="error" class="err" hidden></p>
+  <table id="result">
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const input = document.getElementById('url');
+    const tbody = document.querySelector('#result tbody');
+    const errorEl = document.getElementById('error');
+
+    const fields = [
+      ['href', '完整 URL'],
+      ['origin', 'Origin（协议+主机+端口）'],
+      ['protocol', '协议'],
+      ['username', '用户名'],
+      ['password', '密码'],
+      ['hostname', '主机名'],
+      ['port', '端口（默认端口为空）'],
+      ['pathname', '路径'],
+      ['search', '查询串'],
+      ['hash', '锚点'],
+    ];
+
+    function render() {
+      errorEl.hidden = true;
+      tbody.innerHTML = '';
+      try {
+        const u = new URL(input.value.trim());
+        for (const [key, label] of fields) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<th>${label}<br><code>${key}</code></th><td><code>${u[key] || '（空）'}</code></td>`;
+          tbody.appendChild(tr);
+        }
+        const params = [...u.searchParams.entries()]
+          .map(([k, v]) => `${k} = ${v}`)
+          .join('\n') || '（无）';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<th>查询参数解码<br><code>searchParams</code></th><td><code style="white-space:pre-wrap">${params}</code></td>`;
+        tbody.appendChild(tr);
+      } catch (e) {
+        errorEl.hidden = false;
+        errorEl.textContent = '无法解析：' + e.message;
+      }
+    }
+
+    document.getElementById('parse').addEventListener('click', render);
+    document.getElementById('sample').addEventListener('click', () => {
+      input.value = 'https://api.example.com/v1/orders?status=open&limit=10#list';
+      render();
+    });
+    document.getElementById('bump').addEventListener('click', () => {
+      try {
+        const u = new URL(input.value.trim());
+        const page = Number(u.searchParams.get('page') || '0') + 1;
+        u.searchParams.set('page', String(page));
+        input.value = u.toString();
+        render();
+      } catch (e) {
+        errorEl.hidden = false;
+        errorEl.textContent = e.message;
+      }
+    });
+    render();
+  </script>
+</body>
+</html>

@@ -26,3 +26,11 @@ examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 | 0.2.2 | vscode-config | ✅ |
 | 0.2.3 | devtools-demo | ✅ |
 | 0.2.4 | git-workflow | ✅ |
+| 0.3.1 | url-parse-demo | ✅ |
+| 0.3.2 | http-methods-demo | ✅ |
+| 0.3.3 | http-versions（观察清单） | ✅ |
+| 0.3.4 | storage-demo | ✅ |
+| 0.3.5 | dns-cdn（观察清单） | ✅ |
+| 0.3.6 | tls-overview（观察清单） | ✅ |
+| 0.3.7 | rest-api-demo | ✅ |
+| 0.3.8 | websocket-demo | ✅ |

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0.3.8 WebSocket 聊天</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 640px;
+      margin: 32px auto;
+      padding: 0 16px;
+      color: #222;
+      line-height: 1.5;
+    }
+    h1 { font-size: 1.3rem; margin-bottom: 8px; }
+    .tip {
+      background: #fff8e6;
+      border: 1px solid #ffe08a;
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+    #status {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #f0f0f0;
+    }
+    #status.open { background: #e6f4ea; }
+    #status.closed { background: #fce8e6; }
+    #log {
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      height: 280px;
+      overflow: auto;
+      padding: 12px;
+      background: #fafafa;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .sys { color: #666; font-style: italic; }
+    .msg { margin: 4px 0; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    input {
+      flex: 1;
+      min-width: 120px;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button.secondary { background: #6c757d; }
+  </style>
+</head>
+<body>
+  <h1>WebSocket 简易聊天</h1>
+  <div class="tip">
+    先运行 <code>node server.js</code>。打开 DevTools → Network → 筛选 <strong>WS</strong>，查看握手与 Frames。
+    再开一个标签页可看到广播。
+  </div>
+
+  <div id="status" class="closed">未连接</div>
+  <div id="log"></div>
+
+  <div class="row" style="margin-bottom:8px">
+    <input id="name" placeholder="昵称" value="guest" />
+    <button id="connect" class="secondary" type="button">连接 / 重连</button>
+  </div>
+  <div class="row">
+    <input id="text" placeholder="输入消息，Enter 发送" />
+    <button id="send" type="button">发送</button>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById('status');
+    const logEl = document.getElementById('log');
+    const textEl = document.getElementById('text');
+    let ws;
+
+    function setStatus(state, label) {
+      statusEl.className = state;
+      statusEl.textContent = label;
+    }
+
+    function append(html, cls) {
+      const div = document.createElement('div');
+      div.className = 'msg ' + (cls || '');
+      div.innerHTML = html;
+      logEl.appendChild(div);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function connect() {
+      if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
+        ws.close();
+      }
+      const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+      const url = `${proto}://${location.host}/ws`;
+      ws = new WebSocket(url);
+      setStatus('closed', '连接中… ' + url);
+
+      ws.addEventListener('open', () => setStatus('open', '已连接 ' + url));
+      ws.addEventListener('close', (ev) =>
+        setStatus('closed', `已关闭 code=${ev.code} ${ev.reason || ''}`),
+      );
+      ws.addEventListener('error', () => append('连接错误（确认 server.js 在跑）', 'sys'));
+      ws.addEventListener('message', (ev) => {
+        let data;
+        try { data = JSON.parse(ev.data); } catch { data = { type: 'chat', text: ev.data }; }
+        if (data.type === 'system') append(escapeHtml(data.text), 'sys');
+        else append(`<strong>${escapeHtml(data.from || '?')}</strong>: ${escapeHtml(data.text)}`);
+      });
+    }
+
+    function send() {
+      if (!ws || ws.readyState !== WebSocket.OPEN) {
+        append('未连接', 'sys');
+        return;
+      }
+      const text = textEl.value.trim();
+      if (!text) return;
+      ws.send(JSON.stringify({ type: 'chat', text, from: document.getElementById('name').value || 'anon' }));
+      textEl.value = '';
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    document.getElementById('connect').onclick = connect;
+    document.getElementById('send').onclick = send;
+    textEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') send();
+    });
+
+    connect();
+  </script>
+</body>
+</html>

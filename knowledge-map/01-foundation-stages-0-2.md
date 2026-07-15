@@ -33,15 +33,18 @@
 
 ### 0.3 网络基础（Web 开发者必备）
 
-- [ ] [0.3.1 **URL** 结构：协议、域名、端口、路径、查询参数、锚点](./notes/00-environment/0.3-network-basics/0.3.1.url.md)
-- [ ] [0.3.2 **HTTP/HTTPS** 协议：方法（GET/POST/PUT/PATCH/DELETE）、状态码、请求头/响应头](./notes/00-environment/0.3-network-basics/0.3.2.http-https.md)
-- [ ] [0.3.3 **HTTP/1.1、HTTP/2、HTTP/3** 基本概念与差异](./notes/00-environment/0.3-network-basics/0.3.3.http-http-http.md)
-- [ ] [0.3.4 **Cookie、Session、LocalStorage、SessionStorage** 的区别与使用场景](./notes/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md)
-- [ ] [0.3.5 **DNS** 解析与 **CDN** 基本概念](./notes/00-environment/0.3-network-basics/0.3.5.dns.md)
-- [ ] [0.3.6 **TLS/SSL** 与 HTTPS 加密的基本原理](./notes/00-environment/0.3-network-basics/0.3.6.tls-ssl.md)
-- [ ] [0.3.7 **RESTful API** 设计风格与常见约定](./notes/00-environment/0.3-network-basics/0.3.7.restful-api.md)
-- [ ] [0.3.8 **WebSocket** 与长连接的基本概念](./notes/00-environment/0.3-network-basics/0.3.8.websocket.md)
-- [ ] [0.3.9 📱 移动端对照：Retrofit/OkHttp/Dio ≈ fetch/axios；SharedPreferences ≈ localStorage](./notes/00-environment/0.3-network-basics/0.3.9.retrofit-okhttp-dio-fetch-axios.md)
+> 📖 本章笔记：[notes/00-environment/0.3-network-basics/](../notes/00-environment/0.3-network-basics/README.md)
+
+- [x] [0.3.1 **URL** 结构：协议、域名、端口、路径、查询参数、锚点](../notes/00-environment/0.3-network-basics/0.3.1.url.md)
+- [x] [0.3.2 **HTTP/HTTPS** 协议：方法（GET/POST/PUT/PATCH/DELETE）、状态码、请求头/响应头](../notes/00-environment/0.3-network-basics/0.3.2.http-https.md)
+- [x] [0.3.3 **HTTP/1.1、HTTP/2、HTTP/3** 基本概念与差异](../notes/00-environment/0.3-network-basics/0.3.3.http-http-http.md)
+- [x] [0.3.4 **Cookie、Session、LocalStorage、SessionStorage** 的区别与使用场景](../notes/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md)
+- [x] [0.3.5 **DNS** 解析与 **CDN** 基本概念](../notes/00-environment/0.3-network-basics/0.3.5.dns.md)
+- [x] [0.3.6 **TLS/SSL** 与 HTTPS 加密的基本原理](../notes/00-environment/0.3-network-basics/0.3.6.tls-ssl.md)
+- [x] [0.3.7 **RESTful API** 设计风格与常见约定](../notes/00-environment/0.3-network-basics/0.3.7.restful-api.md)
+- [x] [0.3.8 **WebSocket** 与长连接的基本概念](../notes/00-environment/0.3-network-basics/0.3.8.websocket.md)
+- [x] [0.3.9 📱 移动端对照：Retrofit/OkHttp/Dio ≈ fetch/axios；SharedPreferences ≈ localStorage](../notes/00-environment/0.3-network-basics/0.3.9.retrofit-okhttp-dio-fetch-axios.md)
+
 
 ---
 

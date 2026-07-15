@@ -30,7 +30,7 @@ notes/
 ├── 00-environment/          # 阶段 0
 │   ├── 0.1-what-is-web-app/ ✅
 │   ├── 0.2-dev-environment/ ✅
-│   └── 0.3-network-basics/  （待补充）
+│   └── 0.3-network-basics/  ✅
 ├── 01-web-fundamentals/     # 阶段 1（待补充）
 └── ...
 ```
@@ -48,4 +48,4 @@ notes/
 | --- | --- | --- |
 | 0 | [0.1 Web 应用是什么](./00-environment/0.1-what-is-web-app/README.md) | ✅ 已完成 |
 | 0 | [0.2 开发环境](./00-environment/0.2-dev-environment/README.md) | ✅ 已完成 |
-| 0 | 0.3 网络基础 | 待补充 |
+| 0 | [0.3 网络基础](./00-environment/0.3-network-basics/README.md) | ✅ 已完成 |
