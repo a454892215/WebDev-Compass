@@ -8,6 +8,7 @@
 - **分册目录**：[01 foundation](./knowledge-map/01-foundation-stages-0-2.md) · [02 engineering](./knowledge-map/02-engineering-stages-3-5.md) · [03 application](./knowledge-map/03-application-stages-6-7.md) · [04 architecture](./knowledge-map/04-architecture-stages-8-11.md) · [05 platform](./knowledge-map/05-platform-stages-12-14.md) · [06 delivery](./knowledge-map/06-delivery-stages-15-appendix.md)
 - **知识体系笔记**：`notes/` 目录，知识点序号与分册一致（如 `0.1.1`）。
 - **完整代码示例**：`examples/` 目录，文件名序号与笔记对齐。
+- **[Nuxt 通用基座与宿主搭建指南](./framework-guide/README.md)**：技术选型、目录和依赖、公共模块、官方脚手架、桌面/手机模板、AI 工作流及分阶段验收，供后续独立基座与宿主项目实施。
 
 
 
