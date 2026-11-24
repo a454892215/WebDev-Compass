@@ -20,3 +20,10 @@
 - 回答 Web 开发相关问题，或编写、修改、审查相关知识笔记和示例时，必须先检索 Modern Web Guidance 并阅读匹配的指南正文，再作答、确定技术方案或修改文件。适用范围包括 HTML、CSS、浏览器端 JavaScript/TypeScript、Web UI、浏览器 API、可访问性、性能、安全和兼容性等 Web 开发主题。
 - 优先使用已安装的 `modern-web-guidance` 技能。技能不可用时，使用官方 CLI 的 `search` 和 `retrieve`，或直接查阅 [官方指南目录](https://developer.chrome.com/docs/modern-web-guidance/guides)。检索时使用简短的英文动作短语。
 - 结合项目约束和目标浏览器的支持情况采用指南建议，并在答复或交付说明中注明参考的指南 ID 或链接。查阅后没有匹配指南，或指南无法访问时，简要说明检索结果或访问问题，再依据可核实的资料继续任务。
+
+## 学习资料四部分约束
+
+- 学习内容统一放在 `learning/1-notes/`、`learning/2-examples/`、`learning/3-exercises/`、`learning/4-practice/`，内部按阶段与编号组织；`framework-guide/` 独立维护工程搭建专题。
+- 遵守 `docs/LEARNING_STRUCTURE.md`；每个已编写知识点必须维护四部分契约 `docs/stages/stage-N.json`，不得用空文件或通用重复任务充数。未来未编写章节保持预留。
+- 内容改动必须通过 `python3 scripts/check_knowledge.py --report` 与 `python3 scripts/check_learning_delivery.py`；检查器改动运行 `python3 -m unittest discover -s scripts/tests -v`。
+- 结构完整、实际运行和学习掌握分别报告，地图复选框不自动勾选。

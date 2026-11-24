@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.5.5 动画性能：测量布局、绘制与合成 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        position: relative;
+        left: 40px;
+        transform: none;
+        width: 140px;
+      }
+      body[data-active="true"] #target {
+        left: 0;
+        transform: translateX(40px);
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.5.5"
+    data-active="false"
+    data-properties='["transform"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.5.5 动画性能：测量布局、绘制与合成</h1>
+      <p>
+        选择transform/opacity常能避免布局变化，但是否更快、是否合成，需要真实测量。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div class="motion-track">
+          <div id="target" class="sample">比较移动实现</div>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          页面没有伪造FPS或基准结果；性能结论必须来自具体设备和录制。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>切换left与transform两种视觉移动。</li>
+          <li>在Performance中分别录制，比较布局/绘制事件。</li>
+          <li>样例只验证属性，不宣称已得到真实设备性能提升。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

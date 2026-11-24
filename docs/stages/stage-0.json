@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "stage": 0,
+  "project": "learning/4-practice/01-web-fundamentals/index.html",
+  "points": [
+    {
+      "id": "0.1.1",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-1"
+    },
+    {
+      "id": "0.1.2",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.2.browser-role.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.3.devtools-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.2.browser-role.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-2"
+    },
+    {
+      "id": "0.1.3",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa.md",
+      "example": "learning/2-examples/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-3"
+    },
+    {
+      "id": "0.1.4",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.4.same-origin-policy.md",
+      "example": "learning/2-examples/00-environment/0.1-what-is-web-app/0.1.4.same-origin-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.4.same-origin-policy.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-4"
+    },
+    {
+      "id": "0.1.5",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.5.mobile-comparison.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.5.mobile-comparison.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-5"
+    },
+    {
+      "id": "0.2.1",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.1.node.js.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.1.package-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.1.node.js.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-1"
+    },
+    {
+      "id": "0.2.2",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.2.vscode-config/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-2"
+    },
+    {
+      "id": "0.2.3",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.3.chrome-devtools.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.3.devtools-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.3.chrome-devtools.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-3"
+    },
+    {
+      "id": "0.2.4",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.4.git.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.4.git-workflow.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.4.git.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-4"
+    },
+    {
+      "id": "0.2.5",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.5.npm-pub-cocoapods-gradle-vite.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.1.package-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.5.npm-pub-cocoapods-gradle-vite.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-5"
+    },
+    {
+      "id": "0.3.1",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.1.url.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.1.url-parse-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.1.url.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-1"
+    },
+    {
+      "id": "0.3.2",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.2.http-https.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.2.http-https.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-2"
+    },
+    {
+      "id": "0.3.3",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.3.http-http-http.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.3.http-versions.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.3.http-http-http.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-3"
+    },
+    {
+      "id": "0.3.4",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.4.storage-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-4"
+    },
+    {
+      "id": "0.3.5",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.5.dns.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.5.dns-cdn.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.5.dns.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-5"
+    },
+    {
+      "id": "0.3.6",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.6.tls-ssl.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.6.tls-overview.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.6.tls-ssl.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-6"
+    },
+    {
+      "id": "0.3.7",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.7.restful-api.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.7.restful-api.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-7"
+    },
+    {
+      "id": "0.3.8",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.8.websocket.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.8.websocket-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.8.websocket.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-8"
+    },
+    {
+      "id": "0.3.9",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.9.retrofit-okhttp-dio-fetch-axios.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.9.retrofit-okhttp-dio-fetch-axios.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-9"
+    }
+  ]
+}

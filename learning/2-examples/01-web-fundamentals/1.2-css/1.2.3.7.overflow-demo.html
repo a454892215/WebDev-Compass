@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.3.7 overflow、滚动容器与可达性 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        max-width: 250px;
+        overflow-x: hidden;
+        white-space: nowrap;
+      }
+      .long-code {
+        display: inline-block;
+        min-width: 540px;
+      }
+      body[data-active="true"] #target {
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.3.7"
+    data-active="false"
+    data-properties='["overflowX"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.3.7 overflow、滚动容器与可达性</h1>
+      <p>
+        溢出策略决定超出盒子的内容如何显示或访问，也可能改变定位与格式化行为。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div
+          id="target"
+          class="sample"
+          role="region"
+          tabindex="0"
+          aria-label="长代码局部滚动区域"
+        >
+          <span class="long-code"
+            >const extremelyLongResourceIdentifier = "content must remain
+            reachable";</span
+          >
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>观察一行长代码的溢出。</li>
+          <li>切换overflow-x:auto并横向滚动。</li>
+          <li>Tab聚焦局部区域，用方向键确认内容可达。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

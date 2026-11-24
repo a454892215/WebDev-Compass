@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.3.5 背景图、尺寸、位置与重复 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        height: 160px;
+        background: #e6f4f0 url("./assets/wide.svg") center/contain no-repeat;
+      }
+      body[data-active="true"] #target {
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.3.5"
+    data-active="false"
+    data-properties='["backgroundSize"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.3.5 背景图、尺寸、位置与重复</h1>
+      <p>
+        background负责盒子背后的装饰；承载内容信息的图片通常仍应使用img及替代文本。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div id="target" class="sample">浏览器请求与响应（文字保留）</div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>观察contain时插画的留空。</li>
+          <li>切换cover并检查computed background-size。</li>
+          <li>禁用背景图，确认目标文字仍表达含义。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

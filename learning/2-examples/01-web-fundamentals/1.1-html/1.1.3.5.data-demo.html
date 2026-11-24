@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>data-* 与 dataset · WebDev Compass</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fa;
+        color: #17283b;
+        font:
+          1rem/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 54rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+      }
+      section,
+      fieldset,
+      article {
+        background: white;
+        border: 1px solid #bbcbd7;
+        border-radius: 0.65rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        min-width: 0;
+      }
+      label {
+        display: block;
+        margin: 0.6rem 0 0.2rem;
+      }
+      input:not([type="checkbox"]):not([type="radio"]),
+      textarea,
+      select,
+      button {
+        font: inherit;
+        max-width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #6f8191;
+        border-radius: 0.3rem;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+      button {
+        background: #135776;
+        color: white;
+        cursor: pointer;
+        margin: 0.3rem 0.3rem 0.3rem 0;
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        inline-size: 1.1rem;
+        block-size: 1.1rem;
+      }
+      label:has(input[type="checkbox"]),
+      label:has(input[type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        padding: 1rem;
+        background: #e8eff5;
+        border-radius: 0.4rem;
+      }
+      a {
+        color: #075f83;
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      :focus-visible {
+        outline: 3px solid #9c4600;
+        outline-offset: 3px;
+      }
+      .hint {
+        color: #46596a;
+      }
+      .error {
+        color: #a02020;
+        min-height: 1.7em;
+      }
+      svg,
+      canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      dialog {
+        max-width: min(32rem, 90vw);
+        border: 1px solid #6f8191;
+        border-radius: 0.6rem;
+      }
+      dialog:modal {
+        overscroll-behavior: contain;
+      }
+      dialog::backdrop {
+        background: #10283a99;
+        overflow: hidden;
+        overscroll-behavior: contain;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>
+        <a href="../../../learning/1-notes/01-web-fundamentals/1.1-html/1.1.3.5.data.md"
+          >返回对应笔记</a
+        >
+      </p>
+      <h1>data-* 与 dataset</h1>
+      <p>
+        data
+        属性保存公开的元素相关元信息；值都是字符串，不是秘密或可信业务状态。
+      </p>
+      <article id="card" data-project-id="demo-42" data-count="0">
+        <h2>HTML 学习卡片</h2>
+        <p>项目编号：demo-42</p>
+        <p id="count-text">练习次数：0</p>
+        <button type="button" data-action="increment">增加练习次数</button>
+      </article>
+      <pre id="result" aria-live="polite">点击按钮观察 dataset。</pre>
+    </main>
+    <script>
+      document.querySelector("#card").addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+        const button = event.target.closest('button[data-action="increment"]');
+        if (!button || !event.currentTarget.contains(button)) return;
+        const card = event.currentTarget;
+        const previous = Number(card.dataset.count);
+        const count = Number.isFinite(previous) ? previous + 1 : 1;
+        card.dataset.count = String(count);
+        document.querySelector("#count-text").textContent =
+          `练习次数：${count}`;
+        document.querySelector("#result").textContent = JSON.stringify(
+          {
+            projectId: card.dataset.projectId,
+            count: card.dataset.count,
+            countType: typeof card.dataset.count,
+          },
+          null,
+          2,
+        );
+      });
+    </script>
+  </body>
+</html>

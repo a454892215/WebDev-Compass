@@ -65,4 +65,4 @@ flowchart TD
 
 [学习顺序与验收](./docs/LEARNING_PATH.md) · [本次目录审查](./docs/CURRICULUM_REVIEW.md) · [正文建设进度](./docs/PROGRESS.md) · [内容规范](./docs/AUTHORING.md) · [框架专题](./framework-guide/README.md)
 
-下一批正文从 **1.2 CSS 基础**开始，1.4 的兼容、无障碍与设计要求同步应用；随后补齐原生 JavaScript，再进入 Vue/Nuxt。独立工程开发继续在 web-common 与各宿主项目中进行。
+阶段 1 已提供 106 项四部分资料，统一入口见 [learning/](./learning/README.md)。下一批正文从 **阶段 2：JavaScript 深入与浏览器原理**开始，再按前置进入 Vue 3 / Nuxt。独立工程开发继续在 web-common 与各宿主项目中进行。

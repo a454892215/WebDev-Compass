@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.5.2 keyframes 与 animation 生命周期 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      @keyframes lesson-reveal {
+        from {
+          opacity: 0.35;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      #target {
+        animation: lesson-reveal 180ms ease 1 both;
+        animation-play-state: paused;
+      }
+      body[data-active="true"] #target {
+        animation-play-state: running;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #target {
+          animation: none;
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.5.2"
+    data-active="false"
+    data-properties='["animationPlayState"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.5.2 keyframes 与 animation 生命周期</h1>
+      <p>关键帧定义样式随时间的序列，animation控制播放、次数、方向和填充。</p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div class="motion-track">
+          <div id="target" class="sample">一次性淡入</div>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          减少动态效果环境下animation会禁用；此时应验证静态信息而非强制要求动画播放。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>初始暂停关键帧，观察animation-play-state。</li>
+          <li>切换为播放并等待一次结束。</li>
+          <li>模拟reduced-motion，确认内容仍完整可读。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

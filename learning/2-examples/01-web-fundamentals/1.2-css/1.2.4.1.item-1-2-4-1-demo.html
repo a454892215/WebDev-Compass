@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.4.1 媒体查询与内容驱动的断点 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        display: grid;
+        gap: 8px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 800px) {
+        #target {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      body[data-active="true"] #target {
+        gap: 20px;
+      }
+    </style>
+  </head>
+  <body data-lesson="1.2.4.1" data-active="false" data-properties='["gap"]'>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.4.1 媒体查询与内容驱动的断点</h1>
+      <p>
+        媒体查询判断视口或环境条件，断点应来自内容无法合理排布的位置，而不是设备型号列表。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div id="target" class="sample items">
+          <span>导航</span><span>正文</span><span>操作</span>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          请用DevTools连续改变视口，不以当前设备外观替代断点验证。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>拖动窗口跨过800px，记录data布局与computed列数。</li>
+          <li>切换gap，观察媒体条件与布局参数相互独立。</li>
+          <li>在中间宽度和大字号下复验。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

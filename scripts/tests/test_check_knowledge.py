@@ -40,26 +40,26 @@ class KnowledgeAuditTests(unittest.TestCase):
         self.assertEqual([(x.line, x.target) for x in module.links_in(text)], [(8, 'real.md')])
 
     def test_unchecked_future_note_is_planned_but_wrong_parent_is_error(self):
-        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1 Future](../notes/01-topic/1.1.1.future.md)\n')
+        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1 Future](../learning/1-notes/01-topic/1.1.1.future.md)\n')
         r = module.audit(self.root)
         self.assertEqual((r['planned_notes'], r['knowledge_points'], len(r['errors'])), (1, 1, 0))
-        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1 Future](./notes/01-topic/1.1.1.future.md)\n')
+        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1 Future](./learning/1-notes/01-topic/1.1.1.future.md)\n')
         self.assertEqual(len(module.audit(self.root)['errors']), 1)
 
     def test_checked_future_note_and_body_links_fail(self):
-        self.write('knowledge-map/01-test.md', '- [x] [1.1.1 Missing](../notes/01-topic/1.1.1.missing.md)\n')
-        self.write('README.md', '[Missing](notes/01-topic/1.1.1.missing.md)\n')
+        self.write('knowledge-map/01-test.md', '- [x] [1.1.1 Missing](../learning/1-notes/01-topic/1.1.1.missing.md)\n')
+        self.write('README.md', '[Missing](learning/1-notes/01-topic/1.1.1.missing.md)\n')
         r = module.audit(self.root)
         self.assertEqual(len(r['errors']), 2)
         self.assertEqual(r['planned_notes'], 0)
 
     def test_repeat_links_count_one_knowledge_point_and_do_not_mark_learner(self):
-        self.write('notes/01-topic/1.1.1.present.md', '# Existing\n')
-        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1](../notes/01-topic/1.1.1.present.md) [extra](../notes/01-topic/1.1.1.present.md)\n')
+        self.write('learning/1-notes/01-topic/1.1.1.present.md', '# Existing\n')
+        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1](../learning/1-notes/01-topic/1.1.1.present.md) [extra](../learning/1-notes/01-topic/1.1.1.present.md)\n')
         r = module.audit(self.root)
         self.assertEqual((r['knowledge_points'], r['authored_points']), (1, 1))
         self.assertEqual(r['stages'][1]['checked'], 0)
-        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1](../notes/01-topic/1.1.1.present.md)\n[chapter reference](../notes/01-topic/1.1.1.present.md)\n')
+        self.write('knowledge-map/01-test.md', '- [ ] [1.1.1](../learning/1-notes/01-topic/1.1.1.present.md)\n[chapter reference](../learning/1-notes/01-topic/1.1.1.present.md)\n')
         self.assertEqual(module.audit(self.root)['stages'][1]['checked'], 0)
 
     def test_same_document_unicode_and_duplicate_heading_anchors(self):
@@ -91,19 +91,19 @@ class KnowledgeAuditTests(unittest.TestCase):
     def test_generator_inputs_resolve_at_output_root_without_double_counting(self):
         self.write('README.md', '# Read me\n')
         self.write('scripts/map_header.md', '[root](./README.md)\n')
-        self.write('scripts/data/senior_stages.md', '- [ ] [8.1.1](./notes/08-topic/8.1.1.future.md)\n')
-        self.write('knowledge-map/04-test.md', '- [ ] [8.1.1](../notes/08-topic/8.1.1.future.md)\n')
+        self.write('scripts/data/senior_stages.md', '- [ ] [8.1.1](./learning/1-notes/08-topic/8.1.1.future.md)\n')
+        self.write('knowledge-map/04-test.md', '- [ ] [8.1.1](../learning/1-notes/08-topic/8.1.1.future.md)\n')
         r = module.audit(self.root)
         self.assertEqual((r['knowledge_points'], r['planned_notes'], len(r['errors'])), (1, 1, 0))
 
     def test_completion_table_updates_from_files_not_learner_checks(self):
-        self.write('knowledge-map/01-test.md', '## 阶段 1：HTML\n- [ ] [1.1.1](../notes/01-topic/1.1.1.one.md)\n- [ ] [1.1.2](../notes/01-topic/1.1.2.two.md)\n## 阶段 2：浏览器\n- [ ] [2.1.1](../notes/02-topic/2.1.1.three.md)\n')
-        self.write('notes/01-topic/1.1.1.one.md', '# One\n')
+        self.write('knowledge-map/01-test.md', '## 阶段 1：HTML\n- [ ] [1.1.1](../learning/1-notes/01-topic/1.1.1.one.md)\n- [ ] [1.1.2](../learning/1-notes/01-topic/1.1.2.two.md)\n## 阶段 2：浏览器\n- [ ] [2.1.1](../learning/1-notes/02-topic/2.1.1.three.md)\n')
+        self.write('learning/1-notes/01-topic/1.1.1.one.md', '# One\n')
         first = module.completion_table(self.root, module.audit(self.root))
         self.assertIn('| 1 | HTML | 2 | 1 | 1 | 50.0% |', first)
         self.assertIn('| 2 | 浏览器 | 1 | 0 | 1 | 0% |', first)
         self.assertIn('**33.3%**', first)
-        self.write('notes/01-topic/1.1.2.two.md', '# Two\n')
+        self.write('learning/1-notes/01-topic/1.1.2.two.md', '# Two\n')
         second = module.completion_table(self.root, module.audit(self.root))
         self.assertIn('| 1 | HTML | 2 | 2 | 0 | 100% |', second)
         self.assertIn('**66.7%**', second)

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.2.5 Grid：二维轨道、fr 与 minmax · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+      }
+      body[data-active="true"] #target {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.2.5"
+    data-active="false"
+    data-properties='["gridTemplateColumns"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.2.5 Grid：二维轨道、fr 与 minmax</h1>
+      <p>
+        Grid 先定义行列轨道，再将内容放入网格，适合需要二维对齐的页面和组件。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div id="target" class="sample items">
+          <span>甲</span><span>乙</span><span>丙</span><span>丁</span>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>初始一列，观察子项源顺序。</li>
+          <li>切换两列，确认 computed grid-template-columns 有两个轨道。</li>
+          <li>输入长文本，检查轨道是否仍能收缩。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

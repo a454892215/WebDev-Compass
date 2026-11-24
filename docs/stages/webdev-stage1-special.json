@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-24T14:43:06.836Z",
+  "checks": [
+    "empty form focus, error clearing, Tab",
+    "failure and retry",
+    "no JavaScript readable fallback",
+    "network failure retains reading",
+    "real POST browser echo",
+    "POST success, invalid JSON, invalid title, wrong method"
+  ],
+  "status": "passed"
+}

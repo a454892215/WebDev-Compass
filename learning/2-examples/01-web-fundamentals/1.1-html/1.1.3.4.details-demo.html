@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>details、dialog、progress 与 meter · WebDev Compass</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fa;
+        color: #17283b;
+        font:
+          1rem/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 54rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+      }
+      section,
+      fieldset,
+      article {
+        background: white;
+        border: 1px solid #bbcbd7;
+        border-radius: 0.65rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        min-width: 0;
+      }
+      label {
+        display: block;
+        margin: 0.6rem 0 0.2rem;
+      }
+      input:not([type="checkbox"]):not([type="radio"]),
+      textarea,
+      select,
+      button {
+        font: inherit;
+        max-width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #6f8191;
+        border-radius: 0.3rem;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+      button {
+        background: #135776;
+        color: white;
+        cursor: pointer;
+        margin: 0.3rem 0.3rem 0.3rem 0;
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        inline-size: 1.1rem;
+        block-size: 1.1rem;
+      }
+      label:has(input[type="checkbox"]),
+      label:has(input[type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        padding: 1rem;
+        background: #e8eff5;
+        border-radius: 0.4rem;
+      }
+      a {
+        color: #075f83;
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      :focus-visible {
+        outline: 3px solid #9c4600;
+        outline-offset: 3px;
+      }
+      .hint {
+        color: #46596a;
+      }
+      .error {
+        color: #a02020;
+        min-height: 1.7em;
+      }
+      svg,
+      canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      dialog {
+        max-width: min(32rem, 90vw);
+        border: 1px solid #6f8191;
+        border-radius: 0.6rem;
+      }
+      dialog:modal {
+        overscroll-behavior: contain;
+      }
+      dialog::backdrop {
+        background: #10283a99;
+        overflow: hidden;
+        overscroll-behavior: contain;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>
+        <a href="../../../learning/1-notes/01-web-fundamentals/1.1-html/1.1.3.4.details.md"
+          >返回对应笔记</a
+        >
+      </p>
+      <h1>details、dialog、progress 与 meter</h1>
+      <p>
+        折叠内容不需要脚本；模态对话框使用 showModal。进度表示任务完成量，meter
+        表示已知区间中的测量值。
+      </p>
+      <details>
+        <summary>展开：为什么使用原生控件？</summary>
+        <p>平台提供语义、键盘操作和可访问性基础，仍需明确名称与内容。</p>
+      </details>
+      <button type="button" id="open-dialog">打开确认对话框</button>
+      <p id="fallback" hidden>
+        当前环境不支持原生模态对话框；请使用本页文字说明，本示例不模拟不完整的焦点陷阱。
+      </p>
+      <dialog id="confirm-dialog" aria-labelledby="dialog-title">
+        <h2 id="dialog-title">确认学习安排</h2>
+        <p>这是本地演示，不保存数据。</p>
+        <form method="dialog">
+          <button value="cancel" autofocus>取消</button
+          ><button value="confirm">确认</button>
+        </form>
+      </dialog>
+      <p id="dialog-result" aria-live="polite">尚未打开对话框。</p>
+      <section>
+        <h2>进度与测量值</h2>
+        <label for="progress">练习进度</label
+        ><progress id="progress" max="100" value="30">30%</progress
+        ><label for="meter">存储使用率</label
+        ><meter
+          id="meter"
+          min="0"
+          max="100"
+          low="50"
+          high="80"
+          optimum="20"
+          value="30"
+        >
+          30%
+        </meter>
+        <p id="value-text" aria-live="polite">完成 30%；存储使用率 30%。</p>
+        <button type="button" id="advance">增加 10%</button>
+      </section>
+    </main>
+    <script>
+      const dialog = document.querySelector("#confirm-dialog"),
+        open = document.querySelector("#open-dialog"),
+        result = document.querySelector("#dialog-result");
+      if (typeof dialog.showModal === "function") {
+        open.addEventListener("click", () => {
+          result.textContent = "对话框已打开，可用 Esc 取消。";
+          dialog.showModal();
+        });
+        dialog.addEventListener("close", () => {
+          result.textContent = `对话框关闭：${dialog.returnValue || "Esc / 取消"}。`;
+          dialog.returnValue = "";
+        });
+      } else {
+        open.disabled = true;
+        document.querySelector("#fallback").hidden = false;
+      }
+      let value = 30;
+      document.querySelector("#advance").addEventListener("click", () => {
+        value = (value + 10) % 110;
+        document.querySelector("#progress").value = value;
+        document.querySelector("#meter").value = value;
+        document.querySelector("#value-text").textContent =
+          `完成 ${value}%；存储使用率 ${value}%。`;
+      });
+    </script>
+  </body>
+</html>

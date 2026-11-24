@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.4.5 容器查询：组件根据可用空间变化 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #container {
+        container-type: inline-size;
+        container-name: lesson;
+        max-width: 100%;
+        width: 180px;
+        border: 2px dashed #777;
+      }
+      #target {
+        display: block;
+      }
+      @container lesson (min-width:240px) {
+        #target {
+          display: flex;
+          gap: 8px;
+        }
+      }
+      body[data-active="true"] #container {
+        width: 280px;
+      }
+    </style>
+  </head>
+  <body data-lesson="1.2.4.5" data-active="false" data-properties='["display"]'>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.4.5 容器查询：组件根据可用空间变化</h1>
+      <p>容器查询让组件根据祖先容器尺寸调整布局，而不只根据整个视口。</p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div id="container">
+          <div id="target" class="sample items">
+            <span>封面</span><span>详细内容</span>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>同一浏览器视口中改变卡片祖先宽度。</li>
+          <li>切换180px到280px，看子组件display改变。</li>
+          <li>移除container-type，再观察查询为何失效。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

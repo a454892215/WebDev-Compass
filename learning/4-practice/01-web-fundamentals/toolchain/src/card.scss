@@ -1,0 +1,8 @@
+@use "./tokens";
+.sass-card {
+  padding: tokens.step(3);
+  border: 3px solid tokens.$accent;
+  strong {
+    color: tokens.$accent;
+  }
+}

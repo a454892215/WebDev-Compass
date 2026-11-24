@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.6.4 原子化 CSS 与 Tailwind 的构建边界 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      .lesson-flex {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .lesson-gap {
+        gap: 12px;
+      }
+      .lesson-rounded {
+        border-radius: 16px;
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.6.4"
+    data-active="false"
+    data-properties='["borderTopLeftRadius"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.6.4 原子化 CSS 与 Tailwind 的构建边界</h1>
+      <p>
+        工具类用小而明确的样式组合表达界面；Tailwind通过工具链按源码生成这些规则。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div id="target" class="sample lesson-flex lesson-gap">
+          <span>原子类</span><span>组合</span>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          为零依赖离线实验，本页显式使用lesson-*自有类，不冒充完整Tailwind输出；真实工具链接入留给工程阶段。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>查看每个lesson-*工具类对应哪个CSS属性。</li>
+          <li>切换增加圆角工具类，只改变该属性。</li>
+          <li>
+            阅读Tailwind官方安装与检测文档，区分本页原子化思想fixture和真实框架产物。
+          </li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+    <script>
+      window.applyLessonState = (active) => {
+        document
+          .querySelector("#target")
+          .classList.toggle("lesson-rounded", active);
+      };
+    </script>
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件流：捕获阶段、目标阶段、冒泡阶段 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+  </head>
+  <body data-lesson="1.3.4.2">
+    <a class="skip" href="#main">跳到实验</a>
+    <header><a href="./README.md">JavaScript 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>事件流：捕获阶段、目标阶段、冒泡阶段</h1>
+      <p>事件沿传播路径经历捕获、目标和冒泡，监听器所处阶段影响执行顺序。</p>
+      <p class="hint">
+        只在本页观察，不上传数据；请通过本地 HTTP
+        服务打开。先预测，再运行并解释。
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">实验操作</h2>
+        <div id="lab">
+          <div id="outer" class="event-area">
+            <button id="inner" type="button">内层按钮</button>
+          </div>
+        </div>
+        <button id="run" type="button">运行本节实验</button>
+      </section>
+      <section aria-labelledby="output-title">
+        <h2 id="output-title">运行结果</h2>
+        <pre
+          id="output"
+          tabindex="0"
+          role="region"
+          aria-labelledby="output-title"
+          aria-live="polite"
+        >
+尚未运行。</pre>
+      </section>
+      <section aria-labelledby="code-title">
+        <h2 id="code-title">核心代码</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-labelledby="code-title"
+        ><code>outer.addEventListener(&#x27;click&#x27;, handler, { capture: true });
+inner.addEventListener(&#x27;click&#x27;, handler);
+outer.addEventListener(&#x27;click&#x27;, handler);
+function handler(event) {
+  console.log(event.currentTarget.id, event.eventPhase);
+}</code></pre>
+      </section>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.2.item-1-3-4-2.md"
+          >阅读对应笔记</a
+        >
+      </p>
+    </main>
+    <footer>WebDev Compass · JavaScript 基础实验</footer>
+    <script type="module" src="./assets/lab.mjs"></script>
+  </body>
+</html>

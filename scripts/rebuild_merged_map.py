@@ -108,18 +108,21 @@ INDEX_TAIL = """## 知识点索引（按领域）
 WebDev_Compass/
 ├── README.md
 ├── KNOWLEDGE_MAP.md          # 本文件：Web 工程师知识地图（阶段 0–15）
-├── notes/                    # 笔记：{阶段文件夹}/{小节文件夹}/{序号}.{slug}.md
-├── examples/                 # 示例：与 notes 同路径规则，扩展名为 .html/.ts 等
-└── projects/                 # 完整工程示例（待补充）
+├── learning/
+│   ├── 1-notes/              # 理论知识／原理笔记
+│   ├── 2-examples/           # 代码与实践示例
+│   ├── 3-exercises/          # 独立练习与验收
+│   └── 4-practice/           # 综合实践项目与任务
+└── framework-guide/          # 框架搭建专题
 ```
 
 ### 文件命名规范
 
 | 类型 | 路径示例 |
 | --- | --- |
-| 笔记 | `notes/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md` |
-| 示例 | `examples/00-environment/0.1-what-is-web-app/0.1.1.request-response-demo.html` |
-| 小节索引 | `notes/00-environment/0.1-what-is-web-app/README.md` |
+| 笔记 | `learning/1-notes/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md` |
+| 示例 | `learning/2-examples/00-environment/0.1-what-is-web-app/0.1.1.request-response-demo.html` |
+| 小节索引 | `learning/1-notes/00-environment/0.1-what-is-web-app/README.md` |
 
 ---
 
@@ -133,7 +136,7 @@ WebDev_Compass/
 
 ---
 
-**下一步**：从 [阶段 0](#阶段-0环境与心智模型) 开始，点击知识点链接阅读 `notes/` 笔记并运行 `examples/` 示例。
+**下一步**：从 [阶段 0](#阶段-0环境与心智模型) 开始，点击知识点链接阅读 `learning/1-notes/` 笔记并运行 `learning/2-examples/` 示例。
 """
 
 

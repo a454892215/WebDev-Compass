@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      类（class）：constructor、方法、继承（extends）、super、静态方法 · WebDev
+      Compass
+    </title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+  </head>
+  <body data-lesson="1.3.2.1">
+    <a class="skip" href="#main">跳到实验</a>
+    <header><a href="./README.md">JavaScript 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>类（class）：constructor、方法、继承（extends）、super、静态方法</h1>
+      <p>
+        class 是基于原型的类语法；实例方法、静态方法与实例字段承担不同职责。
+      </p>
+      <p class="hint">
+        只在本页观察，不上传数据；请通过本地 HTTP
+        服务打开。先预测，再运行并解释。
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">实验操作</h2>
+        <div id="lab"></div>
+        <button id="run" type="button">运行本节实验</button>
+      </section>
+      <section aria-labelledby="output-title">
+        <h2 id="output-title">运行结果</h2>
+        <pre
+          id="output"
+          tabindex="0"
+          role="region"
+          aria-labelledby="output-title"
+          aria-live="polite"
+        >
+尚未运行。</pre>
+      </section>
+      <section aria-labelledby="code-title">
+        <h2 id="code-title">核心代码</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-labelledby="code-title"
+        ><code>class Counter {
+  #value = 0;
+  increment() { return ++this.#value; }
+  static description() { return &#x27;计数器&#x27;; }
+}
+const counter = new Counter();
+console.log(counter.increment(), Counter.description());</code></pre>
+      </section>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.1.class.md"
+          >阅读对应笔记</a
+        >
+      </p>
+    </main>
+    <footer>WebDev Compass · JavaScript 基础实验</footer>
+    <script type="module" src="./assets/lab.mjs"></script>
+  </body>
+</html>

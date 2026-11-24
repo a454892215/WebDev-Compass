@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.1.1 CSS 的三种引入方式与来源顺序 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        color: rgb(0, 100, 100);
+      }
+    </style>
+  </head>
+  <body data-lesson="1.2.1.1" data-active="false" data-properties='["color"]'>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.1.1 CSS 的三种引入方式与来源顺序</h1>
+      <p>
+        浏览器把外部表、style
+        标签和内联声明一起参与层叠；“放在哪里”不等于完整优先级。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <p id="target" class="sample" style="color: rgb(180, 45, 45)">
+          相同内容，不同声明来源
+        </p>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          本页外部 lab.css 提供公共样式；当前目标的内部规则与内联声明可在
+          Elements 核对。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>初始检查目标颜色，预判内联声明是否获胜。</li>
+          <li>点击切换移除内联 color，观察内部规则开始生效。</li>
+          <li>在 Elements 恢复内联声明，再观察，而不是只读输出。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+    <script>
+      window.applyLessonState = (active) => {
+        document.querySelector("#target").style.color = active
+          ? ""
+          : "rgb(180,45,45)";
+      };
+    </script>
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

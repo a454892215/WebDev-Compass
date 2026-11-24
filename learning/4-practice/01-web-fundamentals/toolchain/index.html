@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS 真实构建实践</title>
+  </head>
+  <body>
+    <main>
+      <h1>CSS Modules、Sass 与 Tailwind 构建证据</h1>
+      <p>
+        此页面必须经 Vite 构建或开发服务器处理。直接打开源码不会解析 CSS
+        模块导入。
+      </p>
+      <section aria-labelledby="module-title">
+        <h2 id="module-title">CSS Modules：同名 card 隔离</h2>
+        <div id="module-a">模块 A</div>
+        <div id="module-b">模块 B</div>
+        <p>源码均为 .card，生成类名和颜色不同。</p>
+      </section>
+      <section aria-labelledby="sass-title">
+        <h2 id="sass-title">Sass：变量、函数与嵌套</h2>
+        <article class="sass-card" id="sass-card">
+          <strong>嵌套规则已编译</strong>
+          <p>padding 由 step(3) 计算为 24px；强调色来自 Sass 变量。</p>
+        </article>
+      </section>
+      <section aria-labelledby="tailwind-title">
+        <h2 id="tailwind-title">Tailwind：扫描静态 utility</h2>
+        <div id="tailwind-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <p class="rounded-lg bg-sky-100 p-4">第一项</p>
+          <p class="rounded-lg bg-sky-100 p-4">第二项</p>
+        </div>
+        <p>390px 一列，≥640px 两列。类名必须以完整静态字符串出现在源码。</p>
+      </section>
+      <button type="button" id="inspect">读取计算样式</button>
+      <pre id="result" aria-live="polite"></pre>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

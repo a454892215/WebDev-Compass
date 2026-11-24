@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.2.9 层叠上下文与 z-index · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      .stack-stage {
+        position: relative;
+        height: 160px;
+        isolation: isolate;
+      }
+      #target {
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 75%;
+        height: 120px;
+        z-index: 1;
+      }
+      .stack-child {
+        position: absolute;
+        inset: 25px 0 0 0;
+        z-index: 999;
+        background: #bbded4;
+        padding: 16px;
+      }
+      .stack-neighbor {
+        position: absolute;
+        inset: 55px 0 auto auto;
+        z-index: 2;
+        background: #f0d6bf;
+        padding: 16px;
+      }
+      body[data-active="true"] #target {
+        z-index: 3;
+      }
+    </style>
+  </head>
+  <body data-lesson="1.2.2.9" data-active="false" data-properties='["zIndex"]'>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.2.9 层叠上下文与 z-index</h1>
+      <p>
+        z-index 只在所属层叠环境内比较，子元素不能靠一个巨大数字逃出父上下文。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div class="stack-stage">
+          <div id="target">
+            <span class="stack-child">内部 z-index:999</span>
+          </div>
+          <div class="stack-neighbor">相邻上下文 z-index:2</div>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>观察高z-index的内部标签仍被相邻层覆盖。</li>
+          <li>切换父上下文z-index，让整个上下文提升。</li>
+          <li>在 DevTools 中找出真正创建上下文的祖先。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

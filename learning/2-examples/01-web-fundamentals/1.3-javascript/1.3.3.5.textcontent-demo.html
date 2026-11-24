@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      内容：textContent vs innerHTML（及 XSS 风险） · WebDev Compass
+    </title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+  </head>
+  <body data-lesson="1.3.3.5">
+    <a class="skip" href="#main">跳到实验</a>
+    <header><a href="./README.md">JavaScript 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>内容：textContent vs innerHTML（及 XSS 风险）</h1>
+      <p>
+        显示不可信文本用textContent；innerHTML会解析HTML，属于需要严格控制的注入入口。
+      </p>
+      <p class="hint">
+        只在本页观察，不上传数据；请通过本地 HTTP
+        服务打开。先预测，再运行并解释。
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">实验操作</h2>
+        <div id="lab">
+          <label for="raw-text">待显示文本</label
+          ><input id="raw-text" value="&lt;strong&gt;用户文本&lt;/strong&gt;" />
+          <p id="safe-output" class="box"></p>
+          <p id="trusted-output" class="box"></p>
+        </div>
+        <button id="run" type="button">运行本节实验</button>
+      </section>
+      <section aria-labelledby="output-title">
+        <h2 id="output-title">运行结果</h2>
+        <pre
+          id="output"
+          tabindex="0"
+          role="region"
+          aria-labelledby="output-title"
+          aria-live="polite"
+        >
+尚未运行。</pre>
+      </section>
+      <section aria-labelledby="code-title">
+        <h2 id="code-title">核心代码</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-labelledby="code-title"
+        ><code>const input = &#x27;&lt;strong&gt;用户文本&lt;/strong&gt;&#x27;;
+const output = document.querySelector(&#x27;#safe-output&#x27;);
+output.textContent = input; // 显示尖括号，不创建strong
+// 只有确定可信的静态模板才可按需要解析HTML。</code></pre>
+      </section>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.5.textcontent.md"
+          >阅读对应笔记</a
+        >
+      </p>
+    </main>
+    <footer>WebDev Compass · JavaScript 基础实验</footer>
+    <script type="module" src="./assets/lab.mjs"></script>
+  </body>
+</html>

@@ -19,11 +19,11 @@
 
 ### 15.1 技术方案评审、RFC 与跨团队决策
 
-- [ ] [15.1.1 **技术选型** 流程：PoC、Spike、评审会、决策记录](../notes/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md)
-- [ ] [15.1.2 **Build vs Buy**：自研组件库 vs 采购 SaaS / 开源方案](../notes/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md)
-- [ ] [15.1.3 **跨团队 API 契约** 协作：Mock First、OpenAPI、联调节奏](../notes/15-project-delivery/15.1-tech-decisions/15.1.3.api.md)
-- [ ] [15.1.4 与 **设计 / 产品 / 后端 / QA / SRE** 的协作界面定义](../notes/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre.md)
-- [ ] [15.1.5 **Estimation**：Story 拆分、风险缓冲、Unknown Unknowns](../notes/15-project-delivery/15.1-tech-decisions/15.1.5.estimation.md)
+- [ ] [15.1.1 **技术选型** 流程：PoC、Spike、评审会、决策记录](../learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md)
+- [ ] [15.1.2 **Build vs Buy**：自研组件库 vs 采购 SaaS / 开源方案](../learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md)
+- [ ] [15.1.3 **跨团队 API 契约** 协作：Mock First、OpenAPI、联调节奏](../learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.3.api.md)
+- [ ] [15.1.4 与 **设计 / 产品 / 后端 / QA / SRE** 的协作界面定义](../learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre.md)
+- [ ] [15.1.5 **Estimation**：Story 拆分、风险缓冲、Unknown Unknowns](../learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.5.estimation.md)
 
 
 
@@ -31,10 +31,10 @@
 
 ### 15.2 代码评审、问题复现与质量检查
 
-- [ ] [15.2.1 **Review 清单**：正确性、边界、性能、安全、a11y、可测试性](../notes/15-project-delivery/15.2-code-review/15.2.1.review.md)
-- [ ] [15.2.2 **Review 规模** 控制与 LGTM 文化](../notes/15-project-delivery/15.2-code-review/15.2.2.review.md)
-- [ ] [15.2.3 **技术债务** 识别、量化（Hotspot）与偿还计划](../notes/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3.md)
-- [ ] [15.2.4 **Boy Scout Rule** 与渐进式重构](../notes/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule.md)
+- [ ] [15.2.1 **Review 清单**：正确性、边界、性能、安全、a11y、可测试性](../learning/1-notes/15-project-delivery/15.2-code-review/15.2.1.review.md)
+- [ ] [15.2.2 **Review 规模** 控制与 LGTM 文化](../learning/1-notes/15-project-delivery/15.2-code-review/15.2.2.review.md)
+- [ ] [15.2.3 **技术债务** 识别、量化（Hotspot）与偿还计划](../learning/1-notes/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3.md)
+- [ ] [15.2.4 **Boy Scout Rule** 与渐进式重构](../learning/1-notes/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule.md)
 
 
 
@@ -42,11 +42,11 @@
 
 ### 15.3 任务拆分、依赖协调与交付跟踪
 
-- [ ] [15.3.1 **任务拆分与协作分工**：Story 分解、联调节奏、模块 Owner](../notes/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md)
-- [ ] [15.3.2 **Pair Programming / Mob** 在前端场景的运用](../notes/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md)
-- [ ] [15.3.3 **知识分享** 机制：Tech Talk、内部 Wiki、Onboarding 文档](../notes/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3.md)
-- [ ] [15.3.4 **前端能力评估维度**：用于排期、Review 与模块分工（工程视角，非招聘）](../notes/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment.md)
-- [ ] [15.3.5 **Onboarding Checklist** for 新成员](../notes/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist.md)
+- [ ] [15.3.1 **任务拆分与协作分工**：Story 分解、联调节奏、模块 Owner](../learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md)
+- [ ] [15.3.2 **Pair Programming / Mob** 在前端场景的运用](../learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md)
+- [ ] [15.3.3 **知识分享** 机制：Tech Talk、内部 Wiki、Onboarding 文档](../learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3.md)
+- [ ] [15.3.4 **前端能力评估维度**：用于排期、Review 与模块分工（工程视角，非招聘）](../learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment.md)
+- [ ] [15.3.5 **Onboarding Checklist** for 新成员](../learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist.md)
 
 
 
@@ -54,12 +54,12 @@
 
 ### 15.4 旧项目迁移、依赖升级与回退
 
-- [ ] [15.4.1 **Strangler Fig** 渐进式替换模式](../notes/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md)
-- [ ] [15.4.2 **jQuery / 老 MPA → React/Vue** 迁移策略](../notes/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md)
-- [ ] [15.4.3 **双跑（Parallel Run）** 与 Feature Flag 切流](../notes/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run.md)
-- [ ] [15.4.4 **CSS 遗留债务** 治理：全局命名空间、!important、层叠上下文](../notes/15-project-delivery/15.4-legacy-migration/15.4.4.css.md)
-- [ ] [15.4.5 **Big Bang vs Incremental** 迁移风险评估](../notes/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md)
-- [ ] [15.4.6 **Codemod + 自动化测试** 保障迁移安全](../notes/15-project-delivery/15.4-legacy-migration/15.4.6.codemod.md)
+- [ ] [15.4.1 **Strangler Fig** 渐进式替换模式](../learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md)
+- [ ] [15.4.2 **jQuery / 老 MPA → React/Vue** 迁移策略](../learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md)
+- [ ] [15.4.3 **双跑（Parallel Run）** 与 Feature Flag 切流](../learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run.md)
+- [ ] [15.4.4 **CSS 遗留债务** 治理：全局命名空间、!important、层叠上下文](../learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.4.css.md)
+- [ ] [15.4.5 **Big Bang vs Incremental** 迁移风险评估](../learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md)
+- [ ] [15.4.6 **Codemod + 自动化测试** 保障迁移安全](../learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.6.codemod.md)
 
 
 
@@ -67,12 +67,12 @@
 
 ### 15.5 多语言、RTL 与无障碍交付验收
 
-- [ ] [15.5.1 **i18n 架构**：namespace 懒加载、ICU MessageFormat、复数与性别](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md)
-- [ ] [15.5.2 **RTL** 生产级：逻辑属性、镜像图标、BiDi 混排](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md)
-- [ ] [15.5.3 **时区**：`Intl.DateTimeFormat`、dayjs timezone、服务端 UTC 约定](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md)
-- [ ] [15.5.4 **WCAG 2.2 AA** 达标流程与 VPAT 报告基础](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md)
-- [ ] [15.5.5 **SPA 路由切换**：标题、焦点落点、skip link、live region 与滚动恢复；焦点陷阱仅用于需要约束焦点的模态交互](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa.md)
-- [ ] [15.5.6 复杂组件 a11y：**Combobox、DatePicker、Modal** WAI-ARIA 模式](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md)
+- [ ] [15.5.1 **i18n 架构**：namespace 懒加载、ICU MessageFormat、复数与性别](../learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md)
+- [ ] [15.5.2 **RTL** 生产级：逻辑属性、镜像图标、BiDi 混排](../learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md)
+- [ ] [15.5.3 **时区**：`Intl.DateTimeFormat`、dayjs timezone、服务端 UTC 约定](../learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md)
+- [ ] [15.5.4 **WCAG 2.2 AA** 达标流程与 VPAT 报告基础](../learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md)
+- [ ] [15.5.5 **SPA 路由切换**：标题、焦点落点、skip link、live region 与滚动恢复；焦点陷阱仅用于需要约束焦点的模态交互](../learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa.md)
+- [ ] [15.5.6 复杂组件 a11y：**Combobox、DatePicker、Modal** WAI-ARIA 模式](../learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md)
 
 
 
@@ -80,14 +80,14 @@
 
 ### 15.6 浏览器转场、WebRTC、WebAuthn 与 WebGL（选修）
 
-- [ ] [15.6.1 **View Transitions API** 与 SPA 路由动画](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md)
-- [ ] [15.6.2 **Navigation API**](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md)
-- [ ] [15.6.3 **OPFS（Origin Private File System）**](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md)
-- [ ] [15.6.4 **WebRTC** 基础（音视频场景）](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc.md)
-- [ ] [15.6.5 **WebAuthn / Payment Request API**](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md)
-- [ ] [15.6.6 **Import Maps** 与原生 ESM CDN](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps.md)
-- [ ] [15.6.7 **WebAssembly** 线程、SIMD、与 JS 边界](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly.md)
-- [ ] [15.6.8 **WebGL / Three.js** 3D 场景 — 可视化选学](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js.md)
+- [ ] [15.6.1 **View Transitions API** 与 SPA 路由动画](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md)
+- [ ] [15.6.2 **Navigation API**](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md)
+- [ ] [15.6.3 **OPFS（Origin Private File System）**](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md)
+- [ ] [15.6.4 **WebRTC** 基础（音视频场景）](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc.md)
+- [ ] [15.6.5 **WebAuthn / Payment Request API**](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md)
+- [ ] [15.6.6 **Import Maps** 与原生 ESM CDN](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps.md)
+- [ ] [15.6.7 **WebAssembly** 线程、SIMD、与 JS 边界](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly.md)
+- [ ] [15.6.8 **WebGL / Three.js** 3D 场景 — 可视化选学](../learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js.md)
 
 
 
@@ -204,8 +204,8 @@ WebDev_Compass/
 │   ├── 04-architecture-stages-8-11.md
 │   ├── 05-platform-stages-12-14.md
 │   └── 06-delivery-stages-15-appendix.md
-├── notes/
-├── examples/
+├── learning/1-notes/
+├── learning/2-examples/
 └── projects/
 ```
 
@@ -216,9 +216,9 @@ WebDev_Compass/
 
 | 类型   | 路径示例                                                                           |
 | ---- | ------------------------------------------------------------------------------ |
-| 笔记   | `notes/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md`        |
-| 示例   | `examples/00-environment/0.1-what-is-web-app/0.1.1.request-response-demo.html` |
-| 小节索引 | `notes/00-environment/0.1-what-is-web-app/README.md`                           |
+| 笔记   | `learning/1-notes/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md`        |
+| 示例   | `learning/2-examples/00-environment/0.1-what-is-web-app/0.1.1.request-response-demo.html` |
+| 小节索引 | `learning/1-notes/00-environment/0.1-what-is-web-app/README.md`                           |
 
 
 ---

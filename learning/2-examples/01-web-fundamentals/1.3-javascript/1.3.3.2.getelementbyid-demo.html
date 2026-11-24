@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      查询：getElementById、querySelector、querySelectorAll · WebDev Compass
+    </title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+  </head>
+  <body data-lesson="1.3.3.2">
+    <a class="skip" href="#main">跳到实验</a>
+    <header><a href="./README.md">JavaScript 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>查询：getElementById、querySelector、querySelectorAll</h1>
+      <p>按范围查询节点并处理找不到的结果；不要依赖ID自动变成全局变量。</p>
+      <p class="hint">
+        只在本页观察，不上传数据；请通过本地 HTTP
+        服务打开。先预测，再运行并解释。
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">实验操作</h2>
+        <div id="lab"><ul id="items"></ul></div>
+        <button id="run" type="button">运行本节实验</button>
+      </section>
+      <section aria-labelledby="output-title">
+        <h2 id="output-title">运行结果</h2>
+        <pre
+          id="output"
+          tabindex="0"
+          role="region"
+          aria-labelledby="output-title"
+          aria-live="polite"
+        >
+尚未运行。</pre>
+      </section>
+      <section aria-labelledby="code-title">
+        <h2 id="code-title">核心代码</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-labelledby="code-title"
+        ><code>const root = document.querySelector(&#x27;#items&#x27;);
+if (!root) throw new Error(&#x27;缺少列表根节点&#x27;);
+const snapshot = root.querySelectorAll(&#x27;.item&#x27;);
+const live = root.getElementsByClassName(&#x27;item&#x27;);
+root.append(Object.assign(document.createElement(&#x27;li&#x27;), {className:&#x27;item&#x27;}));
+console.log(snapshot.length, live.length);</code></pre>
+      </section>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.2.getelementbyid.md"
+          >阅读对应笔记</a
+        >
+      </p>
+    </main>
+    <footer>WebDev Compass · JavaScript 基础实验</footer>
+    <script type="module" src="./assets/lab.mjs"></script>
+  </body>
+</html>

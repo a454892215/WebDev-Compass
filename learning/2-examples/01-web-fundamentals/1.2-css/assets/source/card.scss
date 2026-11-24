@@ -1,0 +1,14 @@
+$accent: #006464;
+@mixin ring($color) {
+  border: 2px solid $color;
+}
+.scss-card {
+  @include ring($accent);
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+}
+.scss-card--muted {
+  border-style: dashed;
+}

@@ -1,0 +1,51 @@
+# 示例代码目录
+
+本目录存放与 [learning/1-notes/](../1-notes/) 中知识点配套的**可运行示例**。文件名序号与知识地图、笔记保持一致。
+
+## 命名规范
+
+```
+learning/2-examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
+```
+
+示例：`learning/2-examples/00-environment/0.1-what-is-web-app/0.1.1.request-response-demo.html` 对应知识点 **0.1.1**。
+
+## 如何运行
+
+在仓库根目录运行 `node learning/4-practice/01-web-fundamentals/server.mjs`，通过 HTTP 打开示例。模块与 Fetch 示例应使用 HTTP；独立 POST、REST、WebSocket 按章节 README 启动。
+
+## 当前进度
+
+| 序号 | 示例 | 状态 |
+| --- | --- | --- |
+| 0.1.1 | request-response-demo | ✅ |
+| 0.1.3 | spa-vs-mpa-demo | ✅ |
+| 0.1.4 | same-origin-demo | ✅ |
+| 0.2.1 | package-demo | ✅ |
+| 0.2.2 | vscode-config | ✅ |
+| 0.2.3 | devtools-demo | ✅ |
+| 0.2.4 | git-workflow | ✅ |
+| 0.3.1 | url-parse-demo | ✅ |
+| 0.3.2 | http-methods-demo | ✅ |
+| 0.3.3 | http-versions（观察清单） | ✅ |
+| 0.3.4 | storage-demo | ✅ |
+| 0.3.5 | dns-cdn（观察清单） | ✅ |
+| 0.3.6 | tls-overview（观察清单） | ✅ |
+| 0.3.7 | rest-api-demo | ✅ |
+| 0.3.8 | websocket-demo | ✅ |
+
+
+## 阶段 1：HTML
+
+新增 19 个离线示例，完整入口见 [HTML 示例目录](./01-web-fundamentals/1.1-html/README.md)。例子运行、观察清单与真实服务验证分别记录，范围见[本轮验证记录](../../docs/verification-2026-11-24.md)。
+
+## 阶段 1 完整示例
+
+| 章节 | 数量 | 入口 |
+| --- | --- | --- |
+| HTML | 19 | [目录](./01-web-fundamentals/1.1-html/README.md) |
+| CSS | 41 | [目录](./01-web-fundamentals/1.2-css/README.md) |
+| JavaScript | 42 | [目录](./01-web-fundamentals/1.3-javascript/README.md) |
+| 基础质量 | 4 | [目录](./01-web-fundamentals/1.4-quality-basics/README.md) |
+
+最新验证见[阶段 1 记录](../../docs/STAGE_1_VERIFICATION.md)；上方 HTML 记录是前一次增量交付。静态样式 fixture 与真实工具链编译在目录中分别标明。

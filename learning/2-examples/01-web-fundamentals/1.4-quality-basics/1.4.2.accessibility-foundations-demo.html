@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>键盘、焦点与可访问表单 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/quality.css" />
+  </head>
+  <body data-lesson="1.4.2">
+    <a href="#content" class="skip">跳到主要内容</a>
+    <header><a href="./README.md">基础质量示例目录</a></header>
+    <main>
+      <h1 id="content" tabindex="-1">键盘、焦点与可访问反馈</h1>
+      <p>仅使用演示昵称。表单在本页生成预览，不上传、不存储。</p>
+      <label class="check"
+        ><input id="contrast" type="checkbox" />切换高对比配色</label
+      >
+      <form id="demo" novalidate>
+        <label for="nickname">演示昵称</label>
+        <input
+          id="nickname"
+          name="nickname"
+          autocomplete="nickname"
+          required
+          aria-describedby="name-help name-error"
+        />
+        <p id="name-help">输入任意非空演示昵称；空值会显示关联的错误。</p>
+        <p id="name-error" class="error"></p>
+        <button type="submit">生成本地预览</button>
+      </form>
+      <p id="result" role="status" data-state="idle" class="status">
+        尚未生成。
+      </p>
+      <section>
+        <h2>手工验收</h2>
+        <ul>
+          <li>按 Tab/Shift+Tab 走查顺序和焦点样式。</li>
+          <li>空值提交后，焦点回到有错误的字段。</li>
+          <li>浏览器放大后仍可阅读和操作。</li>
+          <li>颜色切换不是 WCAG 全量审计。</li>
+        </ul>
+      </section>
+    </main>
+    <script>
+      const form = document.querySelector("#demo");
+      const input = document.querySelector("#nickname");
+      const error = document.querySelector("#name-error");
+      const result = document.querySelector("#result");
+      document
+        .querySelector("#contrast")
+        .addEventListener("change", (event) => {
+          document.documentElement.dataset.theme = event.currentTarget.checked
+            ? "contrast"
+            : "default";
+        });
+      input.addEventListener("input", () => {
+        input.setCustomValidity("");
+        input.removeAttribute("aria-invalid");
+        error.textContent = "";
+      });
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const valid = input.value.trim().length > 0;
+        input.setCustomValidity(valid ? "" : "请输入演示昵称。");
+        if (!valid) {
+          input.setAttribute("aria-invalid", "true");
+          error.textContent = "请输入演示昵称后重试。";
+          result.textContent = "预览未生成，请修正昵称。";
+          result.dataset.state = "error";
+          input.reportValidity();
+          input.focus();
+          return;
+        }
+        input.removeAttribute("aria-invalid");
+        error.textContent = "";
+        result.textContent = `你好，${input.value.trim()}。这是一份本地预览。`;
+        result.dataset.state = "success";
+      });
+    </script>
+  </body>
+</html>

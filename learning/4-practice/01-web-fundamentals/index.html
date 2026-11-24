@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>学习资源目录 · 阶段 1 综合实践</title>
+<link rel="stylesheet" href="./styles.css"><script type="module" src="./app.mjs"></script>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+<header><p class="eyebrow">WebDev Compass · HTML / CSS / JavaScript</p><h1>学习资源目录</h1><p>用一个本地项目观察布局、表单、异步请求与失败恢复。</p><button type="button" id="theme" aria-pressed="false">切换深色主题</button></header>
+<main id="main" tabindex="-1">
+<section aria-labelledby="filter-title"><h2 id="filter-title">查找练习</h2>
+<form id="filters" action="./index.html#static-catalog" method="get">
+<div class="fields"><div><label for="q">关键词</label><input id="q" name="q" type="search" maxlength="80" placeholder="例如：布局"></div>
+<div><label for="category">主题</label><select id="category" name="category"><option value="all">全部</option><option value="html">HTML</option><option value="css">CSS</option><option value="js">JavaScript</option></select></div>
+<div><label for="mode">本地接口场景</label><select id="mode" name="mode"><option value="ok">正常响应</option><option value="empty">空数据</option><option value="slow">延迟 800ms</option><option value="error">HTTP 503</option><option value="invalid">无效 JSON</option></select></div></div>
+<div class="actions"><button type="submit">查询</button><button id="cancel" type="button" disabled>取消请求</button><button id="retry" type="button">重试当前条件</button><label class="inline"><input id="favorites" type="checkbox">只看收藏</label></div></form>
+<p class="hint">示例只访问本机只读接口；收藏仅保留在当前页面内存，刷新重置。</p></section>
+<section id="results" aria-labelledby="result-title" aria-busy="false"><h2 id="result-title">查询结果</h2><p id="status" role="status">脚本尚未加载。可直接使用下方静态资料入口。</p><ul id="cards" class="cards"></ul></section>
+<section id="static-catalog" aria-labelledby="static-title"><h2 id="static-title">无脚本也能访问的资料</h2><p>筛选依赖 JavaScript；以下普通链接保持可用，内容不会因请求失败而消失。</p><ul><li><a href="../../2-examples/01-web-fundamentals/1.1-html/README.md">HTML 实验目录</a></li><li><a href="../../2-examples/01-web-fundamentals/1.2-css/README.md">CSS 实验目录</a></li><li><a href="../../2-examples/01-web-fundamentals/1.3-javascript/README.md">JavaScript 实验目录</a></li></ul></section>
+</main><footer><p>先运行项目，再按 README 独立修改与排错；这是教学 fixture，不提供真实登录或生产数据。</p></footer>
+</body></html>

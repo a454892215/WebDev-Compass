@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>迭代器与生成器（了解） · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+  </head>
+  <body data-lesson="1.3.2.5">
+    <a class="skip" href="#main">跳到实验</a>
+    <header><a href="./README.md">JavaScript 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>迭代器与生成器（了解）</h1>
+      <p>
+        迭代器描述逐次取值协议；生成器用yield暂停并恢复函数，适合按需生成序列。
+      </p>
+      <p class="hint">
+        只在本页观察，不上传数据；请通过本地 HTTP
+        服务打开。先预测，再运行并解释。
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">实验操作</h2>
+        <div id="lab"></div>
+        <button id="run" type="button">运行本节实验</button>
+      </section>
+      <section aria-labelledby="output-title">
+        <h2 id="output-title">运行结果</h2>
+        <pre
+          id="output"
+          tabindex="0"
+          role="region"
+          aria-labelledby="output-title"
+          aria-live="polite"
+        >
+尚未运行。</pre>
+      </section>
+      <section aria-labelledby="code-title">
+        <h2 id="code-title">核心代码</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-labelledby="code-title"
+        ><code>function* range(limit) {
+  for (let value = 0; value &lt; limit; value++) yield value;
+  return &#x27;done&#x27;;
+}
+const sequence = range(2);
+console.log(sequence.next()); // {value:0,done:false}
+console.log([...range(3)]); // [0,1,2]</code></pre>
+      </section>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.5.item-1-3-2-5.md"
+          >阅读对应笔记</a
+        >
+      </p>
+    </main>
+    <footer>WebDev Compass · JavaScript 基础实验</footer>
+    <script type="module" src="./assets/lab.mjs"></script>
+  </body>
+</html>

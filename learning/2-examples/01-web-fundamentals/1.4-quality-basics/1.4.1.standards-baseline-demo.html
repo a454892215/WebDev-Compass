@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Baseline、能力检测与基础回退 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/quality.css" />
+  </head>
+  <body data-lesson="1.4.1">
+    <header><a href="./README.md">基础质量示例目录</a></header>
+    <main>
+      <h1>能力检测与基础回退</h1>
+      <p>
+        先输出完整内容，再使用支持的布局增强。此页只检测当前浏览器，不生成
+        Baseline 或旧 WebView 兼容结论。
+      </p>
+      <section aria-labelledby="detect-title">
+        <h2 id="detect-title">读取当前环境能力</h2>
+        <button type="button" id="detect">检测能力</button>
+        <pre id="result" role="status">
+等待检测。CSS 检测为真，不代表所有组合行为都已验证。</pre>
+        <label class="check"
+          ><input
+            id="fallback-toggle"
+            type="checkbox"
+          />强制基础布局，检查回退分支</label
+        >
+        <p class="hint">这是主动禁用布局增强，不是完整模拟旧浏览器。</p>
+      </section>
+      <div id="layout">
+        <div class="cards" id="cards">
+          <article>
+            <h2>基础内容</h2>
+            <p>即使没有 Grid，正文与导航仍存在。</p>
+          </article>
+          <article>
+            <h2>布局增强</h2>
+            <p>支持 Grid 且空间足够时展示双列，窄窗口保持单列。</p>
+          </article>
+        </div>
+      </div>
+    </main>
+    <footer>用目标浏览器验证核心任务，不能以某次检测代替完整支持矩阵。</footer>
+    <script>
+      document.querySelector("#detect").addEventListener("click", () => {
+        const supports = (property, value) =>
+          typeof CSS !== "undefined" && CSS.supports(property, value);
+        const dialog = document.createElement("dialog");
+        document.querySelector("#result").textContent = JSON.stringify(
+          {
+            "Grid 语法支持": supports("display", "grid"),
+            容器查询声明支持: supports("container-type", "inline-size"),
+            "dialog.showModal 方法": typeof dialog.showModal === "function",
+            说明: "检测结果不等于旧 WebView、辅助技术与行为组合全部通过。",
+          },
+          null,
+          2,
+        );
+      });
+      document
+        .querySelector("#fallback-toggle")
+        .addEventListener("change", (event) => {
+          document
+            .querySelector("#layout")
+            .classList.toggle("force-fallback", event.currentTarget.checked);
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template、Shadow DOM 与 slot · WebDev Compass</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fa;
+        color: #17283b;
+        font:
+          1rem/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 54rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+      }
+      section,
+      fieldset,
+      article {
+        background: white;
+        border: 1px solid #bbcbd7;
+        border-radius: 0.65rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        min-width: 0;
+      }
+      label {
+        display: block;
+        margin: 0.6rem 0 0.2rem;
+      }
+      input:not([type="checkbox"]):not([type="radio"]),
+      textarea,
+      select,
+      button {
+        font: inherit;
+        max-width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #6f8191;
+        border-radius: 0.3rem;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+      button {
+        background: #135776;
+        color: white;
+        cursor: pointer;
+        margin: 0.3rem 0.3rem 0.3rem 0;
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        inline-size: 1.1rem;
+        block-size: 1.1rem;
+      }
+      label:has(input[type="checkbox"]),
+      label:has(input[type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        padding: 1rem;
+        background: #e8eff5;
+        border-radius: 0.4rem;
+      }
+      a {
+        color: #075f83;
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      :focus-visible {
+        outline: 3px solid #9c4600;
+        outline-offset: 3px;
+      }
+      .hint {
+        color: #46596a;
+      }
+      .error {
+        color: #a02020;
+        min-height: 1.7em;
+      }
+      svg,
+      canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      dialog {
+        max-width: min(32rem, 90vw);
+        border: 1px solid #6f8191;
+        border-radius: 0.6rem;
+      }
+      dialog:modal {
+        overscroll-behavior: contain;
+      }
+      dialog::backdrop {
+        background: #10283a99;
+        overflow: hidden;
+        overscroll-behavior: contain;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.1-html/1.1.3.3.template.md"
+          >返回对应笔记</a
+        >
+      </p>
+      <h1>template、Shadow DOM 与 slot</h1>
+      <p>
+        模板内容先不渲染；克隆后插入。slot 只有放在 Shadow DOM
+        中才承担内容分发作用。
+      </p>
+      <template id="card-template"
+        ><article>
+          <h2><slot name="title">默认标题</slot></h2>
+          <div><slot>默认内容</slot></div>
+        </article></template
+      >
+      <learning-card
+        ><span slot="title">HTML 原生组件</span>
+        <p>这段正文来自宿主的 light DOM。</p></learning-card
+      >
+      <section>
+        <h2>普通模板克隆</h2>
+        <template id="row-template"><p class="row">新克隆的一行</p></template>
+        <div id="rows"></div>
+        <button type="button" id="add">克隆并添加一行</button>
+        <p id="count" aria-live="polite">已添加 0 行。</p>
+      </section>
+      <p id="support" class="hint"></p>
+    </main>
+    <script>
+      const cardTemplate = document.querySelector("#card-template");
+      if (
+        "customElements" in window &&
+        "attachShadow" in HTMLElement.prototype
+      ) {
+        customElements.define(
+          "learning-card",
+          class extends HTMLElement {
+            constructor() {
+              super();
+              this.attachShadow({ mode: "open" }).append(
+                cardTemplate.content.cloneNode(true),
+              );
+            }
+          },
+        );
+        document.querySelector("#support").textContent =
+          "当前浏览器支持 Custom Elements 与 Shadow DOM；外层内容通过命名/默认 slot 显示。";
+      } else
+        document.querySelector("#support").textContent =
+          "当前环境不支持组件API，保留 light DOM 正文。";
+      let count = 0;
+      document.querySelector("#add").addEventListener("click", () => {
+        const fragment = document
+          .querySelector("#row-template")
+          .content.cloneNode(true);
+        fragment.querySelector("p").textContent =
+          `第 ${++count} 行：独立克隆的节点`;
+        document.querySelector("#rows").append(fragment);
+        document.querySelector("#count").textContent = `已添加 ${count} 行。`;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.4.6 把移动布局经验迁移到 CSS · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        flex-direction: row;
+      }
+      body[data-active="true"] #target {
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.4.6"
+    data-active="false"
+    data-properties='["flexDirection"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.4.6 把移动布局经验迁移到 CSS</h1>
+      <p>
+        复用“约束、内容、对齐”的思维，但需重新学习浏览器的文本流和最小尺寸规则。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div id="target" class="sample items">
+          <button type="button">第一步</button
+          ><button type="button">第二步</button
+          ><button type="button">第三步</button>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>切换行/列布局并解释轴变化。</li>
+          <li>保留HTML源顺序，Tab观察阅读与操作顺序。</li>
+          <li>用长文案和缩放验证约束，而不是固定高度。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

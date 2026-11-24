@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.6.1 BEM 命名：识别结构与状态 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      .lesson-card {
+        border: 2px solid #b7c8d0;
+      }
+      .lesson-card__title {
+        font-size: 1.1rem;
+      }
+      .lesson-card--highlighted {
+        border-color: rgb(0, 100, 100);
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.6.1"
+    data-active="false"
+    data-properties='["borderTopColor"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.6.1 BEM 命名：识别结构与状态</h1>
+      <p>BEM 是一种团队命名约定，不是浏览器隔离机制，也不决定层叠优先级。</p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <article id="target" class="sample lesson-card">
+          <h2 class="lesson-card__title">命名能说明职责</h2>
+          <p>但不会建立浏览器样式隔离。</p>
+        </article>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          这是维护/团队约定示例，不宣称BEM优于所有原生层叠或局部样式方案。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>观察block、element和modifier三个角色。</li>
+          <li>切换modifier，确认只是新增普通class。</li>
+          <li>用相同属性的全局规则测试命名并不免疫层叠。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+    <script>
+      window.applyLessonState = (active) => {
+        document
+          .querySelector("#target")
+          .classList.toggle("lesson-card--highlighted", active);
+      };
+    </script>
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

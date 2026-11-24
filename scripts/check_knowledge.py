@@ -154,7 +154,7 @@ def audit(root: Path) -> dict:
                 relative = target.relative_to(root)
             except ValueError:
                 relative = None
-            note = bool(relative and relative.parts[0] == 'notes' and target.suffix == '.md' and POINT.match(target.name))
+            note = bool(relative and relative.parts[:2] == ('learning', '1-notes') and target.suffix == '.md' and POINT.match(target.name))
             if source_map and note and link.checkbox:
                 number = POINT.match(target.name)[1]
                 points.setdefault(str(relative), {'id': number, 'stage': int(number.split('.')[0]), 'exists': target.is_file()})
@@ -176,7 +176,7 @@ def audit(root: Path) -> dict:
         row['points'] += 1
         row['authored'] += point['exists']
         row['checked'] += path in checked_targets
-    note_files = [p for p in (root / 'notes').rglob('*.md') if POINT.match(p.name)] if (root / 'notes').exists() else []
+    note_files = [p for p in (root / 'learning' / '1-notes').rglob('*.md') if POINT.match(p.name)] if (root / 'learning' / '1-notes').exists() else []
     return {
         'documents': len(sources), 'local_links': local_count,
         'knowledge_points': len(points), 'authored_points': sum(p['exists'] for p in points.values()),

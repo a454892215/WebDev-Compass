@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>提交方法与编码 · WebDev Compass</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fa;
+        color: #17283b;
+        font:
+          1rem/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 54rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+      }
+      section,
+      fieldset,
+      article {
+        background: white;
+        border: 1px solid #bbcbd7;
+        border-radius: 0.65rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        min-width: 0;
+      }
+      label {
+        display: block;
+        margin: 0.6rem 0 0.2rem;
+      }
+      input:not([type="checkbox"]):not([type="radio"]),
+      textarea,
+      select,
+      button {
+        font: inherit;
+        max-width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #6f8191;
+        border-radius: 0.3rem;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+      button {
+        background: #135776;
+        color: white;
+        cursor: pointer;
+        margin: 0.3rem 0.3rem 0.3rem 0;
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        inline-size: 1.1rem;
+        block-size: 1.1rem;
+      }
+      label:has(input[type="checkbox"]),
+      label:has(input[type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        padding: 1rem;
+        background: #e8eff5;
+        border-radius: 0.4rem;
+      }
+      a {
+        color: #075f83;
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      :focus-visible {
+        outline: 3px solid #9c4600;
+        outline-offset: 3px;
+      }
+      .hint {
+        color: #46596a;
+      }
+      .error {
+        color: #a02020;
+        min-height: 1.7em;
+      }
+      svg,
+      canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      dialog {
+        max-width: min(32rem, 90vw);
+        border: 1px solid #6f8191;
+        border-radius: 0.6rem;
+      }
+      dialog:modal {
+        overscroll-behavior: contain;
+      }
+      dialog::backdrop {
+        background: #10283a99;
+        overflow: hidden;
+        overscroll-behavior: contain;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.1-html/1.1.2.4.application-x-www-form-urlencoded.md"
+          >返回对应笔记</a
+        >
+      </p>
+      <h1>提交方法与编码</h1>
+      <p>
+        本页拦截 submit，只预览请求形态，不发送网络请求。文件仅显示名称和大小。
+      </p>
+      <form
+        id="demo"
+        action="/demo-only"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <label for="title">演示标题</label
+        ><input id="title" name="title" value="Web 表单" required />
+        <label for="tag">标签</label
+        ><input id="tag" name="tag" value="HTML CSS" />
+        <label for="upload">本地文件</label
+        ><input id="upload" name="upload" type="file" />
+        <label for="mode">预览编码</label
+        ><select id="mode">
+          <option value="get">GET 查询串（不含文件）</option>
+          <option value="urlencoded">POST urlencoded（不含文件）</option>
+          <option value="multipart">POST multipart（文件元信息）</option>
+          <option value="json">Fetch JSON（自行定义协议）</option>
+        </select>
+        <button type="submit">预览，不发送</button
+        ><button type="button" id="request">通过 requestSubmit 预览</button>
+      </form>
+      <pre id="result" aria-live="polite">选择编码后预览。</pre>
+    </main>
+    <script>
+      const form = document.querySelector("#demo");
+      document
+        .querySelector("#request")
+        .addEventListener("click", () => form.requestSubmit());
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const text = [...data].filter(([, v]) => typeof v === "string");
+        const mode = document.querySelector("#mode").value;
+        let result;
+        if (mode === "get")
+          result = "GET /demo-only?" + new URLSearchParams(text);
+        else if (mode === "urlencoded")
+          result =
+            "POST /demo-only\nContent-Type: application/x-www-form-urlencoded\n\n" +
+            new URLSearchParams(text);
+        else if (mode === "multipart")
+          result =
+            "POST /demo-only\nContent-Type: multipart/form-data; boundary=(由浏览器生成)\n\n" +
+            JSON.stringify(
+              [...data].map(([k, v]) => [
+                k,
+                v instanceof File ? { name: v.name, size: v.size } : v,
+              ]),
+              null,
+              2,
+            );
+        else
+          result =
+            "POST /demo-only\nContent-Type: application/json\n\n" +
+            JSON.stringify(Object.fromEntries(text), null, 2);
+        document.querySelector("#result").textContent = result;
+      });
+    </script>
+  </body>
+</html>

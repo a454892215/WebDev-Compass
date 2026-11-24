@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.3.2 字体、行高与文字间距 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        font-size: 16px;
+        line-height: 1.5;
+        max-width: 30ch;
+      }
+      body[data-active="true"] #target {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.3.2"
+    data-active="false"
+    data-properties='["lineHeight"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.3.2 字体、行高与文字间距</h1>
+      <p>
+        字号决定字形尺度，行高决定行盒节奏；字体回退和内容长度都会改变布局。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <p id="target" class="sample">
+          浏览器排版关注可读性，也关注真实内容在变化后的布局。第二行用来观察行盒。
+        </p>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>观察目标字号和行高计算值。</li>
+          <li>切换局部字号，确认无单位行高按新字号缩放。</li>
+          <li>浏览器放大，检查文本是否仍完整可达。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

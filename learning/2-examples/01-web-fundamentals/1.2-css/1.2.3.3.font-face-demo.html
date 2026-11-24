@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.3.3 @font-face、字体回退与加载策略 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      @font-face {
+        font-family: LessonLocal;
+        src: local("Arial");
+        font-display: swap;
+      }
+      #target {
+        font-family: system-ui, sans-serif;
+      }
+      body[data-active="true"] #target {
+        font-family: LessonLocal, system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.3.3"
+    data-active="false"
+    data-properties='["fontFamily"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.3.3 @font-face、字体回退与加载策略</h1>
+      <p>
+        @font-face声明字体来源与匹配信息；是否下载、是否阻塞及是否换字形需要另行观察。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <p id="target" class="sample">
+          Web font fallback ABC 123 浏览器文字回退
+        </p>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          只验证本地声明与回退，不包含授权字体下载资源，不宣称已验收Web字体网络加载。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>切换local字体家族声明并看computed family列表。</li>
+          <li>
+            说明local(&quot;Arial&quot;)不一定在每个系统存在，回退仍须可读。
+          </li>
+          <li>如要测试下载，请提供自有授权WOFF2并在Network观察缓存和失败。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

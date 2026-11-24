@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>条件：if/else、switch、三元表达式 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+  </head>
+  <body data-lesson="1.3.1.6">
+    <a class="skip" href="#main">跳到实验</a>
+    <header><a href="./README.md">JavaScript 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>条件：if/else、switch、三元表达式</h1>
+      <p>分支应表达业务状态，优先让每个条件和返回路径清楚。</p>
+      <p class="hint">
+        只在本页观察，不上传数据；请通过本地 HTTP
+        服务打开。先预测，再运行并解释。
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">实验操作</h2>
+        <div id="lab">
+          <label for="state">请求状态</label
+          ><select id="state">
+            <option value="loading">loading</option>
+            <option value="error">error</option>
+            <option value="ready">ready</option>
+          </select>
+        </div>
+        <button id="run" type="button">运行本节实验</button>
+      </section>
+      <section aria-labelledby="output-title">
+        <h2 id="output-title">运行结果</h2>
+        <pre
+          id="output"
+          tabindex="0"
+          role="region"
+          aria-labelledby="output-title"
+          aria-live="polite"
+        >
+尚未运行。</pre>
+      </section>
+      <section aria-labelledby="code-title">
+        <h2 id="code-title">核心代码</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-labelledby="code-title"
+        ><code>function statusText(status) {
+  switch (status) {
+    case &#x27;loading&#x27;: return &#x27;加载中&#x27;;
+    case &#x27;error&#x27;: return &#x27;请重试&#x27;;
+    default: return &#x27;就绪&#x27;;
+  }
+}
+const label = 0 &gt; 0 ? &#x27;有数据&#x27; : &#x27;暂无数据&#x27;;</code></pre>
+      </section>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.6.if-else.md"
+          >阅读对应笔记</a
+        >
+      </p>
+    </main>
+    <footer>WebDev Compass · JavaScript 基础实验</footer>
+    <script type="module" src="./assets/lab.mjs"></script>
+  </body>
+</html>

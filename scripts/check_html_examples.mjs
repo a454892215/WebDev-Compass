@@ -5,7 +5,7 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
-const directory = "examples/01-web-fundamentals/1.1-html/";
+const directory = "learning/2-examples/01-web-fundamentals/1.1-html/";
 const files = (await readdir(resolve(root, directory)))
   .filter((name) => name.endsWith("-demo.html"))
   .sort();

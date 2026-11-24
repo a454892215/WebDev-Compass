@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.1.2 选择器、状态伪类与伪元素 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      .selector-list > li:nth-child(2) {
+        font-weight: 700;
+      }
+      #target[data-state="chosen"] {
+        color: rgb(0, 100, 100);
+      }
+      #target::before {
+        content: "• ";
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body data-lesson="1.2.1.2" data-active="false" data-properties='["color"]'>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.1.2 选择器、状态伪类与伪元素</h1>
+      <p>选择器匹配元素，伪类表达状态或位置，伪元素表示元素生成的部分。</p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <ul class="selector-list">
+          <li>第一项</li>
+          <li id="target" class="sample" data-state="idle">
+            第二项：属性与位置
+          </li>
+          <li>第三项</li>
+        </ul>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">改变一个条件，预测结果，再到 DevTools 核对实际规则。</p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>观察第二项为何被匹配，新增前置兄弟后再判断位置。</li>
+          <li>切换 data-state 属性，观察属性选择器。</li>
+          <li>Tab 聚焦按钮，确认焦点轮廓仍可见。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+    <script>
+      window.applyLessonState = (active) => {
+        document.querySelector("#target").dataset.state = active
+          ? "chosen"
+          : "idle";
+      };
+    </script>
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

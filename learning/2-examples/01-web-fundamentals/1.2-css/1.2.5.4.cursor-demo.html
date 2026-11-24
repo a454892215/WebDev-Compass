@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>
+      1.2.5.4 cursor、user-select 与 pointer-events · WebDev Compass
+    </title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        cursor: pointer;
+        user-select: text;
+        pointer-events: auto;
+      }
+      body[data-active="true"] #target {
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.5.4"
+    data-active="false"
+    data-properties='["pointerEvents"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.5.4 cursor、user-select 与 pointer-events</h1>
+      <p>
+        指针样式和命中测试改变交互细节，不会自动改变控件语义、禁用状态或键盘行为。
+      </p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <button id="target" class="sample" type="button">
+          指针目标（不是禁用示范）
+        </button>
+        <p id="click-count" role="status">触发次数：0</p>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          切换后目标仍可通过Tab聚焦；本例故意说明pointer-events不是完整禁用。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>切换pointer-events后用鼠标测试命中。</li>
+          <li>Tab聚焦目标，比较键盘操作仍可能可用。</li>
+          <li>解释何时应改为原生disabled而非只写CSS。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基础内容、取消与失败恢复 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/quality.css" />
+  </head>
+  <body data-lesson="1.4.4">
+    <header><a href="./README.md">基础质量示例目录</a></header>
+    <main>
+      <h1>脚本和增强失败时，基础内容仍在</h1>
+      <p>
+        <a href="#reading">阅读基础步骤</a
+        >。没有账号、输入上传、持久化或分析上报。
+      </p>
+      <section id="reading" aria-labelledby="reading-title">
+        <h2 id="reading-title">始终可读的学习步骤</h2>
+        <ol>
+          <li>阅读原理。</li>
+          <li>运行本地示例。</li>
+          <li>验证成功和失败。</li>
+        </ol>
+      </section>
+      <noscript
+        ><p id="no-script">
+          当前未启用脚本，仍可阅读基础步骤。增强控件不会展示。
+        </p></noscript
+      >
+      <section id="enhanced" aria-labelledby="enhanced-title" hidden>
+        <h2 id="enhanced-title">可取消的本地增强</h2>
+        <p>
+          成功时读取同源
+          JSON；等待是客户端人为延迟，失败是故障注入。并非真实弱网或服务可用性验收。
+        </p>
+        <label for="mode">实验分支</label
+        ><select id="mode">
+          <option value="success">成功</option>
+          <option value="failure">本地模拟失败</option>
+        </select>
+        <button type="button" id="start">读取本地更新</button>
+        <button type="button" id="cancel" class="secondary" disabled>
+          取消等待
+        </button>
+        <button type="button" id="retry" hidden>重试成功分支</button>
+        <p id="result" role="status" class="status" data-state="idle">
+          增强已就绪，基础内容未被替换。
+        </p>
+        <ul id="updated"></ul>
+      </section>
+    </main>
+    <script type="module">
+      const region = document.querySelector("#enhanced");
+      const result = document.querySelector("#result");
+      const startButton = document.querySelector("#start");
+      const cancelButton = document.querySelector("#cancel");
+      const retryButton = document.querySelector("#retry");
+      const mode = document.querySelector("#mode");
+      let controller;
+      let revision = 0;
+      region.hidden = false;
+      function delay(milliseconds, signal) {
+        return new Promise((resolve, reject) => {
+          if (signal.aborted) {
+            reject(new DOMException("已取消", "AbortError"));
+            return;
+          }
+          const abort = () => {
+            clearTimeout(timer);
+            signal.removeEventListener("abort", abort);
+            reject(new DOMException("已取消", "AbortError"));
+          };
+          const timer = setTimeout(() => {
+            signal.removeEventListener("abort", abort);
+            resolve();
+          }, milliseconds);
+          signal.addEventListener("abort", abort, { once: true });
+        });
+      }
+      async function run() {
+        const ownRevision = ++revision;
+        controller?.abort();
+        const own = new AbortController();
+        controller = own;
+        const failure = mode.value === "failure";
+        startButton.disabled = true;
+        cancelButton.disabled = false;
+        retryButton.hidden = true;
+        result.dataset.state = "loading";
+        result.textContent = "本地延迟实验：正在等待，可取消。";
+        try {
+          await delay(700, own.signal);
+          if (failure) throw new Error("本地故障注入：未连接真实服务");
+          const response = await fetch("./assets/lesson-data.json", {
+            signal: own.signal,
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          if (
+            typeof data.title !== "string" ||
+            !Array.isArray(data.items) ||
+            data.items.some((item) => typeof item !== "string")
+          )
+            throw new Error("响应不符合演示协议");
+          if (ownRevision !== revision) return;
+          const list = document.querySelector("#updated");
+          list.replaceChildren(
+            ...data.items.map((text) => {
+              const li = document.createElement("li");
+              li.textContent = text;
+              return li;
+            }),
+          );
+          result.dataset.state = "success";
+          result.textContent = data.title;
+        } catch (error) {
+          if (ownRevision !== revision) return;
+          const cancelled = own.signal.aborted;
+          result.dataset.state = cancelled ? "cancelled" : "error";
+          result.textContent = cancelled
+            ? "等待已取消，基础步骤仍可阅读。"
+            : "增强暂不可用，可重试；基础步骤仍可阅读。";
+          retryButton.hidden = cancelled;
+        } finally {
+          if (ownRevision === revision) {
+            startButton.disabled = false;
+            cancelButton.disabled = true;
+          }
+        }
+      }
+      startButton.addEventListener("click", run);
+      cancelButton.addEventListener("click", () => controller?.abort());
+      retryButton.addEventListener("click", () => {
+        mode.value = "success";
+        run();
+      });
+      window.addEventListener("pagehide", () => controller?.abort());
+    </script>
+  </body>
+</html>

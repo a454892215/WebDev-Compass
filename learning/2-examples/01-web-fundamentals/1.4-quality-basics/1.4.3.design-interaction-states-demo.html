@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>加载、空、错与真实内容验收 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/quality.css" />
+  </head>
+  <body data-lesson="1.4.3">
+    <header><a href="./README.md">基础质量示例目录</a></header>
+    <main>
+      <h1>设计稿之外的交互状态</h1>
+      <p>
+        这是人工切换的状态实验，不是实时 API
+        请求。每种状态都应说明内容和可执行动作。
+      </p>
+      <label for="state">选择组件状态</label>
+      <select id="state">
+        <option value="idle">初始</option>
+        <option value="loading">加载</option>
+        <option value="success">成功</option>
+        <option value="empty">空结果</option>
+        <option value="error">错误</option>
+      </select>
+      <label class="check"
+        ><input
+          id="long-copy"
+          type="checkbox"
+        />使用长标题与真实说明检查布局</label
+      >
+      <section
+        id="state-panel"
+        aria-labelledby="panel-title"
+        aria-busy="false"
+        data-state="idle"
+      >
+        <h2 id="panel-title">学习项目</h2>
+        <p id="message" role="status">尚未查询，请选择一个状态。</p>
+        <article id="project" hidden>
+          <h3 id="project-title">HTML 入门</h3>
+          <p>学习内容包括语义、输入与原生交互。完成后仍需运行自己的练习。</p>
+        </article>
+        <button type="button" id="load">展示成功状态</button>
+        <button type="button" id="retry" hidden>重试示例</button>
+      </section>
+      <p class="hint">
+        错误使用可见文字，不只靠颜色；状态更新不强行抢走当前焦点。
+      </p>
+    </main>
+    <script>
+      const state = document.querySelector("#state");
+      const panel = document.querySelector("#state-panel");
+      const messages = {
+        idle: "尚未查询，请选择一个状态。",
+        loading: "正在加载，请稍候。",
+        success: "已找到 1 个学习项目。",
+        empty: "查询完成，没有匹配项目。可调整条件。",
+        error: "暂时无法取得项目，请重试。",
+      };
+      function render() {
+        const value = state.value;
+        panel.dataset.state = value;
+        panel.setAttribute("aria-busy", String(value === "loading"));
+        document.querySelector("#message").textContent = messages[value];
+        document.querySelector("#project").hidden = value !== "success";
+        document.querySelector("#retry").hidden = value !== "error";
+        document.querySelector("#load").disabled = value === "loading";
+      }
+      state.addEventListener("change", render);
+      for (const id of ["load", "retry"])
+        document.querySelector("#" + id).addEventListener("click", () => {
+          state.value = "success";
+          render();
+        });
+      document
+        .querySelector("#long-copy")
+        .addEventListener("change", (event) => {
+          document.querySelector("#project-title").textContent = event
+            .currentTarget.checked
+            ? "面向桌面与手机用户的 HTML 表单学习项目：输入、校验、错误恢复与可访问反馈"
+            : "HTML 入门";
+        });
+    </script>
+  </body>
+</html>

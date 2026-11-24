@@ -152,7 +152,7 @@ def note_path(stage: int, section_id: str, section_title: str, item_id: str, ite
     folder = STAGE_FOLDERS[stage]
     sec_slug = section_slug(section_id, section_title)
     slug = slugify_item(item_text, item_id)
-    return f"./notes/{folder}/{sec_slug}/{item_id}.{slug}.md"
+    return f"./learning/1-notes/{folder}/{sec_slug}/{item_id}.{slug}.md"
 
 
 def extract_label(body: str) -> str:

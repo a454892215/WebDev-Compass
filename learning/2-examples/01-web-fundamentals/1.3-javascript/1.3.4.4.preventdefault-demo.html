@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      阻止默认行为与冒泡：preventDefault()、stopPropagation() · WebDev Compass
+    </title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+  </head>
+  <body data-lesson="1.3.4.4">
+    <a class="skip" href="#main">跳到实验</a>
+    <header><a href="./README.md">JavaScript 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>阻止默认行为与冒泡：preventDefault()、stopPropagation()</h1>
+      <p>取消默认动作和阻止事件传播是两件事，需要分别表达。</p>
+      <p class="hint">
+        只在本页观察，不上传数据；请通过本地 HTTP
+        服务打开。先预测，再运行并解释。
+      </p>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">实验操作</h2>
+        <div id="lab">
+          <form id="local-form">
+            <label for="demo-value">演示值</label
+            ><input id="demo-value" name="value" value="本地" /><button
+              type="submit"
+            >
+              本地提交
+            </button>
+          </form>
+          <div id="event-box" class="event-area">
+            <button id="stop" type="button">停止冒泡</button>
+          </div>
+        </div>
+        <button id="run" type="button">运行本节实验</button>
+      </section>
+      <section aria-labelledby="output-title">
+        <h2 id="output-title">运行结果</h2>
+        <pre
+          id="output"
+          tabindex="0"
+          role="region"
+          aria-labelledby="output-title"
+          aria-live="polite"
+        >
+尚未运行。</pre>
+      </section>
+      <section aria-labelledby="code-title">
+        <h2 id="code-title">核心代码</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-labelledby="code-title"
+        ><code>form.addEventListener(&#x27;submit&#x27;, event =&gt; {
+  event.preventDefault(); // 阻止导航式提交
+  console.log(event.defaultPrevented);
+});
+button.addEventListener(&#x27;click&#x27;, event =&gt; event.stopPropagation());</code></pre>
+      </section>
+      <p>
+        <a
+          href="../../../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.4.preventdefault.md"
+          >阅读对应笔记</a
+        >
+      </p>
+    </main>
+    <footer>WebDev Compass · JavaScript 基础实验</footer>
+    <script type="module" src="./assets/lab.mjs"></script>
+  </body>
+</html>

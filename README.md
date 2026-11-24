@@ -8,37 +8,33 @@
 
 - [当前进度与后续计划](./docs/PROGRESS.md)：已编写内容、验证范围及待办。
 - [知识地图总览](./KNOWLEDGE_MAP.md)与[六个分册](./knowledge-map/README.md)：583 个知识点的学习路线。
-- [笔记](./notes/README.md)与[配套示例](./examples/README.md)：原理、移动开发对照与练习。
+- [四部分学习资料](./learning/README.md)：理论、代码示例、独立练习与综合实践。
+- [学习资料结构规范](./docs/LEARNING_STRUCTURE.md)：目录、逐知识点映射与脚本门禁。
 - [Nuxt 基座与宿主指南](./framework-guide/README.md)：通用工程规划与独立项目交接。
 - [内容编写与验证规范](./docs/AUTHORING.md)：来源、命名、示例与验收要求。
 
 ## 当前覆盖
 
-| 模块          | 已提供的内容                                             |
-| ------------- | -------------------------------------------------------- |
-| 阶段 0        | 19 篇笔记、15 个示例入口，覆盖环境、浏览器与网络心智模型 |
-| 阶段 1 · HTML | 19 篇笔记及对应离线示例，覆盖语义、表单与原生元素        |
-| 工程实践专题  | 6 篇规划正文及三仓库实施交接记录                         |
+| 模块 | 已提供内容 |
+| --- | --- |
+| 阶段 0 | 19 篇既有笔记及实践入口，补齐独立练习与综合任务映射；旧正文待专项复审 |
+| 阶段 1 | HTML 19、CSS 41、JavaScript 42、基础质量 4，共 106 项四部分资料 |
+| 工程专题 | Nuxt 基座、桌面及手机宿主的规划与独立仓库交接 |
 
-阶段 1 的 CSS、JavaScript、基础质量专题，以及阶段 2–15 的详细教材仍待逐节编写。地图复选框保留为学习者进度，正文是否存在由检查器独立统计。清单覆盖不代表正文或学习已完成。
+正文覆盖 125/583（约 21.4%），阶段 2–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。验证边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
 
-## 示例与检查
-
-在仓库根目录启动纯 HTML 示例的静态服务：
+## 运行与检查
 
 ```bash
-python3 -m http.server 4173 --bind 127.0.0.1
-```
-
-浏览器打开 http://127.0.0.1:4173/examples/ 。REST、WebSocket 需按各自 README 启动 Node 服务。
-
-```bash
+node learning/4-practice/01-web-fundamentals/server.mjs
+# 打开 http://127.0.0.1:4174/learning/4-practice/01-web-fundamentals/
+python3 scripts/check_knowledge.py --table
 python3 scripts/check_knowledge.py --report
-python3 scripts/check_knowledge.py --table  # 打印各阶段正文完成度表格
+python3 scripts/check_learning_delivery.py
 python3 -m unittest discover -s scripts/tests -v
 ```
 
-检查器核对覆盖、本地链接、锚点与已勾选条目，区分未来章节的预留链接；不替代浏览器、接口、安全或辅助技术验证。
+综合项目服务同时提供仓库静态资源和本地教学 API。JavaScript POST、阶段 0 REST/WebSocket 以及 CSS 构建项目按各自 README 启动。使用 HTTP 运行模块与 Fetch 示例，避免 file:// 限制。检查器验证结构、映射及本地链接；浏览器行为与真实构建另行验证。
 
 ## 独立框架边界
 

@@ -1,0 +1,21 @@
+{
+  "name": "compass-css-build-lab",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "engines": {
+    "node": "^22.12.0 || >=24.0.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "verify": "node verify.mjs",
+    "check": "npm run build && npm run verify"
+  },
+  "devDependencies": {
+    "vite": "8.3.8",
+    "sass": "1.108.2",
+    "tailwindcss": "4.3.5",
+    "@tailwindcss/vite": "4.3.5"
+  }
+}

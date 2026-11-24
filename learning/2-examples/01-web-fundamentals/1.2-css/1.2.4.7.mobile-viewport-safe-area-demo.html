@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>1.2.4.7 移动视口、safe-area 与软键盘 · WebDev Compass</title>
+    <link rel="stylesheet" href="./assets/lab.css" />
+    <style>
+      #target {
+        min-height: 160px;
+        padding-bottom: 0;
+      }
+      body[data-active="true"] #target {
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        min-height: min(30dvh, 220px);
+      }
+    </style>
+  </head>
+  <body
+    data-lesson="1.2.4.7"
+    data-active="false"
+    data-properties='["paddingBottom"]'
+  >
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">CSS 实验目录</a></header>
+    <main id="main" tabindex="-1">
+      <h1>1.2.4.7 移动视口、safe-area 与软键盘</h1>
+      <p>手机浏览器的可见区域会变化，安全区和软键盘需要按真实设备行为验收。</p>
+      <section aria-label="实验操作" class="controls">
+        <button id="toggle" type="button" aria-pressed="false">
+          切换对照状态</button
+        ><button id="inspect" type="button">读取实际样式</button>
+      </section>
+      <section class="lab" aria-label="规则对照区域">
+        <div id="target" class="sample">
+          <label for="mobile-input">测试输入焦点</label
+          ><input
+            id="mobile-input"
+            autocomplete="off"
+            placeholder="真机可观察键盘"
+          />
+          <p>软键盘、刘海和地址栏必须按目标设备验证。</p>
+        </div>
+      </section>
+      <section>
+        <h2>实际计算与观察</h2>
+        <pre
+          id="result"
+          class="readout"
+          tabindex="0"
+          role="region"
+          aria-label="目标元素计算值"
+        ></pre>
+        <p class="hint">
+          本轮离线案例只观察CSS声明与模拟视口；safe-area、软键盘不等于真机验收。
+        </p>
+      </section>
+      <section>
+        <h2>本例需要回答</h2>
+        <ol>
+          <li>比较CSS单位支持与视口读数。</li>
+          <li>切换安全区padding规则，观察计算值。</li>
+          <li>
+            真机打开键盘，检查输入框/底栏；本页静态模拟不声称已完成这一步。
+          </li>
+        </ol>
+      </section>
+    </main>
+    <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
+
+    <script src="./assets/lab.js" defer></script>
+  </body>
+</html>

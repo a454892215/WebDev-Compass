@@ -1,0 +1,109 @@
+{
+  "cases": [
+    {
+      "id": "1.4.1",
+      "file": "1.4.1.standards-baseline-demo.html",
+      "actions": [
+        { "kind": "click", "selector": "#detect" },
+        { "kind": "click", "selector": "#fallback-toggle" }
+      ],
+      "assertions": [
+        { "kind": "text", "selector": "#result", "contains": "Grid 语法支持" },
+        {
+          "kind": "computed",
+          "selector": "#cards",
+          "property": "display",
+          "equals": "block"
+        }
+      ]
+    },
+    {
+      "id": "1.4.2",
+      "file": "1.4.2.accessibility-foundations-demo.html",
+      "actions": [
+        { "kind": "click", "selector": "button[type=submit]" },
+        { "kind": "fill", "selector": "#nickname", "value": "Demo" },
+        { "kind": "click", "selector": "button[type=submit]" },
+        { "kind": "click", "selector": "#contrast" }
+      ],
+      "assertions": [
+        { "kind": "text", "selector": "#result", "contains": "你好，Demo" },
+        {
+          "kind": "attribute",
+          "selector": "#result",
+          "name": "data-state",
+          "equals": "success"
+        },
+        {
+          "kind": "attribute",
+          "selector": "html",
+          "name": "data-theme",
+          "equals": "contrast"
+        }
+      ]
+    },
+    {
+      "id": "1.4.3",
+      "file": "1.4.3.design-interaction-states-demo.html",
+      "actions": [
+        { "kind": "select", "selector": "#state", "value": "error" },
+        { "kind": "click", "selector": "#retry" },
+        { "kind": "click", "selector": "#long-copy" }
+      ],
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#state-panel",
+          "name": "data-state",
+          "equals": "success"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#state-panel",
+          "name": "aria-busy",
+          "equals": "false"
+        },
+        {
+          "kind": "text",
+          "selector": "#project-title",
+          "contains": "面向桌面与手机用户"
+        }
+      ]
+    },
+    {
+      "id": "1.4.4",
+      "file": "1.4.4.progressive-enhancement-demo.html",
+      "actions": [
+        { "kind": "click", "selector": "#start" },
+        { "kind": "click", "selector": "#cancel" }
+      ],
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#result",
+          "name": "data-state",
+          "equals": "cancelled"
+        },
+        { "kind": "text", "selector": "#reading", "contains": "运行本地示例" }
+      ]
+    }
+  ],
+  "specialChecks": [
+    {
+      "id": "1.4.2",
+      "scenario": "提交空昵称后检查nickname焦点、aria-invalid=true；输入后错误清除；Tab走查。"
+    },
+    {
+      "id": "1.4.4",
+      "scenario": "mode=failure点击start，等待result[data-state=error]；点击retry等待success，updated有3项。"
+    },
+    {
+      "id": "1.4.4",
+      "scenario": "新context禁用JavaScript，reading可见、enhanced不可见、no-script可见。"
+    },
+    {
+      "id": "1.4.4",
+      "scenario": "拦截assets/lesson-data.json并abort，点击start等待error，reading仍可读；故意失败请求是预期。"
+    }
+  ]
+}
