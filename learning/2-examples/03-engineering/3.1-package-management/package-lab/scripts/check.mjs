@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import semver from 'semver';
+import{readFile}from'node:fs/promises';
+const cases=[['1.9.0','^1.2.3',true],['2.0.0','^1.2.3',false],['1.2.9','~1.2.3',true],['1.3.0','~1.2.3',false],['0.2.9','^0.2.3',true],['0.3.0','^0.2.3',false],['0.0.4','^0.0.3',false],['1.3.0-beta.1','^1.2.3',false]];
+for(const[version,range,expected]of cases)assert.equal(semver.satisfies(version,range),expected,`${version} ${range}`);
+const root=JSON.parse(await readFile(new URL('../package.json',import.meta.url)));
+assert.equal(root.private,true);assert.equal(root.devDependencies.semver,'7.8.6');
+const app=JSON.parse(await readFile(new URL('../packages/app/package.json',import.meta.url)));
+assert.equal(app.dependencies['@compass/math'],'workspace:*');
+console.log(JSON.stringify({semverCases:cases.length,privateRoot:true,workspaceDependency:true,status:'passed'}));

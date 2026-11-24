@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "stage": 3,
+  "project": "learning/4-practice/03-engineering/index.html",
+  "points": [
+    {
+      "id": "3.1.1",
+      "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.1.package.json.md",
+      "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.1.package.json-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.1.package.json.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-1"
+    },
+    {
+      "id": "3.1.2",
+      "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.2.npm-yarn-pnpm.md",
+      "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.2.npm-yarn-pnpm-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.2.npm-yarn-pnpm.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-2"
+    },
+    {
+      "id": "3.1.3",
+      "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.3.item-3-1-3.md",
+      "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.3.item-3-1-3-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.3.item-3-1-3.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-3"
+    },
+    {
+      "id": "3.1.4",
+      "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.4.package-lock.json.md",
+      "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.4.package-lock.json-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.4.package-lock.json.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-4"
+    },
+    {
+      "id": "3.1.5",
+      "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.5.monorepo.md",
+      "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.5.monorepo-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.5.monorepo.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-5"
+    },
+    {
+      "id": "3.1.6",
+      "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.6.src.md",
+      "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.6.src-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.6.src.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-6"
+    },
+    {
+      "id": "3.2.1",
+      "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.1.hmr.md",
+      "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.1.hmr-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.1.hmr.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-1"
+    },
+    {
+      "id": "3.2.2",
+      "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.2.vite.md",
+      "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.2.vite-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.2.vite.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-2"
+    },
+    {
+      "id": "3.2.3",
+      "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.3.webpack.md",
+      "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.3.webpack-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.3.webpack.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-3"
+    },
+    {
+      "id": "3.2.4",
+      "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.4.hmr.md",
+      "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.4.hmr-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.4.hmr.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-4"
+    },
+    {
+      "id": "3.2.5",
+      "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.5.code-splitting-tree-shaking.md",
+      "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.5.code-splitting-tree-shaking-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.5.code-splitting-tree-shaking.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-5"
+    },
+    {
+      "id": "3.2.6",
+      "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.6.source-map.md",
+      "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.6.source-map-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.6.source-map.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-6"
+    },
+    {
+      "id": "3.2.7",
+      "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build.md",
+      "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-7"
+    },
+    {
+      "id": "3.3.1",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.1.typescript-ide.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.1.typescript-ide-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.1.typescript-ide.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-1"
+    },
+    {
+      "id": "3.3.2",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.2.string.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.2.string-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.2.string.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-2"
+    },
+    {
+      "id": "3.3.3",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.3.interface.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.3.interface-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.3.interface.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-3"
+    },
+    {
+      "id": "3.3.4",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.4.item-3-3-4.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.4.item-3-3-4-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.4.item-3-3-4.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-4"
+    },
+    {
+      "id": "3.3.5",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.5.extends.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.5.extends-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.5.extends.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-5"
+    },
+    {
+      "id": "3.3.6",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.6.typeof.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.6.typeof-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.6.typeof.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-6"
+    },
+    {
+      "id": "3.3.7",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.7.item-3-3-7.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.7.item-3-3-7-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.7.item-3-3-7.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-7"
+    },
+    {
+      "id": "3.3.8",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.8.public.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.8.public-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.8.public.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-8"
+    },
+    {
+      "id": "3.3.9",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.9..d.ts.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.9..d.ts-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.9..d.ts.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-9"
+    },
+    {
+      "id": "3.3.10",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.10.tsconfig.json.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.10.tsconfig.json-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.10.tsconfig.json.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-10"
+    },
+    {
+      "id": "3.3.11",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-11"
+    },
+    {
+      "id": "3.3.12",
+      "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin.md",
+      "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin-demo.md",
+      "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-12"
+    },
+    {
+      "id": "3.4.1",
+      "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.1.eslint.md",
+      "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.1-eslint/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.1.eslint.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-1"
+    },
+    {
+      "id": "3.4.2",
+      "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.2.prettier.md",
+      "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.2-prettier/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.2.prettier.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-2"
+    },
+    {
+      "id": "3.4.3",
+      "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.3.editorconfig.md",
+      "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.3-editorconfig/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.3.editorconfig.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-3"
+    },
+    {
+      "id": "3.4.4",
+      "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.4.husky.md",
+      "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.4-husky/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.4.husky.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-4"
+    },
+    {
+      "id": "3.4.5",
+      "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.5.conventional-commits.md",
+      "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.5-conventional-commits/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.5.conventional-commits.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-5"
+    },
+    {
+      "id": "3.4.6",
+      "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.6..gitignore.md",
+      "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.6-.gitignore/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.6..gitignore.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-6"
+    },
+    {
+      "id": "3.5.1",
+      "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.1.e2e.md",
+      "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.1-e2e/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.1.e2e.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-1"
+    },
+    {
+      "id": "3.5.2",
+      "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.2.vitest.md",
+      "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.2-vitest/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.2.vitest.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-2"
+    },
+    {
+      "id": "3.5.3",
+      "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.3.react-testing-library.md",
+      "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.3-react-testing-library/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.3.react-testing-library.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-3"
+    },
+    {
+      "id": "3.5.4",
+      "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.4.playwright.md",
+      "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.4-playwright/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.4.playwright.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-4"
+    },
+    {
+      "id": "3.5.5",
+      "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.5.item-3-5-5.md",
+      "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.5-item-3-5-5/README.md",
+      "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.5.item-3-5-5.md",
+      "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-5"
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "3.3.1",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.1.typescript-ide.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.1.typescript-ide-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.1.typescript-ide.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-1",
+    "evidence": {
+      "theory": [
+        "TypeScript在JavaScript上增加静态类型检查，IDE补全、跳转和重构依赖同一份可分析契约；有类型并不自动证明业务正确。",
+        "类型注解、interface、type和多数断言在输出JS中消失；浏览器运行的是JS。Vite转译TS不等于执行完整类型检查，构建流程应另有tsc --noEmit。",
+        "any、断言、外部JS及不准确声明可绕开检查；网络/存储输入先作为unknown并验证，不能把“编译通过”当协议已可信。"
+      ],
+      "example": "purpose()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "在副本为任务对象和formatTitle函数加类型，保留一份未知JSON输入并验证字段。 排错：用as把数字title断言成string，再调用toUpperCase；先解释为什么编译器相信你，改为unknown与守卫后对坏输入给明确错误。",
+      "practice": "审查任务板模型与unknown解码边界，指出哪些错误由tsc发现、哪些必须运行时拒绝。",
+      "boundaries": "适合对项目模型、模块边界和协作接口建立反馈；不能替代运行期验证、权限和测试。启用strict后应逐步解释错误，不用any统一消音。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.2",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.2.string.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.2.string-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.2.string.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-2",
+    "evidence": {
+      "theory": [
+        "string/number/boolean、小写原始类型与数组描述值形状；元组固定位置的意义，readonly元组不等于运行期冻结。",
+        "unknown要求先收窄才访问；any主动退出大部分检查，错误可能一路传播。void表示调用方忽略返回结果的契约，never表示不应正常返回或不可达。",
+        "null/undefined在strictNullChecks下需要显式处理；数组越界需noUncheckedIndexedAccess或业务检查。enum一般生成运行期对象，不是全部TS语法都会擦除；某些仅剥离类型的执行器不支持enum。"
+      ],
+      "example": "basics()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "创建含字符串id、布尔状态、数值时长和元组坐标的模型；比较unknown与any访问同一坏输入。 排错：把unknown换成any让坏字段参与乘法，得到NaN；改回unknown并检查Number.isFinite后再使用。",
+      "practice": "为任务板id、标题、完成状态和筛选条件写准确类型，评估用字面量联合而非强引enum。",
+      "boundaries": "本包由真实tsc编译enum，不把Node直接剥离TS或Vite的所有配置都称支持。对象包装类型String/Number通常不用于普通值注解。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.3",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.3.interface.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.3.interface-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.3.interface.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-3",
+    "evidence": {
+      "theory": [
+        "interface常用于对象契约，可extends并支持同名声明合并；type能命名对象、联合、元组等，不能依相同名字重复定义来合并。",
+        "多数对象兼容按结构判断：有需要字段即可，不要求显式implements。新鲜对象字面量的多余属性检查与变量赋值情形不同。",
+        "二者没有“interface一定更安全”的通用结论。对外契约保持清楚并避免无意全局合并；类型名在运行时不存在，不能instanceof一个interface。"
+      ],
+      "example": "aliases()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "分别用interface定义阅读项、type定义筛选联合；比较字面量多余字段与变量赋值。 排错：用同名interface意外合并不相关字段，让实现突然缺字段；隔离模块命名并判断是否本应是不同契约。",
+      "practice": "整理任务板的Task与Filter契约，区分服务端字段、UI派生字段，避免把所有扩展塞进同一可选接口。",
+      "boundaries": "模型类型应表达业务字段，不能为了复用让一个巨型interface含所有可选属性。精确运行期JSON字段限制仍需解码器。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.4",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.4.item-3-3-4.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.4.item-3-3-4-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.4.item-3-3-4.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-4",
+    "evidence": {
+      "theory": [
+        "A|B表示值符合其中一种，未收窄前只能安全使用公共能力；统一kind字段可让分支关联到对应payload。",
+        "A&B要求同时满足两组约束，不是运行时合并对象。冲突字段可能收窄为never，不能把交叉当覆盖操作符。",
+        "用switch/default中的never检查遗漏分支；这只在检查器可见的封闭联合中有效，运行期输入仍可能非法。"
+      ],
+      "example": "unions()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "把loading、success、error表示为联合，在各分支只访问对应字段；新增一种状态检查遗漏。 排错：把{id:string}与{id:number}交叉后试写id；不要用as压过去，改为统一协议或更换字段名。",
+      "practice": "审查任务板加载/失败/成功分支，若多个布尔标志能形成矛盾状态，在副本用判别联合整理。",
+      "boundaries": "用于加载/错误等互斥状态，优于多个可能互相矛盾的布尔值；不要求小页面过度状态机化。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.5",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.5.extends.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.5.extends-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.5.extends.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-5",
+    "evidence": {
+      "theory": [
+        "泛型表达输入与输出之间的类型关系，不只是把any换成T。约束extends规定调用方至少满足哪些能力。",
+        "查询可能找不到时返回T|undefined，不用断言掩盖。readonly输入可以避免函数意外修改数组，但不是深冻结。",
+        "Partial/Pick/Omit/Record都是类型变换，不会在运行时补字段、删除字段或验证键。只为一次固定操作写清楚类型，避免无意义多层泛型。"
+      ],
+      "example": "generics()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "从两种带id的模型抽出byId，再用Pick定义列表摘要、Omit定义创建输入。 排错：把返回值断言为T导致找不到项时崩溃；改为T|undefined并由调用方处理空结果。",
+      "practice": "给任务板的按id查询或摘要映射保留输入/输出类型关系；仅在确有复用时抽出泛型。",
+      "boundaries": "当多个模型共享查询、映射关系时有价值；不为每个函数都设计“通用框架”。Partial也不能直接当未经验证的更新协议。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.6",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.6.typeof.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.6.typeof-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.6.typeof.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-6",
+    "evidence": {
+      "theory": [
+        "as和非空断言!改变编译器看法，不验证、转换或填充值。typeof、null检查、in、instanceof可依据真实运行条件收窄。",
+        "自定义value is T谓词是给编译器的承诺，检查体写错仍会撒谎；应逐个验证必须字段和类型，嵌套数据按实际schema继续解码。",
+        "instanceof适合真实类实例，JSON解析出的普通对象不自动成为类；跨realm等场景也需考虑构造器身份。DOM查询可先instanceof判断元素类型和缺失情况。"
+      ],
+      "example": "narrowing()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "从unknown解码一条阅读项，覆盖null、数组、缺字段、错类型和有效对象，再比较as版本。 排错：写一个无条件return true的谓词，让坏title通过；补真实字段判断，不把谓词签名本身当正确性证明。",
+      "practice": "为任务板fetch得到的unknown数据设计解码及反例测试，避免把响应直接断言为Task[]。",
+      "boundaries": "网络、存储、文件都是边界。校验失败应返回可理解错误，不能靠as unknown as或!把错误变成调用栈更远处崩溃。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.7",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.7.item-3-3-7.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.7.item-3-3-7-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.7.item-3-3-7.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-7",
+    "evidence": {
+      "theory": [
+        "参数类型和返回类型描述调用契约；函数类型可用于依赖注入、事件回调和测试替身，不能混淆函数本身与执行结果。",
+        "可选参数意味着调用方可不传；默认参数在缺失或undefined时生效，不在null时自动生效。必需参数和可选顺序要设计清楚。",
+        "返回void的回调契约允许调用方忽略结果，不表示传入函数不能有返回值。strictFunctionTypes对函数参数兼容提供额外检查，方法位置有特殊规则，不以一个例子概括所有变体。"
+      ],
+      "example": "functions()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "给标题格式化、筛选谓词及请求函数写契约，再用测试替身实现同样签名。 排错：把处理number的函数当作string回调，观察strictFunctionTypes诊断；修复契约或真正转换输入，不盲目强断言。",
+      "practice": "为任务板筛选、解码和测试fetch替身定义函数契约，保留真实的异步与失败行为。",
+      "boundaries": "为模块协作固定最小契约。异步函数显式Promise<Result>，注意reject不是类型中的自动错误分支，错误处理另设计。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.8",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.8.public.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.8.public-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.8.public.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-8",
+    "evidence": {
+      "theory": [
+        "public是默认可访问性；protected允许子类访问，private限制TypeScript代码中的访问。初始化、继承和方法绑定仍按JavaScript执行。",
+        "TypeScript private通常保留普通JS属性，并非秘密存储；JS #private有运行时私有品牌检查。编译目标与工具支持必须核对，不能混用两者概念。",
+        "readonly阻止类型检查范围内的重新赋值，不等于Object.freeze或深不可变。受保护/私有成员还会影响类的类型兼容，不能把所有类都简化成任意结构一样即可。"
+      ],
+      "example": "classes()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "建立公开id、protected工具、private缓存和#private状态，分别测试编译期拒绝与运行时反射。 排错：把private token当秘密，查看输出JS后反射读取；删除前端秘密设计，敏感授权交服务端，公开演示用无敏感字段。",
+      "practice": "评估任务板状态是否确需class；在独立分支比较纯函数与实例封装，不为修饰符重写主工程。",
+      "boundaries": "可用于实例状态，但不要求为了学修饰符把清晰纯函数重写成类。秘密不能只靠前端private字段保护，浏览器代码仍由用户掌控。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.9",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.9..d.ts.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.9..d.ts-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.9..d.ts.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-9",
+    "evidence": {
+      "theory": [
+        "普通import/export组织运行时模块；import type只在类型系统中使用，编译后应擦除。Node、浏览器与打包器解析规则不同，示例明确NodeNext与.js后缀。",
+        "声明文件描述现有运行时API，不自动生成函数、变量或安装依赖。错误声明会让编译器相信不存在的事实。",
+        "包的types/exports与.d.ts需和实际产物一致；全局声明慎用，优先模块范围。运行时库缺失与类型声明缺失是两种错误，不能随手declare module any掩盖。"
+      ],
+      "example": "modules()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "拆出Task契约和纯函数；生成声明产物，再创建仅有声明、没有实现的BUILD_META对照。 排错：为不存在的SDK写declare const sdk后直接调用；观察运行期ReferenceError，再正确安装/导入实现，不继续加断言。",
+      "practice": "审查任务板domain类型的type-only导入和实际函数导入，检查产物/声明与运行模块是否一致。",
+      "boundaries": "实验types/build-meta.d.ts声明BUILD_META；Node里typeof BUILD_META仍是undefined。真实代码直接读取未实现的变量会ReferenceError，类型检查通过不补运行时。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.10",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.10.tsconfig.json.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.10.tsconfig.json-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.10.tsconfig.json.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-10",
+    "evidence": {
+      "theory": [
+        "strict启用一组严格检查，但并非所有安全选项；noUncheckedIndexedAccess、exactOptionalPropertyTypes等按需求显式选择。本例数组索引显式处理undefined。",
+        "target决定输出语法级别；lib声明可用API的类型，不会安装polyfill。module/moduleResolution要匹配Node或打包器宿主，不能把NodeNext配置无脑复制给Vite。",
+        "paths帮助类型检查器查找导入，不自动重写输出import。Vite alias或其他运行时解析要同步配置；本例真实验证tsc成功但Node无法找到@lab/lib。"
+      ],
+      "example": "config()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "对照strictNullChecks开关与数组索引选项；添加别名并分别验证tsc、构建器和运行器。 排错：只配paths不配真实解析，运行产物出现ERR_MODULE_NOT_FOUND；修复宿主配置或相对导入，不用skipLibCheck解决路径。",
+      "practice": "核对任务板tsconfig与Vite alias的一致性，并分别运行typecheck、build和产物浏览器验证。",
+      "boundaries": "修改配置后要运行tsc与真实构建/运行。单独传文件可能不按预期读取项目tsconfig；使用tsc -p。版本升级的废弃选项需查对应版本文档。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.11",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-11",
+    "evidence": {
+      "theory": [
+        "Vue组件的Props与事件形成组件契约；defineComponent可从运行时props/emits声明推断类型。script setup的defineProps/defineEmits属于SFC编译宏，不能在任意普通TS文件直接调用来模拟编译。",
+        "composable函数可以返回Ref、方法及只读派生值；Ref<T>与T不同，script与模板解包规则后续展开。不要为方便全转any失去返回契约。",
+        "类型注解与运行时props验证仍有边界。示例只编译契约、创建VNode并运行ref函数，不挂载DOM，不声称已验证交互；组件测试在3.5，完整Vue在阶段4。React只作为选修，不额外引依赖。"
+      ],
+      "example": "vue()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "为一个最小卡片定义title、done、select事件，给useSelection标清返回值；先做类型错误实验。 排错：把defineProps当普通TS运行函数调用；改用真正SFC编译环境或defineComponent示例，不把宏声明当运行时实现。",
+      "practice": "主任务板是原生TS；在独立副本定义Vue卡片契约和composable返回类型，为阶段4迁移准备，不冒称主项目已有Vue UI。",
+      "boundaries": "实验ReadingCard使用真实Vue defineComponent和h，CardProps由实例推断；把title设为number时真实tsc拒绝。没有为了类型入门引入完整SSR/路由。"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.3.12",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin.md",
+    "example": "learning/2-examples/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-3-12",
+    "evidence": {
+      "theory": [
+        "可迁移经验包括类型契约、空值处理、泛型和IDE反馈；TS普通对象多按结构兼容，Dart/Kotlin的名义类型关系不能直接套用。",
+        "strictNullChecks改善静态空值检查，但any、断言、未检查外部JS及数组索引仍可能留下运行时缺失值；不把TS称为与Dart sound null safety完全等价。",
+        "TS类型主要擦除，运行平台仍是JS；外部JSON不会自动校验，类访问控制、泛型、枚举和平台API都要按目标工具链核对。Kotlin平台类型/!!等也有边界，不能反向宣称移动端绝无空值错误。"
+      ],
+      "example": "mobileBoundary()真实类型正例、Node运行断言和对应编译反例；27项验证的本点记录见stage-3-ts-runtime.json。",
+      "exercise": "列出结构兼容、类型擦除、外部JSON、数组越界四项与移动经验的差异，并用本组TS实验逐一证明Web侧。 排错：把后端响应直接标成模型后认为不会为空；用null/错字段重现，改为unknown解码与可空分支。",
+      "practice": "写任务板从移动经验迁移的三条注意事项，分别指向实际解码、状态和编译配置代码。",
+      "boundaries": "本章只在TS编译器与Node运行，不建立Dart/Android工程，也不声称跨平台运行验证。需要迁移具体框架时查目标版本官方文档。"
+    },
+    "issues": []
+  }
+]

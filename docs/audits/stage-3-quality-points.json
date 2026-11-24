@@ -1,0 +1,266 @@
+[
+  {
+    "id": "3.4.1",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "ESLint 解析源码并按规则报告问题。flat config 是配置对象数组；files 决定匹配范围，ignores 排除产物。typescript-eslint 使规则理解 TypeScript 语法；基础 recommended 不等于全部类型感知规则。tsc 负责类型检查，两者需要分别执行。",
+        "类似 Dart analyzer 的部分职责，但 Dart 格式化、类型检查和 lint 在 Web 中通常是多个工具；没有装编辑器插件也应能运行 CLI。"
+      ],
+      "example": "运行 pnpm lint；再运行 pnpm verify:tools，临时 debugger 触发 no-debugger，进程返回非零。配置文件不会自己执行；编辑器诊断依赖对应插件和工作区设置，终端脚本才是可复现入口。",
+      "exercise": "在实验副本添加 no-debugger:error，并创建含 debugger 的 ts 文件；记录失败，修复后重新检查。 排错：把 files 误设成 **/*.js 后放入 bad.ts；观察该文件是否被规则检查。恢复 TypeScript 匹配范围，再比较输出；不能只看命令退出码而忽略 ignored 警告。",
+      "practice": "现有任务板已有 flat config。复制项目，增加 no-debugger 规则并用一个会失败的临时源文件证明脚本覆盖 src；修复后保留成功记录。",
+      "boundaries": "适合捕捉未使用变量、危险写法等。规则作用域必须匹配 ts 文件；不要用关闭全部规则解决误报。推荐集随版本变化，锁定依赖和锁文件。ESLint 不负责取代测试或统一所有排版。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.1.eslint.md",
+    "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.1-eslint/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.1.eslint.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-1",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.4.2",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "Prettier 把源码解析后重新打印为统一风格；它关注排版。--write 改写文件，--check 比较结果并用退出码表示差异。ESLint 检查质量时避免再启用一套相互冲突的排版规则；此项目不需要把 Prettier 包成 ESLint 规则。",
+        "类似 dart format；并非等同整个 analyzer。Web 多语言文件与忽略规则较多，要核对实际检查范围。"
+      ],
+      "example": "实验配置使用 semi:false、singleQuote:true。verify:tools 对未排版 fixture 调用 --check，确认返回非零且文件未被重写；校验样本显式跳过 ignore 文件，避免误把“无匹配文件”当有效检查。",
+      "exercise": "在副本把 domain.ts 一段改成双引号/紧凑对象；先 check 再 write，再 check，并保存差异。 排错：把目标文件加入 .prettierignore 后再次 check；解释为什么“全部匹配文件通过”可能没有检查目标，再移除误忽略。",
+      "practice": "现有任务板已有 format:check。副本故意制造一个排版差异，证明 check 不改源码，再格式化并通过功能测试。",
+      "boundaries": "适合提交前和自动化检查中统一差异。格式正确不代表类型、业务逻辑或安全正确；--write 先看差异，避免对整个他人仓库做无关排版。配置必须由执行入口读取才生效。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.2.prettier.md",
+    "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.2-prettier/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.2.prettier.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-2",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.4.3",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        ".editorconfig 是编辑器/工具可读取的文本约定。root=true 停止向父目录查找；section glob 选择文件，后匹配的属性可覆盖前面。indent_size、end_of_line 和 insert_final_newline 等不等同完整语法格式化。只有支持它的工具或插件会应用。",
+        "类似团队IDE代码样式约定，但它是工具无关的部分属性协议；不能像某个IDE配置一样假设人人自动启用。"
+      ],
+      "example": "verify:tools 在隔离目录把 indent_size 设成4，通过 Prettier.resolveConfig(...,{editorconfig:true}) 读到 tabWidth:4，并实际格式化出四空格。这证明支持工具的读取；没有冒充所有编辑器保存行为已测试。",
+      "exercise": "在实验副本为 *.md 单独保留尾空格，并为一个临时目录设四空格；记录工具解析到的缩进设置。 排错：把 indent_size 错写为 indent-size 后解析；修回标准属性名并重新读取，不只在编辑器肉眼看空白。",
+      "practice": "现有任务板有基础 EditorConfig。副本增加 Markdown 专用 section，解释为什么代码缩进与 Markdown 尾空格需要不同策略。",
+      "boundaries": "适合跨编辑器基础约定。Prettier 显式配置可以覆盖其映射的 EditorConfig 属性；charset 不会替你把既有二进制或坏编码自动修好。Markdown 尾空格可能有意义，可单独设 trim_trailing_whitespace=false。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.3.editorconfig.md",
+    "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.3-editorconfig/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.3.editorconfig.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-3",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.4.4",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "Git hooks 是 Git 生命周期中的本地脚本。Husky 配置仓库 hook 入口，lint-staged 获取暂存路径并把匹配文件交给工具。全项目类型检查不是简单给 tsc 追加暂存文件；涉及跨文件类型时仍跑项目脚本。先区分工作区、暂存区和提交。",
+        "类似提交前 analyzer 脚本，但 Git 暂存区是独立快照；只改工作区并不保证提交内容已修复。"
+      ],
+      "example": "本例不在学习仓库运行 husky init/prepare。pnpm verify:tools 创建临时 Git 仓库、设置该临时仓库 .husky/_，暂存 debugger 并证明提交失败；修复、重新暂存后提交成功。临时仓库随后删除。",
+      "exercise": "阅读 verify-tools.mjs 的临时仓库段，在自己的临时副本把匹配范围改为 *.ts，添加 bad.ts 验证暂存检查。不要在真实宿主仓库安装 hook。 排错：修复文件但忘记 git add；比较 git diff 和 git diff --cached，再重新暂存验证。不要通过 --no-verify 掩盖失败。",
+      "practice": "主任务板不安装真实 hooks。阅读隔离验证，另建临时 Git 仓库重复“暂存错误—阻止—修复—提交”，记录主项目未受影响。",
+      "boundaries": "适合快速本地反馈；hook 可被跳过，不是服务端权限或安全边界。团队仍需独立自动化检查。husky init 会改 package.json 和仓库配置，不能未经判断在已有仓库执行；本例不提供真实主仓库 hook 安装。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.4.husky.md",
+    "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.4-husky/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.4.husky.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-4",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.4.5",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "约定以 type(scope可选)!可选: 描述 开头；正文补充原因，footer 可声明 BREAKING CHANGE。fix、feat 常用于版本工具语义，其余类型按团队约定。! 或 BREAKING CHANGE 表示破坏性契约变化，不能只依赖标题猜。",
+        "与 Android/Flutter 项目使用相同 Git 提交约定；没有平台专属技术依赖。"
+      ],
+      "example": "verify:tools 检查两个合法教学标题和一个无结构标题；使用的是项目标题子集正则，并非完整规范解析器。真实规范包括正文/footer，多行内容不能靠这一个正则完全验证。",
+      "exercise": "为“新增筛选”“修复标题解码”“改变导入字段导致旧文件不兼容”各写提交消息；最后一条写明迁移方法。 排错：给纯排版提交写 feat: 新增功能；指出语义误导并改成团队认可的 style/chore 等类型，而不是只检查正则。",
+      "practice": "基于任务板的一次真实副本改动撰写提交说明；若只练习文案无需提交真实仓库，另提供一次破坏性 JSON 协议变化的示范消息。",
+      "boundaries": "适合变更日志和回溯。标题格式不会保证业务质量、测试充分或自动发布安全；语义版本和发布仍需团队规则、兼容分析与授权。本仓库默认中文描述，保留英文 type/scope。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.5.conventional-commits.md",
+    "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.5-conventional-commits/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.5.conventional-commits.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-5",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.4.6",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        ".gitignore 控制未跟踪文件的忽略，不会取消已跟踪文件。git ls-files 查看索引，git check-ignore 观察匹配。npm 包的文件集合是另一套规则：有 .npmignore 时不会再把 .gitignore 当同等兜底；优先用 package.json files 明确允许分发文件，并核对实际清单。",
+        "类似移动端排除 build、签名文件；npm 包发布清单与 Git 仓库可见性是不同维度。"
+      ],
+      "example": "verify:tools 在临时仓库证明已跟踪 sample.js 后来被忽略仍留在索引；临时 npm 包用无敏感内容的 dummy-secret.txt 证明 .npmignore 与 .gitignore 的差异，补规则后 dry-run 清单不再包含它。没有发布任何包。",
+      "exercise": "仅在临时目录创建无敏感内容的 config.demo，演示跟踪后添加忽略无效；为临时包设置 files:[\"dist\"] 并核对 dry-run 清单。 排错：只把 config.demo 写进 .gitignore，再新建 .npmignore 而遗漏它；观察清单，修复为明确 files 白名单或正确排除。禁止放真实秘密做实验。",
+      "practice": "现有任务板是 private 应用而非待发布库。复制一个无秘密的最小包，在 dry-run 中核对 files 白名单，不把任务板直接 publish。",
+      "boundaries": "适合阻止产物和本地配置误入库/包；忽略不是加密或秘密防线。真实凭据泄漏须撤销/轮换，删除工作区文件不删除历史。git rm --cached 会修改索引，先核对目标，不在本课程主仓库批量执行。private:true 防误发布但不替代产物审查。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.4-code-quality/3.4.6..gitignore.md",
+    "example": "learning/2-examples/03-engineering/3.4-code-quality/3.4.6-.gitignore/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.4-code-quality/3.4.6..gitignore.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-4-6",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.5.1",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "单元测试隔离纯逻辑或少量依赖；组件测试验证渲染、交互与事件契约；端到端测试从用户入口贯穿浏览器流程。分层按风险和反馈速度选择，金字塔是经验模型，不是必须满足的数量比例。同一断言不必机械在所有层重复。",
+        "对应移动开发的单元/Widget或组件/集成测试分工；DOM模拟器与浏览器差异类似测试宿主与真实设备差异，但实现并非同一套。"
+      ],
+      "example": "lab 的 domain/service 测试运行在 Vitest；Vue 组件 mount 在 jsdom；Playwright 在真实 Chrome 打开原生页面。三类证据各有范围：mock HTTP 没有验证真实服务器，jsdom 没有验证真实排版。",
+      "exercise": "为 JSON 导入失败、按钮发事件、键盘添加任务、服务器鉴权各选择测试层；写明为什么其他层不能完全替代。 排错：在 jsdom 写一个“没有横向溢出”的断言并试图证明移动布局；说明测量环境缺口，改用 Playwright viewport + scrollWidth 观察。",
+      "practice": "为任务板写一页风险—测试层映射；复用已有单元与 E2E，并给尚未连接的真实后台明确标记未验证。",
+      "boundaries": "适合制定最小充分回归。导入解析的多种非法输入放单元；props/emits 放组件；表单可用和文本安全放关键 E2E。移动视口只验证布局尺寸，不能称手机真机或完整无障碍认证。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.1.e2e.md",
+    "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.1-e2e/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.1.e2e.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-1",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.5.2",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "Vitest 用 test/it 定义场景，expect 断言可观察结果。vi.fn 可替代依赖并检查调用。异步断言需要 await/return，否则测试可能在失败前结束。隔离并清理替身，避免前一个测试污染后一个。测试应围绕契约而非复制实现。",
+        "类似 Dart test + mock 注入，但 JS Promise 必须被测试等待；类型断言 as 不能验证网络数据。"
+      ],
+      "example": "查看 service.test.ts 的完整 import 与 fixture：HTTP错误时不解析 JSON；还验证传输、JSON解析和协议失败。domain.test.ts 测空白、重复ID、非法 unknown 输入与不可变更新。verify:tools 的受控错误断言确实导致非零退出后清理。",
+      "exercise": "为 loadTasks 增加一个响应 json() 拒绝的独立测试，并检查错误上抛；不要只测成功返回。 排错：故意删掉 await 观察异步断言可靠性；恢复 await，并用明确错误信息/调用计数防止假阳性。不要依赖这次机器恰好及时报错。",
+      "practice": "现有任务板已有解析测试。副本新增一个未覆盖的导入边界，先写失败测试再修复；新增服务接入需标为扩展，不能假称已有后台。",
+      "boundaries": "适合快速业务边界回归。mock 成功只证明代码处理这个替身，不证明真实网络协议；外部响应仍要 runtime decode。Jest 可选对照，本课程主线不重复安装。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.2.vitest.md",
+    "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.2-vitest/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.2.vitest.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-2",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.5.3",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "本节主线用 Vue Test Utils v2 测 Vue 3；历史路径保留以保护链接，React Testing Library 为选修。组件细节在阶段4展开，这里只引入 defineComponent、h、props、emits 所需最小概念：父级传状态，子级发事件请求改变，测试不能假定子级自动拥有父状态。",
+        "类似 Widget 测试验证输入属性、点击与回调；Vue 的响应更新和 DOM 是自身机制，不能直接照抄 Flutter pump 语义。"
+      ],
+      "example": "完整 component.test.ts 导入 mount/expect，enableAutoUnmount(afterEach) 清理挂载。点击后检查 emitted，再 setProps(done:true) 检查 aria-pressed；没有把 jsdom 挂载称为真实浏览器截图。",
+      "exercise": "在副本组件添加 disabled 属性：disabled 时点击不发 toggle；分别测正常与禁用情况，并清理 mount。 排错：点击后期待 props.done 自动变 true；指出受控组件契约，使用父级回传或 setProps 验证状态变化。",
+      "practice": "原生任务板不已有 Vue UI。使用隔离 lab 的 TaskButton 作为组件测试支线，在副本增加 disabled 契约和正常/禁用测试，不给主任务板硬接Vue。",
+      "boundaries": "适合组件公开契约。await trigger/setProps 等待 Vue 更新；不要只断言内部实例私有变量。jsdom不提供可靠真实布局，ARIA属性存在也不证明屏幕阅读器全部通过。此例用h避开尚未学习的SFC编译配置。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.3.react-testing-library.md",
+    "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.3-react-testing-library/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.3.react-testing-library.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-3",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.5.4",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "Playwright 在实际浏览器上下文操作页面。getByRole/getByLabel 优先表达用户可见语义；动作自动等待可操作条件，expect定位器断言等待目标状态。条件等待针对观察对象，固定 waitForTimeout 既慢又易在慢机失败。每个测试使用隔离上下文，自己创建所需数据。",
+        "类似移动集成测试的用户操作，但在隔离浏览器上下文执行；选择可访问名称比依赖DOM层级或像素坐标稳定。"
+      ],
+      "example": "完整 e2e/tasks.spec.ts 以实际按钮名称/结构为准。Chrome 启动Vite后添加含HTML字符的标题、确认没有注入节点、完成和撤销；桌面1440×900与手机视口390×844各执行一次，并检查页面错误与横向溢出。",
+      "exercise": "为添加空白标题补一个浏览器用例：确认不新增列表项并出现可理解的错误/状态反馈；若副本尚无反馈先实现，标明扩展。 排错：把按钮名称定位写错为“保存”；读 locator 日志，对照实际可访问名称，修正定位或真正缺失的标签，不盲目加等待。",
+      "practice": "任务板已有浏览器脚本；副本按现有表单真实标签增加一次失败后纠正成功的流程，在两视口通过，不用固定等待掩盖错误。",
+      "boundaries": "适合关键跨层流程；稳定选择器仍依赖正确标签和明确范围。两个视口不是所有浏览器和手机真机。现有Chrome路径仅为本机便利；其他机器用 CHROME_PATH 或按官方方式安装匹配浏览器，不能宣称零环境依赖。Cypress为选修对照。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.4.playwright.md",
+    "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.4-playwright/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.4.playwright.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-4",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  },
+  {
+    "id": "3.5.5",
+    "result": "passed",
+    "evidence": {
+      "theory": [
+        "行、语句、函数和分支覆盖率是执行覆盖信号，不能证明断言正确。显式 coverage.include 把目标源码纳入分母，避免未import文件被遗漏。阈值是项目回归约束，不是跨项目通用质量等级；更不能为了通过随意排除未测业务文件。",
+        "类似 Dart 覆盖率但 provider和插桩不同；同样不能用高覆盖率代替断言质量与真实使用场景。"
+      ],
+      "example": "pnpm coverage 实际执行14项测试，报告包含3个目标源码。本轮语句96.42%、分支93.33%、函数100%、行100%；数字只描述此fixture，此例防御分支仍有未执行路径。检查漏行要结合协议和可达性，不能制造无意义用例凑100%。",
+      "exercise": "在副本增加一个有两个合法分支的纯函数并纳入 include，只测一侧观察报告，再补另一侧有意义断言；比较各列。 排错：删除 coverage.include 再比较报告文件集合；恢复明确范围，解释百分比上升为何未必质量提高。",
+      "practice": "读取任务板自身 coverage 报告，写明实际分母、主要漏测风险；副本新增一个真实边界测试，不套用 lab 的百分比到任务板。",
+      "boundaries": "适合发现错误分支和未覆盖模块。报告 include 不含浏览器 main.ts；该UI流程另由Playwright验收，此测试报告不是全工程100%。生产服务、跨浏览器、安全攻防和真实学习掌握均未由这些数字证明。",
+      "runtime": [
+        "docs/audits/stage-3-quality-runtime.json",
+        "docs/audits/stage-3-quality-tools.json"
+      ]
+    },
+    "issues": [],
+    "theory": "learning/1-notes/03-engineering/3.5-testing-basics/3.5.5.item-3-5-5.md",
+    "example": "learning/2-examples/03-engineering/3.5-testing-basics/3.5.5-item-3-5-5/README.md",
+    "exercise": "learning/3-exercises/03-engineering/3.5-testing-basics/3.5.5.item-3-5-5.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-5-5",
+    "review": "R01–R09 grouped content review passed; stage-wide integration and main capstone acceptance by main agent."
+  }
+]

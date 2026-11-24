@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-24T15:53:11.604Z",
+  "checks": [
+    {
+      "name": "frozen install preserves lock",
+      "status": "passed"
+    },
+    {
+      "name": "8 SemVer assertions and workspace runtime",
+      "status": "passed"
+    },
+    {
+      "name": "changed manifest is rejected by frozen install",
+      "status": "passed"
+    },
+    {
+      "name": "local pack manifest whitelist, no publication",
+      "status": "passed"
+    }
+  ],
+  "scope": "Real pnpm11 workspace, SemVer, frozen failure and local pack; no registry publication or npm/Yarn execution.",
+  "packFiles": [
+    "package/index.js",
+    "package/package.json"
+  ],
+  "status": "passed"
+}

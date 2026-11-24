@@ -1,0 +1,223 @@
+[
+  {
+    "id": "3.1.1",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.1.package.json.md",
+    "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.1.package.json-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.1.package.json.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-1",
+    "evidence": {
+      "theory": "dependencies用于包运行所需依赖，devDependencies用于开发、构建和测试工具；对于浏览器应用，最终哪些代码进入产物由导入与构建决定，不能把devDependencies等同“不会进入客户端”。",
+      "example": "进入package-lab，阅读根manifest及packages/app/package.json，再运行pnpm check与pnpm workspace；分别观察工具依赖和workspace运行依赖。",
+      "exercise": "在副本把check脚本改成不存在文件，运行并记录退出码；恢复路径后同一命令通过。",
+      "practice": "为任务板逐项解释scripts、依赖类型、Node范围与private，指出真实命令入口，不把声明当验证。",
+      "source": "https://docs.npmjs.com/cli/v11/configuring-npm/package-json/",
+      "runtime": "docs/audits/stage-3-package-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.1.2",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.2.npm-yarn-pnpm.md",
+    "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.2.npm-yarn-pnpm-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.2.npm-yarn-pnpm.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-2",
+    "evidence": {
+      "theory": "install安装依赖，run执行scripts，workspace相关命令定位子包；不同工具的锁文件、安装布局和命令参数不能简单互换。",
+      "example": "在package-lab运行默认脚本、filter子包与本地pack；检查tarball清单。npm/Yarn只阅读对应命令映射，本轮不声称全部工具安装实测。",
+      "exercise": "在副本错写filter包名，观察未匹配或失败信息；不能把没有执行任何包当任务通过。",
+      "practice": "用任务板既有pnpm脚本完成安装与检查；若评估发布，先以pack核对文件而不真实上传。",
+      "source": "https://pnpm.io/cli/run",
+      "runtime": "docs/audits/stage-3-package-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.1.3",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.3.item-3-1-3.md",
+    "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.3.item-3-1-3-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.3.item-3-1-3.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-3",
+    "evidence": {
+      "theory": "SemVer表达兼容承诺，不自动证明代码确实兼容。^1.2.3通常允许1.x范围；~1.2.3通常限1.2.x。精确版本只固定直接声明，完整依赖图仍由锁文件记录。",
+      "example": "package-lab的scripts/check.mjs使用semver实际断言8个范围样本，包含零主版本和预发布。",
+      "exercise": "把^0.2.3误认为允许0.3.0，先预测，再让semver断言反驳并修正规则。",
+      "practice": "为任务板一项工具依赖设计升级范围，并说明锁文件与兼容回归各负责什么。",
+      "source": "https://github.com/npm/node-semver#caret-ranges-123-025-004",
+      "runtime": "docs/audits/stage-3-package-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.1.4",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.4.package-lock.json.md",
+    "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.4.package-lock.json-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.4.package-lock.json.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-4",
+    "evidence": {
+      "theory": "package-lock.json、yarn.lock、pnpm-lock.yaml分别由对应工具维护，记录解析版本、完整性及依赖关系等。格式与语义不应手工互相改名转换。",
+      "example": "先冻结安装现有package-lab，再在独立临时副本改变semver版本验证冻结拒绝；复跑脚本不会破坏本仓库锁。",
+      "exercise": "制造依赖声明/锁不一致，定位ERR_PNPM_OUTDATED_LOCKFILE；按明确升级目标重生成锁，不用关闭冻结掩盖问题。",
+      "practice": "在任务板保持manifest与pnpm锁一致，升级时同时审查锁变化并运行检查。",
+      "source": "https://pnpm.io/cli/install#--frozen-lockfile",
+      "runtime": "docs/audits/stage-3-package-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.1.5",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.5.monorepo.md",
+    "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.5.monorepo-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.5.monorepo.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-5",
+    "evidence": {
+      "theory": "workspace由根pnpm-workspace.yaml声明包范围，子包仍有独立manifest。workspace:*明确要求本地workspace包，避免误从注册表匹配同名外部版本。",
+      "example": "package-lab中@compass/demo导入@compass/math，真实filter start输出total=5；检查子包的workspace依赖声明。",
+      "exercise": "临时把workspace:*依赖名称改成不存在本地包，说明应报错而非悄悄取任意注册表包。",
+      "practice": "评估阅读任务板当前是否需要workspace；如新增共享纯模型包，在副本显式声明依赖方向。",
+      "source": "https://pnpm.io/workspaces",
+      "runtime": "docs/audits/stage-3-package-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.1.6",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.1-package-management/3.1.6.src.md",
+    "example": "learning/2-examples/03-engineering/3.1-package-management/3.1.6.src-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.1-package-management/3.1.6.src.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-1-6",
+    "evidence": {
+      "theory": "src通常放应用源码；tests可放测试，具体位置由框架/团队约定，目录名本身不会自动执行测试。Vite默认index.html位于工程根，是构建图入口。",
+      "example": "对照本组vite-lab的src/public/dist，build后读取dist/index.html和mark.svg；不要修改生成文件作为练习答案。",
+      "exercise": "只修改dist内文字，再重新build观察改动丢失；正确修复应回到对应src再生成。",
+      "practice": "为任务板画出入口、领域模型、UI、测试和产物边界，再新增功能时指出应改的源码与测试。",
+      "source": "https://vite.dev/guide/assets#the-public-directory",
+      "runtime": "docs/audits/stage-3-package-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.2.1",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.1.hmr.md",
+    "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.1.hmr-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.1.hmr.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-1",
+    "evidence": {
+      "theory": "开发工具解析包导入、转换TypeScript/CSS等资源并维护模块图；生产构建生成适合部署的资源，可能进行代码分割、去除不可达代码和压缩。",
+      "example": "在临时副本增加const count: number = \"wrong\"，对比Vite bundle-only与tsc；错误只在类型检查时被拒绝，副本随后清理。",
+      "exercise": "把build改成只有vite build并宣称类型安全，注入错误后用单独tsc指出漏检并恢复组合命令。",
+      "practice": "审查任务板的typecheck/build/lint/test命令各自职责，并在副本注入类型错误验证门禁。",
+      "source": "https://vite.dev/guide/features#typescript",
+      "runtime": "docs/audits/stage-3-build-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.2.2",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.2.vite.md",
+    "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.2.vite-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.2.vite.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-2",
+    "evidence": {
+      "theory": "create-vite可创建模板，也可用显式index.html与src/main.ts理解骨架；本实验保留可阅读的最小配置，避免把生成器当理解工程的替代品。",
+      "example": "vite-lab从index.html加载main.ts，@lab别名导入util；复制.env.example为本地.env仅使用公开演示标签，重启再观察。",
+      "exercise": "只配置TS paths却删除Vite alias，在副本触发运行/打包解析失败；恢复两侧一致配置。",
+      "practice": "核对任务板index入口、tsconfig与Vite alias及公开标签，不把VITE_当密钥管理。",
+      "source": "https://vite.dev/guide/env-and-mode",
+      "runtime": "docs/audits/stage-3-build-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.2.3",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.3.webpack.md",
+    "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.3.webpack-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.3.webpack.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-3",
+    "evidence": {
+      "theory": "entry指定依赖图起点，output定义生成位置与文件名；loader转换匹配模块，plugin通过构建钩子处理更广的任务。它们职责不同。",
+      "example": "阅读webpack.config.cjs示例，标entry/output；解释为什么处理TS还要合适转换器、依赖和配置；不把静态阅读计为实际bundle。",
+      "exercise": "把loader写在plugins数组中，说明调用契约为什么不同；在独立副本按官方配置修复，不改当前Vite配置冒充验证。",
+      "practice": "若未来接手Webpack任务板，写入口/转换/产物迁移清单；当前工程继续Vite，不强引第二构建器。",
+      "source": "https://webpack.js.org/concepts/",
+      "runtime": "docs/audits/stage-3-build-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.2.4",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.4.hmr.md",
+    "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.4.hmr-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.4.hmr.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-4",
+    "evidence": {
+      "theory": "dev server监视文件并通知客户端；变化在可接受的模块边界内由运行时应用，否则可能沿依赖图传播或回退全页刷新。HMR不是永不重载的承诺。",
+      "example": "vite-lab中点击计数至3，再修改message.ts。verify.mjs断言文字更新、计数仍3、无文档导航；测试后恢复源文件。",
+      "exercise": "在副本移除accept，再改依赖，观察刷新和计数归零；还原后重测，不把浏览器自动刷新都叫HMR。",
+      "practice": "在任务板开发时区分模块HMR与全页刷新，更新需保留状态时先理解边界，不把示例手工accept强塞到框架。",
+      "source": "https://vite.dev/guide/api-hmr",
+      "runtime": "docs/audits/stage-3-build-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.2.5",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.5.code-splitting-tree-shaking.md",
+    "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.5.code-splitting-tree-shaking-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.5.code-splitting-tree-shaking.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-5",
+    "evidence": {
+      "theory": "动态import提供按需加载边界，构建器可生成独立chunk；不是所有动态路径都能静态分析，也不能把更多chunk一概当更快。",
+      "example": "运行vite-lab build及check:output；检查至少两个JS资产，动态统计点击前后真实网络请求不同，唯一unused标记不在运行JS中。",
+      "exercise": "把初始化副作用加入模块并在副本观察产物；说明为什么不能为缩包盲目声明所有sideEffects:false。",
+      "practice": "给任务板按需统计模块检查真实chunk与首次消费请求，并判断是否值得分割。",
+      "source": "https://vite.dev/guide/build",
+      "runtime": "docs/audits/stage-3-build-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.2.6",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.6.source-map.md",
+    "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.6.source-map-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.6.source-map.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-6",
+    "evidence": {
+      "theory": "Source Map把生成位置映射到原始源码位置，帮助调试和错误定位，不改变运行逻辑或自动修复错误。不同工具支持外部、内联、隐藏等策略，具体选项不是统一跨工具枚举。",
+      "example": "vite-lab build后check:output解析真实map并确认src来源；可在浏览器Sources手动定位TS，自动检查不冒充完整DevTools断点验收。",
+      "exercise": "删去发布包的map但保留sourceMappingURL，观察调试获取失败；在副本修正部署清单或策略而不改业务逻辑掩盖。",
+      "practice": "为任务板决定开发/生产map策略，写明哪些产物公开、错误诊断如何取得映射。",
+      "source": "https://vite.dev/config/build-options#build-sourcemap",
+      "runtime": "docs/audits/stage-3-build-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "3.2.7",
+    "result": "passed",
+    "theory": "learning/1-notes/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build.md",
+    "example": "learning/2-examples/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build-demo.md",
+    "exercise": "learning/3-exercises/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build.md",
+    "practice": "learning/4-practice/03-engineering/tasks.md#p-3-2-7",
+    "evidence": {
+      "theory": "共同目标包括解析依赖、转换源码/资源、生成可运行产物和提供开发反馈。Webpack/Vite、Gradle、Xcode和Metro的职责范围并不一致，不能一对一替换。",
+      "example": "对同一个vite-lab分别执行typecheck/build/preview，列出输入、输出与未覆盖检查；不需要建立Android或Flutter工程。",
+      "exercise": "把vite build成功当签名发布完成，列出实际尚未发生的部署、配置和验收步骤并修正交付描述。",
+      "practice": "给任务板画四栏：类型/构建/质量/测试；用移动经验解释共同目标，并写出至少三项Web特有边界。",
+      "source": "https://vite.dev/guide/",
+      "runtime": "docs/audits/stage-3-build-runtime.json"
+    },
+    "issues": []
+  }
+]

@@ -1,0 +1,49 @@
+:root {
+  color-scheme: light;
+  font:
+    1rem/1.6 system-ui,
+    sans-serif;
+  color: #173347;
+  background: #edf3f8;
+}
+* {
+  box-sizing: border-box;
+}
+main {
+  max-width: 48rem;
+  margin: auto;
+  padding: 1rem;
+}
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: end;
+}
+label {
+  display: block;
+}
+input,
+button {
+  font: inherit;
+  max-width: 100%;
+  padding: 0.6rem;
+}
+input {
+  width: min(100%, 24rem);
+}
+ul {
+  padding: 0;
+  list-style: none;
+}
+li {
+  margin-block: 0.7rem;
+  overflow-wrap: anywhere;
+}
+button {
+  white-space: normal;
+}
+:focus-visible {
+  outline: 3px solid #975000;
+  outline-offset: 3px;
+}

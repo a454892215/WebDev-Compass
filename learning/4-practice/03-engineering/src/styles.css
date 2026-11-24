@@ -1,0 +1,126 @@
+:root {
+  color-scheme: light;
+  --ink: #173246;
+  --bg: #f0f5f8;
+  --panel: #fff;
+  --line: #a7becd;
+  --accent: #00677b;
+  --focus: #a34500;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font:
+    1rem/1.65 system-ui,
+    sans-serif;
+}
+header,
+main,
+footer {
+  max-inline-size: 68rem;
+  margin: auto;
+  padding: 1.25rem;
+}
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  line-height: 1.2;
+}
+h2 {
+  font-size: 1.3rem;
+}
+section {
+  min-inline-size: 0;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 1rem;
+  margin-block: 1rem;
+  border-radius: 0.7rem;
+}
+label {
+  display: block;
+  font-weight: 600;
+}
+input,
+select,
+button {
+  font: inherit;
+  max-inline-size: 100%;
+  padding: 0.5rem;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+}
+button {
+  cursor: pointer;
+  border-color: var(--accent);
+  margin-block: 0.5rem;
+}
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+input,
+select {
+  inline-size: 100%;
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+.fields > div {
+  min-inline-size: 0;
+}
+.cards {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 0.8rem;
+}
+.cards > li {
+  border: 1px solid var(--line);
+  padding: 1rem;
+  border-radius: 0.4rem;
+  min-inline-size: 0;
+}
+.cards h3 {
+  font-size: 1.1rem;
+  overflow-wrap: anywhere;
+}
+.hint {
+  font-size: 0.93rem;
+}
+p {
+  overflow-wrap: anywhere;
+}
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.skip {
+  position: absolute;
+  inset-block-start: -5rem;
+  inset-inline-start: 1rem;
+  background: #fff;
+  padding: 0.5rem;
+}
+.skip:focus {
+  inset-block-start: 0.5rem;
+}
+#status {
+  border-inline-start: 4px solid var(--accent);
+  padding: 0.6rem;
+}
+@media (max-width: 30rem) {
+  header,
+  main,
+  footer {
+    padding: 0.85rem;
+  }
+}

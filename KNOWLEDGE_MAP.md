@@ -65,4 +65,4 @@ flowchart TD
 
 [学习顺序与验收](./docs/LEARNING_PATH.md) · [本次目录审查](./docs/CURRICULUM_REVIEW.md) · [正文建设进度](./docs/PROGRESS.md) · [内容规范](./docs/AUTHORING.md) · [框架专题](./framework-guide/README.md)
 
-阶段 1 已提供 106 项四部分资料，统一入口见 [learning/](./learning/README.md)。阶段2已提供33项四部分资料与综合实践，下一批从 **阶段3：TypeScript、Vite、代码检查与测试**开始，再按前置进入Vue 3 / Nuxt。独立工程开发继续在 web-common 与各宿主项目中进行。
+阶段 1 已提供 106 项四部分资料，统一入口见 [learning/](./learning/README.md)。阶段2已提供33项、阶段3已提供36项四部分资料与综合实践；下一批从 **阶段4：Vue 3 + Nuxt应用开发与状态管理**开始，依次学习组件、路由、状态与渲染。独立工程开发继续在 web-common 与各宿主项目中进行。

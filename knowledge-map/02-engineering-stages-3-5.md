@@ -38,7 +38,7 @@
 - [ ] [3.2.4 开发服务器与热更新（HMR）原理](../learning/1-notes/03-engineering/3.2-build-tools/3.2.4.hmr.md)
 - [ ] [3.2.5 生产构建：代码分割（Code Splitting）、Tree Shaking、压缩](../learning/1-notes/03-engineering/3.2-build-tools/3.2.5.code-splitting-tree-shaking.md)
 - [ ] [3.2.6 Source Map 的作用与类型](../learning/1-notes/03-engineering/3.2-build-tools/3.2.6.source-map.md)
-- [ ] [3.2.7 📱 移动端对照：Vite/Webpack ≈ Gradle/Xcode Build + Metro Bundler](../learning/1-notes/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build.md)
+- [ ] [3.2.7 📱 移动端对照：Web 构建与 Gradle、Xcode、Metro 的职责差异](../learning/1-notes/03-engineering/3.2-build-tools/3.2.7.vite-webpack-gradle-xcode-build.md)
 
 
 
@@ -57,7 +57,7 @@
 - [ ] [3.3.9 模块与声明文件（`.d.ts`）](../learning/1-notes/03-engineering/3.3-typescript/3.3.9..d.ts.md)
 - [ ] [3.3.10 `tsconfig.json` 核心配置：`strict`、`target`、`module`、`paths`（路径别名）](../learning/1-notes/03-engineering/3.3-typescript/3.3.10.tsconfig.json.md)
 - [ ] [3.3.11 Vue 组件与 composables 的 TS 类型（Props、事件、返回值）；React 类型为选修对照，阶段 4 深化](../learning/1-notes/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props.md)
-- [ ] [3.3.12 📱 移动端对照：TypeScript ≈ Dart 的类型系统 / Kotlin 空安全](../learning/1-notes/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin.md)
+- [ ] [3.3.12 📱 移动端对照：TypeScript 与 Dart、Kotlin 类型及空安全的差异](../learning/1-notes/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin.md)
 
 
 

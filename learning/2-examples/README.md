@@ -51,3 +51,7 @@ learning/2-examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 最新验证见[阶段 1 记录](../../docs/STAGE_1_VERIFICATION.md)；上方 HTML 记录是前一次增量交付。静态样式 fixture 与真实工具链编译在目录中分别标明。
 
 - [阶段 2：JavaScript、浏览器与存储](./02-javascript-browser/README.md)：真实实验及运行条件。
+
+- [阶段 3：TypeScript、Vite、代码检查与测试](./03-engineering/README.md)：固定依赖的真实pnpm、Vite、类型、质量与测试实验。
+
+工程类知识点可使用同编号Markdown操作卡链接真实源码工程；不要求每点都是单独HTML。具体映射以docs/stages中的契约为准。

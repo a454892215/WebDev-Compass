@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-24",
+  "scope": "stage3 capstone, actual Node26/pnpm11/local Chrome; headless simulated viewports",
+  "commands": [
+    {
+      "command": "pnpm config get storeDir / pnpm store path",
+      "result": "passed",
+      "observed": "YAML .pnpm-store / capstone/.pnpm-store/v11"
+    },
+    {
+      "command": "CI=true pnpm install --frozen-lockfile",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "includes": [
+        "ESLint",
+        "Prettier",
+        "Vitest with V8",
+        "two tsc projects",
+        "Vite production build",
+        "dynamic-entry/dead-export/hidden-map artifact checks"
+      ]
+    },
+    {
+      "command": "pnpm test:e2e",
+      "result": "passed",
+      "tests": 4,
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ],
+      "cases": [
+        "add/complete/filter/text safety/lazy statistics",
+        "real local HTTP404/invalid JSON/invalid schema/error recovery",
+        "old statistics invalidated on list change; recompute yields 5 total/2 done"
+      ]
+    }
+  ],
+  "unitIntegration": {
+    "numTotalTests": 17,
+    "numPassedTests": 17,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "e2eStats": {
+    "startTime": "2026-11-24T15:59:03.735Z",
+    "duration": 4447.14,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "coverage": {
+    "include": [
+      "src/domain/**/*.ts",
+      "src/services/**/*.ts"
+    ],
+    "total": {
+      "lines": {
+        "total": 27,
+        "covered": 26,
+        "skipped": 0,
+        "pct": 96.29
+      },
+      "statements": {
+        "total": 31,
+        "covered": 30,
+        "skipped": 0,
+        "pct": 96.77
+      },
+      "functions": {
+        "total": 12,
+        "covered": 11,
+        "skipped": 0,
+        "pct": 91.66
+      },
+      "branches": {
+        "total": 31,
+        "covered": 31,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branchesTrue": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "boundary": "not browser UI/E2E coverage; unusedDebug deliberately uncovered, no artificial 100% target"
+  },
+  "findingsClosed": [
+    "pnpm11 settings moved from ineffective .npmrc to YAML and config/frozen verified",
+    "real missing fixture middleware returns404 rather than SPA fallback200",
+    "explicit .ts config import plus noEmit allowImportingTsExtensions removes loader ambiguity",
+    "intentional broken JSON fixture excluded from formatting only by exact path",
+    "list/filter updates clear old statistics; both viewport regression assertions passed"
+  ],
+  "notVerified": [
+    "real mobile device",
+    "other browsers",
+    "production deployment/backend/auth",
+    "screen reader",
+    "human learner trial"
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"stage3-package-lab","version":"1.0.0","private":true,"type":"module","packageManager":"pnpm@11.4.0","engines":{"node":"^24.15.0 || >=26.0.0"},"scripts":{"check":"node scripts/check.mjs","workspace":"pnpm --filter @compass/demo start"},"devDependencies":{"semver":"7.8.6"}}

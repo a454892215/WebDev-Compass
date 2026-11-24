@@ -1,0 +1,38 @@
+{
+  "name": "webdev-stage3-quality-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests",
+    "format:check": "prettier --check src tests e2e *.ts *.mjs *.json index.html",
+    "test": "vitest run",
+    "coverage": "vitest run --coverage",
+    "dev": "vite --host 127.0.0.1 --port 4203 --strictPort",
+    "build": "vite build",
+    "test:e2e": "playwright test",
+    "verify:tools": "node verify-tools.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.1",
+    "@types/node": "26.6.6",
+    "@vitest/coverage-v8": "5.1.1",
+    "@vue/test-utils": "2.6.0",
+    "eslint": "10.15.0",
+    "husky": "9.1.7",
+    "jsdom": "31.0.1",
+    "lint-staged": "17.6.2",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.74.0",
+    "vite": "8.3.8",
+    "vitest": "5.1.1",
+    "vue": "3.5.46"
+  }
+}

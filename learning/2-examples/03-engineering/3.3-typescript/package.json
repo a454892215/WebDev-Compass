@@ -1,0 +1,21 @@
+{
+  "name": "webdev-stage3-typescript-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "check": "pnpm typecheck && pnpm build && node verify.mjs"
+  },
+  "dependencies": {
+    "vue": "3.5.46"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
+  }
+}

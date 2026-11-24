@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>阅读任务板 · 阶段 3</title>
+    <script type="module" src="./src/main.ts"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header>
+      <p>WebDev Compass · Vite + TypeScript</p>
+      <h1 id="app-title">阅读任务板</h1>
+      <p>从可运行的页面，走向可检查、可测试、可构建的工程。</p>
+    </header>
+    <main id="main" tabindex="-1">
+      <section aria-labelledby="source-title">
+        <h2 id="source-title">读取本地数据</h2>
+        <label for="source">数据场景</label
+        ><select id="source">
+          <option value="tasks">正常</option>
+          <option value="invalid">字段错误</option>
+          <option value="broken">坏 JSON</option>
+          <option value="missing">不存在的资源</option></select
+        ><button id="reload" type="button">重新加载</button>
+        <p id="status" role="status">
+          脚本未运行时仍可阅读说明。动态功能需 JavaScript。
+        </p>
+      </section>
+      <section aria-labelledby="add-title">
+        <h2 id="add-title">新增阅读任务</h2>
+        <form id="add-form">
+          <label for="title">任务标题（1–80 字符）</label
+          ><input
+            id="title"
+            name="title"
+            required
+            maxlength="80"
+            autocomplete="off"
+          /><button type="submit">添加任务</button>
+        </form>
+        <p class="hint">
+          只用演示数据。新增与完成状态留在内存，重新加载会重置。
+        </p>
+      </section>
+      <section aria-labelledby="list-title">
+        <h2 id="list-title">任务列表</h2>
+        <div class="fields">
+          <div>
+            <label for="query">搜索标题</label
+            ><input id="query" type="search" maxlength="80" />
+          </div>
+          <div>
+            <label for="filter">完成状态</label
+            ><select id="filter">
+              <option value="all">全部</option>
+              <option value="open">待完成</option>
+              <option value="done">已完成</option>
+            </select>
+          </div>
+        </div>
+        <p id="count" role="status">尚未读取数据。</p>
+        <ul id="list" class="cards"></ul>
+      </section>
+      <section aria-labelledby="stats-title">
+        <h2 id="stats-title">按需加载统计</h2>
+        <button id="statistics" type="button">计算全部任务统计</button>
+        <p id="statistics-result" role="status">
+          统计模块将在首次点击时动态导入。
+        </p>
+      </section>
+      <section>
+        <h2>工程观察点</h2>
+        <ul>
+          <li>类型检查与 Vite 构建分开；外部 JSON 仍需运行期校验。</li>
+          <li>单元、集成和 E2E 分层验证；覆盖率不代表功能正确。</li>
+          <li>VITE_* 会进入客户端，不能保存密钥。</li>
+        </ul>
+        <noscript
+          ><p>
+            请启用 JavaScript 运行交互；命令与源码说明见项目 README。
+          </p></noscript
+        >
+      </section>
+    </main>
+    <footer>
+      <p>阶段 3 教学工程，不提供登录、生产接口、服务端持久化或发布服务。</p>
+    </footer>
+  </body>
+</html>

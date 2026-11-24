@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>测试分层实验 · 阶段3</title>
+  </head>
+  <body>
+    <main>
+      <h1>质量与测试分层实验</h1>
+      <p>
+        页面用于真实E2E；Vue组件另由VTU隔离测试。只处理本页演示内容，不存储或上传。
+      </p>
+      <form id="task-form">
+        <div>
+          <label for="title">任务标题</label
+          ><input id="title" name="title" required maxlength="120" />
+        </div>
+        <button type="submit">添加任务</button>
+      </form>
+      <p id="status" role="status">等待添加。</p>
+      <ul id="tasks" aria-label="任务列表"></ul>
+    </main>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

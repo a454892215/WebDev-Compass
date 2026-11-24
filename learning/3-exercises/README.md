@@ -8,3 +8,5 @@
 [结构规范](../../docs/LEARNING_STRUCTURE.md) · [返回学习入口](../README.md)
 
 - [阶段 2：JavaScript、浏览器与存储](./02-javascript-browser/README.md)：独立实现、排错与验收。
+
+- [阶段 3：TypeScript、Vite、代码检查与测试](./03-engineering/README.md)：36项独立实现、具体故障与验收。

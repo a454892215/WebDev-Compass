@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-24T15:53:27.498Z",
+  "checks": [
+    {
+      "name": "frozen install",
+      "status": "passed"
+    },
+    {
+      "name": "typecheck/build, dynamic chunks, pure export removal, maps and public asset",
+      "status": "passed"
+    },
+    {
+      "name": "actual imported TS fault rejected by tsc while Vite-only transforms",
+      "status": "passed"
+    },
+    {
+      "name": "dev public env/alias/asset, real lazy import and HMR preserves count+document",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "name": "dev public env/alias/asset, real lazy import and HMR preserves count+document",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "name": "production real chunk demand and public asset",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "name": "production real chunk demand and public asset",
+      "width": 1440,
+      "status": "passed"
+    }
+  ],
+  "scope": "Real Vite dev/HMR and production browser simulation at390/1440; controlled temporary type fault. Not Webpack execution, real device, deployment or full DevTools breakpoint validation.",
+  "build": "$ tsc --noEmit && vite build\nvite v8.3.8 building client environment for production...\ntransforming...\n✓ 9 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                 0.80 kB │ gzip: 0.55 kB\ndist/assets/index-JaJLoQTh.css  0.42 kB │ gzip: 0.29 kB\ndist/assets/stats-Def-ir22.js   0.15 kB │ gzip: 0.17 kB │ map: 0.38 kB\ndist/assets/index-CQP0Lsgs.js   3.05 kB │ gzip: 1.51 kB │ map: 2.24 kB\n\n✓ built in 38ms\n",
+  "artifacts": "$ node scripts/check-output.mjs\n{\"jsChunks\":2,\"sourceMaps\":2,\"unusedPureExportRemoved\":true,\"publicAssetCopied\":true,\"status\":\"passed\"}\n",
+  "browser": "158.0.8127.37",
+  "status": "passed"
+}

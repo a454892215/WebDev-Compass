@@ -1,0 +1,50 @@
+[
+  {
+    "id": "3.4.1",
+    "task": "现有任务板已有 flat config。复制项目，增加 no-debugger 规则并用一个会失败的临时源文件证明脚本覆盖 src；修复后保留成功记录。",
+    "acceptance": [
+      "pnpm lint 对 debugger 返回非零且指出规则名",
+      "移除 debugger 后 lint 与 typecheck 均通过"
+    ]
+  },
+  {
+    "id": "3.4.2",
+    "task": "现有任务板已有 format:check。副本故意制造一个排版差异，证明 check 不改源码，再格式化并通过功能测试。",
+    "acceptance": [
+      "check 第一次失败且没有改写文件",
+      "write 后 check 通过，业务测试仍通过"
+    ]
+  },
+  {
+    "id": "3.4.3",
+    "task": "现有任务板有基础 EditorConfig。副本增加 Markdown 专用 section，解释为什么代码缩进与 Markdown 尾空格需要不同策略。",
+    "acceptance": [
+      "能解释 root 和 section 的匹配/覆盖次序",
+      "支持工具读到四空格，根配置保持两空格且排版检查通过"
+    ]
+  },
+  {
+    "id": "3.4.4",
+    "task": "主任务板不安装真实 hooks。阅读隔离验证，另建临时 Git 仓库重复“暂存错误—阻止—修复—提交”，记录主项目未受影响。",
+    "acceptance": [
+      "坏暂存内容阻止提交且出现实际 ESLint 规则名",
+      "修复并重新 git add 后成功；主仓库 hooksPath 未改变"
+    ]
+  },
+  {
+    "id": "3.4.5",
+    "task": "基于任务板的一次真实副本改动撰写提交说明；若只练习文案无需提交真实仓库，另提供一次破坏性 JSON 协议变化的示范消息。",
+    "acceptance": [
+      "feat/fix 类型与实际变更一致，描述说明结果",
+      "不兼容变更使用 ! 或 BREAKING CHANGE 并说明迁移"
+    ]
+  },
+  {
+    "id": "3.4.6",
+    "task": "现有任务板是 private 应用而非待发布库。复制一个无秘密的最小包，在 dry-run 中核对 files 白名单，不把任务板直接 publish。",
+    "acceptance": [
+      "说明已跟踪文件为何仍出现在 git ls-files",
+      "dry-run 产物符合白名单且无 config.demo、源码测试缓存"
+    ]
+  }
+]

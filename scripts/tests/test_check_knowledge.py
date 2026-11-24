@@ -27,6 +27,12 @@ class KnowledgeAuditTests(unittest.TestCase):
         p.write_text(content, encoding='utf-8')
         return p
 
+    def test_pnpm_cache_documents_are_not_course_content(self):
+        self.write('README.md', '# Root')
+        for folder in ['.pnpm-store', 'coverage', 'test-results', 'playwright-report', '.nyc_output', '.vite']:
+            self.write(f'{folder}/vendor/README.md', '[generated link](missing.md)')
+        self.assertEqual(module.audit(self.root)['errors'], [])
+
     def test_code_does_not_create_false_links(self):
         text = '''`[not a link](missing.md)`
 ```md

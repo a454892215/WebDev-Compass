@@ -1,0 +1,237 @@
+{
+  "date": "2026-11-24T15:50:45.510Z",
+  "typescript": "6.0.3",
+  "node": "v26.0.0",
+  "checks": [
+    {
+      "id": "3.3.1",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "titleLength": 2,
+        "assertedTitleRuntimeType": "number"
+      }
+    },
+    {
+      "id": "3.3.2",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "title": "Vue",
+        "count": 2,
+        "done": false,
+        "firstId": "a",
+        "enumObjectExists": true,
+        "anyProducesNaN": true
+      }
+    },
+    {
+      "id": "3.3.3",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "id": 1,
+        "title": "类型",
+        "extraRuntimeProperty": true
+      }
+    },
+    {
+      "id": "3.3.4",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "success": "已加载",
+        "failure": "重试",
+        "record": {
+          "id": "a",
+          "updatedAt": 1
+        }
+      }
+    },
+    {
+      "id": "3.3.5",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "title": "约束",
+        "patch": {
+          "done": true
+        },
+        "preview": {
+          "id": "a",
+          "title": "约束"
+        },
+        "creation": {
+          "title": "新项",
+          "done": false
+        },
+        "names": {
+          "pending": "待办",
+          "done": "完成"
+        }
+      }
+    },
+    {
+      "id": "3.3.6",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "acceptedTitles": [
+          "有效"
+        ],
+        "assertedIdRuntimeType": "number",
+        "dateGuard": true
+      }
+    },
+    {
+      "id": "3.3.7",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "outputs": [
+          "阅读",
+          "#阅读",
+          "Type!"
+        ]
+      }
+    },
+    {
+      "id": "3.3.8",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "privateVisible": 2,
+        "readonlyRuntimeId": "changed",
+        "protectedViaSubclass": 1,
+        "hashPrivateBrandRejected": true
+      }
+    },
+    {
+      "id": "3.3.9",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "title": "模块",
+        "declarationOnlyRuntime": "undefined"
+      }
+    },
+    {
+      "id": "3.3.10",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "label": "空列表",
+        "target": "ES2022",
+        "note": "alias/no-polyfill boundaries are verified separately"
+      }
+    },
+    {
+      "id": "3.3.11",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "selected": "a",
+        "vnodeTitle": "类型预告",
+        "scope": "types/VNode/composable, not DOM mount"
+      }
+    },
+    {
+      "id": "3.3.12",
+      "kind": "runtime",
+      "status": "passed",
+      "observed": {
+        "structuralTitle": "结构兼容",
+        "nullRejected": true,
+        "missingElement": "undefined handled",
+        "scope": "TypeScript runtime only, not Dart/Kotlin execution"
+      }
+    },
+    {
+      "id": "3.3.1",
+      "kind": "negative-typecheck",
+      "expected": "TS2322",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.2",
+      "kind": "negative-typecheck",
+      "expected": "TS18046",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.3",
+      "kind": "negative-typecheck",
+      "expected": "TS2741",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.4",
+      "kind": "negative-typecheck",
+      "expected": "TS2339",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.5",
+      "kind": "negative-typecheck",
+      "expected": "TS2353",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.6",
+      "kind": "negative-typecheck",
+      "expected": "TS18046",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.7",
+      "kind": "negative-typecheck",
+      "expected": "TS2322",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.8",
+      "kind": "negative-typecheck",
+      "expected": "TS2341",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.9",
+      "kind": "negative-typecheck",
+      "expected": "TS2322",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.10",
+      "kind": "negative-typecheck",
+      "expected": "TS2322",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.11",
+      "kind": "negative-typecheck",
+      "expected": "TS2322",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.12",
+      "kind": "negative-typecheck",
+      "expected": "TS2322",
+      "status": "passed"
+    },
+    {
+      "kind": "expect-error-valid-and-stale",
+      "status": "passed"
+    },
+    {
+      "id": "3.3.10",
+      "kind": "alias-resolves-in-ts-but-not-rewritten-for-node",
+      "status": "passed"
+    },
+    {
+      "kind": "emitted-type-erasure-runtime-enum-and-private-boundaries",
+      "status": "passed"
+    }
+  ],
+  "scope": "Actual TypeScript compiler rejection, emitted Node runtime and Vue VNode/composable; no browser DOM or Dart/Kotlin runtime certification.",
+  "status": "passed"
+}

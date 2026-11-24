@@ -12,3 +12,5 @@
 每个知识点关联四部分，多个知识点可以共享综合项目。文件存在、自动检查通过和学习者真正掌握分别记录；不为满足数量创建空文件。
 
 [返回知识地图](../KNOWLEDGE_MAP.md) · [资料规范](../docs/AUTHORING.md)
+
+阶段3新增[理论入口](./1-notes/03-engineering/README.md)、[真实实验](./2-examples/03-engineering/README.md)、[独立练习](./3-exercises/03-engineering/README.md)与[阅读任务板](./4-practice/03-engineering/README.md)，共36点。

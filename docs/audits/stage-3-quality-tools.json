@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-24T15:54:21.182Z",
+  "checks": [
+    {
+      "name": "typechecker rejects incompatible assignment",
+      "result": "passed",
+      "detail": "TS2322, expected nonzero"
+    },
+    {
+      "name": "ESLint flat config catches debugger",
+      "result": "passed",
+      "detail": "Actual no-debugger error"
+    },
+    {
+      "name": "Prettier check rejects format without rewriting",
+      "result": "passed",
+      "detail": "const value={title:\"demo\"};\n"
+    },
+    {
+      "name": "EditorConfig is consumed by a supporting tool",
+      "result": "passed",
+      "detail": "Prettier resolves tabWidth=4; does not prove editor plugin/UI"
+    },
+    {
+      "name": "Vitest rejects a deliberately wrong result",
+      "result": "passed",
+      "detail": "Failure proven; fixture removed after validation"
+    },
+    {
+      "name": "Husky plus lint-staged blocks bad staged content and accepts repair",
+      "result": "passed",
+      "detail": "Only isolated temporary repo; main hooks unchanged"
+    },
+    {
+      "name": "Git ignore does not untrack existing source",
+      "result": "passed",
+      "detail": "Temporary repository status/ls-files inspected"
+    },
+    {
+      "name": "Conventional Commit header examples",
+      "result": "passed",
+      "detail": "Project educational header subset only, not a full specification parser"
+    },
+    {
+      "name": "npm pack dry run proves npmignore and gitignore differ",
+      "result": "passed",
+      "detail": "Only harmless DEMO_ONLY fixture; no archive published"
+    }
+  ],
+  "scope": "Actual local CLI negative cases, temporary Git hooks and npm pack dry run. No real publish or main-repository hook/config modifications.",
+  "result": "passed"
+}

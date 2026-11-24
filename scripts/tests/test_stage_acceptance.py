@@ -28,6 +28,11 @@ class AcceptanceTests(unittest.TestCase):
   self.record();(self.root/'docs/review.md').unlink();self.assertTrue(any('missing/empty evidence' in e for e in audit(self.root,1)['errors']))
  def test_shared_asset_change_invalidates_review(self):
   self.record();self.write('learning/2-examples/01/assets/shared.mjs','export const changed=true');self.assertTrue(any('source changed' in e for e in audit(self.root,1)['errors']))
+ def test_generated_pnpm_cache_does_not_stale_review(self):
+  self.record()
+  for folder in ['.pnpm-store','coverage','test-results','playwright-report','.nyc_output','.vite']:
+   self.write(f'learning/2-examples/01/{folder}/generated.json','generated output')
+   self.assertEqual(audit(self.root,1)['errors'],[])
  def test_rule_change_invalidates_review(self):
   self.record();self.write('docs/AUTHORING.md','# Revised rules');self.assertTrue(any('source changed' in e for e in audit(self.root,1)['errors']))
  def test_open_point_issue_blocks_pass(self):
