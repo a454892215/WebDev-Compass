@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font:
+    1rem/1.6 system-ui,
+    sans-serif;
+}
+[data-theme] {
+  padding: 1rem;
+  min-height: 100vh;
+  color: #102338;
+  background: #f5f8fc;
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  color: #ecf4ff;
+  background: #142032;
+  color-scheme: dark;
+}
+header,
+main,
+footer {
+  max-width: 56rem;
+  margin: auto;
+}
+nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+a {
+  color: #1769ae;
+}
+[data-theme="dark"] a {
+  color: #8bc6ff;
+}
+article,
+section {
+  border: 1px solid #789;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-block: 1rem;
+}
+label {
+  display: block;
+}
+input,
+textarea,
+button {
+  font: inherit;
+  max-width: 100%;
+  padding: 0.5rem;
+  margin-block: 0.35rem;
+}
+input,
+textarea {
+  display: block;
+  width: 100%;
+}
+button {
+  cursor: pointer;
+  min-height: 44px;
+  margin-inline-end: 0.4rem;
+}
+:focus-visible {
+  outline: 3px solid #d27800;
+  outline-offset: 3px;
+}
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}

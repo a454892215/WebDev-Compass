@@ -104,7 +104,7 @@
 - [ ] [4.1.4 客户端路由 vs 服务端路由](../learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.4.vs.md)
 - [ ] [4.1.5 组件表单状态与双向绑定契约；受控/非受控作为 React 选修对照](../learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.5.vs.md)
 - [ ] [4.1.6 条件渲染、列表渲染与 `key` 的作用](../learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.6.key.md)
-- [ ] [4.1.7 📱 移动端对照：React ≈ React Native；Vue ≈ 组合 Widget + 响应式状态](../learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget.md)
+- [ ] [4.1.7 📱 移动端对照：Web 组件与 React Native / Flutter 的共通概念和平台差异](../learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget.md)
 
 
 
@@ -156,7 +156,7 @@
 - [ ] [4.2.4.1 组件设计：展示组件 vs 容器组件](../learning/1-notes/04-frameworks/4.2-react/4.2.4.1.vs.md)
 - [ ] [4.2.4.2 组件库使用：**Ant Design**、**Material UI**、**shadcn/ui** 等](../learning/1-notes/04-frameworks/4.2-react/4.2.4.2.ant-design.md)
 - [ ] [4.2.4.3 CSS 方案：CSS Modules、Styled Components、Tailwind CSS](../learning/1-notes/04-frameworks/4.2-react/4.2.4.3.css-css-modules-styled-components.md)
-- [ ] [4.2.4.4 **Next.js** 入门：文件路由、API Routes、SSR/SSG 概念（阶段 7 深化）](../learning/1-notes/04-frameworks/4.2-react/4.2.4.4.next.js.md)
+- [ ] [4.2.4.4 **Next.js** 入门：App Router、Route Handlers、Server/Client Components 与 SSR/SSG（旧 Pages Router 按需对照）](../learning/1-notes/04-frameworks/4.2-react/4.2.4.4.next.js.md)
 
 
 
@@ -169,12 +169,13 @@
 #### 4.3.1 Vue 3 核心
 
 - [ ] [4.3.1.1 模板语法：`{{ }}`、指令（`v-if`、`v-for`、`v-show`、`v-bind`、`v-on`、`v-model`）](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on.md)
-- [ ] [4.3.1.2 组合式 API：`setup`、`ref`、`reactive`、`computed`、`watch`、`watchEffect`；composables 上下文、复用和清理](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.2.setup.md)
+- [ ] [4.3.1.2 组合式 API：`setup`、`ref`、`reactive`、`computed`；响应式解构边界、`nextTick` 与 composables 复用（侦听清理见 4.3.1.8）](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.2.setup.md)
 - [ ] [4.3.1.3 生命周期钩子（`onMounted` 等）](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.3.onmounted.md)
 - [ ] [4.3.1.4 组件：Props、`emit`、组件 `v-model` 与插槽（默认、具名、作用域）](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.4.emit.md)
 - [ ] [4.3.1.5 依赖注入：`provide` / `inject`](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.5.provide.md)
 - [ ] [4.3.1.6 模板引用：`ref` 获取 DOM](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.6.ref.md)
 - [ ] [4.3.1.7 动态组件与 `<KeepAlive>`](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.7.keepalive.md)
+- [ ] [4.3.1.8 `watch` / `watchEffect`：依赖追踪、异步请求竞态与副作用清理](../learning/1-notes/04-frameworks/4.3-vue/4.3.1.8.watch-cleanup.md)
 
 
 
@@ -220,6 +221,7 @@
 - [ ] [4.5.6 Nitro / server 路由：最小 BFF、输入校验、服务端授权与业务后端边界](../learning/1-notes/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes.md)
 - [ ] [4.5.7 plugins / composables / modules / Layers：生命周期、依赖注入与复用职责](../learning/1-notes/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers.md)
 - [ ] [4.5.8 中间件、错误页与 404：浏览器 API 边界，客户端守卫不等于服务端授权](../learning/1-notes/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries.md)
+- [ ] [4.5.9 `useHead` / `useSeoMeta`：SSR 页面标题、描述与客户端导航更新（完整 SEO 见阶段 6）](../learning/1-notes/04-frameworks/4.5-nuxt/4.5.9.head-page-metadata.md)
 
 ---
 

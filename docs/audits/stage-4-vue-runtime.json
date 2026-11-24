@@ -1,0 +1,216 @@
+{
+  "date": "2026-11-24",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "vue": "3.5.46",
+    "router": "5.5.1",
+    "pinia": "4.1.0",
+    "typescript": "6.0.3",
+    "vue-tsc": "3.3.14",
+    "vite": "8.3.8",
+    "plugin-vue": "6.0.11",
+    "vitest": "5.1.1",
+    "browser": "local Google Chrome, headless"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --fetch-retries=0 --fetch-timeout=20000",
+      "status": "passed"
+    },
+    {
+      "command": "CI=true pnpm install --frozen-lockfile --offline",
+      "status": "passed"
+    },
+    {
+      "command": "pnpm check",
+      "status": "passed",
+      "parts": [
+        "vue-tsc",
+        "11 VTU/reactivity/watch tests",
+        "SFC negative compiler",
+        "Vite build",
+        "scoped CSS and route chunks artifact check"
+      ]
+    },
+    {
+      "command": "pnpm verify:negative",
+      "status": "passed",
+      "observed": "actual vue-tsc nonzero with 2 TS2322 Props/model diagnostics + TS2345 wrong event payload; temporary SFC removed"
+    },
+    {
+      "command": "pnpm test:e2e",
+      "status": "passed",
+      "tests": 2,
+      "viewports": [
+        "1440x900",
+        "390x844"
+      ]
+    }
+  ],
+  "unit": {
+    "numTotalTests": 11,
+    "numPassedTests": 11,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "e2e": {
+    "startTime": "2026-11-24T16:28:20.988Z",
+    "duration": 2772.676,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    "SFC instance-local state",
+    "reactive destructuring versus toRefs + computed",
+    "watchEffect synchronous dependencies and cleanup",
+    "Props/model/emits/scoped slot contracts and safe text",
+    "typed provide/inject ref mutation",
+    "nextTick focus after v-if",
+    "two Pinia instance isolation + storeToRefs live getter",
+    "same-component route params + guard redirect",
+    "KeepAlive local state and activation/deactivation",
+    "controlled old loader ignoring abort cannot overwrite new data",
+    "empty/error/reset/dispose state boundaries",
+    "real Chrome add-toggle/draft/theme/cache/focus/search recovery/detail refresh/no overflow/no pageerror"
+  ],
+  "fixedIssues": [
+    "exactOptionalPropertyTypes disallows executablePath:undefined; now omit field unless present",
+    "route-test redirect mounted injection consumer without provider; added correct test provider and cleared cascading errors",
+    "Vue compiler did not recognize native search; template compiler explicitly preserves this tag in Vite and Vitest",
+    "SFC listener variance did not produce the expected third error; negative fixture now directly invokes typed emit with wrong payload and verifies actual TS2345, not a fabricated listener failure"
+  ],
+  "boundaries": [
+    "Search uses explicit in-memory delayed fixture, not HTTP backend",
+    "jsdom not real layout; viewport not real device",
+    "Nuxt overview is code-reading/transfer plan, actual Nuxt runtime covered elsewhere",
+    "Nuxt UI/Vant comparison only, not installed or certified",
+    "No SSR/request isolation/production backend/auth/deployment, assistive technology or human learner trial"
+  ],
+  "dependencyMetadata": {
+    "vue": {
+      "version": "3.5.46",
+      "engines": null,
+      "peerDependencies": {
+        "typescript": "*"
+      }
+    },
+    "vue-router": {
+      "version": "5.5.1",
+      "engines": null,
+      "peerDependencies": {
+        "vue": "^3.5.34 || ^4.0.0",
+        "vite": "^7.3.0 || ^8.0.0",
+        "pinia": "^3.0.4 || ^4.0.2",
+        "@pinia/colada": ">=0.21.2",
+        "@vue/compiler-sfc": "^3.5.34 || ^4.0.0"
+      }
+    },
+    "pinia": {
+      "version": "4.1.0",
+      "engines": null,
+      "peerDependencies": {
+        "vue": "^3.5.11",
+        "typescript": ">=5.6.0",
+        "@vue/devtools-api": "^8.2.1"
+      }
+    },
+    "vue-tsc": {
+      "version": "3.3.14",
+      "engines": null,
+      "peerDependencies": {
+        "typescript": ">=5.0.0"
+      }
+    },
+    "@vitejs/plugin-vue": {
+      "version": "6.0.11",
+      "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+      },
+      "peerDependencies": {
+        "vue": "^3.2.25 || ^3.6.0-rc.15",
+        "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+      }
+    },
+    "vite": {
+      "version": "8.3.8",
+      "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+      },
+      "peerDependencies": {
+        "tsx": "^4.8.1",
+        "jiti": ">=1.21.0",
+        "less": "^4.0.0",
+        "sass": "^1.70.0",
+        "yaml": "^2.4.2",
+        "stylus": ">=0.54.8",
+        "terser": "^5.16.0",
+        "esbuild": "^0.27.0 || ^0.28.0",
+        "sugarss": "^5.0.0",
+        "@types/node": "^20.19.0 || >=22.12.0",
+        "sass-embedded": "^1.70.0",
+        "@vitejs/devtools": "^0.7.1 || ^0.8.0"
+      }
+    },
+    "typescript": {
+      "version": "7.0.2",
+      "engines": {
+        "node": ">=16.20.0"
+      },
+      "peerDependencies": null
+    },
+    "vitest": {
+      "version": "5.1.1",
+      "engines": {
+        "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+      },
+      "peerDependencies": {
+        "vite": "^6.4.0 || ^7.0.0 || ^8.0.0",
+        "jsdom": "*",
+        "happy-dom": "*",
+        "@vitest/ui": "5.1.1",
+        "@types/node": "^22.0.0 || >=24.0.0",
+        "@edge-runtime/vm": "*",
+        "@opentelemetry/api": "^1.9.0",
+        "@vitest/coverage-v8": "5.1.1",
+        "@vitest/browser-preview": "5.1.1",
+        "@vitest/coverage-istanbul": "5.1.1",
+        "@vitest/browser-playwright": "5.1.1",
+        "@vitest/browser-webdriverio": "^5.0.0-beta.5 || >=5.0.0"
+      }
+    },
+    "@vue/test-utils": {
+      "version": "2.6.0",
+      "engines": null,
+      "peerDependencies": {
+        "vue": "3.x",
+        "@vue/compiler-dom": "3.x",
+        "@vue/server-renderer": "3.x"
+      }
+    },
+    "jsdom": {
+      "version": "31.0.1",
+      "engines": {
+        "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+      },
+      "peerDependencies": {
+        "@napi-rs/canvas": "^1.0.13"
+      }
+    },
+    "@playwright/test": {
+      "version": "1.65.1",
+      "engines": {
+        "node": ">=20"
+      },
+      "peerDependencies": null
+    },
+    "@types/node": {
+      "version": "26.6.6",
+      "engines": null,
+      "peerDependencies": {}
+    }
+  },
+  "finalVerification": "2026-11-24T16:28:31Z"
+}

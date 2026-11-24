@@ -1,0 +1,114 @@
+[
+  {
+    "id": "4.1.1",
+    "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.1.ui-vs-ui.md",
+    "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.1.ui-vs-ui-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.1.ui-vs-ui.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "命令式写法明确指定查找和修改；声明式写法保留数据与界面的关系。两者都由JavaScript运行，选择应围绕局部功能、复杂度与可维护性，而非“框架永远更快”。Vue模板经过编译，运行时仍需调度和提交DOM更新；重复直接操作框架管理的子树会破坏一致性。浏览器原生focus、selection等通常仍需模板引用和生命周期。",
+      "example": "阅读任务板从useReadingList.ids派生数量。点击加入书单后看output变化；不要手工把output改为999作为状态更新。",
+      "exercise": "先只用开发者工具把output文字改成999，再执行正常状态变化；观察其不是数据源。若项目代码主动改框架DOM，删除重复写入并由状态驱动，不能把DOM文字再反读成权威状态。",
+      "practice": "已有：书单数量随useState更新。副本扩展：增加清空命令和空状态，比较与原生计数器的职责。",
+      "source": "https://vuejs.org/guide/introduction.html"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.1.2",
+    "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2.md",
+    "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "父组件传Props表达当前状态，子组件发事件请求改变，状态所有者处理更新。事件不是“父级必须照办”的命令，子组件也不应改只读Props。默认/具名插槽允许父级提供内容而保留容器结构；插槽内容的词法作用域属于提供它的父组件。组件可有局部草稿，但必须说明何时丢弃以及与后端事实的关系。",
+      "example": "运行组件测试：点击发出toggle但selected仍为false；父级setProps(true)后才变aria-pressed。页面用具名title插槽插入NuxtLink，卡片本身保持内容容器。",
+      "exercise": "把子组件点击改为直接给props.selected赋值，观察类型/运行只读警告或父子不同步。改回emit→父状态→Props，组件测试分别覆盖发事件与父更新。",
+      "practice": "已有：父级控制书单，卡片发toggle，标题/默认插槽。副本扩展：disabled契约与正反组件测试。",
+      "source": "https://vuejs.org/guide/components/props.html"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.1.3",
+    "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.3.dom.md",
+    "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.3.dom-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.3.dom.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Vue把模板编译成渲染函数，执行渲染时读取响应式值并形成依赖；变化触发调度，更新阶段比较/应用必要DOM变更。虚拟DOM不是浏览器DOM的完整副本，也不保证每次都比手写DOM快。computed缓存依赖计算结果，但不能为隐式副作用提供可靠执行时机。React函数重渲染与Vue依赖追踪机制不同，不能仅因都有组件就当作相同。",
+      "example": "对照useReadingList与模板：ids变化，数量和按钮消费同一事实；E2E用可重试断言等待界面。Vue组实验进一步演示computed缓存、nextTick和解构失响应。",
+      "exercise": "把const count = state.count当成长期响应式绑定，之后只改state.count。复现显示不变，指出复制的是当时值；恢复代理读取或使用toRef，再验证。",
+      "practice": "已有：从书单状态驱动数量与卡片。副本扩展：新增一个computed派生统计并解释依赖和DOM时序。",
+      "source": "https://vuejs.org/guide/extras/rendering-mechanism.html"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.1.4",
+    "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.4.vs.md",
+    "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.4.vs-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.4.vs.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SPA路由通常监听/使用History并切换组件；服务端直接访问必须有匹配页面或合适回退。Nuxt的页面文件同时参与服务端渲染与客户端路由，Nitro的server/api又是HTTP接口，不等于页面路由。查询参数适合可分享筛选；临时交互不必全塞URL。客户端导航守卫改善流程，不能替代API授权。",
+      "example": "直接请求/resources/vue能得到含标题的HTML，再用NuxtLink进入详情。筛选q保留在URL，刷新仍筛选；不存在详情HTTP404由服务端响应，不只是画一个404标题。",
+      "exercise": "把资源详情请求错误写成页面路径/api/resources之外的静态字符串，观察HTML或404与期望JSON不符。核对页面/API路由目录和Network Content-Type，再修复消费端URL。",
+      "practice": "已有：页面/API路由、q查询和直接404。副本扩展：新增category筛选并验证三种导航入口。",
+      "source": "https://nuxt.com/docs/4.x/getting-started/routing"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.1.5",
+    "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.5.vs.md",
+    "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.5.vs-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.5.vs.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "原生input上的v-model处理value和输入事件，表单submit仍有自己的边界；组件v-model是modelValue/update:modelValue（或defineModel等编译宏）契约。同步输入不等于网络已保存。使用真实label、button、form和原生约束，客户端校验用于反馈，服务器仍需验证。React受控/非受控是选修对照，Vue模板规则不能直接套React。",
+      "example": "关于课程页只把标题POST到校验接口，返回saved:false；不是数据库保存。搜索框先编辑draftQuery，提交后才改变URL查询，避免一次按键自动导航。",
+      "exercise": "直接向/api/validate发送title:42，绕过浏览器约束仍应400。若只靠TS或HTML通过，改服务器入口对unknown校验；再测空白、长度上限和合法输入。",
+      "practice": "已有：v-model搜索草稿、POST标题校验/失败反馈。副本扩展：字符计数、服务器400后重试与组件v-model对照。",
+      "source": "https://vuejs.org/guide/essentials/forms.html"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.1.6",
+    "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.6.key.md",
+    "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.6.key-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.6.key.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "v-if创建/销毁分支，v-show主要切换显示，生命周期和保留状态不同。v-for用稳定唯一key帮助框架关联同一条目；index作为可排序列表的key会让局部笔记、焦点或组件状态跟着位置走。随机key又会让每次更新都重建。避免在同一元素混用v-if和v-for造成优先级误解，先computed筛选，再循环。",
+      "example": "先给Vue卡片写临时笔记，再反转列表。笔记仍属于Vue卡片，这是key机制的直接观察；不是只看排序后的文字。搜索移除并重新挂载卡片会丢失局部笔记，这是当前约定。",
+      "exercise": "把:key改为循环index，输入A/B后排序，定位笔记与标题错配。恢复id，保证fixture id唯一；把“不重复”的条件也加入数据边界检查或测试。",
+      "practice": "已有：稳定id、局部笔记、反转顺序与条件分支。副本扩展：重现index key错误并比较v-if/v-show。",
+      "source": "https://vuejs.org/guide/essentials/list.html"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.1.7",
+    "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget.md",
+    "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Vue/React Web最终操作浏览器DOM与CSS布局，React Native使用原生宿主组件，Flutter有自己的渲染/Widget体系。组件组合是共通方法，渲染、输入、样式、生命周期和导航不是同一实现。Web URL、History、刷新、可分享链接、浏览器存储和SSR需要单独理解；Nuxt同一源码可能在服务端与浏览器执行，顶层window/localStorage并不安全。",
+      "example": "对照资料库的SSR原始HTML、浏览器导航和CSR对照页；观察useState在一次应用内共享但新SSR请求独立。这里没有运行Dart或React Native工程，不冒称跨平台测试。",
+      "exercise": "在Nuxt页面setup顶层读window.innerWidth，使用直接SSR访问重现window未定义；将读取放到onMounted并保留稳定首屏，复查无hydration mismatch。",
+      "practice": "已有：SSR/CSR对照与请求隔离实验。副本扩展：移动列表迁移清单和受控window错误修复。",
+      "source": "https://nuxt.com/docs/4.x/guide/concepts/rendering"
+    },
+    "issues": []
+  }
+]

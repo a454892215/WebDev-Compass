@@ -1,0 +1,137 @@
+{
+  "date": "2026-11-24",
+  "scope": "4.4 standalone theme-lab actual build/browser; 4.5 source and API contract checks by this agent; shared Nuxt runtime and SSG executed by root and inspected here",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "tailwind": "4.3.5",
+    "tailwindCli": "4.3.5",
+    "playwright": "1.65.1",
+    "nuxt": "4.7.0",
+    "browser": "existing macOS Google Chrome, headless"
+  },
+  "theme": {
+    "date": "2026-11-24",
+    "tailwind": "4.3.5",
+    "passed": 3,
+    "checks": [
+      {
+        "viewport": 390,
+        "passed": true,
+        "observed": "actual grid columns; OS light/dark; explicit overrides and reset; named/decorative icons; controls and no overflow/pageerror"
+      },
+      {
+        "viewport": 1440,
+        "passed": true,
+        "observed": "actual grid columns; OS light/dark; explicit overrides and reset; named/decorative icons; controls and no overflow/pageerror"
+      },
+      {
+        "javaScriptEnabled": false,
+        "passed": true,
+        "observed": "CSS system dark works without script; no persistence claimed"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile (theme-lab)",
+      "result": "passed",
+      "observed": "fixed lock and explicit project YAML ignoreScripts:true"
+    },
+    {
+      "command": "pnpm build (theme-lab)",
+      "result": "passed",
+      "observed": "real CLI emits grid/md breakpoint/token/dark CSS; imports compiled, local assets copied"
+    },
+    {
+      "command": "pnpm verify (theme-lab)",
+      "result": "passed",
+      "checks": 3
+    },
+    {
+      "command": "node learning/2-examples/04-frameworks/4.5-nuxt/verify-contract.mjs",
+      "result": "passed",
+      "observed": "actual vue-tsc against main Nuxt4.7-generated context; positive handler signal/key/dedupe accepted, number signal rejected TS2322; temp files removed"
+    },
+    {
+      "command": "node --check server/build/verify scripts",
+      "result": "passed"
+    }
+  ],
+  "fixedIssues": [
+    "Default pnpm install reported ignored @parcel/watcher script. Isolated fixture explicitly disables lifecycle scripts, then frozen install and actual platform prebuilt CLI build passed. Not global policy, not all-platform proof.",
+    "Dark-mode brand text initially fixed blue could lose contrast. Theme now overrides brand color too; both viewport computed-color assertions passed.",
+    "Initial map/capstone wording confused SSR build and SSG. Docs now separate dynamic default SSR from explicit static generate; no arbitrary-query/POST equivalence.",
+    "Compiler native search support must be configured in main Nuxt, not inferred from browser support; noted in scaffold chapter.",
+    "Nuxt9 point runtime status updated only after reading main-agent raw4-E2E JSON, scripts and actual logs; SSR and SSG evidence distinguished."
+  ],
+  "notVerified": [
+    "runtime cancellation and remote mutation rollback",
+    "true mobile devices",
+    "other browsers",
+    "screen reader or complete keyboard certification",
+    "real Nuxt backend/auth/production deployment",
+    "persistent theme or SSR theme hydration in standalone static lab",
+    "human learner trial"
+  ],
+  "sharedNuxtEvidence": {
+    "executedBy": "root",
+    "reviewedBy": "stage4_nuxt_ui",
+    "e2eStats": {
+      "startTime": "2026-11-24T16:31:24.289Z",
+      "duration": 2863.59,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "passedCommands": [
+      "nuxt typecheck",
+      "eslint .",
+      "vitest run: 11 tests",
+      "nuxt build: node-server",
+      "playwright: 4 tests",
+      "nuxt generate: static preset, 10 prerender routes"
+    ],
+    "observed": [
+      "SSR visible resources and public config, no private marker",
+      "hydration without duplicate browser resource API request or mismatch console",
+      "stable keyed card note on reverse, booklist props/events across navigation",
+      "detail parameter/title changes, q navigation and full reload",
+      "503 recovery, direct detail404, duplicate query400, invalid/valid POST",
+      "route middleware302 without loop",
+      "CSR raw response lacks content, browser displays it",
+      "four parallel SSR request markers remain distinct",
+      "plugin format, local module head marker, Layer app metadata and badge",
+      "final E2E also asserts SSR description and Vue→Nuxt detail description updates; same-build runtime public env override appears in HTML/API"
+    ],
+    "sourceLogs": "Final E2E /tmp/webdev-stage4-e2e-final.log (4 passed), final-check/type/lint/unit/build/generate logs and raw JSON inspected on 2026-11-24; root owns durable aggregate evidence"
+  },
+  "sharedSsgArtifactEvidence": {
+    "mode": "SSG artifact inspection, not dynamic API deployment",
+    "checks": [
+      {
+        "path": "index.html",
+        "content": true,
+        "title": true
+      },
+      {
+        "path": "about/index.html",
+        "content": true,
+        "title": true
+      },
+      {
+        "path": "resources/vue/index.html",
+        "content": true,
+        "title": true
+      },
+      {
+        "path": "resources/nuxt/index.html",
+        "content": true,
+        "title": true
+      }
+    ],
+    "privateMarkersAbsent": true,
+    "executedBy": "root; result JSON inspected by stage4_nuxt_ui, not independently rerun"
+  }
+}

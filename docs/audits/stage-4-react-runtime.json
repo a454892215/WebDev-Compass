@@ -1,0 +1,151 @@
+{
+  "date": "2026-11-24",
+  "scope": "4.2 React elective; separate from Nuxt capstone and mainline",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "packages": {
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "react-router": "8.5.2",
+      "zustand": "5.1.0",
+      "@reduxjs/toolkit": "2.15.0",
+      "@tanstack/react-query": "5.108.4",
+      "react-hook-form": "7.92.0",
+      "zod": "4.6.7",
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0",
+      "typescript": "6.0.3",
+      "vite": "8.3.8",
+      "vitest": "5.1.1",
+      "jsdom": "31.0.1",
+      "@playwright/test": "1.65.1"
+    },
+    "browser": "existing local Google Chrome, headless; no download"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --fetch-retries=0 --fetch-timeout=20000",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm install --frozen-lockfile --offline",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm config get storeDir / pnpm store path",
+      "result": "passed",
+      "observed": "node_modules/.pnpm-store / expected lab-local v11 path"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "observed": "tsc,24 Vitest tests,tsc+Vite build"
+    },
+    {
+      "command": "pnpm exec vitest run --reporter=json --outputFile=/tmp/stage4-react-vitest.json",
+      "result": "passed",
+      "observed": "24 tests; final after gcTime fixture adjustment and readability formatting"
+    },
+    {
+      "command": "pnpm build",
+      "result": "passed",
+      "observed": "final TS6 and Vite8; standalone LazyNote and CSS Modules assets"
+    },
+    {
+      "command": "pnpm verify:artifacts",
+      "result": "passed",
+      "observed": {
+        "checks": 2,
+        "lazyModule": true,
+        "cssModules": true,
+        "files": [
+          "LazyNote-B9rW3c2_.js",
+          "index-dLQJqyOr.js",
+          "index-rtRYjXSF.css"
+        ]
+      }
+    },
+    {
+      "command": "pnpm verify:browser",
+      "result": "passed",
+      "observed": {
+        "browser": "local headless Chrome",
+        "results": [
+          {
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "passed": true,
+            "cases": [
+              "counter+2",
+              "real focus",
+              "RHF error then Zod trimmed success",
+              "URL query/deep reload",
+              "client redirect",
+              "lazy route",
+              "no overflow/pageerror"
+            ]
+          },
+          {
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            },
+            "passed": true,
+            "cases": [
+              "counter+2",
+              "real focus",
+              "RHF error then Zod trimmed success",
+              "URL query/deep reload",
+              "client redirect",
+              "lazy route",
+              "no overflow/pageerror"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "command": "pnpm typecheck && pnpm exec vitest run --reporter=json --outputFile=/tmp/stage4-react-vitest.json",
+      "result": "passed",
+      "observed": "final24 tests including controlled optimistic write failure/rollback and explicit bounded retry; store tools are not imported by browser UI"
+    }
+  ],
+  "testSummary": {
+    "numTotalTests": 24,
+    "numPassedTests": 24,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "actualAssertions": {
+    "core": "JSX text safety, supported function/class, props/children, updater queue, effect cleanup, DOM ref, memo dependencies, nearest Context, immutable reducer, independent Hook, render boundary, portal/lazy, root StrictMode probes",
+    "routing": "MemoryRouter params/query/navigation, Outlet layout identity, client redirect, lazy route",
+    "ecosystem": "Zustand isolation/unsubscribe; RTK thunk fulfilled/rejected + unwrap; Query key caching/invalidation/old value restore; RHF+Zod field error/schema conversion; view-container callback; controlled optimistic save failure restores snapshot and final invalidation, bounded retry recovers on second attempt"
+  },
+  "observationsOnly": [
+    "4.2.4.2 Ant Design/MUI/shadcn selection checklist; none installed",
+    "4.2.4.3 Styled Components/Tailwind React comparison; CSS Modules actually built",
+    "4.2.4.4 Next App Router official directory/runtime-boundary checklist; Next not installed/built"
+  ],
+  "warnings": [
+    "Rolldown may warn about library use client directives in pure-client Vite build; no RSC/Next claim, actual browser flows passed."
+  ],
+  "fixedIssues": [
+    "Form schema separated from pure store-tool laboratory so form UI does not import RTK/Query tool modules.",
+    "QueryClient fixture gcTime set to60s with explicit clear, instead of depending on0ms expiry timing.",
+    "Unit lazy tests await actual import rather than fixed timeout.",
+    "Point-filter command uses pnpm exec vitest run -t, not an ambiguous -- terminator."
+  ],
+  "notVerified": [
+    "real mobile hardware",
+    "other browsers",
+    "production backend/auth/deployment",
+    "complete optimistic mutation concurrency",
+    "real UI-library/Next build",
+    "full modal focus behavior",
+    "screen reader",
+    "human learner trial"
+  ]
+}

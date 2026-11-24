@@ -1,0 +1,35 @@
+{
+  "name": "@compass/stage4-vue-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4301 --strictPort",
+    "typecheck": "vue-tsc --noEmit",
+    "build": "pnpm typecheck && vite build",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "pnpm typecheck && pnpm test && pnpm verify:negative && pnpm build && pnpm verify:output",
+    "verify:negative": "node verify-negative.mjs",
+    "verify:output": "node verify-output.mjs"
+  },
+  "dependencies": {
+    "vue": "3.5.46",
+    "vue-router": "5.5.1",
+    "pinia": "4.1.0"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vue-tsc": "3.3.14",
+    "@vitejs/plugin-vue": "6.0.11",
+    "vite": "8.3.8",
+    "vitest": "5.1.1",
+    "@vue/test-utils": "2.6.0",
+    "jsdom": "31.0.1",
+    "@playwright/test": "1.65.1",
+    "@types/node": "26.6.6"
+  }
+}

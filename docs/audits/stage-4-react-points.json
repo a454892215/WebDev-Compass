@@ -1,0 +1,653 @@
+[
+  {
+    "id": "4.2.1.1",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.1.jsx.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.1.jsx-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.1.jsx.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-1",
+    "evidence": {
+      "theory": [
+        "JSX是描述元素的语法扩展，构建器把它转换成React元素创建调用；不是HTML字符串，也不在运行时解释任意模板。组件名大写，原生标签小写。",
+        "花括号放JavaScript表达式；多节点可用Fragment组合。className对应class，事件处理传函数而非立即调用。动态列表需要同级稳定key。",
+        "React把普通字符串子节点作为文本处理；dangerouslySetInnerHTML是另一种显式HTML注入接口，未经可信处理的输入不能交给它。JSX转义也不等于URL、服务端授权等风险全被解决。"
+      ],
+      "example": "Core.tsx的Greeting与编号测试把<b>输入</b>传为name，断言文本保留尖括号、DOM没有b节点。",
+      "exercise": "把onClick={save()}写成渲染时调用，重现提前保存或循环更新；改成onClick={save}或事件函数并证明只在点击发生。",
+      "practice": "在React对照lab副本增加读取任务标题的列表，用JSX表达式与稳定id展示，不向Nuxt工程引入React。",
+      "boundary": [
+        "JSX是编译语法；浏览器仍接收JS与DOM。",
+        "不要用数组序号掩盖可重排列表的身份问题。"
+      ],
+      "source": "https://react.dev/learn/writing-markup-with-jsx",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.2",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.2.item-4-2-1-2.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.2.item-4-2-1-2-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.2.item-4-2-1-2.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-2",
+    "evidence": {
+      "theory": [
+        "函数组件接收props返回可渲染内容；应通过JSX让React调用，不能把普通函数调用当完整组件生命周期。渲染阶段不做网络写入或修改外部对象。",
+        "新代码优先函数组件与Hooks。类组件仍受支持，通过this.props、this.state和生命周期工作，但其生命周期并不与某一个Hook一一等价。",
+        "函数每次渲染重新执行不意味着DOM整体重建，也不意味着函数内普通局部变量能跨渲染保存。类实例字段同样不自动触发渲染。"
+      ],
+      "example": "Core.tsx同时包含Greeting和LegacyGreeting，测试检查各自props输出；错误边界章节有保留类的具体理由。",
+      "exercise": "在函数体直接写localCount++并期待点击后保存状态；重渲染后观察丢失，改用useState。",
+      "practice": "在独立React副本写函数版与类版只读任务标题，比较props入口；主线Nuxt组件保持Vue实现。",
+      "boundary": [
+        "组件是React管理的渲染单元，不是任意函数调用。",
+        "不为模仿移动View实例把所有逻辑写成class。"
+      ],
+      "source": "https://react.dev/reference/react/Component",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.3",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.3.props-children.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.3.props-children-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.3.props-children.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-3",
+    "evidence": {
+      "theory": [
+        "Props是父组件传入的只读快照；子组件要请求父状态改变，应调用约定的回调，而不是修改props或其嵌套对象。类型readonly并不冻结实际对象。",
+        "children是传入组件标签内部的可渲染内容；ReactNode可包含元素、文本、空值等，不应该用string类型限制任意组件插槽。",
+        "组合让外壳提供布局而调用方决定内容；children不是Vue具名/作用域插槽的逐项同义替换，复杂契约可用命名props或render函数明确表达。"
+      ],
+      "example": "Panel真实挂载标题与p子节点；测试核对可访问名称和组合文本。",
+      "exercise": "把children当字符串拼进innerHTML造成元素丢失/注入风险；恢复直接渲染children并验证事件仍有效。",
+      "practice": "在React副本实现任务卡外壳，内容由children提供，完成操作通过onToggle(id)通知容器。",
+      "boundary": [
+        "输入与回调形成公开组件契约。",
+        "ReactNode不是DOM节点；无需手工appendChild。"
+      ],
+      "source": "https://react.dev/learn/passing-props-to-a-component",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.4",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.4.usestate.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.4.usestate-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.4.usestate.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-4",
+    "evidence": {
+      "theory": [
+        "每次渲染看到自己的state快照。setter安排后续渲染，不同步改变当前闭包里的值；连续按旧快照计算会覆盖预期增量。",
+        "当新状态依赖旧状态，使用setCount(n=>n+1)。更新函数必须纯净；React会按队列计算，开发期还可能重复调用以检查纯度。",
+        "对象和数组state应创建替换值，保留未变化部分引用。直接push旧数组后传回相同引用，可能没有预期更新，还污染历史快照。"
+      ],
+      "example": "Counter一次点击调用两个函数更新，真实DOM由计数0变计数2；reducer测试另检查旧对象没变。",
+      "exercise": "将两次更新改为setCount(count+1)，观察只加1；再改回函数更新，说明快照与队列的差别。",
+      "practice": "在React任务列表副本添加一次批量完成操作，按旧状态生成新数组，保留未变记录。",
+      "boundary": [
+        "setter不是立即改写当前局部变量。",
+        "不可变更新是数据管理约定，不是必须引入某个库。"
+      ],
+      "source": "https://react.dev/learn/queueing-a-series-of-state-updates",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.5",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.5.useeffect.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.5.useeffect-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.5.useeffect.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-5",
+    "evidence": {
+      "theory": [
+        "Effect适合把组件与订阅、定时器等外部系统同步；由用户点击触发的提交通常放事件处理，不要为了派生一个可计算值增加Effect。",
+        "依赖列表必须包含Effect读取的响应值。React按Object.is比较依赖；旧清理先于相应新设置执行，组件卸载也需释放。不要靠删依赖压制重复。",
+        "异步请求还需取消或忽略迟到结果。Effect回调不直接async，因为返回值约定是清理函数；在内部启动异步过程并处理失败。Effect不在服务端渲染执行。"
+      ],
+      "example": "Subscription的真实回调记录start:A、stop:A、start:B；StrictMode实验另外检查额外设置/清理。不是连接外部消息服务。",
+      "exercise": "删除topic依赖使订阅停在旧主题；恢复依赖并测试切换，另对比每次渲染新建observe造成的重订阅。",
+      "practice": "在React副本把阅读主题切换连到受控订阅，快速切换A/B并记录清理；若扩展请求，增加迟到响应保护。",
+      "boundary": [
+        "依赖由实际读取决定，不能凭希望只运行一次填写。",
+        "清理用于撤销外部同步，不用于把任何业务流程塞进Effect。"
+      ],
+      "source": "https://react.dev/learn/synchronizing-with-effects",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.6",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.6.useref.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.6.useref-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.6.useref.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-6",
+    "evidence": {
+      "theory": [
+        "useRef返回稳定容器，current可跨渲染保存；写current不会触发重渲染，所以不适合承担需要显示变化的状态。",
+        "DOM ref在挂载提交后才指向元素，移除后可变回null；聚焦等操作放事件或适当Effect中，先检查存在。",
+        "不要在渲染中读写任意可变ref来决定结果，也不要用ref绕过Effect清理。ref像实例字段的部分用途，但React渲染/提交时机有自身规则。"
+      ],
+      "example": "FocusInput真实DOM测试点击按钮后document.activeElement是对应输入；不是模拟focus字符串。",
+      "exercise": "在函数体初次渲染直接input.current.focus()造成null访问；移入交互/Effect并使用空值分支。",
+      "practice": "给React副本表单增加“返回标题输入”按钮；比较显示提交次数应使用state还是ref。",
+      "boundary": [
+        "DOM ref不是可以提前取得的元素。",
+        "需要更新界面的值应保存在state。"
+      ],
+      "source": "https://react.dev/reference/react/useRef",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.7",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.7.usememo.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.7.usememo-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.7.usememo.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-7",
+    "evidence": {
+      "theory": [
+        "useMemo缓存计算结果，useCallback缓存函数引用；memo可在props相同时跳过部分重渲染。这些是性能工具，业务正确性不能依赖缓存永远保留。",
+        "依赖缺失会留下旧结果/闭包；每次创建全新对象也可能让缓存失效。先用正确代码与测量找到开销，不给每个值机械加缓存。",
+        "React Compiler适用配置可减少手工缓存需求；本实验没有启用Compiler。开发StrictMode重复执行不能直接作为生产性能结论。"
+      ],
+      "example": "MemoFilter测试修改query后列表由Vue更新为Nuxt，点击后选择正确；不把这个功能断言当性能提升基准。",
+      "exercise": "漏掉query依赖重现旧筛选；补齐依赖。不要通过禁止输入变化来让测试通过。",
+      "practice": "在React副本为可测量的大列表筛选比较有无缓存，先验证query变化的正确性，再记录实际测量条件。",
+      "boundary": [
+        "缓存值不是状态持久化和授权边界。",
+        "本节证明依赖正确性，不证明某次优化收益。"
+      ],
+      "source": "https://react.dev/reference/react/useMemo",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.8",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.8.createcontext.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.8.createcontext-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.8.createcontext.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-8",
+    "evidence": {
+      "theory": [
+        "createContext定义通道，Provider提供值，useContext读取上方最近匹配Provider；没有提供时使用创建时默认值。它避免逐层透传，不自动成为完整状态管理器。",
+        "Provider值变化会通知消费方；每次创建新对象可能造成额外更新。先分清共享范围和变化频率，必要时拆Context而不是把整个应用塞入一个对象。",
+        "Context用于主题、语言、明确范围的依赖等；认证用户对象只能影响UI，不能代替服务端验证。SSR中用户状态仍需按请求创建。"
+      ],
+      "example": "LocaleProvider下的LocaleLabel输出en；默认值和覆盖范围可在独立副本继续实验。",
+      "exercise": "把Provider放在读取Context的同一组件返回值下面却期待影响该组件本次useContext；将消费者移入Provider子树。",
+      "practice": "在React对照副本提供阅读偏好Context，对比Nuxt主工程的注入/状态范围，避免跨请求共享用户偏好。",
+      "boundary": [
+        "Context是传递机制；state所有者仍要明确。",
+        "跨层共享不等于跨用户共享。"
+      ],
+      "source": "https://react.dev/reference/react/useContext",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.9",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.9.usereducer.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.9.usereducer-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.9.usereducer.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-9",
+    "evidence": {
+      "theory": [
+        "reducer接收当前状态与action，返回下一状态；集中描述多种关联转换，方便独立测试，不负责发请求或执行DOM操作。",
+        "dispatch安排更新；当前事件闭包仍持有旧state。action用判别联合明确载荷，避免任意字符串和巨型可选字段对象。",
+        "纯reducer不能直接修改输入。Redux Toolkit借助Immer允许草稿写法，而普通useReducer不自动拥有这种能力；两者不可按相似名称混用。"
+      ],
+      "example": "taskReducer测试切换后旧记录done仍false、新记录true；ReducerCounter真实挂载dispatch增加任务数。",
+      "exercise": "普通reducer里push旧数组后return state，重现旧快照污染；改为新数组并断言引用和旧值。",
+      "practice": "在React副本定义添加/完成/删除三种action，先独立测试状态转换，再连接UI事件。",
+      "boundary": [
+        "复杂度来自转换关联，而不是状态数量达到某个固定值。",
+        "副作用放事件、Effect或适用的数据层。"
+      ],
+      "source": "https://react.dev/reference/react/useReducer",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.10",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.10.hook.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.10.hook-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.10.hook.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-10",
+    "evidence": {
+      "theory": [
+        "自定义Hook以use开头，通过其他Hooks封装状态逻辑；在组件或其他Hook顶层调用，不能按条件、循环或事件临时调用。",
+        "两处调用同一个Hook通常各有独立状态；复用的是逻辑，并不是自动得到进程单例。需要共享时再选择提升状态、Context或专门store。",
+        "Hook公开返回值、依赖和清理职责，隐藏实现但不掩盖副作用；不能把任何普通工具函数都冠以use然后违反调用规则。"
+      ],
+      "example": "TogglePair中A/B各调用useToggle；点A后A true而B false，验证状态独立。",
+      "exercise": "在if(expanded)内部调用useToggle，再切换条件，观察Hook顺序错误；改为顶层无条件调用并由结果决定渲染。",
+      "practice": "在React副本提取两个独立展开卡片的Hook，记录它与Vue composable的相同目标及调用/生命周期差异。",
+      "boundary": [
+        "React Hook的调用规则不能照抄Vue composable写法。",
+        "共享逻辑不等于共享状态。"
+      ],
+      "source": "https://react.dev/learn/reusing-logic-with-custom-hooks",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.11",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.11.error-boundary.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.11.error-boundary-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.11.error-boundary.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-11",
+    "evidence": {
+      "theory": [
+        "错误边界用于隔离子树渲染等React处理阶段的失败，提供回退UI；可用class的getDerivedStateFromError/componentDidCatch或成熟封装。",
+        "它不自动捕获事件处理器、任意setTimeout/Promise回调和服务端渲染中的所有错误。请求失败应由请求状态/try-catch处理，不能一律throw给边界。",
+        "重试需要明确恢复机制，例如清除故障输入或重建边界；只把同一个仍会抛错的子树再渲染会再次失败。本例提供安全回退，不宣称完整生产错误平台。"
+      ],
+      "example": "RenderBoundary包裹受控BrokenCard并真实显示alert；测试只为该预期故障屏蔽console.error，其他测试仍正常报告错误。",
+      "exercise": "在按钮onClick里抛错并期待边界接管；改为事件处理中的失败状态/try-catch，并说明捕获范围。",
+      "practice": "在React对照副本给可选卡片区增加渲染回退，另外在提交事件用try/catch显示HTTP失败，区分两类路径。",
+      "boundary": [
+        "回退UI应可理解且保留离开/恢复路径。",
+        "错误日志不应上传用户秘密。"
+      ],
+      "source": "https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.12",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.12.portal.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.12.portal-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.12.portal.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-12",
+    "evidence": {
+      "theory": [
+        "Fragment组合多个子节点但不创建额外DOM容器。Portal改变内容在DOM中的放置位置，React父子关系与事件传播仍按React树处理。",
+        "Portal不会自动使浮层可访问；模态行为需要焦点、Escape和背景交互管理，简单对话框先考虑原生dialog。本例Portal只放说明文本，不伪装完整模态框。",
+        "Suspense为支持挂起的子树提供等待回退；lazy的动态导入会触发，普通Effect里的fetch不会自动触发。代码加载失败还需要错误处理，Suspense不是通用try/catch。"
+      ],
+      "example": "PortalNote文本出现在独立aside而非原host；LazyExample真实动态导入成功后显示懒模块内容。等待回退的网络时序另由浏览器观察，不把jsdom计时当性能测试。",
+      "exercise": "把Effect fetch放进Suspense却等不到fallback；用显式loading/error状态，或采用框架支持的Suspense数据方案。",
+      "practice": "在React副本按需加载帮助卡，采用Fragment组合；若需要对话框，先比较原生dialog而非只做Portal位置搬移。",
+      "boundary": [
+        "三个API解决不同问题，不能相互替代。",
+        "本实验没有完成模态焦点或Suspense数据缓存。"
+      ],
+      "source": "https://react.dev/reference/react/Suspense",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.1.13",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.13.strict-mode.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.13.strict-mode-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.13.strict-mode.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-13",
+    "evidence": {
+      "theory": [
+        "StrictMode启用开发检查，例如额外渲染、Effect设置/清理与ref回调检查，帮助发现不纯逻辑和未释放资源；不生成可见DOM包装。",
+        "重复行为不是生产环境每次用户操作都会执行两次。根级与局部启用的某些探测行为有区别，因此不能把“所有代码永远正好两次”当API保证。",
+        "正确修复是让渲染纯净、Effect可清理和外部写入放正确事件，不是删StrictMode掩盖重复订阅。必须幂等的服务端写操作还需后端契约。"
+      ],
+      "example": "根StrictMode下Subscription设置真实调用两次，第一次清理一次；非Strict挂载用另一个测试比较，不声称生产build具有同样次数。",
+      "exercise": "Effect开定时器不返回清理导致开发期重复计时；补clearInterval并观察卸载后停止，不只删StrictMode。",
+      "practice": "在React实验开发入口保留StrictMode，给订阅记录setup/cleanup；对比生产预览交互，解释差别。",
+      "boundary": [
+        "开发探测是发现问题的工具，不是生产生命周期次数合同。",
+        "本轮严格模式次数断言针对固定React开发测试环境。"
+      ],
+      "source": "https://react.dev/reference/react/StrictMode",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.2.1",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.1.react-router.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.1.react-router-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.1.react-router.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-1",
+    "evidence": {
+      "theory": [
+        "本实验采用React Router8.5.2的声明式模式；BrowserRouter提供浏览器history，Routes/Route匹配UI，Link保留链接语义，useNavigate用于交互后的程序导航。",
+        "useParams读取动态段，useSearchParams读写查询；动态参数仍是外部字符串，需校验。不要把路由URL与本地state做两份互不更新的真相。",
+        "声明式、数据和框架模式能力不同；本例没有loader/action服务器流程。生产静态托管还需深链回退，否则客户端能跳转但直接刷新404。"
+      ],
+      "example": "RoutesDemo在MemoryRouter真实匹配/tasks/7?q=Vue，修改查询为Nuxt并导航首页；浏览器入口使用BrowserRouter。",
+      "exercise": "把/detail/7配成/details/:id导致不匹配，或把查询藏在仅内存state中；修正路径并分别验证站内导航/直接访问。",
+      "practice": "在React对照副本把阅读任务id和搜索条件编码到URL，核对复制链接与刷新；比较Nuxt文件路由的同类职责。",
+      "boundary": [
+        "本例从react-router导入，不能混用旧版本文档。",
+        "MemoryRouter不验证服务器深链配置。"
+      ],
+      "source": "https://reactrouter.com/start/declarative/routing",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.2.2",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.2.layout-route.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.2.layout-route-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.2.layout-route.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-2",
+    "evidence": {
+      "theory": [
+        "父路由可提供共同布局，子路由内容渲染到Outlet；index是父路径默认内容，不与另一个path同时混写。",
+        "路径嵌套表达URL结构，布局路由也可不增加路径段。导航可以相对当前路由解析，复杂层级应对照真实URL而非手拼字符串。",
+        "保留布局不等于所有子页状态永久保存；组件身份、key和挂载位置决定状态生命周期。路由边界也不自动等同权限边界。"
+      ],
+      "example": "RoutesDemo测试从首页到详情后nav DOM节点身份保持，内容由Outlet切换。",
+      "exercise": "漏写Outlet导致URL变了子页空白；加Outlet后验证首页和详情，不能靠在布局中硬编码详情掩盖。",
+      "practice": "在React副本把列表/详情放进同一阅读布局，保留导航栏，比较Nuxt layouts与嵌套路由的职责差别。",
+      "boundary": [
+        "布局复用不等于任意组件缓存。",
+        "路径层级和UI层级可按产品需要分别设计。"
+      ],
+      "source": "https://reactrouter.com/start/declarative/routing",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.2.3",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.3.item-4-2-2-3.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.3.item-4-2-2-3-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.3.item-4-2-2-3.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-3",
+    "evidence": {
+      "theory": [
+        "客户端守卫根据已知会话状态决定显示、等待或重定向；它提供导航体验，不拥有服务端资源的最终授权权力。",
+        "检查会话可能异步，先区分loading/anonymous/authenticated，避免加载时误重定向或敏感界面闪现。本例signedIn是演示布尔值，不是完整会话。",
+        "Navigate replace可替换历史条目，但不能保护直接API调用。回跳URL需要限制为可信站内路径，防止开放重定向。授权、过期、CSRF等在阶段5深化。"
+      ],
+      "example": "MemoryRouter从/private进入真实登录占位，测试未出现受限页面文本；没有真实Token、远程认证和服务端权限验证。",
+      "exercise": "会话尚在加载就以false重定向造成闪跳；改判别状态，并用慢会话fixture重现和修复。",
+      "practice": "在React副本加入显式会话加载占位，再模拟匿名/成功/过期；列出Nuxt中间件与服务端API分别必须做什么。",
+      "boundary": [
+        "UI守卫不构成安全控制。",
+        "只接受经过校验的站内returnTo。"
+      ],
+      "source": "https://reactrouter.com/start/declarative/navigating",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.2.4",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.4.react.lazy.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.4.react.lazy-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.4.react.lazy.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-4",
+    "evidence": {
+      "theory": [
+        "React.lazy加载具有default组件导出的模块，Suspense提供等待UI；把lazy定义放组件外，避免每次渲染创建新组件身份。",
+        "代码分包解决资源加载时机，不自动优化所有网络、渲染或缓存问题。首次加载失败需要错误边界/恢复路径，不能一直显示加载中。",
+        "声明式lazy组件与数据路由的route.lazy不是同一接口；本例只用React.lazy与Suspense，不把数据模式文档直接套进来。"
+      ],
+      "example": "真实MemoryRouter进入/report后显示懒模块；生产build生成独立LazyNote chunk。首次网络请求可在本地浏览器Network中观察，不保证它必然被某预加载策略延后。",
+      "exercise": "模块只导出具名组件导致lazy失败；提供default导出或显式映射，并验证真实路由。",
+      "practice": "在React副本把低频帮助页拆成懒模块，比较Nuxt页面自动分块；提供等待和加载失败恢复方案。",
+      "boundary": [
+        "加载和错误分别处理。",
+        "不以chunk数量作为性能得分。"
+      ],
+      "source": "https://react.dev/reference/react/lazy",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.3.1",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.1.item-4-2-3-1.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.1.item-4-2-3-1-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.1.item-4-2-3-1.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-1",
+    "evidence": {
+      "theory": [
+        "先用组件局部state；直接父子共享可提升到共同父级，跨深层稳定依赖可用Context。只有真实跨路由/跨树共享需求时再引入全局store。",
+        "URL适合可分享的路由/筛选条件，服务端缓存适合远程数据；把它们都复制进通用store容易形成多份真相和失效问题。",
+        "全局不是进程级用户单例的许可。SSR中请求状态、用户和缓存隔离仍要明确；关闭页面后的持久化也需单独协议，不是store默认功能。"
+      ],
+      "example": "TogglePair独立状态测试实际点A不改B；后续Zustand工厂测试说明显式共享和工厂隔离。",
+      "exercise": "把搜索同时放URL和全局store却只更新一个，重现前进/后退显示不同；保留URL单一来源或明确同步。",
+      "practice": "为React对照副本的搜索、选中、远程列表、登录占位画所有权表，解释哪些应该局部、URL、缓存或应用共享。",
+      "boundary": [
+        "先解决所有权，再选库。",
+        "本节不要求React/Zustand/Redux一起进入主线工程。"
+      ],
+      "source": "https://react.dev/learn/sharing-state-between-components",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.3.2",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.2.zustand.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.2.zustand-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.2.zustand.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-2",
+    "evidence": {
+      "theory": [
+        "本节选Zustand，不要求同时学习Jotai。store维护状态与动作；React层可通过选择器订阅所需切片，vanilla createStore可在React之外测试核心行为。",
+        "默认set按第一层合并；深层对象仍要自己保持不可变更新。订阅返回取消函数，组件外手动订阅要按生命周期释放。",
+        "模块顶层store在单页应用中可用于应用共享，但SSR用户状态宜按请求/实例创建；持久化中间件不是秘密存储，hydration也需另行处理。"
+      ],
+      "example": "stores.ts用真实zustand/vanilla；测试两工厂实例隔离，取消订阅后不再通知。没有实装Jotai或persist。",
+      "exercise": "模块顶层导出一个用户store给全部SSR请求；改为请求/应用工厂，并用两个实例断言不互相污染。",
+      "practice": "在React副本以工厂创建选中任务store，用选择器连接两个消费者，再比较Pinia应用实例的隔离职责。",
+      "boundary": [
+        "轻量库不会自动解决边界设计。",
+        "本例验证核心store，不冒称全套SSR hydration完成。"
+      ],
+      "source": "https://github.com/pmndrs/zustand",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.3.3",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.3.redux-toolkit.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.3.redux-toolkit-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.3.redux-toolkit.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-3",
+    "evidence": {
+      "theory": [
+        "configureStore提供常用默认中间件与工具配置，createSlice生成reducer/actions。slice中的“修改”写法针对Immer草稿，不是普通对象随意可变的规则。",
+        "createAsyncThunk创建pending/fulfilled/rejected action；reducer应显式处理状态。dispatch返回的Promise通常以action完成，业务调用需要unwrap才能按异常处理拒绝。",
+        "异步竞态、取消和授权不会因使用RTK自动解决。中间件处理dispatch链路上的副作用/检查，不等同组件生命周期或服务端鉴权。"
+      ],
+      "example": "stores.ts真实configureStore/createSlice/createAsyncThunk；测试成功与fixture失败、unwrap拒绝以及最终状态。未接真实HTTP或react-redux Provider。",
+      "exercise": "await dispatch后直接提示成功而没有检查拒绝；改unwrap+catch，用fail:true证明不再误报。",
+      "practice": "在React副本为阅读标题加载定义pending/success/error，模拟失败；若需要UI，另接Provider并说明属于新增扩展。",
+      "boundary": [
+        "RTK草稿写法局限在对应Immer处理范围。",
+        "生产仍需请求取消、会话和服务端授权契约。"
+      ],
+      "source": "https://redux.js.org/toolkit/api/createAsyncThunk",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.3.4",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.4.tanstack-query-react-query.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.4.tanstack-query-react-query-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.4.tanstack-query-react-query.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-4",
+    "evidence": {
+      "theory": [
+        "Query用queryKey标识缓存内容，queryFn返回Promise。key应包含影响结果的输入，例如用户范围和筛选；不同查询共用同一key会污染结果。",
+        "staleTime描述新鲜度，gcTime描述无观察者缓存保留，二者不同。invalidateQueries标记匹配缓存失效，活跃查询可按选项触发重新获取；重试需要结合幂等和错误类型。",
+        "乐观更新通常先取消冲突查询、保存旧值、临时更新、失败回滚、完成后失效；本例直接操作QueryClient证明缓存与回滚机制，不冒充完整mutation并发协调。"
+      ],
+      "example": "真实QueryClient测试相同key新鲜缓存只调用queryFn一次，保存/恢复旧值后显式失效，再取发生第二次调用。无真实网络/乐观mutation UI。 新增受控失败实验：optimisticAppend先取消冲突查询、保存旧值并写临时数据，save Promise失败时恢复快照，最后失效；另用retry:1/retryDelay:0验证一次重试后恢复。仍未实现React useMutation并发UI或真实服务端。",
+      "exercise": "列表A/B共用[\"tasks\"]导致串数据；把筛选/用户放key，分别读取并断言缓存隔离。",
+      "practice": "在React副本为同一阅读列表设计用户+筛选key和失败回滚计划；新增Mutation时用延迟失败fixture验证，不复制到Nuxt造成两套缓存真相。",
+      "boundary": [
+        "远程缓存和纯UI状态职责不同。",
+        "本例retry:false便于确定失败行为，不是所有生产场景推荐。"
+      ],
+      "source": "https://tanstack.com/query/latest/docs/framework/react/guides/optimistic-updates",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.3.5",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.5.react-hook-form.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.5.react-hook-form-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.5.react-hook-form.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-5",
+    "evidence": {
+      "theory": [
+        "React Hook Form管理表单注册、错误和提交状态；Zod对运行值校验并可变换。TypeScript注解只做静态约束，外部输入仍需真实schema验证。",
+        "本例register的validate调用Zod safeParse，提交再parse取得trim后的值；也可按对应版本接resolver，但本实验未安装resolver适配器。避免把校验后的类型与原始值混淆。",
+        "客户端校验用于反馈，服务端仍需再次验证与授权。标签、错误关联和提交中状态必须保留，不能为了自定义UI移除原生键盘能力。"
+      ],
+      "example": "FormDemo真实useForm注册与提交，空值后出现Zod错误并设置aria-invalid；schema测试trim与拒绝数字。未执行真实后端提交。",
+      "exercise": "只把输入as FormValues就发送，空白标题溜过；改运行校验，并证明trim后的输出被实际保存。",
+      "practice": "在React副本新增描述字段和服务端拒绝fixture，保持输入、字段错误与提交错误分开；主Nuxt表单继续使用其原生/Vue契约。",
+      "boundary": [
+        "noValidate在本例用于统一演示自定义校验，不代表必须关闭原生约束。",
+        "保存秘密和权限不由表单库解决。",
+        "最终真实Chrome还验证空白错误后填写标题、trim成功保存。"
+      ],
+      "source": "https://react-hook-form.com/docs/useform",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.4.1",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.1.vs.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.1.vs-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.1.vs.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-1",
+    "evidence": {
+      "theory": [
+        "展示组件以props/回调描述界面，容器组织状态、数据获取和业务动作；这是可选设计模式，不是每个组件必须配一个Container文件。",
+        "组件大小、复用与变化原因决定是否拆分。Hooks可以复用逻辑而不再依赖额外容器包装，但数据所有权与错误状态仍需明确。",
+        "切分应保留可访问名称、loading/empty/error等业务可见状态，不要把类型和技术层级名泄露给产品用户。"
+      ],
+      "example": "App.tsx的CardContainer拥有state，CardView发回调；真实DOM测试点击后容器文本更新。",
+      "exercise": "子组件复制props到state后父值变化不跟随；删除无必要副本，或明确编辑草稿与重置策略。",
+      "practice": "在React副本把阅读卡展示与列表查询分开，仅在复用/可测性有收益时拆分，与Vue Props/emits比较。",
+      "boundary": [
+        "层次服务变化边界，不为目录形式增加转发组件。",
+        "回调说明意图，父级保留最终状态所有权。"
+      ],
+      "source": "https://react.dev/learn/thinking-in-react",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.4.2",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.2.ant-design.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.2.ant-design-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.2.ant-design.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-2",
+    "evidence": {
+      "theory": [
+        "组件库解决常用控件、主题和交互一致性，但仍需核对React版本、SSR集成、体积、许可和可访问性。不能把“流行”当场景匹配证据。",
+        "Ant Design提供较完整产品组件；MUI提供Material体系与可定制组件；shadcn/ui以可引入并自行维护的组件源码为重要特征，升级责任和封装方式不同。",
+        "本节选型观察清单，不安装三套库。任务从一个具体表单/选择控件出发比较受控契约、键盘/触屏、错误与主题，决定是否需要库，避免同时混入多个视觉体系。"
+      ],
+      "example": "运行组件库观察清单.md，打开三个官方说明，记录版本、控件API、SSR/主题/键盘条件和未验证项；不是本地组件库运行证明。",
+      "exercise": "把shadcn生成组件当自动随npm升级的黑盒库，找不到自改覆盖点；列清源码归属、升级diff和复验责任。",
+      "practice": "为React选修副本写一页控件选型比较，选择一套或保持原生，再在独立分支做最小接入；不改变主Nuxt选型。",
+      "boundary": [
+        "本地实验仍用原生button/input。",
+        "官网示例可用不等于目标产品全部可访问。"
+      ],
+      "source": "https://ui.shadcn.com/docs",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.4.3",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.3.css-css-modules-styled-components.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.3.css-css-modules-styled-components-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.3.css-css-modules-styled-components.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-3",
+    "evidence": {
+      "theory": [
+        "CSS Modules按构建规则生成类名映射，避免常见类名冲突，但不是Shadow DOM隔离；全局样式、继承和层叠仍然存在。",
+        "Styled Components以组件形式描述样式，具体运行/编译/SSR策略取决于版本；不能把所有CSS-in-JS都描述为同一种性能特征。Tailwind将可识别的工具类生成CSS，动态拼接完整类名需符合扫描规则。",
+        "本实验真实编译CSS Modules。Styled Components与Tailwind在React中仅作官方对照；Tailwind主线另由4.4实装，避免为横向比较重复装三套。"
+      ],
+      "example": "App.tsx实际消费Card.module.css，生产CSS包含转换后的card类；样式方案观察清单.md记录其他两方案的条件。",
+      "exercise": "把styles.card写成字面量className=\"styles.card\"，样式丢失；改表达式后检查DOM类名与产物。",
+      "practice": "在React副本给阅读卡增加局部错误样式，检查产物类名并解释全局/继承边界；与4.4工具类比较后保留一个主方案。",
+      "boundary": [
+        "局部类名不等于完全隔离。",
+        "动态工具类和SSR样式顺序需查目标版本。"
+      ],
+      "source": "https://vite.dev/guide/features#css-modules",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.2.4.4",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.4.next.js.md",
+    "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.4.next.js-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.4.next.js.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-4",
+    "evidence": {
+      "theory": [
+        "Next.js是React应用框架；本节按App Router理解app/page.tsx、layout.tsx、动态段[id]/page.tsx、route.ts。Pages Router的pages/api属于另一套目录约定，不能混进同一最小骨架。",
+        "App Router默认的Server Components与Client Components有运行/模块边界。需要state、effect或浏览器事件的入口用use client，边界导入的依赖也要评估；服务端组件不等于服务端永远不生成客户端HTML。",
+        "Route Handlers按HTTP方法处理请求，仍需校验和授权。SSR/静态生成/缓存由页面数据和配置共同决定，不能只看文件名断言部署模式或必须永远运行Node。Nuxt主线无需先学Next。"
+      ],
+      "example": "Next应用观察清单.md要求按官方文档追踪一次页面/客户端交互/Route Handler，并区分假想骨架和本轮真实React Vite工程；本轮未构建Next。",
+      "exercise": "在默认Server Component里调用useState或window；先判断是否该拆Client入口，或把操作留服务端，不随意把整个应用加use client。",
+      "practice": "把主Nuxt阅读应用的pages/layouts/server/API边界映射成一份Next App Router候选目录与数据流，不要求再建生产项目。",
+      "boundary": [
+        "这是跨框架选修观察，不是完整Next部署教程。",
+        "缓存、预渲染和运行时细节需按目标版本官方资料专项核对。"
+      ],
+      "source": "https://nextjs.org/docs/app/getting-started/server-and-client-components",
+      "runtime": "docs/audits/stage-4-react-runtime.json"
+    },
+    "issues": []
+  }
+]

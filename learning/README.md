@@ -14,3 +14,5 @@
 [返回知识地图](../KNOWLEDGE_MAP.md) · [资料规范](../docs/AUTHORING.md)
 
 阶段3新增[理论入口](./1-notes/03-engineering/README.md)、[真实实验](./2-examples/03-engineering/README.md)、[独立练习](./3-exercises/03-engineering/README.md)与[阅读任务板](./4-practice/03-engineering/README.md)，共36点。
+
+阶段4：先读[Vue/Nuxt主线入口](./1-notes/04-frameworks/README.md)，再运行[真实实验](./2-examples/04-frameworks/README.md)、完成[独立练习](./3-exercises/04-frameworks/README.md)与[Nuxt综合项目](./4-practice/04-frameworks/README.md)。共59项，React26项为选修。

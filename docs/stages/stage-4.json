@@ -1,0 +1,420 @@
+{
+  "schemaVersion": 1,
+  "stage": 4,
+  "project": "learning/4-practice/04-frameworks/nuxt.config.ts",
+  "points": [
+    {
+      "id": "4.1.1",
+      "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.1.ui-vs-ui.md",
+      "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.1.ui-vs-ui-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.1.ui-vs-ui.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-1"
+    },
+    {
+      "id": "4.1.2",
+      "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2.md",
+      "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-2"
+    },
+    {
+      "id": "4.1.3",
+      "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.3.dom.md",
+      "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.3.dom-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.3.dom.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-3"
+    },
+    {
+      "id": "4.1.4",
+      "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.4.vs.md",
+      "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.4.vs-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.4.vs.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-4"
+    },
+    {
+      "id": "4.1.5",
+      "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.5.vs.md",
+      "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.5.vs-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.5.vs.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-5"
+    },
+    {
+      "id": "4.1.6",
+      "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.6.key.md",
+      "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.6.key-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.6.key.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-6"
+    },
+    {
+      "id": "4.1.7",
+      "theory": "learning/1-notes/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget.md",
+      "example": "learning/2-examples/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-1-7"
+    },
+    {
+      "id": "4.2.1.1",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.1.jsx.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.1.jsx-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.1.jsx.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-1"
+    },
+    {
+      "id": "4.2.1.2",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.2.item-4-2-1-2.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.2.item-4-2-1-2-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.2.item-4-2-1-2.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-2"
+    },
+    {
+      "id": "4.2.1.3",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.3.props-children.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.3.props-children-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.3.props-children.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-3"
+    },
+    {
+      "id": "4.2.1.4",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.4.usestate.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.4.usestate-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.4.usestate.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-4"
+    },
+    {
+      "id": "4.2.1.5",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.5.useeffect.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.5.useeffect-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.5.useeffect.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-5"
+    },
+    {
+      "id": "4.2.1.6",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.6.useref.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.6.useref-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.6.useref.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-6"
+    },
+    {
+      "id": "4.2.1.7",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.7.usememo.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.7.usememo-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.7.usememo.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-7"
+    },
+    {
+      "id": "4.2.1.8",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.8.createcontext.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.8.createcontext-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.8.createcontext.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-8"
+    },
+    {
+      "id": "4.2.1.9",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.9.usereducer.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.9.usereducer-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.9.usereducer.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-9"
+    },
+    {
+      "id": "4.2.1.10",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.10.hook.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.10.hook-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.10.hook.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-10"
+    },
+    {
+      "id": "4.2.1.11",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.11.error-boundary.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.11.error-boundary-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.11.error-boundary.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-11"
+    },
+    {
+      "id": "4.2.1.12",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.12.portal.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.12.portal-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.12.portal.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-12"
+    },
+    {
+      "id": "4.2.1.13",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.1.13.strict-mode.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.1.13.strict-mode-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.1.13.strict-mode.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-1-13"
+    },
+    {
+      "id": "4.2.2.1",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.1.react-router.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.1.react-router-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.1.react-router.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-1"
+    },
+    {
+      "id": "4.2.2.2",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.2.layout-route.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.2.layout-route-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.2.layout-route.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-2"
+    },
+    {
+      "id": "4.2.2.3",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.3.item-4-2-2-3.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.3.item-4-2-2-3-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.3.item-4-2-2-3.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-3"
+    },
+    {
+      "id": "4.2.2.4",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.2.4.react.lazy.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.2.4.react.lazy-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.2.4.react.lazy.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-2-4"
+    },
+    {
+      "id": "4.2.3.1",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.1.item-4-2-3-1.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.1.item-4-2-3-1-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.1.item-4-2-3-1.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-1"
+    },
+    {
+      "id": "4.2.3.2",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.2.zustand.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.2.zustand-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.2.zustand.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-2"
+    },
+    {
+      "id": "4.2.3.3",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.3.redux-toolkit.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.3.redux-toolkit-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.3.redux-toolkit.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-3"
+    },
+    {
+      "id": "4.2.3.4",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.4.tanstack-query-react-query.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.4.tanstack-query-react-query-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.4.tanstack-query-react-query.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-4"
+    },
+    {
+      "id": "4.2.3.5",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.3.5.react-hook-form.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.3.5.react-hook-form-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.3.5.react-hook-form.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-3-5"
+    },
+    {
+      "id": "4.2.4.1",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.1.vs.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.1.vs-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.1.vs.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-1"
+    },
+    {
+      "id": "4.2.4.2",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.2.ant-design.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.2.ant-design-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.2.ant-design.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-2"
+    },
+    {
+      "id": "4.2.4.3",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.3.css-css-modules-styled-components.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.3.css-css-modules-styled-components-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.3.css-css-modules-styled-components.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-3"
+    },
+    {
+      "id": "4.2.4.4",
+      "theory": "learning/1-notes/04-frameworks/4.2-react/4.2.4.4.next.js.md",
+      "example": "learning/2-examples/04-frameworks/4.2-react/4.2.4.4.next.js-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.2-react/4.2.4.4.next.js.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-2-4-4"
+    },
+    {
+      "id": "4.3.1.1",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-1"
+    },
+    {
+      "id": "4.3.1.2",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.2.setup.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.2.setup-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.2.setup.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-2"
+    },
+    {
+      "id": "4.3.1.3",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.3.onmounted.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.3.onmounted-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.3.onmounted.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-3"
+    },
+    {
+      "id": "4.3.1.4",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.4.emit.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.4.emit-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.4.emit.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-4"
+    },
+    {
+      "id": "4.3.1.5",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.5.provide.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.5.provide-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.5.provide.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-5"
+    },
+    {
+      "id": "4.3.1.6",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.6.ref.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.6.ref-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.6.ref.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-6"
+    },
+    {
+      "id": "4.3.1.7",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.7.keepalive.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.7.keepalive-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.7.keepalive.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-7"
+    },
+    {
+      "id": "4.3.1.8",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.8.watch-cleanup.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.8.watch-cleanup-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.8.watch-cleanup.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-8"
+    },
+    {
+      "id": "4.3.2.1",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.2.1.vue-router.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.2.1.vue-router-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.2.1.vue-router.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-2-1"
+    },
+    {
+      "id": "4.3.2.2",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.2.2.pinia.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.2.2.pinia-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.2.2.pinia.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-2-2"
+    },
+    {
+      "id": "4.3.3.1",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.3.1..vue.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.3.1..vue-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.3.1..vue.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-3-1"
+    },
+    {
+      "id": "4.3.3.2",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.3.2.element-plus.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.3.2.element-plus-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.3.2.element-plus.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-3-2"
+    },
+    {
+      "id": "4.3.3.3",
+      "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.3.3.nuxt.md",
+      "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.3.3.nuxt-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.3.3.nuxt.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-3-3"
+    },
+    {
+      "id": "4.4.1",
+      "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.1.tailwind-css.md",
+      "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.1.tailwind-css-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.1.tailwind-css.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-1"
+    },
+    {
+      "id": "4.4.2",
+      "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.2.item-4-4-2.md",
+      "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.2.item-4-4-2-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.2.item-4-4-2.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-2"
+    },
+    {
+      "id": "4.4.3",
+      "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.3.icon-font-svg-icon-lucide.md",
+      "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.3.icon-font-svg-icon-lucide-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.3.icon-font-svg-icon-lucide.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-3"
+    },
+    {
+      "id": "4.4.4",
+      "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.4.prefers-color-scheme.md",
+      "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.4.prefers-color-scheme-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.4.prefers-color-scheme.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-4"
+    },
+    {
+      "id": "4.5.1",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.1.scaffold-routing-layouts.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.1.scaffold-routing-layouts-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.1.scaffold-routing-layouts.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-1"
+    },
+    {
+      "id": "4.5.2",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.2.rendering-hydration.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.2.rendering-hydration-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.2.rendering-hydration.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-2"
+    },
+    {
+      "id": "4.5.3",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.3.data-fetching-lifecycle.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.3.data-fetching-lifecycle-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.3.data-fetching-lifecycle.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-3"
+    },
+    {
+      "id": "4.5.4",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.4.state-request-boundaries.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.4.state-request-boundaries-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.4.state-request-boundaries.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-4"
+    },
+    {
+      "id": "4.5.5",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.5.runtime-config.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.5.runtime-config-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.5.runtime-config.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-5"
+    },
+    {
+      "id": "4.5.6",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-6"
+    },
+    {
+      "id": "4.5.7",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-7"
+    },
+    {
+      "id": "4.5.8",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-8"
+    },
+    {
+      "id": "4.5.9",
+      "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.9.head-page-metadata.md",
+      "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.9.head-page-metadata-demo.md",
+      "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.9.head-page-metadata.md",
+      "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-9"
+    }
+  ]
+}

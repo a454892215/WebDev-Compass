@@ -1,0 +1,63 @@
+@import "tailwindcss";
+@source "./index.html";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@theme {
+  --color-brand: #1d4ed8;
+  --font-sans: system-ui, sans-serif;
+}
+:root {
+  color-scheme: light dark;
+  --surface: #ffffff;
+  --ink: #172033;
+  --edge: #64748b;
+  --space-control: 0.75rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #111827;
+    --ink: #e5e7eb;
+    --edge: #94a3b8;
+    --color-brand: #93c5fd;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --surface: #ffffff;
+  --ink: #172033;
+  --edge: #64748b;
+  --color-brand: #1d4ed8;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #111827;
+  --ink: #e5e7eb;
+  --edge: #94a3b8;
+  --color-brand: #93c5fd;
+}
+body {
+  background: var(--surface);
+  color: var(--ink);
+}
+.control {
+  padding: var(--space-control);
+  border: 1px solid var(--edge);
+  border-radius: 0.5rem;
+  font: inherit;
+}
+:focus-visible {
+  outline: 3px solid #c2410c;
+  outline-offset: 3px;
+}
+svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+button,
+select {
+  min-height: 44px;
+}
+@media (forced-colors: active) {
+  .control {
+    border-color: ButtonText;
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "nuxt": {
+    "version": "4.7.0",
+    "engines": {
+      "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+    },
+    "peerDependencies": {
+      "rolldown": "~1.2.1",
+      "@types/node": ">=18.12.0",
+      "@parcel/watcher": "^2.1.0"
+    }
+  },
+  "@nuxt/test-utils": {
+    "version": "4.4.0",
+    "engines": {
+      "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+    },
+    "peerDependencies": {
+      "h3": "^1.15.0 || ^2.0.0-0",
+      "vue": "^3.5.0",
+      "nuxt": "^3.21.0 || ^4.0.0 || ^5.0.0-0",
+      "jsdom": ">=27.4.0",
+      "vitest": "^4.0.2 || ^5.0.0",
+      "happy-dom": ">=20.0.11",
+      "@jest/globals": ">=30.0.0",
+      "@vue/test-utils": "^2.4.2",
+      "playwright-core": "^1.43.1",
+      "@playwright/test": "^1.43.1",
+      "@cucumber/cucumber": ">=11.0.0",
+      "@testing-library/vue": "^8.0.1"
+    }
+  },
+  "@pinia/nuxt": {
+    "version": "1.0.3",
+    "engines": null,
+    "peerDependencies": {
+      "pinia": "^4.1.0"
+    }
+  },
+  "pinia": {
+    "version": "4.1.0",
+    "engines": null,
+    "peerDependencies": {
+      "vue": "^3.5.11",
+      "typescript": ">=5.6.0",
+      "@vue/devtools-api": "^8.2.1"
+    }
+  },
+  "vue": {
+    "version": "3.5.46",
+    "engines": null,
+    "peerDependencies": {
+      "typescript": "*"
+    }
+  },
+  "vue-tsc": {
+    "version": "3.3.14",
+    "engines": null,
+    "peerDependencies": {
+      "typescript": ">=5.0.0"
+    }
+  },
+  "@nuxt/eslint": {
+    "version": "1.17.0",
+    "engines": null,
+    "peerDependencies": {
+      "eslint": "^9.0.0 || ^10.0.0",
+      "vite-plugin-eslint2": "^5.0.0",
+      "eslint-webpack-plugin": "^4.1.0"
+    }
+  },
+  "@nuxt/kit": {
+    "version": "4.7.0",
+    "engines": {
+      "node": "^20.19.0 || >=22.12.0"
+    },
+    "peerDependencies": {
+      "jiti": "^2.0.0",
+      "mlly": "^1.2.0",
+      "giget": ">=3.1.0",
+      "dotenv": "*",
+      "confbox": ">=0.1.0",
+      "rolldown": ">=1.0.0",
+      "oxc-parser": ">=0.56.0",
+      "@nuxt/schema": "^3.0.0 || ^4.0.0 || ^5.0.0-0"
+    }
+  },
+  "nuxi": {
+    "version": "4.1.0",
+    "engines": {
+      "node": "^22.21.0 || ^24.11.0 || >=26.0.0"
+    },
+    "peerDependencies": {
+      "jiti": "^2.3.0",
+      "@nuxt/cli": ">=3.26.0"
+    }
+  },
+  "@vitejs/plugin-vue": {
+    "version": "6.0.11",
+    "engines": {
+      "node": "^20.19.0 || >=22.12.0"
+    },
+    "peerDependencies": {
+      "vue": "^3.2.25 || ^3.6.0-rc.15",
+      "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+    }
+  },
+  "tailwindcss": {
+    "version": "4.3.5",
+    "engines": null,
+    "peerDependencies": null
+  },
+  "_verification": {
+    "date": "2026-11-24",
+    "source": "official npm registry metadata, exact manifests, lockfile and runtime checks",
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "selectedTypeScript": "6.0.3",
+    "reason": "matches stage3 baseline and current ESLint TypeScript adapter support"
+  }
+}

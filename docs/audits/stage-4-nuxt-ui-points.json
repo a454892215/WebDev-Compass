@@ -1,0 +1,312 @@
+[
+  {
+    "id": "4.4.1",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.1.tailwind-css.md",
+    "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.1.tailwind-css-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.1.tailwind-css.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-1",
+    "evidence": {
+      "mechanism": "本实验固定Tailwind与官方CLI 4.3.5。v4入口使用CSS的@import、@theme和@source；不要把旧版tailwind.config.js/content配置直接当成当前必需骨架。CLI扫描源文件中的完整类名并生成需要的规则。md:不是“识别桌面设备”，而是从断点起覆盖样式；默认类适用于全部尺寸。运行时拼接text-${color}-600可能无法被扫描，应使用完整类名映射或明确的来源规则。",
+      "example": [
+        "在theme-lab执行冻结安装与pnpm build，查看真实dist/theme.css；源码CSS不是可直接当成已编译产物的证明。",
+        "运行pnpm preview，在390px和1440px观察同一grid从一列变两列；查看computed样式和md规则。",
+        "在副本新增一个完整工具类再构建，比较产物；动态拼接类失败时用静态映射修正。"
+      ],
+      "exercise": "把完整text-brand改成运行时拼接的类名，清理dist重建后定位未生成的规则；修复为完整类名映射，再核对产物和computed样式。",
+      "practice": "主Nuxt任务板使用自己的CSS。先对照两种样式组织方式；若在副本接入Tailwind，只替换一张卡片并检查真实产物，不把本实验构建结果当作Nuxt已集成。",
+      "source": [
+        "https://tailwindcss.com/docs/installation/tailwind-cli",
+        "https://tailwindcss.com/docs/detecting-classes-in-source-files"
+      ],
+      "runtime": "Tailwind4.3.5真实构建；Chrome390/1440与无JS深色共3组通过。独立实验不称Nuxt SSR运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.4.2",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.2.item-4-4-2.md",
+    "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.2.item-4-4-2-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.2.item-4-4-2.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-2",
+    "evidence": {
+      "mechanism": "原始值是具体色值或尺寸；语义令牌说明用途，如surface/ink/edge。组件令牌或规范再说明按钮的尺寸、状态和间距。令牌不仅是复制一套CSS变量：还要规定焦点、禁用、错误、加载和空状态。共享令牌不强制两端布局一致；同名语义应保持可解释的含义，平台密度可以不同。",
+      "example": [
+        "定位surface/ink/edge与space-control的定义和.control消费位置。",
+        "切换浅/深主题，比较两个卡片及原生select；改一个令牌观察受影响范围。",
+        "Tab进入按钮，核对焦点有独立可见样式；不要用颜色独自表示收藏状态。"
+      ],
+      "exercise": "给第二张卡片硬编码白底而继承深色文字，切换主题重现不匹配；改回语义变量并复核两主题。",
+      "practice": "列出Nuxt阅读资料库的背景、正文、边框、焦点与错误令牌，在副本统一一处硬编码样式；不要求主工程改用某个UI库。",
+      "source": [
+        "https://tailwindcss.com/docs/theme",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/css/css"
+      ],
+      "runtime": "Tailwind4.3.5真实构建；Chrome390/1440与无JS深色共3组通过。独立实验不称Nuxt SSR运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.4.3",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.3.icon-font-svg-icon-lucide.md",
+    "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.3.icon-font-svg-icon-lucide-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.3.icon-font-svg-icon-lucide.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-3",
+    "evidence": {
+      "mechanism": "图标字体用字形承载形状，可能受字体加载和替代字体影响。SVG可以内联、作为img或sprite使用；内联currentColor可跟随文字色，img加载的独立SVG不会直接继承宿主CSS的currentColor。带可见文字的图标常是装饰，应避免重复朗读；纯图标按钮的名称放在按钮上；独立信息图应有自己的可访问名称。",
+      "example": [
+        "查看收藏按钮中aria-hidden图标与文字，按钮可按“收藏卡片”定位。",
+        "查看纯图标按钮的aria-label和img空alt，再查看独立role=img及title关系。",
+        "离线观察两个SVG都是本地资源；深色模式核对内联和外部图标都有可辨识对比。"
+      ],
+      "exercise": "移除纯图标按钮aria-label后观察它失去动作名称；恢复名称，而不是仅给SVG添加“图标”这样的无意义描述。",
+      "practice": "核对阅读资料卡片动作是否有可见文字或按钮名称；若新增图标，使用本地资源并验证装饰/信息区分，不为图标强装组件库。",
+      "source": [
+        "https://www.w3.org/WAI/tutorials/images/functional/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ],
+      "runtime": "Tailwind4.3.5真实构建；Chrome390/1440与无JS深色共3组通过。独立实验不称Nuxt SSR运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.4.4",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.4-css-ui/4.4.4.prefers-color-scheme.md",
+    "example": "learning/2-examples/04-frameworks/4.4-css-ui/4.4.4.prefers-color-scheme-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.4-css-ui/4.4.4.prefers-color-scheme.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-4-4",
+    "evidence": {
+      "mechanism": "模型分system/light/dark。默认meta与:root声明light dark，CSS媒体查询决定令牌；显式选择通过data-theme覆盖变量和color-scheme，回system时删除覆盖。本实验不持久化，不在SSR期间读取window/localStorage，因此初始HTML与客户端渲染不因浏览器存储而分叉。真实Nuxt持久化可用服务端可读cookie或经过设计的启动脚本，但要处理CSP、无脚本及闪烁边界。",
+      "example": [
+        "先不选主题，在浏览器模拟浅/深系统偏好，查看背景与原生select的color-scheme。",
+        "选择浅色后把系统改深色，应保持浅色；选择深色后把系统改浅色，应保持深色。",
+        "回跟随系统后覆盖属性消失；关闭JS重新加载，CSS仍能随系统变深色，选择控件的增强行为不被冒称仍存在。"
+      ],
+      "exercise": "把:root写死color-scheme:light而只更新meta，观察原生UI不随预期变化；修正CSS覆盖关系再验证两系统偏好。",
+      "practice": "主Nuxt工程默认CSS跟随系统。将手动主题与持久化作为副本扩展：先保证SSR/客户端初始一致，再分别验证两主题和恢复系统，不声称主项目已有该设置。",
+      "source": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/visual-design/dark-mode",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-components/dark-mode-toggle"
+      ],
+      "runtime": "Tailwind4.3.5真实构建；Chrome390/1440与无JS深色共3组通过。独立实验不称Nuxt SSR运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.1",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.1.scaffold-routing-layouts.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.1.scaffold-routing-layouts-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.1.scaffold-routing-layouts.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-1",
+    "evidence": {
+      "mechanism": "当前Nuxt 4应用代码默认放app/，app/pages生成页面路由，app/layouts定义布局，app/app.vue通过NuxtLayout/NuxtPage装配。文件resources/[id].vue对应动态参数，不等同服务端API路由。server/api单独注册HTTP处理。官方创建命令能生成起点，但本教材固定Nuxt4.7.0与锁文件，后续生成器latest不保证产生完全相同文件。",
+      "example": [
+        "读取package/锁及配置，再按综合README安装与运行。",
+        "从列表用NuxtLink进入详情，记录URL；直接打开同一详情并刷新，观察服务端仍返回内容。",
+        "检查布局复用与当前路由参数；访问不存在id核对错误边界，不能只验证首页。"
+      ],
+      "exercise": "把NuxtPage删掉后URL变化但页面不显示；检查装配入口，恢复NuxtPage并复验，而不是在每页复制整套布局。",
+      "practice": "核对阅读资料库的列表/详情/关于页与布局。在副本新增页面并验证深链，现有工程不是自动生成所有业务页面。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/installation",
+        "https://nuxt.com/docs/4.x/directory-structure/app/pages"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.2",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.2.rendering-hydration.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.2.rendering-hydration-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.2.rendering-hydration.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-2",
+    "evidence": {
+      "mechanism": "SSR在请求时生成HTML，浏览器收到后hydration接管事件；后续站内导航通常在客户端进行。CSR的初始HTML通常是壳，内容依赖客户端JS。SSG在构建/预渲染时生成静态内容，之后是否更新取决于重新生成等策略。它们不是三种不同语法，Nuxt可以按routeRules混合。确定性初始值与payload可使服务端/客户端输出一致。",
+      "example": [
+        "默认build运行SSR服务器，仅client-demo为CSR；独立generate设置COMPASS_PRERENDER=1生成已知静态只读路径。",
+        "原始HTML、payload、浏览器实际操作分别判定，静态模式不声称任意query/POST后端仍可执行。"
+      ],
+      "exercise": "在页面setup直接读localStorage导致服务端ReferenceError；先说明页面是否必须SSR，再移动浏览器代码到合适边界并检查初始占位一致。",
+      "practice": "比较默认SSR资料库、client-demo客户端页与独立generate的已知静态路径；用原始响应/静态产物与真实操作各留证据，说明静态副本不等价支持任意query/POST。",
+      "source": [
+        "https://nuxt.com/docs/4.x/guide/concepts/rendering",
+        "https://nuxt.com/docs/4.x/guide/best-practices/hydration"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.3",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.3.data-fetching-lifecycle.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.3.data-fetching-lifecycle-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.3.data-fetching-lifecycle.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-3",
+    "evidence": {
+      "mechanism": "useFetch封装常见HTTP读取，useAsyncData承接一般异步handler；它们把服务端结果送入payload供hydration复用。单独在setup调用$fetch通常没有这层复用，可能两端重复请求。data/status/error是ref；status区分idle/pending/success/error。handler应返回可复用的确定结果，不能返回undefined/null造成预期外重新获取。相同key共享状态，handler、deep、transform、pick、getCachedData和default等选项需按官方要求一致。",
+      "example": [
+        "查看列表与详情useFetch调用和响应式参数；刷新页面，区分服务端内部API调用和浏览器Network请求。",
+        "检查初始payload被hydration消费，正常首屏不由浏览器再读同一资源；随后改变查询、手动刷新、制造失败。",
+        "验证用户提交在事件中调用POST，错误可恢复；取消机制的专项结果以综合测试记录为准，不将前端停止等待当服务端回滚。"
+      ],
+      "exercise": "把不同详情强制用同一固定key并用不一致transform，观察共享结果/告警；改用含id的响应式key并统一配置，不用清空全部状态掩盖身份问题。",
+      "practice": "追踪已有资料库列表/详情读取与表单提交；在独立副本新增一次可取消的条件读取，验证payload、key、刷新及signal传递。主项目没有取消按钮，公开fixture也不是真实业务后端。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://nuxt.com/docs/4.x/api/composables/use-async-data"
+      ],
+      "contract": "verify-contract.mjs: actual vue-tsc positive accepts signal/key/dedupe, numeric signal rejected TS2322; no runtime cancellation claim",
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.4",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.4.state-request-boundaries.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.4.state-request-boundaries-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.4.state-request-boundaries.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-4",
+    "evidence": {
+      "mechanism": "组件内部ref适合局部交互；useState用key在当前Nuxt应用上下文共享，并通过payload衔接SSR与客户端。服务端同一进程可能处理多个请求，所以模块顶层可变ref/数组/对象可能被不同请求共用。每请求状态放setup/composable的正确上下文初始化；useState的值应适合序列化，不能把函数、连接或类实例当业务payload。Pinia需要SSR集成，不能直接复用一个进程级store实例。",
+      "example": [
+        "读useReadingList，找出key与初始化位置；在两个组件中操作观察同应用内共享。",
+        "分别请求isolation的不同公开seed，对比HTML/payload，并在并发或不同浏览器上下文重复。",
+        "刷新与新上下文分别观察状态重建；说明为什么这不等同生产账号数据。"
+      ],
+      "exercise": "将初始化状态提到模块顶层后两个请求互相影响；定位模块缓存与请求上下文区别，修复并重跑不同seed/并发。",
+      "practice": "验证资料库书签在同应用可复用，并用isolation公开seed检查SSR请求边界；持久化和登录作为后续扩展，不虚构已有功能。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/state-management",
+        "https://pinia.vuejs.org/ssr/nuxt.html"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.5",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.5.runtime-config.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.5.runtime-config-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.5.runtime-config.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-5",
+    "evidence": {
+      "mechanism": "在nuxt.config声明runtimeConfig结构，public下字段进入客户端可见范围，其他自定义字段仅服务端读取。匹配的NUXT_环境变量可在运行时覆盖结构对应键。开发/build/generate会读取.env，但运行构建后的Node服务不会自动读取项目.env；托管环境应实际注入变量。静态站点没有同样的每请求Node运行配置通道，需要重新生成或设计公开配置加载机制。",
+      "example": [
+        "runtimeConfig.privateDemoLabel为公开教学占位，public.courseLabel为客户端配置。config端点仅回publicLabel/privateConfigured，不回私值。",
+        "真实私密配置应默认空并由匹配NUXT_环境注入，不用生产凭据做教材实验。"
+      ],
+      "exercise": "用不匹配名称OTHER_SITE_NAME启动后界面没变；检查结构和NUXT_命名，修正后重启，不靠重写源码假装运行时覆盖。",
+      "practice": "核对资料库public标签与配置端点，在副本检验同一构建的覆盖与泄漏边界；不把布尔configured标志当生产安全审计。",
+      "source": [
+        "https://nuxt.com/docs/4.x/guide/going-further/runtime-config",
+        "https://nuxt.com/docs/4.x/directory-structure/env"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.6",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-6",
+    "evidence": {
+      "mechanism": "server/api文件按路由和方法约定注册，处理器用defineEventHandler，读取路径/查询/请求体后按业务契约校验。TypeScript不会在运行时自动检查用户JSON。响应数据应只包含允许公开字段；输入错误返回合适4xx，未找到与服务故障分开。BFF可聚合已有服务，但不因叫BFF就能省去授权、超时、审计和下游边界。",
+      "example": [
+        "用HTTP直接请求公开列表、合法详情、未知id和坏参数，比较状态与返回体。",
+        "向validate发送合法和缺失/错误类型输入，观察4xx；确认没有声称保存到数据库。",
+        "绕过页面直接调用API，解释真实受保护业务为什么必须在这层做授权。"
+      ],
+      "exercise": "只给请求体as类型后数字标题被当字符串使用；发送坏JSON/错字段复现，改为unknown逐项校验并重测4xx。",
+      "practice": "阅读资料库的公开API与validate端点，解释何处校验、哪些能力尚未实现；不伪造登录或生产数据库。",
+      "source": [
+        "https://nuxt.com/docs/4.x/directory-structure/server",
+        "https://nuxt.com/docs/4.x/directory-structure/shared"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.7",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-7",
+    "evidence": {
+      "mechanism": "composable是按约定组织的可复用函数，可在适当Nuxt/Vue上下文调用；插件在Nuxt应用创建时执行，可注入工具，.client/.server限定运行环境；Nuxt module在Nuxt开发/构建初始化期间扩展配置、模板或注册运行代码；Layer按Nuxt目录结构复用配置、组件和页面等。它们不能互相当同义词；模块可以注册插件，Layer也可以包含模块。",
+      "example": [
+        "分别定位注入工具、书签composable、本地module及Layer组件，说明执行时机。",
+        "构建并观察Layer徽章/模块装配结果；检查插件工具在SSR与客户端都能按约定使用。",
+        "在副本给一种复用需求选择合适位置，避免为纯函数创建整套module。"
+      ],
+      "exercise": "在普通模块顶层调用useNuxtApp出现上下文不可用；改在setup/插件内取得注入或显式传参，复验SSR和客户端。",
+      "practice": "追踪资料库插件、composable、local module和learning Layer。副本只扩展一种能力，写明哪些是本地复用、哪些仍未发布。",
+      "source": [
+        "https://nuxt.com/docs/4.x/directory-structure/app/plugins",
+        "https://nuxt.com/docs/4.x/getting-started/layers"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.8",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-8",
+    "evidence": {
+      "mechanism": "Nuxt route middleware在Vue导航上下文运行，可以在SSR首个导航与客户端导航执行；server middleware在Nitro请求上下文运行，两者不相同。导航重定向要return navigateTo等结果并避免循环。找不到资源可通过createError等进入合适错误页；局部读取错误不必全部升级为全屏致命错误。错误页提供恢复路径，并注意恢复后的路由/状态。",
+      "example": [
+        "具名study只由about页面声明，notice=1重定向到不含notice的about?from=study；不同于全局路由或API中间件。",
+        "未知资料、未知页与全屏错误恢复由主工程HTTP/浏览器证据判定。"
+      ],
+      "exercise": "将所有路由都重定向到同一会被再次拦截的目标导致循环；为规则加明确匹配/退出条件后重新验证，不简单关闭全部中间件。",
+      "practice": "核对资料库study中间件、404与错误页恢复；真实权限流程在阶段5按后台契约实现，当前公开样本不提供身份保护。",
+      "source": [
+        "https://nuxt.com/docs/4.x/directory-structure/app/middleware",
+        "https://nuxt.com/docs/4.x/getting-started/error-handling"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.5.9",
+    "result": "passed",
+    "theory": "learning/1-notes/04-frameworks/4.5-nuxt/4.5.9.head-page-metadata.md",
+    "example": "learning/2-examples/04-frameworks/4.5-nuxt/4.5.9.head-page-metadata-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.5-nuxt/4.5.9.head-page-metadata.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-5-9",
+    "evidence": {
+      "mechanism": "Nuxt借助Unhead管理head。useHead适合title、meta、html属性等，useSeoMeta提供较明确的SEO字段契约。数据依赖可以用getter/computed使标题在路由参数或内容变化后更新；页面卸载时框架管理注册项。标题和正文应表达同一资源，布局提供公共模板但不应盖掉所有详情标题。",
+      "example": [
+        "直接请求详情并读初始HTML的title和description，而不是只看hydration后的DOM。",
+        "从列表客户端进入不同详情，查看document.title与描述更新，返回列表不残留旧详情名。",
+        "未知详情显示合适错误标题；记录是元信息基础验收，没有真实搜索引擎收录结论。"
+      ],
+      "exercise": "用onMounted直接改document.title后SSR响应仍是默认标题；改用Nuxt head composable，分别检查HTTP初始HTML与客户端导航。",
+      "practice": "验证资料库列表/详情的标题与描述在SSR和导航中都正确，在副本新增一个页面元信息；不承诺收录或排名。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/seo-meta",
+        "https://nuxt.com/docs/4.x/api/composables/use-head"
+      ],
+      "runtime": "主代理实际Nuxt4.7 type/lint/11 tests/node build与4个Chrome E2E通过；本组已读取原始JSON、脚本与日志核对，非本组重复执行。SSG静态产物另行检查，取消仅类型契约。"
+    },
+    "issues": []
+  }
+]

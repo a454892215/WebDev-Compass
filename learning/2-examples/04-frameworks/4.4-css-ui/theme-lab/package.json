@@ -1,0 +1,19 @@
+{
+  "name": "@compass/stage4-theme-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node server.mjs",
+    "verify": "node verify.mjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "4.3.5",
+    "@tailwindcss/cli": "4.3.5",
+    "@playwright/test": "1.65.1"
+  }
+}

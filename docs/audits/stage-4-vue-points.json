@@ -1,0 +1,262 @@
+[
+  {
+    "id": "4.3.1.1",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "模板将状态映射成DOM。双大括号插值按文本处理；v-bind（:）绑定属性，v-on（@）注册监听器。v-html会解释HTML，不能接不可信输入；框架不会让任意HTML自动安全。",
+        "v-if改变子树的创建/销毁；v-show切换display，实例与元素保留。选用取决于初始成本、切换频率和副作用，而不是哪一个绝对更快。条件和列表可先用computed筛选，避免把v-if与v-for竞争作用域混在同一元素。",
+        "v-for用稳定业务id作:key，支持插入/重排时维持正确实例身份；不要用随机数或在可编辑列表用位置替代业务身份。原生input的v-model连接value和input等适当事件，select/checkbox还有各自语义；不能据此省掉label或类型校验。"
+      ],
+      "example": "筛选标题改变computed列表；切换说明后v-show节点仍存在。输入<b>draft</b>只显示文字，没有b节点；真实模型更新改变插槽内容。",
+      "exercise": "把:key换成索引并把编辑草稿放到子组件本地，在列表头插入条目观察串位；恢复稳定id，并说明不是数组索引一概禁止。",
+      "practice": "先在Vue实验核对v-show帮助区域保留节点；再用Nuxt已有卡片临时笔记验证反转列表后的稳定id。标题用文本展示；当前筛选卸载后笔记可丢失，若要跨筛选保留，在副本明确提升状态所有权。",
+      "boundary": "本例v-model更新内存，不提交服务端；样式隐藏也不是访问权限控制。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.1.2",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.2.setup.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.2.setup-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.2.setup.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "ref保存可替换的值，脚本通过.value读写；reactive为对象提供深层代理，跟踪属性访问。应操作代理而非原始对象；把reactive对象里的数字解构成普通变量会断开属性连接，可用toRefs或getter。Vue3.5的defineProps同一script setup内解构有编译处理，是特定例外，不代表所有解构都响应式。",
+        "computed用于基于依赖的派生值并缓存结果；getter保持纯净，不在里面发请求、改依赖或写存储。业务源状态留在ref/reactive，派生筛选和计数不再复制一份手工同步。数组/Map中的ref等解包规则不能从普通模板插值一概类推。",
+        "状态写入立即改变JS值，DOM更新按批次调度；需要读取更新后的DOM时await nextTick，不把固定setTimeout当更新保证。composable是复用有状态逻辑的函数，通常以use开头，在合法setup上下文同步调用以绑定生命周期；两个调用默认拥有各自局部状态，不自动是全局单例。"
+      ],
+      "example": "筛选由computed派生；测试实际对比reactive普通解构的旧值与toRefs新值，验证computed结果4。模板引用实验在nextTick后聚焦。",
+      "exercise": "把reactive({count:1})解构出的count用于computed，随后只改state.count，观察派生值不更新；改用toRefs或直接读state.count。",
+      "practice": "在Nuxt副本把一个实际筛选/计数整理为纯派生值，说明局部composable与useState/Pinia职责，避免缓存一份重复列表。",
+      "boundary": "composable定义本身可在模块顶层，实例状态与生命周期调用要看创建位置；SSR状态边界在Nuxt4.5另行验证。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.1.3",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.3.onmounted.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.3.onmounted-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.3.onmounted.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "在setup同步注册onMounted/onUnmounted等钩子，Vue才能关联当前实例。mounted表示组件初始DOM已挂载，可访问相应客户端DOM；不是所有异步子组件、图片、字体或远程数据均已就绪的保证。",
+        "创建监听器、计时器、观察器和请求时同时设计释放路径。onUnmounted清理手动注册的外部资源；同步setup中创建的watch通常随组件停止，但异步回调里稍后创建的侦听器可能需手动stop。不要把DOM移除等同所有外部资源自动停止。",
+        "普通更新可能频繁触发；onUpdated里无条件修改渲染依赖会产生循环。DOM读写可按目标使用nextTick或post-flush watcher。SSR不会运行onMounted/onUnmounted，服务端setup里不能启动一个指望onUnmounted关闭的永久计时器。"
+      ],
+      "example": "CounterPanel记录mounted/activated/deactivated；切换缓存面板不会再次mounted。watch的effectScope停止测试证明旧异步结果不会在离开后写入。",
+      "exercise": "故意在每次onUpdated中添加resize监听且不清理，多次状态更新后触发一次resize观察重复回调；移至mounted/unmounted配对。",
+      "practice": "在Nuxt副本盘点一项监听或请求的创建/释放位置；客户端资源放合法生命周期，并说明服务端渲染为何不能访问window。",
+      "boundary": "lab记录组件生命周期；未宣称测过页面后台冻结、浏览器进程回收或真实移动系统生命周期。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.1.4",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.4.emit.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.4.emit-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.4.emit.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "父级通过props传输入，子级用emit表达事件。props只读约束是浅层的；传入对象的嵌套字段仍可能被子组件写到，但这会隐藏数据流，通常应发事件由状态所有者修改。组件emit不会像原生DOM事件那样自动跨所有祖先冒泡。",
+        "defineModel在Vue3.4+提供组件v-model宏，默认对应modelValue与update:modelValue；带名称如draft则对应draft/update:draft。它是显式prop/事件契约的语法便利，不是共享对象魔法。父级应初始化模型；子级默认值而父级未传值可能造成不同步。",
+        "默认/具名插槽由父级提供内容，作用域插槽让子级向这段内容传数据。父模板表达式在父作用域求值，不能直接读取子级所有局部变量。Props、emits和slot类型改善检查，但外部JSON仍需运行时校验。"
+      ],
+      "example": "编辑草稿使父级drafts与插槽文字同步；点击切换只emit合法id，由Pinia action改状态。VTU分别检查update:draft、toggle以及父级新props导致aria-pressed更新。",
+      "exercise": "父级只监听change但子级发update:draft，输入值回不到父级；列出实际事件名与参数，修正为匹配的v-model:draft或显式监听。",
+      "practice": "在Nuxt副本为一个真实列表项整理Props与事件，增加一个必要的插槽；如改用组件v-model，明确命名和父状态初始化。",
+      "boundary": "类型通过不等于权限校验；HTML字符串不作为slot/模板源码执行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.1.5",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.5.provide.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.5.provide-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.5.provide.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "provide在祖先setup或app层提供依赖，inject沿组件祖先链选择最近匹配提供者，解决深层逐级透传。它依赖组件树作用域，不是按文件目录搜索，也不是进程级Service Locator。",
+        "字符串键可能冲突，TypeScript可用InjectionKey<T>与Symbol共享契约。键必须是同一个Symbol实例；各文件各造一个同名Symbol不会相等。inject可能没有提供者，要给合理默认或明确失败。",
+        "直接提供普通值只是该值；提供ref保留响应连接，提供readonly(ref)+动作可让修改集中在提供者。readonly是约束数据流而非防攻击措施。SSR应用实例/请求边界需由框架创建，不能把用户状态放模块全局再provide。"
+      ],
+      "example": "App提供readonly主题ref和toggle动作，ThemeBadge注入并切换；VTU提供同一Symbol，点击后文字由light变dark，未引入全局单例。",
+      "exercise": "消费端重新Symbol('theme')导致inject得到undefined；改为从同一context模块导入key，别用非空断言隐藏缺失。",
+      "practice": "在Nuxt副本选择一个真正跨层的主题/配置契约，比较props与inject；若使用provide，标出提供范围、默认值和修改责任。",
+      "boundary": "实验只验证Vue组件树注入，不证明服务端请求隔离；该项在Nuxt综合工程另验。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.1.6",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.6.ref.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.6.ref-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.6.ref.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "useTemplateRef在Vue3.5+根据模板ref取得元素或组件引用；挂载前、v-if移除后可以为空。模板里的ref标记不是普通HTML id，不能依赖它作为浏览器全局变量。",
+        "修改shown=true后，DOM不一定已更新。先await nextTick再检查引用并focus；只做聚焦等必要命令式操作，通常不通过ref改框架正在维护的DOM文本。浏览器测焦点才有真实布局/交互证据，jsdom只能提供一部分DOM行为。",
+        "获取子组件ref会增加耦合。script setup组件默认私有，需要时用defineExpose公开很小的命令接口；父级通常优先用Props/事件。v-for引用集合的顺序也不能不加验证地当业务id索引。"
+      ],
+      "example": "初始没有目标input，点击后创建并获得焦点。VTU断言document.activeElement，Chrome用toBeFocused核对实际焦点；没有固定sleep。",
+      "exercise": "去掉nextTick且用非空断言立即focus新v-if输入，重现null错误；等待更新并做空值分支，不能靠延迟500ms猜时机。",
+      "practice": "在Nuxt副本给一个实际可展开表单增加更新后聚焦，注明客户端时机，不在服务端setup读取document。",
+      "boundary": "本实验未验证屏幕阅读器焦点公告或移动键盘弹出；模拟手机视口不等于真实键盘测试。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.1.7",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.7.keepalive.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.7.keepalive-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.7.keepalive.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "<component :is>切换渲染组件。默认切换可能卸载旧实例，局部状态随之消失；KeepAlive缓存符合条件的组件实例，使其离开DOM时进入deactivated，重新进入时activated。首次挂载也会激活；不能把deactivated等同unmounted。",
+        "include/exclude按组件名匹配，max限制缓存实例并按LRU淘汰。稳定组件身份/key影响缓存复用；无边界地缓存高成本页面会占内存。需要只在可见时工作的监听/轮询可在activated开始、deactivated暂停，最终卸载还需完整清理。",
+        "KeepAlive保留客户端实例，不是持久化、HTTP缓存或跨请求SSR缓存，刷新页面仍会重建。Teleport只改变DOM挂载位置、Transition包装进入/离开效果，职责不同；这些按需查官方文档，不用KeepAlive代替弹窗焦点管理或把实验性Suspense当通用请求保证。"
+      ],
+      "example": "计数加到1→笔记面板→回计数，仍为1；生命周期日志有deactivated/activated而不重复mounted。VTU和Chrome均检查此行为。",
+      "exercise": "只在onUnmounted停止轮询，切换缓存页签后仍轮询；将可见期任务与activated/deactivated配对并保留最终卸载清理。",
+      "practice": "评估Nuxt副本是否确需缓存一个页面，给出保留/重置/过期策略；没有需要时保留普通组件，不强加KeepAlive。",
+      "boundary": "lab记录生命周期和本地状态，未测真实网络轮询或内存压力；相关扩展由练习完成。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.1.8",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.1.8.watch-cleanup.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.1.8.watch-cleanup-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.1.8.watch-cleanup.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-1-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "computed负责纯派生，watch负责明确数据源变化后的副作用。watch(ref/getter/源数组)跟踪声明的源，不因为回调读了别的ref就自动依赖它；不能把reactive对象的数字属性求值后直接传作有效响应源。watchEffect立即运行并跟踪同步读到的响应依赖，async函数第一个await之后才读取的值不会被这次自动追踪。",
+        "查询变更可让旧请求失效。每次创建AbortController并在等待前注册清理，取消旧操作；再用序号/有效标志防止不遵守abort的异步结果回写。Vue3.5+的onWatcherCleanup必须在同步执行阶段调用，不能await后才注册；watch回调第三参数onCleanup绑定本次侦听，仍应尽早注册避免竞态。",
+        "默认watch回调通常在父更新后、所属组件DOM更新前；需要更新后DOM可选flush:post，sync只在确有必要时用，避免高频同步开销。同步setup创建的watch会随实例停止；本lab在effect scope结束时显式stop，清理也使迟到任务失效。空态、失败和恢复应有独立状态，不把捕获所有异常写成成功。"
+      ],
+      "example": "输入error/empty/recovered观察失败、空和恢复；真正的迟到保护由deferred单测控制：旧loader故意忽略abort，后返回也不能覆盖新结果；scope停止后结果不回写。watchEffect测试还核对依赖变化与清理次数。",
+      "exercise": "删去有效性检查并让旧loader忽略signal，按先发A→发B→B返回→A返回重现覆盖；补回版本保护，保留取消而不误信取消永远生效。",
+      "practice": "在Nuxt副本选择一处依赖用户输入的副作用，区分是否应交给useFetch/useAsyncData；若手工watch，写慢旧结果、清空和离开页面三项验收。",
+      "boundary": "搜索数据是内存延迟fixture，明确不是HTTP服务；HTTP请求与Nuxtpayload由阶段4.5/5另行处理。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.2.1",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.2.1.vue-router.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.2.1.vue-router-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.2.1.vue-router.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "router将路径映射到组件，RouterLink生成可导航链接，RouterView显示当前匹配。createWebHistory使用干净URL，生产服务器必须让应用深链回退到入口；hash模式对托管要求不同。客户端路由不自动定义真实HTTP404状态或服务端API权限。",
+        "/items/:id把参数放到route.params；从id1到id2可能复用同一组件，onMounted不会因此再次执行。本例用computed跟踪route.params，异步数据可watch特定参数或用路由更新守卫；避免把一次解构快照当实时路由。query与params各有用途，查询输入要处理string/string[]等实际形态。",
+        "守卫可返回重定向、false或允许，适合导航体验；不能把隐藏路由/重定向当服务端授权。路由懒加载写component: () => import(...)，不是直接在这里传defineAsyncComponent替代路由加载机制。返回/前进、刷新、未匹配路径都要验证，不能只测首页点击。"
+      ],
+      "example": "进入详情1再详情2，内容和参数同步；刷新详情2可用；受限演示重定向并显示说明。实际路由文件生成独立懒加载chunk，TS/VTU/Chrome分别核对。",
+      "exercise": "在onMounted只读取一次route.params.id，从详情1点详情2后保留旧内容；用computed/watch特定参数修复并保留回归。",
+      "practice": "在Nuxt综合项目核对动态详情及query的行为，比较文件路由与本节显式routes；副本增加一次参数复用/刷新专项，不重复手工安装router。",
+      "boundary": "演示守卫永远重定向，未实现登录；Vite开发fallback成功不等于生产托管已配置。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.2.2",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.2.2.pinia.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.2.2.pinia-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.2.2.pinia.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Pinia为跨组件的业务状态提供store。defineStore声明如何取得store，真正状态属于某个Pinia实例；Option Store中的state用工厂返回对象，getters是派生状态，actions组织同步/异步修改。不同组件在同一Pinia读同名store会共享，不同Pinia实例应隔离。",
+        "直接解构store上的响应属性会丢失与原属性的连接，storeToRefs保留state/getter的ref；action可直接解构或调用，保持各自实际契约。Setup Store要返回需要的状态，不能故意藏状态再期待SSR/devtools正常序列化。",
+        "全局状态不等于永久存储，更不等于服务端数据缓存和认证权威。不要把每个input草稿都塞进store；区分组件状态、URL、服务端获取结果和跨页面业务状态。SSR按应用/请求创建Pinia并使用框架适配，不能在模块顶层握住一个用户store跨请求复用。"
+      ],
+      "example": "卡片切换完成后派生doneCount改变，进入详情仍能看到完成态；刷新重建内存状态。测试同一store/getter实时更新，再创建第二Pinia确认doneCount为0。",
+      "exercise": "const { doneCount } = store取得普通值后修改条目，观察摘要不更新；用storeToRefs或直接store.doneCount修复。",
+      "practice": "在Nuxt副本把状态分为局部/URL/useState/Pinia/服务端数据，选择一项真正跨页业务状态实现；若无需Pinia，给出具体理由而非为了覆盖技术强引入。",
+      "boundary": "lab使用Pinia4.1.0，只有内存状态；无持久化插件、真实会话或并发HTTP请求隔离结论。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.3.1",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.3.1..vue.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.3.1..vue-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.3.1..vue.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "SFC将一个组件的模板、实例逻辑和样式集中在.vue文件。浏览器不能原样执行.vue；本实验用Vite和@vitejs/plugin-vue转换，vue-tsc负责类型检查。build转换与类型检查是不同步骤。",
+        "<script setup lang=\"ts\">是编译语法：顶层导入/变量可在模板使用，主体通常按组件实例执行。defineProps/defineEmits/defineModel是编译宏，不需要从vue导入，不能粘到任意普通.ts文件当运行函数。需要模块级逻辑时明确其是否会跨实例/请求共享。",
+        "<style scoped>通过生成属性选择器限制样式匹配，不是Shadow DOM或安全隔离。父组件scoped可影响子组件根元素；深层子树要用明确的:deep等机制。应用主题令牌可保留全局，不能靠scoped隔绝所有继承。"
+      ],
+      "example": "运行lab，点击缓存计数；查看源码的template/script setup，再运行typecheck/build，产物已变成JS/CSS而非浏览器直接解释.vue。",
+      "exercise": "在副本删除Vue Vite插件后构建.vue，保留解析失败；恢复插件再通过。不要用把.vue改名.ts掩盖模板转换缺失。",
+      "practice": "在Nuxt综合项目副本选一个实际页面，拆出最小SFC；指出哪些是组件实例状态、哪些是应用配置，不为复用提取空壳组件。",
+      "boundary": "主实验是客户端Vite SFC，不据此声称已验证Nuxt SSR、每请求隔离或生产部署。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.3.2",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.3.2.element-plus.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.3.2.element-plus-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.3.2.element-plus.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "组件库缩短通用控件实现，但不会自动完成业务状态、权限、设计一致性或可访问性验收。先列产品所需表单、导航、弹层、列表等控件，再核对框架版本、SSR支持、样式/主题、按需导入、键盘和触控，而不是只看截图或star。",
+        "Nuxt UI是基于Vue的组件库，也可用于普通Vue项目，Nuxt并非必需；其Tailwind/主题与组件约定应整体评估。Vant面向移动Web，需要核对目标Vue版本、触控交互与实际组件API。桌面/手机差异大时可以各自选择UI实现，但共享模型/请求契约仍可独立复用。",
+        "用真实代表组件验证再采纳：宽窄表单、弹窗焦点/关闭、错误提示、暗色主题、生产构建和SSR首屏。库声明支持无障碍不代表组合业务自动满足；不因本实验手写原生button就宣称Nuxt UI/Vant均已集成测试。历史文件名保留element-plus以兼容链接，标题反映实际选型范围。"
+      ],
+      "example": "先以lab原生输入与按钮作行为基线，阅读Nuxt UI及Vant官方介绍，完成候选比较清单。本轮不安装两套库；任何候选组件的实际接入需在副本另行运行。",
+      "exercise": "选择只支持Vue2的旧示例并尝试对照Vue3类型/API，指出不兼容证据；换成目标版本官方安装与组件API，不靠关闭类型检查解决。",
+      "practice": "为Nuxt综合项目写一页UI选型决策，用实际页面列必要控件；选一个候选副本验证，不因教程标题含库名就声称工程已依赖该库。",
+      "boundary": "本点代码是选型清单与原生基线，库专属接入仅作为独立练习；Vant站正文抓取受客户端页面限制，补读GitHub官方README。"
+    },
+    "issues": []
+  },
+  {
+    "id": "4.3.3.3",
+    "theory": "learning/1-notes/04-frameworks/4.3-vue/4.3.3.3.nuxt.md",
+    "example": "learning/2-examples/04-frameworks/4.3-vue/4.3.3.3.nuxt-demo.md",
+    "exercise": "learning/3-exercises/04-frameworks/4.3-vue/4.3.3.3.nuxt.md",
+    "practice": "learning/4-practice/04-frameworks/tasks.md#p-4-3-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Vue提供组件和响应式能力，Nuxt在其上组织应用：约定目录、文件路由、布局、数据获取、插件、运行配置及Nitro服务端能力。Nuxt仍运行Vue组件，但不是把每项Vue API简单换名。Nuxt4主应用目录为app/，具体版本以官方骨架和项目配置为准。",
+        "Nuxt可按需求采用SSR、CSR或预渲染/静态生成。SSR部署要有能执行服务端产物的运行环境；纯静态产物可由静态托管提供，但不再有随请求执行的server/API能力。选择取决于首屏、SEO、数据新鲜度、认证和运维，不能说Nuxt一定需要自建Node服务器，也不能说所有模式功能相同。",
+        "从Vite实验迁移时先区分哪些由Nuxt接管：不重复手工创建router，不把客户端VITE_配置当服务端秘密配置，不把模块级ref当每请求状态。useFetch/useState必须在合法Nuxt上下文调用，payload/hydration和SSR隔离在4.5逐项展开，本节只建立职责地图。"
+      ],
+      "example": "在lab标出自己装配createApp/router/pinia的位置，再对照4.5 Nuxt工程目录，写出框架接管、业务保留和部署选择。此操作卡是代码阅读/迁移观察，未在本lab运行Nuxt。",
+      "exercise": "将server/api目录直接复制到已预渲染静态托管并以为仍能运行，指出产物与托管不匹配；改用适当服务端目标或独立后端，不伪造静态API动态能力。",
+      "practice": "对照Nuxt综合项目实际目录，说明从本Vue lab迁移时删去哪些手工装配；为当前模式列出首屏、客户端导航、刷新和运行配置验证。",
+      "boundary": "本点为概览与迁移观察，Nuxt实际构建/SSR/请求隔离由主综合项目与4.5运行报告证明。"
+    },
+    "issues": []
+  }
+]

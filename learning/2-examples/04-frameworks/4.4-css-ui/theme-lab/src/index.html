@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>阶段4主题与工具类实验</title>
+    <link rel="stylesheet" href="./theme.css" />
+    <script type="module" src="./theme.js"></script>
+  </head>
+  <body class="font-sans">
+    <main class="mx-auto max-w-4xl p-4 md:p-8">
+      <h1 class="text-2xl font-bold">阅读卡片：主题与组件规范</h1>
+      <p class="my-4">本地真实构建，默认跟随系统；主题选择仅本页生效。</p>
+      <label for="theme">显示主题</label>
+      <select id="theme" class="control">
+        <option value="system">跟随系统</option>
+        <option value="light">浅色</option>
+        <option value="dark">深色</option>
+      </select>
+      <p id="status" role="status" class="my-4">当前：跟随系统</p>
+      <section aria-labelledby="cards-title">
+        <h2 id="cards-title" class="text-xl font-bold my-4">
+          可复用的阅读卡片
+        </h2>
+        <div id="cards" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <article class="control">
+            <h3 class="font-bold">理解样式令牌</h3>
+            <p class="my-4">颜色和间距有统一语义；组件行为另由契约约束。</p>
+            <button
+              class="control text-brand"
+              type="button"
+              id="save"
+              aria-pressed="false"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path fill="currentColor" d="M6 3h12v18l-6-4-6 4z" />
+              </svg>
+              <span>收藏卡片</span>
+            </button>
+          </article>
+          <article class="control">
+            <h3 class="font-bold">区分装饰和信息图标</h3>
+            <p class="my-4">
+              <svg
+                role="img"
+                aria-labelledby="success-title"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+              >
+                <title id="success-title">构建成功</title>
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  d="m4 12 5 5L20 6"
+                />
+              </svg>
+              真实CSS产物
+            </p>
+            <button
+              class="control"
+              type="button"
+              id="icon-only"
+              aria-label="查看构建说明"
+            >
+              <img src="./info.svg" width="20" height="20" alt="" />
+            </button>
+            <p id="help" hidden>
+              Tailwind生成工具类，组件规范和业务逻辑仍需自己定义。
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

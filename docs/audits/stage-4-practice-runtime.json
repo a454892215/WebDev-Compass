@@ -1,0 +1,117 @@
+{
+  "date": "2026-11-24",
+  "scope": "Actual Nuxt4.7 production Node SSR, local API, background Chrome1440x900/390x844; separate SSG artifacts",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "nitro": "2.14.0",
+    "vite": "8.3.8"
+  },
+  "commands": [
+    {
+      "command": "CI=true pnpm install --frozen-lockfile",
+      "result": "passed",
+      "observed": "project-local YAML store; esbuild install script explicitly false; project nuxt prepare actual success"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "includes": [
+        "Nuxt app/server/shared/node typecheck",
+        "ESLint zero errors",
+        "Prettier",
+        "11 Vitest pure-model/component tests",
+        "production node-server build without default prerender"
+      ]
+    },
+    {
+      "command": "pnpm test:e2e",
+      "result": "passed",
+      "logicalTests": 4,
+      "stats": {
+        "startTime": "2026-11-24T16:31:24.289Z",
+        "duration": 2863.59,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "command": "pnpm test:e2e --grep 'error recovery'",
+      "result": "passed",
+      "tests": 2,
+      "stats": {
+        "startTime": "2026-11-24T16:32:33.263Z",
+        "duration": 2599.909,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reason": "new direct error page + clearError recovery assertions, not a repeat of unchanged happy path"
+    },
+    {
+      "command": "pnpm generate + node scripts/check-static.mjs",
+      "result": "passed",
+      "observed": "static preset; 10 generated routes including payload/API artifacts;4 known page HTML content/title checked; no private markers in public JS/HTML/JSON; final node-server rebuilt afterward"
+    }
+  ],
+  "checks": [
+    "raw SSR contains resource title, description, runtime public override, layer and module meta",
+    "hydration has no repeated initial resource API request or mismatch/pageerror",
+    "stable key preserves local note through reverse; booklist owner/child event and props",
+    "detail parameter changes both title and description; q URL survives refresh while memory booklist resets",
+    "local503 recovery; repeated q400; invalid POST400 and valid response saved:false",
+    "middleware302; direct resource404; custom error page clearError returns usable list",
+    "CSR raw HTML lacks page content; Chrome executes and renders it",
+    "four concurrent independent SSR seeds remain separate; not authentication",
+    "private runtime marker absent from HTML; API returns public override and privateConfigured only",
+    "no horizontal overflow in both viewports"
+  ],
+  "static": {
+    "mode": "SSG artifact inspection, not dynamic API deployment",
+    "checks": [
+      {
+        "path": "index.html",
+        "content": true,
+        "title": true
+      },
+      {
+        "path": "about/index.html",
+        "content": true,
+        "title": true
+      },
+      {
+        "path": "resources/vue/index.html",
+        "content": true,
+        "title": true
+      },
+      {
+        "path": "resources/nuxt/index.html",
+        "content": true,
+        "title": true
+      }
+    ],
+    "privateMarkersAbsent": true
+  },
+  "findingsClosed": [
+    "native search compiler/function name conflict caused SSR self302; explicit native tag + submitSearch rename fixed and repeated SSR/browser validation",
+    "default prerender removed from SSR mode; explicit generation isolated from dynamic query and POST abilities",
+    "distinct named form status from NuxtRouteAnnouncer prevents ambiguous assertion",
+    "H3 ASCII statusMessage and separate user-facing message",
+    "module optional meta initialized for strict typecheck",
+    "ESLint void-tag style aligned with formatter"
+  ],
+  "notVerified": [
+    "real mobile devices",
+    "other browsers or screen readers",
+    "real remote authentication/persistence/production deployment",
+    "real HTTP cancellation side effects; signal type contract and Vue deferred fixtures checked separately",
+    "human learner trial",
+    "complete Next or third party UI library installations"
+  ]
+}
