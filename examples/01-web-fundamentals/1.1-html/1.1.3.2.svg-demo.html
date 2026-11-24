@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVG 矢量图与语义 · WebDev Compass</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fa;
+        color: #17283b;
+        font:
+          1rem/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 54rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+      }
+      section,
+      fieldset,
+      article {
+        background: white;
+        border: 1px solid #bbcbd7;
+        border-radius: 0.65rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        min-width: 0;
+      }
+      label {
+        display: block;
+        margin: 0.6rem 0 0.2rem;
+      }
+      input:not([type="checkbox"]):not([type="radio"]),
+      textarea,
+      select,
+      button {
+        font: inherit;
+        max-width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #6f8191;
+        border-radius: 0.3rem;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+      button {
+        background: #135776;
+        color: white;
+        cursor: pointer;
+        margin: 0.3rem 0.3rem 0.3rem 0;
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        inline-size: 1.1rem;
+        block-size: 1.1rem;
+      }
+      label:has(input[type="checkbox"]),
+      label:has(input[type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        padding: 1rem;
+        background: #e8eff5;
+        border-radius: 0.4rem;
+      }
+      a {
+        color: #075f83;
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      :focus-visible {
+        outline: 3px solid #9c4600;
+        outline-offset: 3px;
+      }
+      .hint {
+        color: #46596a;
+      }
+      .error {
+        color: #a02020;
+        min-height: 1.7em;
+      }
+      svg,
+      canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      dialog {
+        max-width: min(32rem, 90vw);
+        border: 1px solid #6f8191;
+        border-radius: 0.6rem;
+      }
+      dialog:modal {
+        overscroll-behavior: contain;
+      }
+      dialog::backdrop {
+        background: #10283a99;
+        overflow: hidden;
+        overscroll-behavior: contain;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>
+        <a href="../../../notes/01-web-fundamentals/1.1-html/1.1.3.2.svg.md"
+          >返回对应笔记</a
+        >
+      </p>
+      <h1>SVG 矢量图与语义</h1>
+      <p>
+        图形使用 viewBox
+        缩放。标题、说明和旁边的文字共同表达数据，不只依赖颜色。
+      </p>
+      <label for="value">完成度</label
+      ><input id="value" type="range" min="0" max="100" value="70" />
+      <svg
+        viewBox="0 0 400 150"
+        role="img"
+        aria-labelledby="svg-title svg-desc"
+      >
+        <title id="svg-title">学习完成度</title>
+        <desc id="svg-desc">当前完成 70%。深色条代表已完成部分。</desc>
+        <rect
+          x="20"
+          y="35"
+          width="360"
+          height="65"
+          rx="10"
+          fill="#d9e4ec"
+        ></rect>
+        <rect
+          id="bar"
+          x="20"
+          y="35"
+          width="252"
+          height="65"
+          rx="10"
+          fill="#146a83"
+        ></rect>
+        <text
+          id="percent"
+          x="200"
+          y="135"
+          text-anchor="middle"
+          fill="currentColor"
+        >
+          70%
+        </text>
+      </svg>
+      <p id="summary" aria-live="polite">当前完成 70%。</p>
+      <p>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          focusable="false"
+          style="display: inline"
+        >
+          <path
+            d="M3 10 8 15 17 4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          ></path></svg
+        >装饰图标隐藏于辅助技术，文字保留。
+      </p>
+    </main>
+    <script>
+      document.querySelector("#value").addEventListener("input", (event) => {
+        const value = Number(event.target.value);
+        document
+          .querySelector("#bar")
+          .setAttribute("width", (360 * value) / 100);
+        document.querySelector("#percent").textContent = value + "%";
+        document.querySelector("#svg-desc").textContent =
+          `当前完成 ${value}%。深色条代表已完成部分。`;
+        document.querySelector("#summary").textContent = `当前完成 ${value}%。`;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canvas 2D 与像素尺寸 · WebDev Compass</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fa;
+        color: #17283b;
+        font:
+          1rem/1.65 system-ui,
+          sans-serif;
+      }
+      main {
+        max-width: 54rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+      }
+      section,
+      fieldset,
+      article {
+        background: white;
+        border: 1px solid #bbcbd7;
+        border-radius: 0.65rem;
+        padding: 1rem;
+        margin: 1rem 0;
+        min-width: 0;
+      }
+      label {
+        display: block;
+        margin: 0.6rem 0 0.2rem;
+      }
+      input:not([type="checkbox"]):not([type="radio"]),
+      textarea,
+      select,
+      button {
+        font: inherit;
+        max-width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #6f8191;
+        border-radius: 0.3rem;
+      }
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+      button {
+        background: #135776;
+        color: white;
+        cursor: pointer;
+        margin: 0.3rem 0.3rem 0.3rem 0;
+      }
+      input[type="checkbox"],
+      input[type="radio"] {
+        inline-size: 1.1rem;
+        block-size: 1.1rem;
+      }
+      label:has(input[type="checkbox"]),
+      label:has(input[type="radio"]) {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        padding: 1rem;
+        background: #e8eff5;
+        border-radius: 0.4rem;
+      }
+      a {
+        color: #075f83;
+      }
+      code {
+        overflow-wrap: anywhere;
+      }
+      :focus-visible {
+        outline: 3px solid #9c4600;
+        outline-offset: 3px;
+      }
+      .hint {
+        color: #46596a;
+      }
+      .error {
+        color: #a02020;
+        min-height: 1.7em;
+      }
+      svg,
+      canvas {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      dialog {
+        max-width: min(32rem, 90vw);
+        border: 1px solid #6f8191;
+        border-radius: 0.6rem;
+      }
+      dialog:modal {
+        overscroll-behavior: contain;
+      }
+      dialog::backdrop {
+        background: #10283a99;
+        overflow: hidden;
+        overscroll-behavior: contain;
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p>
+        <a href="../../../notes/01-web-fundamentals/1.1-html/1.1.3.1.canvas.md"
+          >返回对应笔记</a
+        >
+      </p>
+      <h1>Canvas 2D 与像素尺寸</h1>
+      <p>
+        同一份数据同时输出文本。高 DPI 通过扩大绘图缓冲区保持清晰，Canvas 不是
+        DOM 图形树。
+      </p>
+      <label for="amount">练习完成度</label
+      ><input id="amount" type="range" min="0" max="100" value="60" />
+      <p id="summary" aria-live="polite">完成度 60%。</p>
+      <canvas
+        id="chart"
+        width="640"
+        height="240"
+        role="img"
+        aria-labelledby="summary"
+        >完成度条形图；下方文字始终提供相同数据。</canvas
+      >
+      <p class="hint">
+        绿色条长度对应上方百分比；没有 Canvas 支持时仍可阅读文字。
+      </p>
+      <pre id="metrics"></pre>
+    </main>
+    <script>
+      const canvas = document.querySelector("#chart"),
+        slider = document.querySelector("#amount");
+      function draw() {
+        const width = 640,
+          height = 240,
+          dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        canvas.style.width = width + "px";
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          document.querySelector("#metrics").textContent =
+            "当前环境无2D上下文，使用文字数据。";
+          return;
+        }
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.fillStyle = "#e1e9ef";
+        ctx.fillRect(20, 60, 600, 90);
+        ctx.fillStyle = "#087b69";
+        ctx.fillRect(20, 60, (600 * Number(slider.value)) / 100, 90);
+        document.querySelector("#summary").textContent =
+          `完成度 ${slider.value}%。`;
+        document.querySelector("#metrics").textContent =
+          `CSS逻辑尺寸 ${width}×${height}；缓冲区 ${canvas.width}×${canvas.height}；DPR ${dpr}`;
+      }
+      slider.addEventListener("input", draw);
+      window.addEventListener("resize", draw);
+      draw();
+    </script>
+  </body>
+</html>

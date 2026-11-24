@@ -1,6 +1,6 @@
 # 0.2 开发环境
 
-> [← 返回阶段 0](../README.md) · [← 返回知识库地图](../../knowledge-map/01-foundation-stages-0-2.md#02-开发环境)
+> [← 返回阶段 0](../README.md) · [← 返回知识库地图](../../../knowledge-map/01-foundation-stages-0-2.md#02-开发环境)
 
 在写第一行 HTML 之前，需要先搭建 **Node.js 运行时、包管理器、编辑器、浏览器调试工具与 Git** 这套 Web 前端日常开发环境。本节 5 个知识点按推荐顺序学习。
 

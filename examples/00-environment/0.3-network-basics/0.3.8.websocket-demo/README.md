@@ -1,6 +1,6 @@
 # 0.3.8 WebSocket 迷你示例
 
-对应笔记：[0.3.8 WebSocket](../../../notes/00-environment/0.3-network-basics/0.3.8.websocket.md)
+对应笔记：[0.3.8 WebSocket](../../../../notes/00-environment/0.3-network-basics/0.3.8.websocket.md)
 
 零依赖 Node.js：HTTP 提供页面，同一端口升级为 WebSocket 聊天室（广播）。
 

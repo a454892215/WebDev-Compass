@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>标题层级与文本含义 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="标题层级与文本含义的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>标题层级与文本含义</h1>
+      <p>
+        标题级别表达内容层级，不负责指定字体大小。点击按钮取消标题的视觉强调，再看
+        DOM 是否改变。
+      </p>
+      <button type="button" id="flatten" aria-pressed="false">
+        切换标题视觉样式
+      </button>
+      <section id="content">
+        <h2>学习计划</h2>
+        <p>
+          先理解 <strong>原生语义</strong>，再学习 CSS。这里的 strong
+          表示重要性，em 表示语气强调：<em>今天</em>先完成 HTML。
+        </p>
+        <section>
+          <h3>文档骨架</h3>
+          <p>
+            使用一个页面主题标题，并按逻辑逐层组织小节。<span class="muted"
+              >span 只是无额外语义的短语容器。</span
+            >
+          </p>
+        </section>
+        <hr />
+        <p>联络地址的自然换行：<br />Web 开发学习小组<br />线上讨论室</p>
+      </section>
+      <p class="status" id="result" role="status">
+        标题层级：h1 → h2 → h3。hr 表示主题切换，不能只为了画线滥用。
+      </p>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+    <script>
+      const b = document.querySelector("#flatten");
+      b.addEventListener("click", () => {
+        const active = b.getAttribute("aria-pressed") !== "true";
+        b.setAttribute("aria-pressed", String(active));
+        document
+          .querySelector("#content")
+          .classList.toggle("preview-flat", active);
+        document.querySelector("#result").textContent = active
+          ? "视觉强调已取消，标题元素仍然是 h2 和 h3。"
+          : "恢复标题样式，语义层级保持不变。";
+      });
+    </script>
+  </body>
+</html>

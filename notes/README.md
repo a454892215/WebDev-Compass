@@ -31,7 +31,7 @@ notes/
 │   ├── 0.1-what-is-web-app/ ✅
 │   ├── 0.2-dev-environment/ ✅
 │   └── 0.3-network-basics/  ✅
-├── 01-web-fundamentals/     # 阶段 1（待补充）
+├── 01-web-fundamentals/     # 阶段 1：HTML 已编写，CSS/JS 待补充
 └── ...
 ```
 
@@ -42,10 +42,13 @@ notes/
 3. 按笔记底部的「实践」指引，在 `examples/` 中运行同序号的配套示例。
 4. 学完后回到知识库地图，将对应项勾选为 `[x]`。
 
-## 当前进度
+## 当前内容进度
+
+这里记录内容是否已提供，不等同于学习者掌握程度。旧阶段 0 的 ✅ 沿用内容完成标记，本轮未全量复审；实际验证见[进度与验证范围](../docs/PROGRESS.md)。
 
 | 阶段 | 小节 | 状态 |
 | --- | --- | --- |
 | 0 | [0.1 Web 应用是什么](./00-environment/0.1-what-is-web-app/README.md) | ✅ 已完成 |
 | 0 | [0.2 开发环境](./00-environment/0.2-dev-environment/README.md) | ✅ 已完成 |
 | 0 | [0.3 网络基础](./00-environment/0.3-network-basics/README.md) | ✅ 已完成 |
+| 1 | [1.1 HTML](./01-web-fundamentals/1.1-html/README.md) | 19 篇及配套示例，见本轮验证记录 |

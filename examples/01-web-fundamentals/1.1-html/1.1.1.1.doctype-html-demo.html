@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文档结构与标准模式 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="文档结构与标准模式的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>文档结构与标准模式</h1>
+      <p>
+        HTML 描述结构，CSS 控制呈现，JavaScript
+        处理行为。先检查本页实际运行环境。
+      </p>
+      <section aria-labelledby="structure">
+        <h2 id="structure">最小文档骨架</h2>
+        <pre
+          tabindex="0"
+          role="region"
+          aria-label="最小 HTML 文档"
+        ><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+  &lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;页面主题&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;&lt;main&gt;&lt;h1&gt;页面主题&lt;/h1&gt;&lt;/main&gt;&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </section>
+      <section>
+        <h2>运行时检查</h2>
+        <button type="button" id="inspect">检查文档</button>
+        <p id="result" class="status" role="status">点击按钮读取 document。</p>
+      </section>
+      <p>
+        在 Elements 中观察浏览器补全的
+        DOM。即使省略标签时看起来仍正常，也不代表源码结构清楚。
+      </p>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+    <script>
+      document.querySelector("#inspect").addEventListener("click", () => {
+        document.querySelector("#result").textContent =
+          `模式：${document.compatMode}；语言：${document.documentElement.lang}；字符集：${document.characterSet}；标题：${document.title}`;
+      });
+    </script>
+  </body>
+</html>

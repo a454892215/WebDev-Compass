@@ -1,0 +1,184 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  font-family: system-ui, sans-serif;
+  line-height: 1.65;
+  color: #19313d;
+  background: #f2f6f8;
+  scroll-behavior: auto;
+}
+body {
+  margin: 0;
+}
+body > header,
+main,
+body > footer {
+  max-width: 64rem;
+  margin: auto;
+  padding: 1.25rem;
+}
+main {
+  padding-bottom: 3rem;
+}
+h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 1.25;
+}
+h2 {
+  font-size: 1.3rem;
+}
+h3 {
+  font-size: 1.1rem;
+}
+a {
+  color: #075d80;
+  text-underline-offset: 0.2em;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  padding: 0.55rem 0.85rem;
+  background: #075d60;
+  color: white;
+  border: 2px solid #075d60;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+button:hover {
+  background: #08494b;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #994900;
+  outline-offset: 3px;
+}
+section,
+article,
+aside,
+.panel {
+  padding: 1rem;
+  margin-block: 1rem;
+  background: white;
+  border: 1px solid #c8d5dc;
+  border-radius: 0.6rem;
+}
+article section,
+section section {
+  border-color: #dce5e8;
+}
+code {
+  overflow-wrap: anywhere;
+  background: #e8eff3;
+  padding: 0.1rem 0.2rem;
+}
+pre {
+  max-width: 100%;
+  overflow: auto;
+  padding: 1rem;
+  background: #e8eff3;
+  border-radius: 0.4rem;
+}
+pre code {
+  padding: 0;
+}
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+audio {
+  max-width: 100%;
+}
+figure {
+  margin: 1rem 0;
+}
+figcaption,
+.muted {
+  color: #4e6370;
+}
+label {
+  display: block;
+  margin-block: 0.7rem 0.25rem;
+}
+input {
+  max-width: 100%;
+}
+.skip {
+  position: absolute;
+  left: 0.5rem;
+  top: -5rem;
+  padding: 0.6rem;
+  background: white;
+  z-index: 1;
+}
+.skip:focus {
+  top: 0.5rem;
+}
+.table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+caption {
+  text-align: left;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+th,
+td {
+  border: 1px solid #b7c8d0;
+  padding: 0.65rem;
+  text-align: left;
+}
+th {
+  background: #edf4f5;
+}
+dt {
+  font-weight: 700;
+}
+dd {
+  margin-inline-start: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding-inline-start: 1.2rem;
+}
+:target {
+  outline: 3px solid #994900;
+  outline-offset: 3px;
+}
+.preview-flat h2,
+.preview-flat h3 {
+  font-size: 1rem;
+  font-weight: 400;
+}
+.status {
+  padding: 0.7rem;
+  background: #e5f2ee;
+  border-left: 4px solid #075d60;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 30rem) {
+  body > header,
+  main,
+  body > footer {
+    padding: 1rem;
+  }
+  th,
+  td {
+    padding: 0.4rem;
+  }
+}

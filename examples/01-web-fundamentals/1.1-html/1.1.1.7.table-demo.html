@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>表头关系与数据表格 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="表头关系与数据表格的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>表头关系与数据表格</h1>
+      <p>
+        表格表示二维数据关系。页面布局应使用 CSS，不用 table 拼装侧边栏或卡片。
+      </p>
+      <section>
+        <h2>学习时长记录</h2>
+        <p id="table-help">
+          窄屏时只让表格区域横向滚动。按 Tab 聚焦后可用方向键滚动。
+        </p>
+        <div
+          class="table-scroll"
+          tabindex="0"
+          role="region"
+          aria-label="学习时长表格"
+          aria-describedby="table-help"
+        >
+          <table>
+            <caption>
+              本周学习记录（单位：分钟）
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">主题</th>
+                <th scope="col">周一</th>
+                <th scope="col">周二</th>
+                <th scope="col">合计</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">HTML</th>
+                <td>30</td>
+                <td>45</td>
+                <td>75</td>
+              </tr>
+              <tr>
+                <th scope="row">CSS</th>
+                <td>20</td>
+                <td>40</td>
+                <td>60</td>
+              </tr>
+              <tr>
+                <th scope="row">JavaScript</th>
+                <td>25</td>
+                <td>35</td>
+                <td>60</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <button type="button" id="headers">检查表头关系</button>
+      <p id="result" role="status" class="status">
+        caption 说明主题，列头和行头说明单元格的位置含义。
+      </p>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+    <script>
+      document.querySelector("#headers").addEventListener("click", () => {
+        document.querySelector("#result").textContent =
+          `列头 ${document.querySelectorAll('th[scope="col"]').length} 个，行头 ${document.querySelectorAll('th[scope="row"]').length} 个；表格标题：${document.querySelector("caption").textContent}`;
+      });
+    </script>
+  </body>
+</html>

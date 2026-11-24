@@ -1,6 +1,6 @@
 # 0.2.1 package-demo
 
-对应笔记：[0.2.1 Node.js 与包管理器](../../../notes/00-environment/0.2-dev-environment/0.2.1.node.js.md)
+对应笔记：[0.2.1 Node.js 与包管理器](../../../../notes/00-environment/0.2-dev-environment/0.2.1.node.js.md)
 
 ## 运行
 

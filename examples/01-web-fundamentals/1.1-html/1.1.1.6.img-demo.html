@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片、响应式资源与原生媒体 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="图片、响应式资源与原生媒体的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>图片、响应式资源与原生媒体</h1>
+      <p>
+        本页图片和一秒提示音均为本地资源。图片以替代文本传达信息，音频提供文字说明；不自动播放。
+      </p>
+      <figure>
+        <picture
+          ><source
+            media="(max-width: 500px)"
+            srcset="./assets/semantics-narrow.svg"
+            width="400"
+            height="480" />
+          <img
+            id="diagram"
+            src="./assets/semantics-wide.svg"
+            alt="浏览器向服务器发出请求，服务器返回响应"
+            width="800"
+            height="300"
+        /></picture>
+        <figcaption>
+          同一信息在宽、窄视口使用不同构图；请在 DevTools 中调整宽度并检查
+          currentSrc。
+        </figcaption>
+      </figure>
+      <section>
+        <h2>原生音频</h2>
+        <audio controls preload="metadata" aria-label="一秒提示音">
+          <source src="./assets/semantics-tone.wav" type="audio/wav" />
+          浏览器不支持音频，请阅读下面的说明。
+        </audio>
+        <p>文字替代：一秒钟持续的纯音，没有语音内容。</p>
+      </section>
+      <section>
+        <h2>选择本地视频</h2>
+        <label for="video-file">选择你自己的视频（仅本机播放，不上传）</label
+        ><input id="video-file" type="file" accept="video/*" />
+        <p id="media-status" class="status" role="status">
+          本示例不内置视频。选中文件后，使用原生控制栏播放；编码是否支持取决于浏览器。
+        </p>
+        <video
+          id="video"
+          controls
+          playsinline
+          preload="metadata"
+          aria-label="所选本地视频"
+        >
+          浏览器不支持视频。
+        </video>
+        <p>
+          正式视频需要对应内容的字幕及必要的文字/音频描述。本地文件预览不会自动产生字幕，不能代替完整可访问媒体交付。
+        </p>
+      </section>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+    <script>
+      let objectURL;
+      const video = document.querySelector("#video");
+      const status = document.querySelector("#media-status");
+      function release() {
+        if (objectURL) {
+          URL.revokeObjectURL(objectURL);
+          objectURL = undefined;
+        }
+      }
+      document
+        .querySelector("#video-file")
+        .addEventListener("change", (event) => {
+          video.pause();
+          video.removeAttribute("src");
+          video.load();
+          release();
+          const file = event.target.files[0];
+          if (!file) {
+            status.textContent = "未选择视频。";
+            return;
+          }
+          objectURL = URL.createObjectURL(file);
+          video.src = objectURL;
+          status.textContent = `已选择：${file.name}，未上传。`;
+        });
+      video.addEventListener("error", () => {
+        status.textContent = "无法播放该文件，请选择浏览器支持的编码格式。";
+      });
+      window.addEventListener("pagehide", release);
+    </script>
+  </body>
+</html>

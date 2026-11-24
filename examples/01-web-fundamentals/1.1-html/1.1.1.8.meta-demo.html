@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>元信息与脚本加载 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="元信息与脚本加载的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+    <meta property="og:title" content="元信息学习示例" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="观察 head 中元信息的不同职责。" />
+    <script src="./assets/semantics-meta.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>元信息与脚本加载</h1>
+      <p>
+        请打开 Elements 查看 head：字符集、viewport、标题、description、Open
+        Graph 和样式表各有职责。
+      </p>
+      <section>
+        <h2>读取文档信息</h2>
+        <button type="button" id="read-meta">读取元信息</button>
+        <p id="result" class="status" role="status">
+          本页脚本是本地外部文件，以 defer 加载。按钮监听在 HTML 解析后注册。
+        </p>
+      </section>
+      <section>
+        <h2>观察清单</h2>
+        <ul>
+          <li>浏览器标签页显示 title，页面中显示 h1，两者不是同一个节点。</li>
+          <li>
+            viewport 没有 maximum-scale 或 user-scalable=no，允许用户缩放。
+          </li>
+          <li>
+            Open Graph
+            描述分享卡片；本地演示不设置虚假的正式站点地址或分享图地址。
+          </li>
+          <li>样式表通过 link 引入，不会因此改变内容语义。</li>
+        </ul>
+      </section>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+  </body>
+</html>

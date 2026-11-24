@@ -123,6 +123,7 @@ def main() -> None:
 
     for i, part in enumerate(PARTS):
         body = extract(content, part["start"], part["end"])
+        body = body.replace("(./notes/", "(../notes/")
         file_content = part_header(part, i) + body + "\n"
         out_path = OUT_DIR / part["file"]
         out_path.write_text(file_content, encoding="utf-8")

@@ -1,6 +1,6 @@
 # 0.2.2 VS Code / Cursor 工作区配置示例
 
-对应笔记：[0.2.2 VS Code / Cursor](../../../notes/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md)
+对应笔记：[0.2.2 VS Code / Cursor](../../../../notes/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md)
 
 ## 文件说明
 

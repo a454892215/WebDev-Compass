@@ -34,3 +34,8 @@ examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 | 0.3.6 | tls-overview（观察清单） | ✅ |
 | 0.3.7 | rest-api-demo | ✅ |
 | 0.3.8 | websocket-demo | ✅ |
+
+
+## 阶段 1：HTML
+
+新增 19 个离线示例，完整入口见 [HTML 示例目录](./01-web-fundamentals/1.1-html/README.md)。例子运行、观察清单与真实服务验证分别记录，范围见[本轮验证记录](../docs/verification-2026-11-24.md)。

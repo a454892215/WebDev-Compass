@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>无序、有序与描述列表 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="无序、有序与描述列表的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>无序、有序与描述列表</h1>
+      <p>数据有集合、步骤和术语关系时，选择不同的原生列表。</p>
+      <section>
+        <h2>无序集合</h2>
+        <ul id="topics">
+          <li>HTML 结构</li>
+          <li>CSS 呈现</li>
+          <li>JavaScript 行为</li>
+        </ul>
+      </section>
+      <section>
+        <h2>有序步骤</h2>
+        <ol>
+          <li>建立文档骨架</li>
+          <li>加入有意义的内容</li>
+          <li>检查键盘和浏览器表现</li>
+        </ol>
+      </section>
+      <section>
+        <h2>术语与说明</h2>
+        <dl>
+          <dt>DOM</dt>
+          <dd>浏览器中的文档对象树。</dd>
+          <dt>语义</dt>
+          <dd>元素表达的内容意义与关系。</dd>
+        </dl>
+      </section>
+      <button id="count" type="button">检查列表数量</button>
+      <p id="result" role="status" class="status">
+        在 Elements 中观察 li 归属哪个列表。
+      </p>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+    <script>
+      document.querySelector("#count").addEventListener("click", () => {
+        document.querySelector("#result").textContent =
+          `无序列表项目 ${document.querySelectorAll("#topics > li").length} 个；有序步骤 ${document.querySelectorAll("ol > li").length} 个；术语 ${document.querySelectorAll("dt").length} 个。`;
+      });
+    </script>
+  </body>
+</html>

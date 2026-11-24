@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>链接、锚点与 URL 解析 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="链接、锚点与 URL 解析的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>链接、锚点与 URL 解析</h1>
+      <p>
+        链接用于导航，按钮用于当前页面动作。只有带 href 的 a
+        才是可操作的普通超链接。
+      </p>
+      <nav aria-label="地址类型示例">
+        <ul>
+          <li>
+            <a href="./1.1.1.1.doctype-html-demo.html">同目录：文档骨架示例</a>
+          </li>
+          <li><a href="#destination">本页：跳到锚点</a></li>
+          <li>
+            <a
+              href="https://developer.chrome.com/docs/modern-web-guidance/guides/html/html"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Modern Web Guidance（新窗口，需联网）</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h2>只解析，不跳转</h2>
+        <label for="address">相对地址</label
+        ><input
+          id="address"
+          type="text"
+          value="./1.1.1.1.doctype-html-demo.html"
+          spellcheck="false"
+        />
+        <p><button type="button" id="resolve">解析地址</button></p>
+        <p id="result" class="status" role="status">
+          解析以当前 document.baseURI 为基准。
+        </p>
+      </section>
+      <section id="destination" tabindex="-1">
+        <h2>锚点目的地</h2>
+        <p>
+          地址中的片段标识用于页内定位，不会发送给服务器。按浏览器后退可回到之前的地址状态。
+        </p>
+      </section>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+    <script>
+      document.querySelector("#resolve").addEventListener("click", () => {
+        const result = document.querySelector("#result");
+        try {
+          result.textContent = new URL(
+            document.querySelector("#address").value,
+            document.baseURI,
+          ).href;
+        } catch {
+          result.textContent = "地址无法解析，请检查输入。";
+        }
+      });
+    </script>
+  </body>
+</html>

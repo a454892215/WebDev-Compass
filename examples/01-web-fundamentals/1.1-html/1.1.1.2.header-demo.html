@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>语义区域与页面骨架 · WebDev Compass</title>
+    <meta
+      name="description"
+      content="语义区域与页面骨架的离线原生 HTML 学习示例。"
+    />
+    <link rel="stylesheet" href="./assets/semantics.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header><a href="./README.md">HTML 示例目录</a> · 无外部依赖</header>
+    <main id="main" tabindex="-1">
+      <h1>语义区域与页面骨架</h1>
+      <p>
+        本页顶部是页面级 header，主要内容由 main 承载。下面展示文章内部的
+        header、section 和 aside。
+      </p>
+      <nav aria-label="本页导航">
+        <ul>
+          <li><a href="#article">阅读文章</a></li>
+          <li><a href="#related">相关提示</a></li>
+        </ul>
+      </nav>
+      <article id="article" tabindex="-1">
+        <header>
+          <h2>从 App 页面到 Web 文档</h2>
+          <p>作者：WebDev Compass · 入门文章</p>
+        </header>
+        <section aria-labelledby="meaning">
+          <h3 id="meaning">结构表达意义</h3>
+          <p>
+            article 是可独立分发的内容；section
+            将同一主题分组。需要盒子却没有主题语义时，可以使用 div。
+          </p>
+        </section>
+        <footer><p>本文属于 HTML 基础章节。</p></footer>
+      </article>
+      <aside id="related" aria-labelledby="aside-title" tabindex="-1">
+        <h2 id="aside-title">相关提示</h2>
+        <p>aside 表示与主要内容相关但可分离的材料，不表示“必须在右侧”。</p>
+      </aside>
+      <button id="toggle" type="button" aria-pressed="false">
+        切换区域描边
+      </button>
+      <p class="status" id="status" role="status">
+        描边只改变样式，不改变语义。
+      </p>
+    </main>
+    <footer>WebDev Compass · 先观察原生语义，再在 DevTools 中验证。</footer>
+    <script>
+      const button = document.querySelector("#toggle");
+      button.addEventListener("click", () => {
+        const active = button.getAttribute("aria-pressed") !== "true";
+        button.setAttribute("aria-pressed", String(active));
+        document
+          .querySelectorAll("main section,main article,main aside,main nav")
+          .forEach((el) => {
+            el.style.outline = active ? "2px dashed #075d60" : "";
+          });
+        document.querySelector("#status").textContent = active
+          ? "描边已开启；区域标签保持不变。"
+          : "描边已关闭；区域标签保持不变。";
+      });
+    </script>
+  </body>
+</html>

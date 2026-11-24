@@ -1,6 +1,6 @@
 # 0.3.7 REST API 迷你示例
 
-对应笔记：[0.3.7 RESTful API](../../../notes/00-environment/0.3-network-basics/0.3.7.restful-api.md)
+对应笔记：[0.3.7 RESTful API](../../../../notes/00-environment/0.3-network-basics/0.3.7.restful-api.md)
 
 零依赖 Node.js HTTP 服务，实现内存中的 `users` 资源 CRUD。
 

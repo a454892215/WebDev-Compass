@@ -1,0 +1,197 @@
+{
+  "browser": "158.0.8127.37",
+  "date": "2026-11-24T13:42:09.688Z",
+  "checks": [
+    {
+      "file": "1.1.1.1.doctype-html-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.2.header-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.3.h1-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.4.ul-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.5.a-href-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.6.img-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.7.table-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.8.meta-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.1.form-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.2.textarea-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.3.required-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.4.application-x-www-form-urlencoded-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.5.item-1-1-2-5-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.1.canvas-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.2.svg-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.3.template-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.4.details-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.5.data-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.6.seo-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.1.doctype-html-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.2.header-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.3.h1-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.4.ul-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.5.a-href-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.6.img-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.7.table-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.1.8.meta-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.1.form-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.2.textarea-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.3.required-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.4.application-x-www-form-urlencoded-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.2.5.item-1-1-2-5-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.1.canvas-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.2.svg-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.3.template-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.4.details-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.5.data-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "file": "1.1.3.6.seo-demo.html",
+      "width": 390,
+      "status": "passed"
+    }
+  ],
+  "scope": "Desktop Chrome and mobile viewport simulation; no real device, screen reader, SEO crawler or backend validation."
+}
