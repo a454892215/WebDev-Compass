@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>严格模式：把隐式错误转为明确失败 · 阶段2实验</title><link rel="stylesheet" href="./assets/lab.css"></head>
+<body data-lesson="2.1.9"><a class="skip" href="#main">跳到主要内容</a><header><a href="./README.md">实验目录</a> · <a href="../../../1-notes/02-javascript-browser/2.1-js-advanced/2.1.9.use-strict.md">对应笔记</a></header>
+<main id="main" tabindex="-1"><h1>2.1.9 严格模式：把隐式错误转为明确失败</h1><p>为什么模块中的漏写变量、失去接收者或写只读属性更容易暴露错误？</p><p class="hint">先预测，再运行。结果来自当前浏览器；不代表其他平台实测。</p><button id="run" type="button">运行实验</button><p id="status" role="status">尚未运行。</p><pre id="output" tabindex="0" role="region" aria-label="实验输出"><code>运行后在此显示真实结果。</code></pre><details><summary>本点最小代码（完整实验实现见源码）</summary><pre tabindex="0"><code>// 本片段保存为ES模块。
+function receiver() { return this; }
+console.log(receiver()); // undefined
+try { stage2UnDeclaredName = 1; } catch (error) {
+  console.log(error.name); // ReferenceError
+}
+const fixed = Object.freeze({ value: 1 });
+try { fixed.value = 2; } catch (error) {
+  console.log(error.name); // TypeError
+}</code></pre></details><noscript><p>脚本已禁用，仍可阅读说明；交互实验需要JavaScript。</p></noscript></main>
+<footer>教学实验，无外网请求、无真实凭据。连续运行会清理本次创建的资源。</footer>
+<script src="./assets/classic.js"></script><script type="module" src="./assets/lab.mjs"></script></body></html>

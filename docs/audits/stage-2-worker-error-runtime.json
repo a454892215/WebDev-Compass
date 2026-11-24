@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-24T15:30:21.901Z",
+  "checks": [
+    {
+      "name": "Worker runtime error produces local fallback without unhandled page exception",
+      "status": "passed"
+    },
+    {
+      "name": "next explicit action creates a working Worker after failure",
+      "status": "passed"
+    }
+  ],
+  "scope": "Actual Worker error event with a controlled local script failure, then successful worker restart. Not mobile or production certification.",
+  "status": "passed"
+}

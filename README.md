@@ -19,9 +19,10 @@
 | --- | --- |
 | 阶段 0 | 19 项四部分资料，已按总则逐篇复审并修正网络与工具陈述 |
 | 阶段 1 | HTML 19、CSS 41、JavaScript 42、基础质量 4，共 106 项四部分资料 |
+| 阶段 2 | JavaScript进阶11、浏览器原理9、存储4、Web API 9，共33项四部分资料 |
 | 工程专题 | Nuxt 基座、桌面及手机宿主的规划与独立仓库交接 |
 
-正文覆盖 125/583（约 21.4%），阶段 2–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 0、1 总则验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
+正文覆盖 158/583（约 27.1%），阶段 3–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
 
 ## 运行与检查
 
@@ -32,11 +33,11 @@ python3 scripts/check_knowledge.py --table
 python3 scripts/check_knowledge.py --report
 python3 scripts/check_learning_delivery.py
 python3 scripts/check_learning_resources.py
-python3 scripts/check_stage_acceptance.py --stage 0 --stage 1
+python3 scripts/check_stage_acceptance.py --stage 0 --stage 1 --stage 2
 python3 -m unittest discover -s scripts/tests -v
 ```
 
-综合项目服务同时提供仓库静态资源和本地教学 API。JavaScript POST、阶段 0 REST/WebSocket 以及 CSS 构建项目按各自 README 启动。使用 HTTP 运行模块与 Fetch 示例，避免 file:// 限制。检查器验证结构、映射及本地链接；浏览器行为与真实构建另行验证。
+阶段2综合项目运行 `node learning/4-practice/02-javascript-browser/server.mjs`，打开 http://127.0.0.1:4190/ 。综合项目服务同时提供仓库静态资源和本地教学 API。JavaScript POST、阶段 0 REST/WebSocket 以及 CSS 构建项目按各自 README 启动。使用 HTTP 运行模块与 Fetch 示例，避免 file:// 限制。检查器验证结构、映射及本地链接；浏览器行为与真实构建另行验证。
 
 ## 独立框架边界
 

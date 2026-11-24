@@ -1,0 +1,34 @@
+[
+  {
+    "id": "2.3.1",
+    "task": "审查阅读队列THEME_KEY的JSON解析、theme白名单和失败回退；在副本加入版本字段，并验证损坏偏好不会阻断列表。",
+    "acceptance": [
+      "用合法light/dark、坏JSON、未知theme三种输入复核页面可用。",
+      "仅改本例主题键，不清除同源其他数据；说明为何筛选用URL而非sessionStorage。"
+    ]
+  },
+  {
+    "id": "2.3.2",
+    "task": "为阅读队列目前没有账号/服务端会话说明不引入Cookie的理由；在本组Cookie实验中比较HttpOnly与普通Cookie，若将来加登录另设计服务端安全协议。",
+    "acceptance": [
+      "document.cookie不可读测试HttpOnly，但服务端回显收到；不输出其他Cookie。",
+      "明确本机HTTP未验证Secure和真实跨站SameSite，也不把HttpOnly当完整CSRF防护。"
+    ]
+  },
+  {
+    "id": "2.3.3",
+    "task": "审查storage.mjs草稿事务：保存等complete、失败保留输入、卸载信号取消和versionchange关闭；在副本模拟中止并确认旧草稿保留。",
+    "acceptance": [
+      "保存后刷新再恢复；主动中止不显示提交成功。",
+      "仅删除webdev-stage2-reading-v1中的本例main记录，不清除整个origin数据库。"
+    ]
+  },
+  {
+    "id": "2.3.4",
+    "task": "为当前队列的主题、URL筛选、内存列表、IndexedDB草稿列选型依据，再说明未来会话及离线响应缓存为何属于其他方案。",
+    "acceptance": [
+      "每项说明访问方式、敏感度、丢失后果与回退。",
+      "区分HTTP缓存、Cache Storage、IndexedDB，不因容量而默认把所有数据塞入同一存储。"
+    ]
+  }
+]

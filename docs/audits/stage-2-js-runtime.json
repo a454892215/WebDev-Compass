@@ -1,0 +1,302 @@
+{
+  "date": "2026-11-24T15:22:28.634Z",
+  "scope": "Headless Chrome 390/1440 viewport experiments. No real-device, mobile-runtime or GC timing certification.",
+  "checks": [
+    {
+      "id": "2.1.1",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "inherited": "article",
+        "hasOwnBefore": false,
+        "shadowed": "draft",
+        "original": "article",
+        "afterDelete": "article",
+        "newPrototype": true
+      }
+    },
+    {
+      "id": "2.1.2",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "method": 5,
+        "call": 13,
+        "apply": 14,
+        "bound": 6,
+        "detachedError": "TypeError",
+        "constructed": 7,
+        "arrow": 2
+      }
+    },
+    {
+      "id": "2.1.3",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "trace": [
+          "outer:start",
+          "inner",
+          "outer:finally",
+          "caught"
+        ],
+        "error": "demo failure",
+        "unreachable": false
+      }
+    },
+    {
+      "id": "2.1.4",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "order": [
+          "sync:start",
+          "sync:end",
+          "promise",
+          "microtask",
+          "nested",
+          "timer"
+        ]
+      }
+    },
+    {
+      "id": "2.1.5",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "originalTitle": "changed",
+        "deepTitle": "draft",
+        "datePreserved": true,
+        "mapPreserved": true,
+        "cyclePreserved": true,
+        "jsonDateType": "string",
+        "undefinedDropped": true,
+        "functionError": "DataCloneError"
+      }
+    },
+    {
+      "id": "2.1.6",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "debounced": [
+          "vue"
+        ],
+        "throttled": [
+          "v",
+          "later"
+        ],
+        "cancelledCalls": 0
+      }
+    },
+    {
+      "id": "2.1.7",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "prepared": [
+          "vue-3",
+          "nuxt"
+        ],
+        "filtered": [
+          "vue"
+        ],
+        "sourceUnchanged": true
+      }
+    },
+    {
+      "id": "2.1.8",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "sameModule": true,
+        "incrementObserved": 1,
+        "secondObserved": 1,
+        "iifePrivate": true
+      }
+    },
+    {
+      "id": "2.1.9",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "moduleThisUndefined": true,
+        "classicThisGlobal": true,
+        "undeclaredError": "ReferenceError",
+        "readonlyError": "TypeError",
+        "accidentalGlobal": false
+      }
+    },
+    {
+      "id": "2.1.10",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "afterDoubleMount": 1,
+        "afterDispose": 1,
+        "timerStopped": true,
+        "active": false
+      }
+    },
+    {
+      "id": "2.1.11",
+      "width": 390,
+      "status": "passed",
+      "observed": {
+        "total": 6,
+        "workerHasDOM": false,
+        "workerFirst": 99,
+        "sourceFirst": 1
+      }
+    },
+    {
+      "id": "2.1.1",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "inherited": "article",
+        "hasOwnBefore": false,
+        "shadowed": "draft",
+        "original": "article",
+        "afterDelete": "article",
+        "newPrototype": true
+      }
+    },
+    {
+      "id": "2.1.2",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "method": 5,
+        "call": 13,
+        "apply": 14,
+        "bound": 6,
+        "detachedError": "TypeError",
+        "constructed": 7,
+        "arrow": 2
+      }
+    },
+    {
+      "id": "2.1.3",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "trace": [
+          "outer:start",
+          "inner",
+          "outer:finally",
+          "caught"
+        ],
+        "error": "demo failure",
+        "unreachable": false
+      }
+    },
+    {
+      "id": "2.1.4",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "order": [
+          "sync:start",
+          "sync:end",
+          "promise",
+          "microtask",
+          "nested",
+          "timer"
+        ]
+      }
+    },
+    {
+      "id": "2.1.5",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "originalTitle": "changed",
+        "deepTitle": "draft",
+        "datePreserved": true,
+        "mapPreserved": true,
+        "cyclePreserved": true,
+        "jsonDateType": "string",
+        "undefinedDropped": true,
+        "functionError": "DataCloneError"
+      }
+    },
+    {
+      "id": "2.1.6",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "debounced": [
+          "vue"
+        ],
+        "throttled": [
+          "v",
+          "later"
+        ],
+        "cancelledCalls": 0
+      }
+    },
+    {
+      "id": "2.1.7",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "prepared": [
+          "vue-3",
+          "nuxt"
+        ],
+        "filtered": [
+          "vue"
+        ],
+        "sourceUnchanged": true
+      }
+    },
+    {
+      "id": "2.1.8",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "sameModule": true,
+        "incrementObserved": 1,
+        "secondObserved": 1,
+        "iifePrivate": true
+      }
+    },
+    {
+      "id": "2.1.9",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "moduleThisUndefined": true,
+        "classicThisGlobal": true,
+        "undeclaredError": "ReferenceError",
+        "readonlyError": "TypeError",
+        "accidentalGlobal": false
+      }
+    },
+    {
+      "id": "2.1.10",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "afterDoubleMount": 1,
+        "afterDispose": 1,
+        "timerStopped": true,
+        "active": false
+      }
+    },
+    {
+      "id": "2.1.11",
+      "width": 1440,
+      "status": "passed",
+      "observed": {
+        "total": 6,
+        "workerHasDOM": false,
+        "workerFirst": 99,
+        "sourceFirst": 1
+      }
+    }
+  ],
+  "browser": "158.0.8127.37",
+  "status": "passed"
+}

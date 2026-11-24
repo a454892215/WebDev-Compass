@@ -6,3 +6,5 @@
 - [阶段 1：HTML、CSS、JavaScript 与基础质量](./01-web-fundamentals/)：106 项，按四个章节目录查找。
 
 [结构规范](../../docs/LEARNING_STRUCTURE.md) · [返回学习入口](../README.md)
+
+- [阶段 2：JavaScript、浏览器与存储](./02-javascript-browser/README.md)：独立实现、排错与验收。

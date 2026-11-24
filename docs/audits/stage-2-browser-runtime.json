@@ -1,0 +1,164 @@
+{
+  "date": "2026-11-24T15:24:45.435Z",
+  "browser": "158.0.8127.37",
+  "checks": [
+    {
+      "id": "2.2.1",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.2",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.3",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.4",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.5",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.6",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.7",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.8",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.9",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.1",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.2",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.3",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.4",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.5",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.6",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.7",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.8",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "id": "2.2.9",
+      "width": 1440,
+      "status": "passed"
+    }
+  ],
+  "http": [
+    {
+      "name": "conditional cache 304",
+      "status": 304,
+      "result": "passed"
+    },
+    {
+      "name": "missing resource",
+      "status": 404,
+      "result": "passed"
+    },
+    {
+      "name": "hidden resource",
+      "status": 403,
+      "result": "passed"
+    }
+  ],
+  "scope": "Headless Chrome 390/1440 viewports and local HTTP/SW mechanics; not PID enumeration, GPU profiling, production performance or real devices.",
+  "cacheObservation": {
+    "fresh": {
+      "responses": [
+        {
+          "scriptStatus": 200,
+          "body": {
+            "mode": "fresh",
+            "version": 1,
+            "request": 1
+          }
+        },
+        {
+          "scriptStatus": 200,
+          "body": {
+            "mode": "fresh",
+            "version": 1,
+            "request": 1
+          }
+        }
+      ],
+      "serverStatuses": [
+        200
+      ]
+    },
+    "validate": {
+      "responses": [
+        {
+          "scriptStatus": 200,
+          "body": {
+            "mode": "validate",
+            "version": 1,
+            "request": 1
+          }
+        },
+        {
+          "scriptStatus": 200,
+          "body": {
+            "mode": "validate",
+            "version": 1,
+            "request": 1
+          }
+        }
+      ],
+      "serverStatuses": [
+        200,
+        304
+      ]
+    }
+  },
+  "status": "passed"
+}

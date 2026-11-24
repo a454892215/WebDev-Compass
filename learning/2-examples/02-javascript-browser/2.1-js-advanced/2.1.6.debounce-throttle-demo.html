@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>防抖与节流：频繁事件的调度与取消 · 阶段2实验</title><link rel="stylesheet" href="./assets/lab.css"></head>
+<body data-lesson="2.1.6"><a class="skip" href="#main">跳到主要内容</a><header><a href="./README.md">实验目录</a> · <a href="../../../1-notes/02-javascript-browser/2.1-js-advanced/2.1.6.debounce-throttle.md">对应笔记</a></header>
+<main id="main" tabindex="-1"><h1>2.1.6 防抖与节流：频繁事件的调度与取消</h1><p>搜索框每个字符都请求，滚动事件每次都计算，怎样分别控制触发频率？</p><p class="hint">先预测，再运行。结果来自当前浏览器；不代表其他平台实测。</p><button id="run" type="button">运行实验</button><p id="status" role="status">尚未运行。</p><pre id="output" tabindex="0" role="region" aria-label="实验输出"><code>运行后在此显示真实结果。</code></pre><details><summary>本点最小代码（完整实验实现见源码）</summary><pre tabindex="0"><code>function debounce(fn, wait) {
+  let timer;
+  function wrapped(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() =&gt; fn.apply(this, args), wait);
+  }
+  wrapped.cancel = () =&gt; clearTimeout(timer);
+  return wrapped;
+}
+const search = debounce(value =&gt; console.log(value), 150);
+search(&quot;v&quot;); search(&quot;vu&quot;); search(&quot;vue&quot;); // 最终只输出vue
+// 离开当前功能时：search.cancel();</code></pre></details><noscript><p>脚本已禁用，仍可阅读说明；交互实验需要JavaScript。</p></noscript></main>
+<footer>教学实验，无外网请求、无真实凭据。连续运行会清理本次创建的资源。</footer>
+<script type="module" src="./assets/lab.mjs"></script></body></html>

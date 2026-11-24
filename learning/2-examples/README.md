@@ -49,3 +49,5 @@ learning/2-examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 | 基础质量 | 4 | [目录](./01-web-fundamentals/1.4-quality-basics/README.md) |
 
 最新验证见[阶段 1 记录](../../docs/STAGE_1_VERIFICATION.md)；上方 HTML 记录是前一次增量交付。静态样式 fixture 与真实工具链编译在目录中分别标明。
+
+- [阶段 2：JavaScript、浏览器与存储](./02-javascript-browser/README.md)：真实实验及运行条件。

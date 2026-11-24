@@ -1,0 +1,227 @@
+[
+  {
+    "id": "2.3.1",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.3-browser-storage/2.3.1.localstorage.md",
+    "example": "learning/2-examples/02-javascript-browser/2.3-browser-storage/2.3.1.localstorage-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.3-browser-storage/2.3.1.localstorage.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-3-1",
+    "evidence": {
+      "theory": "保存不敏感的主题偏好与当前标签草稿。localStorage按origin共享；sessionStorage还按顶层标签会话分区，带opener的新标签可能先复制一份，随后独立变化。它们都不是账号数据库。 不要将令牌或秘密放这里：同源脚本可读取，XSS会影响它；跨设备同步、身份认证与权限由其他系统处理。",
+      "example": "保存两个测试值后刷新，再用独立同源标签读取：local值共享、session值独立；只清除本示例前缀键。",
+      "exercise": "独立为阅读器实现带版本号的主题配置，读取时校验theme与version，失败回退light。 排错：把stage2:local写成{broken再读取，观察JSON解析失败；修复为捕获解析/协议错误而非清空整个origin。",
+      "practice": "审查阅读队列THEME_KEY的JSON解析、theme白名单和失败回退；在副本加入版本字段，并验证损坏偏好不会阻断列表。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.3.2",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.3-browser-storage/2.3.2.cookie.md",
+    "example": "learning/2-examples/02-javascript-browser/2.3-browser-storage/2.3.2.cookie-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.3-browser-storage/2.3.2.cookie.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-3-2",
+    "evidence": {
+      "theory": "Cookie用于浏览器与服务器按作用域自动携带少量信息。属性不是一组万能安全开关；理解作用域与威胁后再用于真实会话。 本地HTTP演示仅比较HttpOnly与普通Cookie，不声称测试了生产HTTPS、Secure、真实跨站SameSite或登录安全。",
+      "example": "用4193本组服务设Cookie，比较document.cookie的普通值与服务器receivedHttpOnly=true；再清除并确认都消失。",
+      "exercise": "在本地教学服务增加一对普通/HttpOnly偏好Cookie，页面显示脚本可读名称，服务端只回显是否收到测试Cookie。 排错：尝试document.cookie=\"stage2_http=client; HttpOnly\"，检查它不能设置真正的HttpOnly属性；改由Set-Cookie，再验证脚本不可读。",
+      "practice": "为阅读队列目前没有账号/服务端会话说明不引入Cookie的理由；在本组Cookie实验中比较HttpOnly与普通Cookie，若将来加登录另设计服务端安全协议。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.3.3",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.3-browser-storage/2.3.3.indexeddb.md",
+    "example": "learning/2-examples/02-javascript-browser/2.3-browser-storage/2.3.3.indexeddb-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.3-browser-storage/2.3.3.indexeddb.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-3-3",
+    "evidence": {
+      "theory": "为阅读草稿保存结构化记录。IndexedDB是异步、按origin隔离的本地数据库；不是关系数据库，也不是服务端同步或永久备份。 最小片段只展示首次创建单仓库；正式升级需要按旧版本条件迁移，不能重复无条件createObjectStore。complete也不等于承诺抗断电永久落盘。",
+      "example": "保存A，输入B后点击中止写入，再读取应仍是A；刷新可恢复已提交记录，只删除本示例数据库。",
+      "exercise": "独立实现按id存取两份草稿，保存提示等事务complete；增加明确取消事务并保留旧内容的流程。 排错：在request.onsuccess直接显示全部保存成功，再让同事务第二个写入触发约束错误；应改等transaction.complete，并在abort说明回滚。",
+      "practice": "审查storage.mjs草稿事务：保存等complete、失败保留输入、卸载信号取消和versionchange关闭；在副本模拟中止并确认旧草稿保留。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.3.4",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.3-browser-storage/2.3.4.item-2-3-4.md",
+    "example": "learning/2-examples/02-javascript-browser/2.3-browser-storage/2.3.4.item-2-3-4-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.3-browser-storage/2.3.4.item-2-3-4.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-3-4",
+    "evidence": {
+      "theory": "主题偏好、当前标签草稿、服务端会话和大量记录属于不同需求。先问数据敏感度、访问方式、体量与离线/同步要求，再选API。 示例是输入需求后的决策说明，不是浏览器自动测试所有配额/安全性；选择结果必须能解释取舍。",
+      "example": "切换主题偏好、结构化草稿、服务端会话、短期筛选四种需求；记录方案与不采用其他方案的理由。",
+      "exercise": "为阅读队列的主题、筛选、草稿和会话写一张选型表，每项列丢失后果、错误恢复、是否需要服务器与迁移策略。 排错：把服务端授权位isAdmin存入localStorage并由页面读取决定权限，说明用户修改后为什么不能获得真实权限，改由服务端授权。",
+      "practice": "为当前队列的主题、URL筛选、内存列表、IndexedDB草稿列选型依据，再说明未来会话及离线响应缓存为何属于其他方案。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.1",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.1.intersection-observer.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.1.intersection-observer-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.1.intersection-observer.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-1",
+    "evidence": {
+      "theory": "当卡片接近滚动容器可视区时再开始加载。Observer异步报告几何交叉变化，减少手写scroll回调逐项测量。 不支持时保留普通内容/手动按钮；不要因Observer回调到来就重复请求或以它替代键盘可达内容。",
+      "example": "滚动本页局部容器，目标进入后显示比例；点击断开后再滚动，回调计数不再增加。",
+      "exercise": "为阅读器末尾添加加载提示哨兵，真实进入后只触发一次请求，并保留手动加载与错误重试。 排错：让每次回调直接追加哨兵并请求，复现重复触发；增加loading/已结束标志，成功后unobserve或移动稳定哨兵。",
+      "practice": "审查#sentinel交叉提示与dispose断开；在副本扩展为一次只请求一页的加载哨兵，保留手动加载和结束状态。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.2",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.2.resize-observer.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.2.resize-observer-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.2.resize-observer.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-2",
+    "evidence": {
+      "theory": "容器被侧栏、父布局或内容改变宽度时，window.resize不一定触发；ResizeObserver直接报告元素尺寸。 CSS负责排版，Observer负责需要尺寸的数据逻辑；不要为了每次改字号再改变同一目标宽度。",
+      "example": "调整滑块改变容器宽度，不调整窗口；输出随真实contentRect变化，断开后不再更新。",
+      "exercise": "给阅读器的统计画布监听容器宽度，输出缓冲区尺寸；纯卡片列数仍用CSS处理。 排错：在回调把目标width设为当前宽度+1，说明循环风险；改为只更新独立输出或有界不回写的尺寸计算。",
+      "practice": "审查.queue-panel的ResizeObserver仅读尺寸、把读数写到独立#size-info；改变容器布局并验证读数，卸载后停止。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.3",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.3.mutation-observer.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.3.mutation-observer-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.3.mutation-observer.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-3",
+    "evidence": {
+      "theory": "为第三方DOM适配或调试记录结构变化。它观察DOM树变更，不应代替自己可直接管理的业务数据流。 谨慎观察document整棵树；阴影树边界与第三方节点生命周期需要额外处理，不默认观察任意所有内容。",
+      "example": "追加节点与修改data-state，观察记录类型；同步输出先于observer回调，断开后修改不再记录。",
+      "exercise": "为阅读器卡片区域添加一个仅调试用的DOM记录器，日志放在区域外；说明正式业务为何不依赖它计算收藏数。 排错：把日志追加到watched内部并在回调继续写日志，分析为什么循环；改放树外并缩小attributeFilter。",
+      "practice": "审查#list的MutationObserver与树外#mutation-info调试读数，解释为什么业务列表应由render/数据驱动而非反推DOM。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.4",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.4.geolocation-api.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.4.geolocation-api-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.4.geolocation-api.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-4",
+    "evidence": {
+      "theory": "用户主动选择附近资源时才请求位置。浏览器返回坐标与accuracy等估计值，不保证GPS硬件或精确定位。 例子仅用户点击后调用，不保存或上传坐标；测试用虚拟坐标，不读取当前设备真实位置。",
+      "example": "先观察未请求状态；隔离浏览器测试授予虚拟位置或拒绝权限，界面对应成功/手工回退。",
+      "exercise": "在阅读器副本设计可选地区筛选，默认手工选择；定位只作用户主动增强，拒绝后保留核心功能。 排错：删除失败回调，模拟拒绝后页面永远等待；恢复错误分类与结束加载，确认不循环弹权限请求。",
+      "practice": "在队列副本设计可选地区筛选：默认手工选择，用户主动定位才作增强；参考项目目前不请求位置。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.5",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.5.clipboard-api.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.5.clipboard-api-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.5.clipboard-api.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-5",
+    "evidence": {
+      "theory": "复制当前阅读链接，不在加载时悄悄读取用户剪贴板。写入固定的本页演示文本，失败时提供可选择文本。 示例只写固定演示文本、不读取剪贴板；本轮QA用受控适配器模拟写入/拒绝，不触碰用户真实系统剪贴板。",
+      "example": "点击复制后观察成功或手动回退；QA注入受控writer记录写入文本并模拟NotAllowedError，明确不称真实系统复制验证。",
+      "exercise": "给阅读器副本增加复制当前筛选链接按钮，复制失败仍显示可选择的链接文本；不添加后台readText。 排错：不await writeText就显示成功，再让writer拒绝；修复为await/catch，并确保失败后没有误导成功提示。",
+      "practice": "在队列副本新增“复制当前筛选链接”按钮，等待writeText完成再提示；失败保留可选择URL，不读取剪贴板。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.6",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.6.file-api.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.6.file-api-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.6.file-api.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-6",
+    "evidence": {
+      "theory": "导入用户主动选择的本地文本，不扫描磁盘，不因选择文件就上传。File是Blob的扩展，包含名称、大小、类型和修改时间。 例子仅处理64KiB内文本，选择清空/读取失败需有提示；网页不能靠accept证明文件内容安全。",
+      "example": "选择本地文本，预览中尖括号只作为文本；选择过大文件或清空选择有明确反馈，Network没有上传请求。",
+      "exercise": "在阅读器副本加JSON草稿导入，限制大小、校验id/text，再由用户确认保存进IndexedDB。 排错：把文件内容赋给innerHTML，在隔离无执行事件的标记样本中观察产生节点；改textContent，并说明为何文件是输入而非可信模板。",
+      "practice": "在队列副本新增小型JSON草稿导入，先限制大小并校验id/text，预览后由用户确认写入IndexedDB；当前项目没有导入功能。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/File_API",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。",
+      "raceRegression": "主代理交叉审查发现File.text迟到覆盖问题；已加readRevision与pagehide失效，受控慢A→清空/快B两项专项通过，见docs/audits/stage-2-storage-apis-file-race.json。"
+    },
+    "issues": [],
+    "resolvedIssues": [
+      "File.text异步读取缺少选择版本归属，可能让迟到A覆盖清空或新B；现成功/失败分支均核对revision。"
+    ]
+  },
+  {
+    "id": "2.4.7",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.7.history-api.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.7.history-api-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.7.history-api.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-7",
+    "evidence": {
+      "theory": "把阅读筛选条件保存在可分享URL里，前进后退恢复界面。pushState/replaceState修改历史，不会自动发请求或渲染页面。 本例仅用page查询参数，不保证完整产品路由；未知page回到home并说明错误，不把hash与popstate混为一谈。",
+      "example": "从? page=notes深链接进入，切换home再返回应恢复notes；从home初始条目切换再后退也应恢复home。",
+      "exercise": "让阅读队列筛选与URL同步，进入/刷新先恢复URL，返回初始条目正常；不要每输入一个字符都堆历史。 排错：删popstate监听，复现地址回退但界面不变；恢复统一readURL/render流程，测试初始条目及直接深链接。",
+      "practice": "审查readURL/writeURL、初始replaceState与popstate；从含q/mode的地址进入、刷新、后退至初始条目，列表与控件保持一致。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.8",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.8.web-workers.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.8.web-workers-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.8.web-workers.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-8",
+    "evidence": {
+      "theory": "把可分离的统计计算放到独立Worker，让主线程处理界面。Worker不能直接访问DOM，跨线程是消息协议而不是共享页面变量。 例子统计小数组仅展示消息协议，不宣称性能提升。Worker缺失或错误时显示回退提示，不阻塞核心阅读。",
+      "example": "输入逗号分隔数字，真实Worker返回总和；错误输入拒绝，停止后Worker终止且不会再更新。",
+      "exercise": "给阅读队列统计增加requestId与销毁逻辑，忽略旧返回结果；记录为何小列表也许无需Worker。 排错：在Worker访问document，观察error并保持界面可用；改为返回数据，由主线程操作DOM。",
+      "practice": "审查stats-worker.mjs统计协议与revision过滤，卸载terminate；在副本制造旧响应及Worker加载错误，核心列表仍可用。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。 主代理追加docs/audits/stage-2-worker-error-runtime.json两项真实Worker错误回退与重新启动通过。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.4.9",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.4-web-apis/2.4.9.notification-api.md",
+    "example": "learning/2-examples/02-javascript-browser/2.4-web-apis/2.4.9.notification-api-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.4-web-apis/2.4.9.notification-api.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-4-9",
+    "evidence": {
+      "theory": "系统通知是用户主动选择的增强能力，默认保留站内状态提示。Notification API与服务器Push不是同一个东西。 本例不创建OS通知；自动化检查默认/拒绝/缺API的站内分支，明确不能证明通知真正送达。",
+      "example": "查看当前能力与权限，不点击也不请求；受控QA模拟拒绝或不可用，站内提示始终可读。",
+      "exercise": "为阅读器写通知取舍说明，保留站内保存结果；只有明确用户需求才设计可关闭的通知增强，不默认引入Push。 排错：让页面加载立刻requestPermission并拒绝后循环重试，分析为何打扰用户；改为明确按钮与拒绝后的站内回退，不实际循环触发系统请求。",
+      "practice": "为阅读队列保留站内保存结果，写是否需要通知的取舍说明；如确有需求在副本设计主动授权和关闭入口，当前不引入系统通知或Push。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API/Using_the_Notifications_API",
+      "runtime": "docs/audits/stage-2-storage-apis-runtime.json：本点390/1440两视口通过，权限类边界按报告模拟范围；地理虚拟允许、剪贴板拒绝、通知拒绝另有专项。"
+    },
+    "issues": []
+  }
+]

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>阅读队列与草稿 · 阶段 2 综合实践</title><link rel="stylesheet" href="./styles.css"><script type="module" src="./app.mjs"></script></head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+<header><p>WebDev Compass · 原生 JavaScript 与浏览器</p><h1>阅读队列与草稿</h1><p>用小项目串起异步、URL、存储、Observer 与资源清理。</p><div class="actions"><button id="theme" type="button" aria-pressed="false">切换深色主题</button><button id="mount" type="button">装配视图</button><button id="dispose" type="button">卸载视图</button></div><p id="lifecycle" role="status">脚本尚未装配；下方普通资料链接仍可用。</p><p id="size-info">容器尺寸尚未观察。</p></header>
+<main id="main" tabindex="-1">
+<section class="queue-panel" aria-labelledby="queue-title"><h2 id="queue-title">阅读队列</h2>
+<form id="filters" action="./index.html#static-catalog" method="get"><div class="fields"><div><label for="q">关键词</label><input id="q" name="q" type="search" maxlength="80" placeholder="例如：缓存"></div><div><label for="mode">本地接口场景</label><select id="mode" name="mode"><option value="ok">正常</option><option value="slow">延迟 650ms</option><option value="error">HTTP 503</option><option value="invalid">坏 JSON</option><option value="shape">错误数据结构</option></select></div></div><div class="actions"><button type="submit">查询</button><button type="button" id="cancel" disabled>取消请求</button></div></form>
+<p class="hint">输入停顿 280ms 后查询，也可按 Enter。查询条件保留在 URL，后退可恢复；接口只读。</p>
+<div id="results" aria-busy="false" data-state="idle"><p id="request-status" role="status">尚未查询。</p><ul id="list" class="cards"></ul></div><p id="sentinel">阅读到队列末尾。</p></section>
+<section aria-labelledby="draft-title"><h2 id="draft-title">本机草稿</h2><label for="draft">演示笔记（最多 2000 字符）</label><textarea id="draft" maxlength="2000" rows="5" placeholder="只输入演示内容，不保存秘密或个人资料。"></textarea><div class="actions"><button id="save" type="button">保存草稿</button><button id="restore" type="button">读取草稿</button><button id="clear" type="button">删除本例草稿</button></div><p id="draft-status" role="status">草稿使用本例 IndexedDB 数据库，不发送到服务器。</p><p id="storage-status">主题使用本例 localStorage 键；存储可能被浏览器限制或清理。</p></section>
+<section aria-labelledby="observe-title"><h2 id="observe-title">观察与计算</h2><p id="intersection-info">队列末尾尚未观察。</p><p id="mutation-info">列表变更记录：0</p><p id="worker-info" role="status">Worker 尚未返回统计。</p><p class="hint">这里使用真实 API；计数用于解释回调与清理，不是性能基准。小列表本可直接计算，Worker 是教学演示。</p></section>
+<section id="static-catalog"><h2>无脚本资料入口</h2><ul><li><a href="../../1-notes/02-javascript-browser/2.1-js-advanced/README.md">JavaScript 进阶</a></li><li><a href="../../1-notes/02-javascript-browser/2.2-browser-internals/README.md">浏览器与缓存</a></li><li><a href="../../1-notes/02-javascript-browser/2.3-browser-storage/README.md">本地存储</a></li><li><a href="../../1-notes/02-javascript-browser/2.4-web-apis/README.md">Web API</a></li></ul></section>
+</main><footer><p>本地教学 fixture，不提供登录、同步、离线提交或生产 PWA。仅保存演示草稿与主题。</p></footer>
+</body></html>

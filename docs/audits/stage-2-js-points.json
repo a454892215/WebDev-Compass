@@ -1,0 +1,222 @@
+[
+  {
+    "id": "2.1.1",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.1.item-2-1-1.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.1.item-2-1-1-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.1.item-2-1-1.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-1",
+    "evidence": {
+      "theoryAndExample": "原型读取、实例遮蔽与删除回退，构造函数prototype与实际原型身份均用真实操作确认；访问器/不可写例外和原型污染边界已说明。",
+      "independentExercise": "从空白脚本建立两个共享方法的阅读条目；给一个实例添加同名属性，再删除观察查找回退。另建无原型字典。",
+      "faultAndRepair": "把共享原型中的tags数组直接push后，说明两个实例为什么一起变化；改为每实例独立数组并复验。",
+      "practiceTask": "审查阅读队列条目的普通对象与共享方法需求；在练习副本做Object.create版本，与原数据对象比较，避免为学习原型强改现有模型。",
+      "practiceAcceptance": [
+        "Object.getPrototypeOf两个实例指向同一共享对象，修改实例title不改变另一个。",
+        "能用Object.hasOwn和删除操作说明自身/继承查找；无原型字典不调用继承方法。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.2",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.2.this.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.2.this-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.2.this.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-2",
+    "evidence": {
+      "theoryAndExample": "对象方法、提取调用错误、call/apply/bind、new及箭头捕获分别执行；没有把箭头叫作始终绑定当前组件。",
+      "independentExercise": "建立一个有value的方法对象，分别通过对象、提取后call/apply/bind、new和箭头调用，并预测每个输出。",
+      "faultAndRepair": "注册监听时bind一次、移除时再次bind，复现移除失败；保存同一函数引用或使用AbortSignal修复。",
+      "practiceTask": "在阅读队列的事件装配副本中加入一个需要this的控制器方法，复现提取回调后接收者丢失，再比较显式绑定和纯函数方案。",
+      "practiceAcceptance": [
+        "脱离对象的方法能复现严格模式错误，call/apply/bind能得到约定值。",
+        "能解释箭头call不改this、new使用实例接收者，而不是背口诀。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.3",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.3.item-2-1-3.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.3.item-2-1-3-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.3.item-2-1-3.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-3",
+    "evidence": {
+      "theoryAndExample": "真实嵌套调用和throw/finally/catch路径记录，不把手工日志冒充引擎上下文；综合任务按实际load内部catch契约修正。",
+      "independentExercise": "写三层函数调用记录进入、返回或抛错路径；再使用DevTools断点观察真实Call Stack，比较日志与栈。",
+      "faultAndRepair": "在finally里return成功文本，复现上层catch看不到原异常；移除覆盖语句后复验。",
+      "practiceTask": "为阅读队列的加载/解码/渲染三个函数画调用链；注入shape场景错误，观察load内部catch的UI提示和finally清理。若调用方需区分结果，在副本显式设计返回状态，不假定现有load会再throw。",
+      "practiceAcceptance": [
+        "正常与shape错误的调用路径和清理可解释，UI能够观察错误而非静默吞掉。",
+        "能区分内部捕获、向外抛错和返回状态三种契约，不仅检查有没有catch。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.4",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.4.event-loop.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.4.event-loop-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.4.event-loop.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-4",
+    "evidence": {
+      "theoryAndExample": "真实Promise/queueMicrotask/嵌套微任务/timer入队结果验证；不扩张为任务来源全局FIFO或RAF绝对顺序。",
+      "independentExercise": "不运行先写本例顺序，再把嵌套Promise移到另一个位置观察顺序。用有限循环比较同步工作和分批让出任务。",
+      "faultAndRepair": "把处理10000项的每一小步都递归queueMicrotask，说明为什么仍可能长时间不响应；改成有界批次和任务让出，不运行无限循环。",
+      "practiceTask": "给阅读队列搜索输入、debounce定时器、Fetch完成和DOM更新记录顺序；只解释实际可保证的先后，再评估大批量处理是否需Worker。",
+      "practiceAcceptance": [
+        "同步、直接微任务、嵌套微任务、timer的本例顺序可解释。",
+        "能说明微任务饥饿风险，不对RAF/timer或后台页面作绝对时序承诺。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.5",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.5.structuredclone.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.5.structuredclone-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.5.structuredclone.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-5",
+    "evidence": {
+      "theoryAndExample": "浅引用修改、Date/Map、循环克隆、JSON丢字段和函数DataCloneError分别验证；项目嵌套草稿明确先新增模型。",
+      "independentExercise": "用嵌套草稿、Date、Map和循环对象比较浅展开/structuredClone/JSON；说明哪些字段需复制、共享或转换。",
+      "faultAndRepair": "用JSON保存含Date与undefined的草稿后按原类型读取，复现数据变化；明确编码/解码协议并验证类型修复。",
+      "practiceTask": "当前草稿只有text和数字updatedAt；先在副本增加含嵌套字段的草稿模型，再比较浅复制与structuredClone的隔离，明确JSON编码边界。",
+      "practiceAcceptance": [
+        "现有草稿模型与新增嵌套扩展分开描述，不凭空假设已有Date或嵌套对象。",
+        "嵌套副本修改不误改原稿，支持类型和失败路径明确。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.6",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.6.debounce-throttle.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.6.debounce-throttle-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.6.debounce-throttle.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-6",
+    "evidence": {
+      "theoryAndExample": "真实连续调用、等待窗口、leading节流与防抖cancel验证；既有capstone.cancel明确已实现，扩展节流单独说明。",
+      "independentExercise": "独立实现带cancel的trailing防抖和leading节流；记录密集输入最终值，再为页面离开和重新进入设计清理。",
+      "faultAndRepair": "把防抖包装器放进input监听函数体，每次新建；复现连续输入触发多次，再改成装配时创建一次。",
+      "practiceTask": "审查现有关键词防抖已具备.cancel且卸载会调用；在副本增加leading节流对照，分别验证防抖取消、Fetch取消与迟到归属。",
+      "practiceAcceptance": [
+        "密集输入最后词生效，leading节流窗口内首值生效，策略差异可解释。",
+        "卸载后待执行定时器不发新请求，已发请求仍由AbortController/归属处理。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.7",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.7.item-2-1-7.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.7.item-2-1-7-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.7.item-2-1-7.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-7",
+    "evidence": {
+      "theoryAndExample": "真实柯里化过滤与同步pipe结果对比，原输入未改；指出部分应用/柯里化差别和异步Promise契约。",
+      "independentExercise": "实现normalize→过滤空白→选择长度范围的小流程，分别用普通函数和柯里化版本，比较可读性。",
+      "faultAndRepair": "在同步pipe中插入async函数后直接调用toUpperCase，复现收到Promise而非字符串；改成明确await的流水线。",
+      "practiceTask": "把队列搜索词正规化提成小函数，比较普通函数与参数化过滤器；允许结论是不需要引入通用pipe工具。",
+      "practiceAcceptance": [
+        "相同输入两种实现得到同样结果，原列表不被修改。",
+        "能说明参数固定与执行时机；异步步骤不混入同步pipe冒充完成值。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.8",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.8.iife-commonjs-amd-es-modules.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.8.iife-commonjs-amd-es-modules-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.8.iife-commonjs-amd-es-modules.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-8",
+    "evidence": {
+      "theoryAndExample": "真实动态import同一模块URL，namespace身份与导出状态增量共享；IIFE封装实际执行，CommonJS/AMD不假装浏览器原生。",
+      "independentExercise": "建立两个实际.mjs文件，比较重复同URL导入、不同查询URL导入与模块内状态；历史格式只写运行环境对照表。",
+      "faultAndRepair": "把浏览器import入口改成require或错误MIME，定位ReferenceError或模块加载错误；修复运行环境而非把所有文件拼成全局脚本。",
+      "practiceTask": "将阅读队列的存储/请求/视图模块边界画清，再用同URL动态import验证实例复用；不为了演进史引入CommonJS/AMD依赖。",
+      "practiceAcceptance": [
+        "通过HTTP实际加载，重复同URL导入共享导出值而非每次重置。",
+        "能解释require/define不属于浏览器原生API，区分包管理、构建与运行时。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.9",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.9.use-strict.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.9.use-strict-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.9.use-strict.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-9",
+    "evidence": {
+      "theoryAndExample": "实际经典非严格脚本与ESM样本比较this；ReferenceError/TypeError均捕获；综合任务采用人为故障注入而非假定隐式全局已存在。",
+      "independentExercise": "用独立经典脚本与ESM各定义一个普通函数，比较默认this；在模块里捕获未声明赋值与不可写属性错误。",
+      "faultAndRepair": "把use strict字符串放在函数中其他语句之后，说明为什么不构成有效指令序言；移到正确位置或改为模块并复验。",
+      "practiceTask": "核对阅读队列type=module和显式状态归属；在副本故意注入未声明赋值复现ReferenceError，再修复声明，不假设当前项目已有隐式全局。",
+      "practiceAcceptance": [
+        "原项目与故障注入分开记录，严格模块能明确暴露未声明赋值。",
+        "修复后不存在该意外全局，仍说明严格模式不是权限/类型校验。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.10",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.10.item-2-1-10.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.10.item-2-1-10-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.10.item-2-1-10.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-10",
+    "evidence": {
+      "theoryAndExample": "真实EventTarget、两次mount、AbortSignal与定时器清理；重复运行无叠加，本实验不证明GC发生或堆大小。",
+      "independentExercise": "为一个可重复mount/dispose的小控制器装配事件与定时器；计数记录重复装配、销毁、重新装配后的行为。",
+      "faultAndRepair": "丢掉旧dispose并再次装配，复现一次事件触发多次；恢复先销毁再装配，同时清理定时器。",
+      "practiceTask": "审查阅读队列的定时器、AbortController、Observer和Worker清理；在副本反复装配/销毁并恢复，确认旧回调不更新界面。",
+      "practiceAcceptance": [
+        "同一事件只增一次计数，重复装配不会叠加监听。",
+        "dispose后事件和定时器都不再修改旧状态；不以堆大小或GC精确时间作为通过条件。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  },
+  {
+    "id": "2.1.11",
+    "result": "passed",
+    "theory": "learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.11.event-loop-flutter-event-queue.md",
+    "example": "learning/2-examples/02-javascript-browser/2.1-js-advanced/2.1.11.event-loop-flutter-event-queue-demo.html",
+    "exercise": "learning/3-exercises/02-javascript-browser/2.1-js-advanced/2.1.11.event-loop-flutter-event-queue.md",
+    "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-1-11",
+    "evidence": {
+      "theoryAndExample": "真实Dedicated Worker返回总数、无document和输入副本修改，主数组仍为原值；Dart/RN只按官方文档做有边界对照，不宣称真机。",
+      "independentExercise": "在Web主页面保留一个计数变量，把数组发送到真实Worker并返回统计结果，比较Worker修改输入副本与主页面状态。再写一张三平台对照。",
+      "faultAndRepair": "在Worker里访问document，捕获错误并解释其环境边界；改为主线程更新DOM，同时补Worker错误/终止处理。",
+      "practiceTask": "为队列统计功能审查Worker消息契约、结果归属和terminate；再记录与移动端经验的可迁移点及浏览器特有差异，不重写现有宿主架构。",
+      "practiceAcceptance": [
+        "真实Worker返回结果且document不可用，主页面输入数据未被Worker普通修改共享。",
+        "平台对照明确宿主、DOM、消息和清理差异，不把浏览器结果称移动端已验证。"
+      ],
+      "runtime": "docs/audits/stage-2-js-runtime.json；Chrome158，390/1440各通过，读取真实输出；模块与清理另重复运行。"
+    },
+    "issues": []
+  }
+]

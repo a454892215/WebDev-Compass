@@ -1,0 +1,152 @@
+{
+  "date": "2026-11-24T15:24:35.724Z",
+  "browser": "158.0.8127.37",
+  "checks": [
+    {
+      "id": "2.3.1",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.3.2",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.3.3",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.3.4",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.1",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.2",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.3",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.4",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.5",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.6",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.7",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.8",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.9",
+      "width": 390,
+      "result": "passed"
+    },
+    {
+      "id": "2.3.1",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.3.2",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.3.3",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.3.4",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.1",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.2",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.3",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.4",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.5",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.6",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.7",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.8",
+      "width": 1440,
+      "result": "passed"
+    },
+    {
+      "id": "2.4.9",
+      "width": 1440,
+      "result": "passed"
+    }
+  ],
+  "special": [
+    {
+      "name": "virtual geolocation allowed",
+      "result": "passed"
+    },
+    {
+      "name": "clipboard adapter rejection fallback",
+      "result": "passed"
+    },
+    {
+      "name": "notification controlled permission rejection; no OS delivery",
+      "result": "passed"
+    }
+  ],
+  "scope": "Headless Chrome 390/1440 viewport. Geolocation virtual, Clipboard and Notification controlled adapters; no real OS clipboard/location/notification delivery validation.",
+  "result": "passed"
+}

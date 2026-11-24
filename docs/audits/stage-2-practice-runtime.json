@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-24T15:22:18.035Z",
+  "browser": "158.0.8127.37",
+  "checks": [
+    {
+      "name": "initial list, Worker, Resize/Mutation, viewport",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "name": "debounce cancel on submit, URL, back, refresh",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "name": "localStorage theme, real IDB commit/read/delete",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "name": "empty, HTTP, parse, schema, cancel, latest request",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "name": "dispose ignores stale work, Observer disconnect, remount, Intersection",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "name": "initial list, Worker, Resize/Mutation, viewport",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "name": "debounce cancel on submit, URL, back, refresh",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "name": "localStorage theme, real IDB commit/read/delete",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "name": "empty, HTTP, parse, schema, cancel, latest request",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "name": "dispose ignores stale work, Observer disconnect, remount, Intersection",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "name": "no JavaScript readable fallback",
+      "status": "passed"
+    },
+    {
+      "name": "controlled storage denial preserves core UI and draft input",
+      "status": "passed"
+    },
+    {
+      "name": "malformed persisted theme handled",
+      "status": "passed"
+    }
+  ],
+  "scope": "Headless Chrome desktop/mobile viewport simulation, real loopback API and IndexedDB; injected API/storage failures are controlled branches, not real-device or full security/performance certification.",
+  "status": "passed"
+}

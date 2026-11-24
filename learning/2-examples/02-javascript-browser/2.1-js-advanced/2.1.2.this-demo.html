@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>this：由调用方式决定的接收者 · 阶段2实验</title><link rel="stylesheet" href="./assets/lab.css"></head>
+<body data-lesson="2.1.2"><a class="skip" href="#main">跳到主要内容</a><header><a href="./README.md">实验目录</a> · <a href="../../../1-notes/02-javascript-browser/2.1-js-advanced/2.1.2.this.md">对应笔记</a></header>
+<main id="main" tabindex="-1"><h1>2.1.2 this：由调用方式决定的接收者</h1><p>同一方法通过对象调用正常，传给回调后却读不到状态，原因在哪里？</p><p class="hint">先预测，再运行。结果来自当前浏览器；不代表其他平台实测。</p><button id="run" type="button">运行实验</button><p id="status" role="status">尚未运行。</p><pre id="output" tabindex="0" role="region" aria-label="实验输出"><code>运行后在此显示真实结果。</code></pre><details><summary>本点最小代码（完整实验实现见源码）</summary><pre tabindex="0"><code>const counter = { value: 2, add(n) { return this.value + n; } };
+console.log(counter.add(3)); // 5
+const detached = counter.add;
+console.log(detached.call({ value: 10 }, 3)); // 13
+const bound = detached.bind(counter);
+console.log(bound(4)); // 6
+function makeReader() { return () =&gt; this.value; }
+const read = makeReader.call(counter);
+console.log(read.call({ value: 99 })); // 2</code></pre></details><noscript><p>脚本已禁用，仍可阅读说明；交互实验需要JavaScript。</p></noscript></main>
+<footer>教学实验，无外网请求、无真实凭据。连续运行会清理本次创建的资源。</footer>
+<script type="module" src="./assets/lab.mjs"></script></body></html>

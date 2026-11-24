@@ -293,7 +293,7 @@ Canvas、SVG 脚本和 template/slot 的实现可在 1.3 后回读；只观察�
 - [ ] [2.1.8 模块化发展史：IIFE → CommonJS → AMD → ES Modules](../learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.8.iife-commonjs-amd-es-modules.md)
 - [ ] [2.1.9 严格模式（`'use strict'`）](../learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.9.use-strict.md)
 - [ ] [2.1.10 内存管理与垃圾回收基本概念；常见内存泄漏场景（闭包、未清理的监听器、定时器）](../learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.10.item-2-1-10.md)
-- [ ] [2.1.11 📱 移动端对照：Event Loop ≈ Flutter 单线程 + Event Queue / RN JS Bridge 异步模型](../learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.11.event-loop-flutter-event-queue.md)
+- [ ] [2.1.11 📱 移动端对照：浏览器 Event Loop、Dart isolate 与 RN JavaScript 运行环境的区别](../learning/1-notes/02-javascript-browser/2.1-js-advanced/2.1.11.event-loop-flutter-event-queue.md)
 
 
 

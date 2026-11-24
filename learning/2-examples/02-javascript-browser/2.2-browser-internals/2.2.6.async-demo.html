@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>async与defer：下载并行，执行时机不同 · 2.2.6</title><link rel="stylesheet" href="./assets/lab.css"></head>
+<body><main><p><a href="./README.md">实验目录</a> · <a href="../../../1-notes/02-javascript-browser/2.2-browser-internals/2.2.6.async.md">对应原理</a></p><h1>2.2.6 async与defer：下载并行，执行时机不同</h1><section><p>服务故意使A下载慢于B；日志由实际外部脚本追加。defer保持文档顺序，async结果取决于到达时机。</p><h2>defer</h2><iframe id="defer" title="defer执行顺序" src="./frames/defer.html"></iframe><h2>async</h2><iframe id="async" title="async执行顺序" src="./frames/async.html"></iframe><button id="run" type="button">读取真实执行日志</button></section><h2>实际观察结果</h2><pre id="output" aria-live="polite">尚未操作。</pre><p class="hint">先预测再运行；页面结果与DevTools/真实设备证据分别记录。</p></main><script type="module">
+const output=document.querySelector('#output');function show(value){output.textContent=JSON.stringify(value,null,2)}
+document.querySelector('#run').onclick=()=>show({defer:document.querySelector('#defer').contentWindow.lessonLog,async:document.querySelector('#async').contentWindow.lessonLog});
+</script></body></html>

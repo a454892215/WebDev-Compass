@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>渲染流水线：从DOM/CSSOM到布局、绘制与合成 · 2.2.2</title><link rel="stylesheet" href="./assets/lab.css"></head>
+<body><main><p><a href="./README.md">实验目录</a> · <a href="../../../1-notes/02-javascript-browser/2.2-browser-internals/2.2.2.item-2-2-2.md">对应原理</a></p><h1>2.2.2 渲染流水线：从DOM/CSSOM到布局、绘制与合成</h1><section><p>DOM存在、计算几何与实际像素呈现是不同证据。改变卡片后读取布局，绘制阶段另用DevTools跟踪。</p><div id="card">内容卡片</div><button id="run" type="button">切换宽度与颜色</button><button id="hide" type="button">切换display:none</button></section><h2>实际观察结果</h2><pre id="output" aria-live="polite">尚未操作。</pre><p class="hint">先预测再运行；页面结果与DevTools/真实设备证据分别记录。</p></main><script type="module">
+const output=document.querySelector('#output');function show(value){output.textContent=JSON.stringify(value,null,2)}
+const card=document.querySelector('#card');function report(){show({nodePresent:!!document.querySelector('#card'),display:getComputedStyle(card).display,width:card.getBoundingClientRect().width,color:getComputedStyle(card).backgroundColor})}document.querySelector('#run').onclick=()=>{card.classList.toggle('wide');report()};document.querySelector('#hide').onclick=()=>{card.classList.toggle('gone');report()};report();
+</script></body></html>

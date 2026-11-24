@@ -1,0 +1,284 @@
+{
+  "ruleVersion": 1,
+  "points": [
+    {
+      "id": "2.2.1",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.1.gpu.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.1.gpu-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.1.gpu.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-1",
+      "result": "passed",
+      "evidence": {
+        "theory": "页面中的JavaScript不是浏览器的全部。遇到页面卡顿、崩溃或隔离问题，需要区分进程与线程，而不是一概称为“JS线程”。 核对要点：navigator.hardwareConcurrency给出浏览器报告的逻辑处理器数量提示，可能为隐私或策略降低；它既不是当前页面线程数，也不是浏览器进程数。",
+        "example": "页面读取真实hardwareConcurrency/isolation提示并明确不能枚举PID；任务管理器拓扑是操作清单，未虚构进程数量。",
+        "exercise": {
+          "task": [
+            "画出导航、DOM更新和图形输出分别涉及的职责边界，标明这是概念图。",
+            "用浏览器任务管理器记录两种页面组合，而不是从标签数量推算进程数量。"
+          ],
+          "acceptance": [
+            "能区分进程、线程、标签与frame，记录观察工具及版本。",
+            "页面显示逻辑处理器提示时，明确不将其当进程数。"
+          ],
+          "fault": "把页面的hardwareConcurrency字段误标成“浏览器渲染进程数”，再用任务管理器对比并修正标签；不依赖固定数量才算修复。",
+          "reference": "页面代码只能观察暴露的API；实现内部需要任务管理器/跟踪工具。概念图解释职责，实际拓扑以本机观察为准。"
+        },
+        "practice": "为阅读队列写一份故障分类：输入卡顿、网络失败、页面崩溃分别先看什么工具；不在业务代码伪造内部进程数。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "未实际执行任务管理器PID拓扑枚举；明确作为学习者观察清单。"
+      ]
+    },
+    {
+      "id": "2.2.2",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.2.item-2-2-2.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.2.item-2-2-2-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.2.item-2-2-2.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-2",
+      "result": "passed",
+      "evidence": {
+        "theory": "DOM已经更新不等于像素已经显示。需要理解结构、样式、几何与像素的不同阶段，才能解释读取尺寸、下一帧与视觉变化。 核对要点：JavaScript修改样式后读取getBoundingClientRect等几何值，浏览器可能为了给出当前值提前刷新样式/布局。返回值不是“屏幕已经绘制完成”的凭证。requestAnimationFrame回调也不是绘制完成通知。",
+        "example": "实际切换width/颜色和display:none，读取260→0几何且DOM仍在；没有把几何读数称paint完成。",
+        "exercise": {
+          "task": [
+            "创建同一张卡片，分别改变文字、颜色、宽度和transform。",
+            "为每项写出可能受影响阶段，再用实际跟踪记录核对，不要求阶段名称完全一致。"
+          ],
+          "acceptance": [
+            "能解释DOM存在与参与布局的区别。",
+            "几何测量与实际绘制跟踪分别记录，不把尺寸数值当GPU证据。"
+          ],
+          "fault": "给卡片设置display:none后仍用固定宽度数值宣称布局正常；改为读取实际几何并解释恢复display后的差异。",
+          "reference": "先判断结构/样式/几何哪部分失效，再看实际跟踪。布局读取可能强制刷新，但不会为你证明后续像素已经呈现。"
+        },
+        "practice": "给阅读队列卡片增加宽度、颜色和transform三个独立变体，记录几何结果与可选Performance跟踪，不把每次变化说成完整重排。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "未录制完整Paint/Composite时间线。"
+      ]
+    },
+    {
+      "id": "2.2.3",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.3.reflow-repaint.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.3.reflow-repaint-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.3.reflow-repaint.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-3",
+      "result": "passed",
+      "evidence": {
+        "theory": "循环中“写样式→读尺寸→再写”可能反复迫使浏览器同步计算布局。优化的目标是减少不必要的工作，而不是让所有布局永远不发生。 核对要点：performance.now测得一段脚本的耗时，不等于完整一帧，也不直接给出布局次数或用户INP。应在相同环境用Performance跟踪确认瓶颈，避免一次快慢偶然值下定论。",
+        "example": "实际20节点交错/批量两种实现，均得到101px；duration来自performance.now，但明确未测Layout次数/FPS。",
+        "exercise": {
+          "task": [
+            "独立实现一个20项列表的尺寸调整，保持两种模式的最终视觉结果等价。",
+            "把测量统一前置，再比较跟踪；保留环境、样本数量和限制。"
+          ],
+          "acceptance": [
+            "读写阶段可以在源码中明确指出，最终几何结果正确。",
+            "性能结论有实际跟踪或明确标未测，不凭一个duration推断FPS。"
+          ],
+          "fault": "故意把offsetWidth移回每次style.width之后，录制或审读这条依赖链，再恢复批量读写；说明为何延迟计时器不是根因修复。",
+          "reference": "关键是失效状态下的读写依赖，批量化可减少往返但不是无条件性能保证。不要为对比制造巨量节点阻塞电脑。"
+        },
+        "practice": "审查阅读队列的ResizeObserver与卡片尺寸读取，在副本实现批量测量/写入，避免观察回调内反复改同一尺寸触发循环。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "未用Performance计数Layout或作生产FPS/INP基准。"
+      ]
+    },
+    {
+      "id": "2.2.4",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.4.critical-rendering-path.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.4.critical-rendering-path-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.4.critical-rendering-path.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-4",
+      "result": "passed",
+      "evidence": {
+        "theory": "下载更多资源不一定让首屏更早显示。需要识别当前视图真正依赖的样式、脚本和图片，缩短阻塞链。 核对要点：本地延迟服务能展示资源到达与解析依赖，不模拟真实公网DNS/TLS、带宽和设备CPU。示例的DCL/资源条目是本次事实，不保证生产LCP改善，也不将DOMContentLoaded视为首屏完成。",
+        "example": "真实iframe加载阻塞样式/脚本与内联样式/defer对照，读取各自Navigation和Resource Timing；未将DCL叫首屏。",
+        "exercise": {
+          "task": [
+            "在目录副本画出首屏HTML、CSS、脚本、封面的依赖链。",
+            "选一个真实非关键资源延后加载，核对功能及无脚本内容，保留前后观察。"
+          ],
+          "acceptance": [
+            "能区分解析阻塞、渲染阻塞与网络慢，不把它们统称加载慢。",
+            "至少一个非关键依赖调整后功能正确，并准确声明指标边界。"
+          ],
+          "fault": "将控制主标题可见性的唯一样式完全延后，再观察无样式闪烁；恢复必要基础样式，非关键部分才延后。",
+          "reference": "先明确关键内容及其依赖，再优化链路。功能可用、可见反馈和测量指标需要分别检查。"
+        },
+        "practice": "为阅读队列绘制首屏依赖图，确认输入与静态说明不等待Worker或草稿数据库完成；性能改善只在实际测量后下结论。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "本地延迟不是公网/低端机环境，未测生产LCP。"
+      ]
+    },
+    {
+      "id": "2.2.5",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.5.will-change.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.5.will-change-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.5.will-change.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-5",
+      "result": "passed",
+      "evidence": {
+        "theory": "transform/opacity有时能减少每帧布局或绘制，但给所有元素加will-change可能增加资源成本。需要理解提示、层与实际测量的区别。 核对要点：实际GPU、图层数和速度需要Layers/Performance等工具确认；getComputedStyle只能证明声明生效。不能把translateZ(0)当所有性能问题的修复。",
+        "example": "实际will-change准备→transform40px→auto清理及复位；Computed只证明CSS，不证明GPU层。",
+        "exercise": {
+          "task": [
+            "选择一个真实交互元素，分别实现无提示与临时提示，保持位移相同。",
+            "在交互结束、取消或离开时移除提示，判断项目是否真的需要该优化。"
+          ],
+          "acceptance": [
+            "提示能清理，重复操作不会永久给整页元素加will-change。",
+            "位移和减少动效终态正确，未测GPU就不作加速保证。"
+          ],
+          "fault": "给列表所有项长期设置will-change:transform；改为仅作用于当前交互目标并及时恢复auto，解释资源成本而不伪造内存数字。",
+          "reference": "先测热点再提示；声明、合成层与真实性能分别是三层证据。"
+        },
+        "practice": "在阅读队列副本给一张正在交互的卡片增加临时will-change，结束即清理；如无实测瓶颈，允许保留无提示版本并解释理由。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "未以Layers/GPU工具证明提层或资源成本，未作速度保证。"
+      ]
+    },
+    {
+      "id": "2.2.6",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.6.async.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.6.async-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.6.async.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-6",
+      "result": "passed",
+      "evidence": {
+        "theory": "脚本彼此依赖或依赖DOM时，错误加载策略会导致偶发未定义。需要区分经典外部脚本与模块脚本。 核对要点：示例为两张隔离iframe，以本地服务故意让A慢、B快。defer仍A后B执行，async可出现B后A。这个结果证明当前下载条件，不把它提升为async固定B先A的语言保证。",
+        "example": "两个真实外部经典脚本，A延迟160ms、B20ms；defer日志parse-tail/A/B/DCL，async在这个控制条件出现B先A。",
+        "exercise": {
+          "task": [
+            "做一组A定义函数、B调用函数的外部经典脚本，用defer保持依赖。",
+            "在副本用async并改变网络延迟制造竞态，再改回明确的模块依赖或defer。"
+          ],
+          "acceptance": [
+            "依赖脚本在不同延迟下均不出现未定义错误。",
+            "能分别解释解析、执行、DCL和load，不只背顺口溜。"
+          ],
+          "fault": "让B依赖A却都async，并延迟A；捕获失败后使用真正的模块import或defer，禁止靠固定setTimeout等待依赖。",
+          "reference": "有依赖用显式依赖关系；async适合相对独立的工作。示例日志记录真实脚本执行，不靠数组预填。"
+        },
+        "practice": "审查阅读队列的module入口与Worker初始化；在独立分支演示经典async依赖故障，不假定现有模块项目本来就有该竞态。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "async先后是本次延迟配置结果，不是任意网络环境排序保证。"
+      ]
+    },
+    {
+      "id": "2.2.7",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.7.link-rel-preload.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.7.link-rel-preload-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.7.link-rel-preload.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-7",
+      "result": "passed",
+      "evidence": {
+        "theory": "浏览器发现关键资源太晚时，可以提前提示；提示太多或参数不匹配也会浪费带宽与连接。 核对要点：本地同源preconnect没有展示公网握手收益；Resource Timing的duration也不证明给用户带来多少提升。最终仍需实际加载指标。",
+        "example": "真实本地SVG preload与img消费，读取实际资源条目；prefetch可忽略，同源preconnect不声称公网收益。",
+        "exercise": {
+          "task": [
+            "选择阅读目录真正的首屏封面，为同URL添加正确as的preload。",
+            "在副本故意预加载另一个不用的文件，识别浪费后删除；比较请求类型而不是只看标签。"
+          ],
+          "acceptance": [
+            "资源地址、类型和消费方对应，页面最终图片可用。",
+            "能够解释提示不等于保证执行，未用的提示已清理。"
+          ],
+          "fault": "把preload指向cover-v2.svg而img仍用cover.svg，检查两份请求；统一实际URL而不是继续增加提示。",
+          "reference": "先找发现延迟，再给少量确需资源提示；参数匹配和实际消费比标签数量重要。"
+        },
+        "practice": "若给阅读队列新增首屏封面，核对是否需要preload；现有纯文本目录不强塞无用图片或第三方preconnect。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "未测公网DNS/TLS收益，prefetch不保证执行。"
+      ]
+    },
+    {
+      "id": "2.2.8",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.8.item-2-2-8.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.8.item-2-2-8-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.8.item-2-2-8.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-8",
+      "result": "passed",
+      "evidence": {
+        "theory": "“用了缓存”可能是直接复用，也可能仍向服务器验证。需要根据响应头、实际请求与状态判断，而不是只看页面快慢。 核对要点：HTTP缓存、Cache Storage、Service Worker、bfcache是不同机制。不能把no-store绝对解释成所有浏览器永不进bfcache；Chrome已针对部分条件改变策略。用户个性化缓存还需Vary、认证及共享边界，入门fixture不模拟生产CDN。",
+        "example": "fresh组服务端仅200一次，validate组200后304，脚本均看到200重建响应；另用HTTP条件请求证明304空体。",
+        "exercise": {
+          "task": [
+            "在本地服务新增一个版本化静态资源和一个需要验证的资源，分别设置缓存头。",
+            "保持URL相同重试，记录If-None-Match与服务器304，再更改ETag观察返回200新内容。"
+          ],
+          "acceptance": [
+            "能够分别证明直接复用与条件验证，区分脚本状态和网络实际状态。",
+            "解释no-cache/no-store、HTTP缓存/SW缓存的差别，未将教学服务当生产认证策略。"
+          ],
+          "fault": "每次请求都加随机查询参数，却期待同URL缓存命中；固定同一组URL、保留组间隔离key后重新验证。",
+          "reference": "缓存匹配与新鲜度先于条件验证；预先区分重载方式和DevTools设置。服务端状态日志只用于本地验证，不替代完整生产链路。"
+        },
+        "practice": "在阅读队列的独立缓存实验中对比只读资源的max-age与ETag，保留请求证据；不声称当前项目已实现离线或CDN缓存。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "无CDN、认证、共享缓存或bfcache实际导航验证；bfcache边界依据官方文档。"
+      ]
+    },
+    {
+      "id": "2.2.9",
+      "theory": "learning/1-notes/02-javascript-browser/2.2-browser-internals/2.2.9.service-worker-pwa.md",
+      "example": "learning/2-examples/02-javascript-browser/2.2-browser-internals/2.2.9.service-worker-pwa-demo.html",
+      "exercise": "learning/3-exercises/02-javascript-browser/2.2-browser-internals/2.2.9.service-worker-pwa.md",
+      "practice": "learning/4-practice/02-javascript-browser/tasks.md#p-2-2-9",
+      "result": "passed",
+      "evidence": {
+        "theory": "离线能力需要拦截请求并明确更新/失效策略。Service Worker不是一直运行的页面线程，也不等于安装一个PWA就完成了所有离线体验。 核对要点：本例仅拦截本组的sw-sample.json：联网时请求并更新缓存，断网时返回自己的已缓存数据。它不缓存整个站点、不提供安装清单和后台同步，也不声称完整PWA通过。清理只移除本例registration及命名缓存。",
+        "example": "真实注册/接管本组scope，在线network后context.setOffline返回cache样本，恢复在线后仅清理本例registration与命名缓存。",
+        "exercise": {
+          "task": [
+            "在独立分支为一个无敏感数据的只读资源实现网络优先、缓存回退。",
+            "给出作用域、版本更新和清理策略；模拟新旧版本共存，说明为何不默认全站接管。"
+          ],
+          "acceptance": [
+            "在线后能真实离线读回既有数据，第一次离线无缓存时有明确失败。",
+            "清理只影响本例，能说明安装、激活、控制客户端和更新等待的不同。"
+          ],
+          "fault": "注册后立即离线且不等待controller，复现请求未被接管；等待实际控制并在线填充缓存后重试，不用固定延时当就绪判据。",
+          "reference": "服务工作线程由事件驱动，持久状态交给存储。作用域、客户端控制、缓存策略和版本切换要分别验证。"
+        },
+        "practice": "为阅读队列副本设计一个只读资源的离线回退及更新方案，复用本组真实SW实验；明确主参考项目本身未提供生产PWA。",
+        "runtime": "docs/audits/stage-2-browser-runtime.json：本点390/1440两视口通过。",
+        "coherence": "本章前置阶段1DOM/CSS/Fetch及2.1事件循环；按进程→渲染→读写→脚本→CRP/资源提示→HTTP缓存→可选SW递进，不把GPU/PWA作为首个框架前置。"
+      },
+      "issues": [],
+      "limitations": [
+        "只缓存一个JSON资源，无离线整页壳、manifest、后台同步和生产更新兼容验收。"
+      ]
+    }
+  ]
+}

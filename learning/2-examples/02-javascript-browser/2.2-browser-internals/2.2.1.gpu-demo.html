@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>浏览器多进程：页面、渲染器与GPU的职责 · 2.2.1</title><link rel="stylesheet" href="./assets/lab.css"></head>
+<body><main><p><a href="./README.md">实验目录</a> · <a href="../../../1-notes/02-javascript-browser/2.2-browser-internals/2.2.1.gpu.md">对应原理</a></p><h1>2.2.1 浏览器多进程：页面、渲染器与GPU的职责</h1><section><p>页面API不能枚举浏览器PID。下面读取真实提示，内部进程需要浏览器任务管理器。</p><button id="run" type="button">读取页面能力</button><ol><li>打开浏览器任务管理器，找到页面/浏览器/GPU相关条目。</li><li>增加同站、跨站标签，记录实际拓扑，不预设固定数量。</li><li>比较逻辑处理器提示与实际进程记录，解释二者不同。</li></ol></section><h2>实际观察结果</h2><pre id="output" aria-live="polite">尚未操作。</pre><p class="hint">先预测再运行；页面结果与DevTools/真实设备证据分别记录。</p></main><script type="module">
+const output=document.querySelector('#output');function show(value){output.textContent=JSON.stringify(value,null,2)}
+document.querySelector('#run').onclick=()=>show({logicalProcessorHint:navigator.hardwareConcurrency,crossOriginIsolated:window.crossOriginIsolated,pidEnumeration:false});
+</script></body></html>

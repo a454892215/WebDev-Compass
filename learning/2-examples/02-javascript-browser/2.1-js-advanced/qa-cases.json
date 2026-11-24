@@ -1,0 +1,140 @@
+{
+  "cases": [
+    {
+      "id": "2.1.1",
+      "file": "2.1.1.item-2-1-1-demo.html",
+      "expected": {
+        "inherited": "article",
+        "hasOwnBefore": false,
+        "shadowed": "draft",
+        "original": "article",
+        "afterDelete": "article",
+        "newPrototype": true
+      }
+    },
+    {
+      "id": "2.1.2",
+      "file": "2.1.2.this-demo.html",
+      "expected": {
+        "method": 5,
+        "call": 13,
+        "apply": 14,
+        "bound": 6,
+        "detachedError": "TypeError",
+        "constructed": 7,
+        "arrow": 2
+      }
+    },
+    {
+      "id": "2.1.3",
+      "file": "2.1.3.item-2-1-3-demo.html",
+      "expected": {
+        "trace": [
+          "outer:start",
+          "inner",
+          "outer:finally",
+          "caught"
+        ],
+        "error": "demo failure",
+        "unreachable": false
+      }
+    },
+    {
+      "id": "2.1.4",
+      "file": "2.1.4.event-loop-demo.html",
+      "expected": {
+        "order": [
+          "sync:start",
+          "sync:end",
+          "promise",
+          "microtask",
+          "nested",
+          "timer"
+        ]
+      }
+    },
+    {
+      "id": "2.1.5",
+      "file": "2.1.5.structuredclone-demo.html",
+      "expected": {
+        "originalTitle": "changed",
+        "deepTitle": "draft",
+        "datePreserved": true,
+        "mapPreserved": true,
+        "cyclePreserved": true,
+        "jsonDateType": "string",
+        "undefinedDropped": true,
+        "functionError": "DataCloneError"
+      }
+    },
+    {
+      "id": "2.1.6",
+      "file": "2.1.6.debounce-throttle-demo.html",
+      "expected": {
+        "debounced": [
+          "vue"
+        ],
+        "throttled": [
+          "v",
+          "later"
+        ],
+        "cancelledCalls": 0
+      }
+    },
+    {
+      "id": "2.1.7",
+      "file": "2.1.7.item-2-1-7-demo.html",
+      "expected": {
+        "prepared": [
+          "vue-3",
+          "nuxt"
+        ],
+        "filtered": [
+          "vue"
+        ],
+        "sourceUnchanged": true
+      }
+    },
+    {
+      "id": "2.1.8",
+      "file": "2.1.8.iife-commonjs-amd-es-modules-demo.html",
+      "expected": {
+        "sameModule": true,
+        "incrementObserved": 1,
+        "secondObserved": 1,
+        "iifePrivate": true
+      }
+    },
+    {
+      "id": "2.1.9",
+      "file": "2.1.9.use-strict-demo.html",
+      "expected": {
+        "moduleThisUndefined": true,
+        "classicThisGlobal": true,
+        "undeclaredError": "ReferenceError",
+        "readonlyError": "TypeError",
+        "accidentalGlobal": false
+      }
+    },
+    {
+      "id": "2.1.10",
+      "file": "2.1.10.item-2-1-10-demo.html",
+      "expected": {
+        "afterDoubleMount": 1,
+        "afterDispose": 1,
+        "timerStopped": true,
+        "active": false
+      }
+    },
+    {
+      "id": "2.1.11",
+      "file": "2.1.11.event-loop-flutter-event-queue-demo.html",
+      "expected": {
+        "total": 6,
+        "workerHasDOM": false,
+        "sourceFirst": 1,
+        "workerFirst": 99
+      }
+    }
+  ]
+}

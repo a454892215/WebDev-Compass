@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-24T15:27:21.008Z",
+  "checks": [
+    {
+      "name": "clear selection invalidates delayed A",
+      "result": "passed"
+    },
+    {
+      "name": "new B survives delayed A",
+      "result": "passed"
+    }
+  ],
+  "scope": "Controlled delay of File.text on in-memory Playwright files; no real disk, upload or OS dialog.",
+  "result": "passed"
+}
