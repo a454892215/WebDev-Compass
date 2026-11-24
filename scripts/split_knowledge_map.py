@@ -21,7 +21,7 @@ PARTS = [
     {
         "file": "02-engineering-stages-3-5.md",
         "title": "阶段 3–5：工程层",
-        "subtitle": "工程化与 TypeScript · 框架与状态管理 · 全栈协作与认证",
+        "subtitle": "工程化与 TypeScript · Vue 3 + Nuxt 应用开发 · 全栈协作与认证",
         "stages": (3, 5),
         "start": "## 阶段 3：工程化与 TypeScript",
         "end": "## 阶段 6：性能、安全与可访问性",

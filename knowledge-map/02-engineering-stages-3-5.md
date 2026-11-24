@@ -1,6 +1,6 @@
 # 阶段 3–5：工程层
 
-> 工程化与 TypeScript · 框架与状态管理 · 全栈协作与认证  
+> 工程化与 TypeScript · Vue 3 + Nuxt 应用开发 · 全栈协作与认证  
 > [← 01-foundation](./01-foundation-stages-0-2.md) · [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./03-application-stages-6-7.md)
 
 ---
@@ -74,7 +74,7 @@
 
 
 
-## 阶段 4：框架与状态管理
+## 阶段 4：Vue 3 + Nuxt 应用开发与状态管理
 
 > 前置：基础 Web 能力与阶段 3 的 TypeScript 工具链。主线采用 **Vue 3 + TypeScript + Nuxt**，按 **4.1 → 4.3 → 4.5 → 4.4** 阅读；4.2 React/Next 为跨生态选修，React Native 经验可用于概念对照，不要求双修。产出：含列表、表单、路由和明确加载/空/错状态的小应用。验收：刷新和导航行为正确、组件可复用、关键交互及宽窄视口可检查；质量基线从本阶段执行。见[学习路径](../docs/LEARNING_PATH.md)。
 
