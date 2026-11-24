@@ -1,6 +1,6 @@
 # 阶段 3–5：工程层
 
-> 工程化与 TypeScript · Vue 3 + Nuxt 应用开发 · 全栈协作与认证  
+> 工程化与 TypeScript · Vue 3 + Nuxt 应用开发 · 全栈协作与认证\
 > [← 01-foundation](./01-foundation-stages-0-2.md) · [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./03-application-stages-6-7.md)
 
 ---
