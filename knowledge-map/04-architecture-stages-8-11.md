@@ -1,17 +1,23 @@
-# 阶段 8–11：架构层
+<a id="阶段-811架构层"></a>
 
-> 架构设计 · 深度性能 · 安全合规 · 可观测性与运维  
+# 阶段 8–11：架构取舍、性能优化、安全与监控
+
+> Vue/Nuxt 模块划分 · 性能测量 · 安全防护 · 错误与发布\
 > [← 03-application](./03-application-stages-6-7.md) · [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./05-platform-stages-12-14.md)
 
 ---
 
-## 阶段 8：前端架构与系统设计
+<a id="阶段-8前端架构与系统设计"></a>
+
+## 阶段 8：Vue/Nuxt 模块划分、状态与渲染选型
 
 > 阶段 8–11 用于在首个产品交付之后深化架构与生产治理，不是第一次写页面的前置门槛。按实际风险选择专题：微前端、复杂插件系统、CRDT/CQRS 和 Edge 渲染只在业务需要时学习。通用原理以 Vue/Nuxt 为主例，React/Next.js 作为对照选修。先修关系与验收方式见[学习主线](../docs/LEARNING_PATH.md)。
 
 
 
-### 8.1 架构思维与文档
+<a id="81-架构思维与文档"></a>
+
+### 8.1 需求约束、RFC/ADR 与模块边界文档
 
 - [ ] [8.1.1 **技术 RFC / ADR** 撰写：背景、目标、备选方案、权衡矩阵、决策与后果](../notes/08-architecture/8.1-architecture-docs/8.1.1.rfc-adr.md)
 - [ ] [8.1.2 **非功能需求（NFR）** 分析：性能、可用性、安全、可维护性、可扩展性](../notes/08-architecture/8.1-architecture-docs/8.1.2.nfr.md)
@@ -22,7 +28,9 @@
 
 
 
-### 8.2 应用架构模式
+<a id="82-应用架构模式"></a>
+
+### 8.2 Vue/Nuxt 业务分层与依赖划分
 
 - [ ] [8.2.1 **Feature-Sliced Design (FSD)**：一种可选业务域划分方式；与 Vue/Nuxt 约定目录协调，避免机械套层](../notes/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md)
 - [ ] [8.2.2 **分层架构**：Presentation → Application → Domain → Infrastructure](../notes/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md)
@@ -33,7 +41,9 @@
 
 
 
-### 8.3 渲染架构选型
+<a id="83-渲染架构选型"></a>
+
+### 8.3 CSR/SSR/SSG 渲染模式取舍
 
 - [ ] [8.3.1 **CSR / SSR / SSG / ISR / Streaming SSR** 深度对比：TTFB、FCP、SEO、成本、复杂度](../notes/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming.md)
 - [ ] [8.3.2 **React Server Components (RSC)** 与 Server Actions 概念与边界——React/Next.js 分支选修](../notes/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc.md)
@@ -45,7 +55,9 @@
 
 
 
-### 8.4 微前端与大型应用
+<a id="84-微前端与大型应用"></a>
+
+### 8.4 微前端与 Module Federation（按需）
 
 - [ ] [8.4.1 **微前端** 动机：独立部署、团队自治、技术栈共存](../notes/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1.md)
 - [ ] [8.4.2 **集成方式**：构建时（Module Federation）vs 运行时（single-spa、iframe、Web Components）](../notes/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2.md)
@@ -57,7 +69,9 @@
 
 
 
-### 8.5 BFF 与 API 层架构
+<a id="85-bff-与-api-层架构"></a>
+
+### 8.5 BFF 接口聚合与前后端职责划分
 
 - [ ] [8.5.1 **BFF（Backend for Frontend）** 模式：聚合、裁剪、鉴权下沉](../notes/08-architecture/8.5-bff/8.5.1.bff-backend-for-frontend.md)
 - [ ] [8.5.2 BFF vs 直连后端 API：何时引入 BFF](../notes/08-architecture/8.5-bff/8.5.2.bff-vs-api-bff.md)
@@ -68,7 +82,9 @@
 
 
 
-### 8.6 状态与数据架构
+<a id="86-状态与数据架构"></a>
+
+### 8.6 页面、URL、服务端与持久化状态归属
 
 - [ ] [8.6.1 **客户端状态 vs 服务端状态** 边界：Vue/Nuxt 的局部状态、Pinia、useState 与 useAsyncData；Query 库按需对照](../notes/08-architecture/8.6-state-data/8.6.1.vs.md)
 - [ ] [8.6.2 **数据 Key 与缓存层级**：查询身份、用户/租户维度、退出失效与个性化数据隔离；禁止无边界全局共享](../notes/08-architecture/8.6-state-data/8.6.2.query-key.md)
@@ -80,7 +96,9 @@
 
 
 
-### 8.7 能力锚点（阶段 8）
+<a id="87-能力锚点阶段-8"></a>
+
+### 8.7 阶段验收：Vue/Nuxt 模块划分、状态与渲染选型
 
 - 能对中等复杂度产品输出 **架构 RFC**，含至少 2 种备选方案与明确决策
 - 能解释团队项目为何采用当前渲染模式，并列出已知 trade-off
@@ -89,11 +107,15 @@
 
 
 
-## 阶段 9：深度性能工程
+<a id="阶段-9深度性能工程"></a>
+
+## 阶段 9：Web Vitals 测量、加载与交互性能优化
 
 
 
-### 9.1 性能度量体系
+<a id="91-性能度量体系"></a>
+
+### 9.1 Web Vitals、RUM 与性能分析工具
 
 - [ ] [9.1.1 **Lab vs RUM**：Lighthouse / WebPageTest vs 真实用户数据](../notes/09-performance/9.1-performance-metrics/9.1.1.lab-vs-rum.md)
 - [ ] [9.1.2 **Core Web Vitals** 深度：LCP 元素归因、INP 交互归因、CLS 布局偏移源](../notes/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals.md)
@@ -105,7 +127,9 @@
 
 
 
-### 9.2 性能预算与治理
+<a id="92-性能预算与治理"></a>
+
+### 9.2 性能阈值、构建体积与回归检查
 
 - [ ] [9.2.1 **Performance Budget** 定义：JS/CSS 体积、请求数、LCP/INP 阈值](../notes/09-performance/9.2-performance-budget/9.2.1.performance-budget.md)
 - [ ] [9.2.2 **Bundle 分析**：rollup-plugin-visualizer、webpack-bundle-analyzer、`source-map-explorer`](../notes/09-performance/9.2-performance-budget/9.2.2.bundle.md)
@@ -115,7 +139,9 @@
 
 
 
-### 9.3 加载性能进阶
+<a id="93-加载性能进阶"></a>
+
+### 9.3 图片、字体、脚本与缓存加载优化
 
 - [ ] [9.3.1 **Critical CSS** 提取与内联策略](../notes/09-performance/9.3-loading-advanced/9.3.1.critical-css.md)
 - [ ] [9.3.2 **字体优化**：`font-display`、subset、preload、FOIT/FOUT 治理](../notes/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2.md)
@@ -126,7 +152,9 @@
 
 
 
-### 9.4 运行时性能进阶
+<a id="94-运行时性能进阶"></a>
+
+### 9.4 长任务、内存泄漏与交互优化
 
 - [ ] [9.4.1 **Long Task** 分析与拆分：任务分片、Vue 更新批处理；scheduler.postTask 能力检测，React 并发特性为选修](../notes/09-performance/9.4-runtime-advanced/9.4.1.long-task.md)
 - [ ] [9.4.2 **INP 优化**：输入延迟、事件处理器优化、debounce 策略升级](../notes/09-performance/9.4-runtime-advanced/9.4.2.inp.md)
@@ -138,7 +166,9 @@
 
 
 
-### 9.5 SSR / 流式渲染性能
+<a id="95-ssr--流式渲染性能"></a>
+
+### 9.5 Nuxt SSR 首屏、数据瀑布与流式响应
 
 - [ ] [9.5.1 **Streaming HTML**：流式响应、边界与运行环境；以 Nuxt 支持情况验证，React renderToReadableStream 为对照](../notes/09-performance/9.5-ssr-streaming/9.5.1.streaming-html.md)
 - [ ] [9.5.2 **水合成本与组件优先级**：Vue/Nuxt 延迟水合按版本能力验证；React 选择性水合为对照](../notes/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2.md)
@@ -148,7 +178,9 @@
 
 
 
-### 9.6 能力锚点（阶段 9）
+<a id="96-能力锚点阶段-9"></a>
+
+### 9.6 阶段验收：Web Vitals 测量、加载与交互性能优化
 
 - 能为项目建立 **性能预算** 并接入 CI
 - 能用 DevTools Memory / Performance 定位一个可复现的性能或内存问题，保留测量与改进证据
@@ -157,11 +189,15 @@
 
 
 
-## 阶段 10：安全工程与合规
+<a id="阶段-10安全工程与合规"></a>
+
+## 阶段 10：XSS/CSRF 防护、认证安全与隐私
 
 
 
-### 10.1 前端安全基线
+<a id="101-前端安全基线"></a>
+
+### 10.1 威胁建模、安全响应头与输入边界
 
 - [ ] [10.1.1 制定团队 **前端安全 Checklist**（发布前 / Code Review）](../notes/10-security/10.1-security-baseline/10.1.1.checklist.md)
 - [ ] [10.1.2 **OWASP Top 10** 与 Web 前端相关项系统性梳理](../notes/10-security/10.1-security-baseline/10.1.2.owasp-top.md)
@@ -170,7 +206,9 @@
 
 
 
-### 10.2 漏洞深度与防御
+<a id="102-漏洞深度与防御"></a>
+
+### 10.2 XSS/CSRF、原型污染与页面嵌入防护
 
 - [ ] [10.2.1 **XSS** 进阶：mXSS、DOM Clobbering、模板注入、`DOMPurify` 配置](../notes/10-security/10.2-vulnerabilities/10.2.1.xss.md)
 - [ ] [10.2.2 **CSP** 生产级：`nonce`、`strict-dynamic`、`report-to`、`Content-Security-Policy-Report-Only`](../notes/10-security/10.2-vulnerabilities/10.2.2.csp.md)
@@ -183,7 +221,9 @@
 
 
 
-### 10.3 认证与授权进阶
+<a id="103-认证与授权进阶"></a>
+
+### 10.3 OAuth/OIDC、会话刷新与权限校验
 
 - [ ] [10.3.1 **OAuth 2.0 / OIDC** 深入：Authorization Code + **PKCE** 流程](../notes/10-security/10.3-auth-advanced/10.3.1.oauth-oidc.md)
 - [ ] [10.3.2 **Refresh Token** 轮换、Reuse Detection](../notes/10-security/10.3-auth-advanced/10.3.2.refresh-token.md)
@@ -195,7 +235,9 @@
 
 
 
-### 10.4 供应链与 Secrets
+<a id="104-供应链与-secrets"></a>
+
+### 10.4 依赖供应链、凭据与源码暴露控制
 
 - [ ] [10.4.1 **npm 供应链安全**：lockfile 完整性、最小权限 Token、私有 registry](../notes/10-security/10.4-supply-chain/10.4.1.npm.md)
 - [ ] [10.4.2 **Dependabot / Renovate** 策略与 emergency patch 流程](../notes/10-security/10.4-supply-chain/10.4.2.dependabot-renovate.md)
@@ -205,7 +247,9 @@
 
 
 
-### 10.5 隐私与合规
+<a id="105-隐私与合规"></a>
+
+### 10.5 个人数据、采集授权与隐私要求
 
 - [ ] [10.5.1 **隐私工程**：数据最小化、保留和删除流程；适用法规及 consent 要求与法务/安全团队确认](../notes/10-security/10.5-privacy-compliance/10.5.1.gdpr.md)
 - [ ] [10.5.2 **Cookie Consent** 与 CMP（Consent Management Platform）集成——按适用业务与合规方案选择](../notes/10-security/10.5-privacy-compliance/10.5.2.cookie-consent.md)
@@ -215,7 +259,9 @@
 
 
 
-### 10.6 能力锚点（阶段 10）
+<a id="106-能力锚点阶段-10"></a>
+
+### 10.6 阶段验收：XSS/CSRF 防护、认证安全与隐私
 
 - 能按应用威胁与认证模型输出 **CSP 与 Cookie 策略**，说明适用条件与验证方式
 - 能完成一次前端 **威胁建模** 或安全 Review；团队主持职责按岗位要求深化
@@ -224,11 +270,15 @@
 
 
 
-## 阶段 11：可观测性与生产运维
+<a id="阶段-11可观测性与生产运维"></a>
+
+## 阶段 11：错误监控、日志指标与灰度发布
 
 
 
-### 11.1 错误监控
+<a id="111-错误监控"></a>
+
+### 11.1 Sentry 错误采集、Source Map 与告警
 
 - [ ] [11.1.1 **Sentry / Bugsnag** 集成：Source Map 上传、Release 追踪、环境标签](../notes/11-observability/11.1-error-monitoring/11.1.1.sentry-bugsnag.md)
 - [ ] [11.1.2 **错误分级**：P0–P3、用户影响面、自动指派](../notes/11-observability/11.1-error-monitoring/11.1.2.item-11-1-2.md)
@@ -238,7 +288,9 @@
 
 
 
-### 11.2 日志与指标
+<a id="112-日志与指标"></a>
+
+### 11.2 结构化日志、用户旅程与 Web 指标
 
 - [ ] [11.2.1 **结构化日志** 规范：level、traceId、userId（脱敏）](../notes/11-observability/11.2-logging-metrics/11.2.1.item-11-2-1.md)
 - [ ] [11.2.2 **Distributed Tracing** 基础：OpenTelemetry、W3C traceparent](../notes/11-observability/11.2-logging-metrics/11.2.2.distributed-tracing.md)
@@ -248,7 +300,9 @@
 
 
 
-### 11.3 发布与变更管理
+<a id="113-发布与变更管理"></a>
+
+### 11.3 Feature Flag、灰度、发布与回滚
 
 - [ ] [11.3.1 **Feature Flag**：LaunchDarkly、Unleash、自研开关；Kill Switch](../notes/11-observability/11.3-release-management/11.3.1.feature-flag.md)
 - [ ] [11.3.2 **灰度发布 / Canary**：按用户百分比、地域、白名单](../notes/11-observability/11.3-release-management/11.3.2.canary.md)
@@ -259,7 +313,9 @@
 
 
 
-### 11.4 基础设施协作
+<a id="114-基础设施协作"></a>
+
+### 11.4 CDN、反向代理、容器与部署协作
 
 - [ ] [11.4.1 **CDN** 配置协作：缓存规则、Purge、Geo 路由](../notes/11-observability/11.4-infra/11.4.1.cdn.md)
 - [ ] [11.4.2 **Nginx 进阶**：负载均衡、限流、反向代理缓存、WAF 对接](../notes/11-observability/11.4-infra/11.4.2.nginx.md)
@@ -269,7 +325,9 @@
 
 
 
-### 11.5 能力锚点（阶段 11）
+<a id="115-能力锚点阶段-11"></a>
+
+### 11.5 阶段验收：错误监控、日志指标与灰度发布
 
 - 能为所负责产品建立 **错误监控 + Web Vitals** 闭环，选择适合的采集工具并验证隐私和告警
 - 能设计并文档化 **灰度 + 回滚** 流程

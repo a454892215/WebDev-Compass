@@ -1,17 +1,23 @@
-# 阶段 12–14：平台层
+<a id="阶段-1214平台层"></a>
 
-> 测试与设计系统 · 平台化工程 · BFF / Node / Edge  
+# 阶段 12–14：自动化测试、组件库、多包发布与 BFF
+
+> 测试与 Storybook · pnpm 多包发布 · Node/Nitro 与 BFF\
 > [← 04-architecture](./04-architecture-stages-8-11.md) · [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./06-delivery-stages-15-appendix.md)
 
 ---
 
-## 阶段 12：测试策略与设计系统
+<a id="阶段-12测试策略与设计系统"></a>
+
+## 阶段 12：自动化测试、Storybook 与 Vue 组件库
 
 > 阶段 12–14 是质量深化、团队平台和服务端协作分支，不要求每个项目依次建设一整套平台。先完成阶段 3 的基础测试和阶段 6–7 的产品验收；组件库、Monorepo、GraphQL、BFF 与 Edge 按复用规模、职责和业务需要选择。详见[学习主线](../docs/LEARNING_PATH.md)。
 
 
 
-### 12.1 测试策略体系
+<a id="121-测试策略体系"></a>
+
+### 12.1 测试范围、契约、视觉与 SSR 隔离回归
 
 - [ ] [12.1.1 编写团队 **测试策略文档**：测什么、不测什么、覆盖率预期](../notes/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1.md)
 - [ ] [12.1.2 **测试组合与风险覆盖**：按组件、契约和关键旅程选层级，不把固定比例或覆盖率当唯一目标](../notes/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2.md)
@@ -24,7 +30,9 @@
 
 
 
-### 12.2 专项测试
+<a id="122-专项测试"></a>
+
+### 12.2 无障碍、性能、国际化与跨浏览器测试
 
 - [ ] [12.2.1 **a11y 测试流程**：axe 自动化 + 键盘走查 + 屏幕阅读器验收](../notes/12-testing-design-system/12.2-specialized-testing/12.2.1.a11y.md)
 - [ ] [12.2.2 **性能回归测试**：Lighthouse CI、bundle diff](../notes/12-testing-design-system/12.2-specialized-testing/12.2.2.item-12-2-2.md)
@@ -33,7 +41,9 @@
 
 
 
-### 12.3 设计系统架构
+<a id="123-设计系统架构"></a>
+
+### 12.3 Design Tokens、Storybook 与组件规范
 
 - [ ] [12.3.1 **Design Token** 体系：Color、Spacing、Typography、Radius、Shadow](../notes/12-testing-design-system/12.3-design-system/12.3.1.design-token.md)
 - [ ] [12.3.2 **Style Dictionary / Tokens Studio** 工作流：Figma → Code](../notes/12-testing-design-system/12.3-design-system/12.3.2.style-dictionary-tokens-studio.md)
@@ -45,7 +55,9 @@
 
 
 
-### 12.4 组件库工程
+<a id="124-组件库工程"></a>
+
+### 12.4 Vue 组件库打包、依赖与版本发布
 
 - [ ] [12.4.1 **Tree-shaking** 友好的导出结构](../notes/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking.md)
 - [ ] [12.4.2 **Peer Dependencies** 管理：Vue/Nuxt 兼容范围、避免多份框架运行时；React 单例为对照](../notes/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies.md)
@@ -55,7 +67,9 @@
 
 
 
-### 12.5 能力锚点（阶段 12）
+<a id="125-能力锚点阶段-12"></a>
+
+### 12.5 阶段验收：自动化测试、Storybook 与 Vue 组件库
 
 - 能为负责的应用选择 **测试策略与组件文档**，以关键故障和使用场景验证效果
 - 存在跨页面/团队复用需求时，能设计并验证 **Design Token** 从设计到代码的同步机制
@@ -64,11 +78,15 @@
 
 
 
-## 阶段 13：平台化工程
+<a id="阶段-13平台化工程"></a>
+
+## 阶段 13：pnpm 多包管理、版本发布与 CI 流水线
 
 
 
-### 13.1 Monorepo 深入
+<a id="131-monorepo-深入"></a>
+
+### 13.1 pnpm workspace 与多应用/多包组织
 
 - [ ] [13.1.1 **Turborepo / Nx** 选型与 task pipeline](../notes/13-platform/13.1-monorepo/13.1.1.turborepo-nx.md)
 - [ ] [13.1.2 **依赖图** 分析与 affected 构建](../notes/13-platform/13.1-monorepo/13.1.2.item-13-1-2.md)
@@ -79,7 +97,9 @@
 
 
 
-### 13.2 发布与依赖治理
+<a id="132-发布与依赖治理"></a>
+
+### 13.2 Changesets、依赖升级与版本兼容
 
 - [ ] [13.2.1 **Changesets** 或 **semantic-release** 自动化版本](../notes/13-platform/13.2-release-deps/13.2.1.changesets.md)
 - [ ] [13.2.2 **内部 npm 包** 发布：Verdaccio / Artifactory / GitHub Packages](../notes/13-platform/13.2-release-deps/13.2.2.npm.md)
@@ -89,7 +109,9 @@
 
 
 
-### 13.3 构建系统进阶
+<a id="133-构建系统进阶"></a>
+
+### 13.3 构建缓存、任务编排与包体分析
 
 - [ ] [13.3.1 **Module Federation** 生产踩坑与调试](../notes/13-platform/13.3-build-advanced/13.3.1.module-federation.md)
 - [ ] [13.3.2 **Custom Webpack / Vite Plugin** 开发基础](../notes/13-platform/13.3-build-advanced/13.3.2.custom-webpack-vite-plugin.md)
@@ -99,7 +121,9 @@
 
 
 
-### 13.4 浏览器兼容与渐进增强
+<a id="134-浏览器兼容与渐进增强"></a>
+
+### 13.4 浏览器支持矩阵、Polyfill 与降级
 
 - [ ] [13.4.1 **Browserslist** 策略与 `@vitejs/plugin-legacy`](../notes/13-platform/13.4-browser-compat/13.4.1.browserslist.md)
 - [ ] [13.4.2 **Polyfill** 按需：原生支持、转译边界、可信来源与供应链风险，避免未经审计的远程注入](../notes/13-platform/13.4-browser-compat/13.4.2.polyfill.md)
@@ -111,7 +135,9 @@
 
 
 
-### 13.5 开发者体验（DX）
+<a id="135-开发者体验dx"></a>
+
+### 13.5 CLI、编辑器与本地开发流程
 
 - [ ] [13.5.1 **eslint-config** 组织级共享与版本发布](../notes/13-platform/13.5-dx/13.5.1.eslint-config.md)
 - [ ] [13.5.2 **自定义 ESLint 规则** 强制执行架构约束](../notes/13-platform/13.5-dx/13.5.2.eslint.md)
@@ -121,7 +147,9 @@
 
 
 
-### 13.6 能力锚点（阶段 13）
+<a id="136-能力锚点阶段-13"></a>
+
+### 13.6 阶段验收：pnpm 多包管理、版本发布与 CI 流水线
 
 - 有多包需求时能维护 **Monorepo** 与统一检查；否则能解释独立仓库和版本包复用的取舍
 - 能输出 **Support Matrix 与能力回退策略**，说明哪些能力原生使用、需降级或不支持，不默认增加 polyfill
@@ -130,13 +158,17 @@
 
 
 
-## 阶段 14：BFF / Node / Edge 运行时
+<a id="阶段-14bff--node--edge-运行时"></a>
+
+## 阶段 14：Node.js、Nuxt Nitro 与 BFF 接口开发
 
 > 使用 SSR、承担 BFF 或服务端协作职责时学习本分支。SPA/静态托管项目不必先实现中间层；选择 Nuxt 时先掌握 Nitro 的请求、状态、配置与部署边界，再按需深入其他服务框架。
 
 
 
-### 14.1 Node.js 运行时
+<a id="141-nodejs-运行时"></a>
+
+### 14.1 Node.js 事件循环、Stream 与进程
 
 - [ ] [14.1.1 **Node Event Loop** 与浏览器差异：phases、microtask、`process.nextTick`](../notes/14-bff-runtime/14.1-node-runtime/14.1.1.node-event-loop.md)
 - [ ] [14.1.2 **Stream** 与背压（Backpressure）](../notes/14-bff-runtime/14.1-node-runtime/14.1.2.stream.md)
@@ -146,7 +178,9 @@
 
 
 
-### 14.2 BFF 实现
+<a id="142-bff-实现"></a>
+
+### 14.2 独立 BFF 的接口聚合、鉴权与限流
 
 - [ ] [14.2.1 **服务端路由与中间件**：Nuxt/Nitro 为主例；Fastify/Hono/Express 按独立 BFF 需求选修](../notes/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express.md)
 - [ ] [14.2.2 **请求聚合**：并行 vs 串行、超时与 Partial Failure](../notes/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2.md)
@@ -157,7 +191,9 @@
 
 
 
-### 14.3 SSR 框架运行时
+<a id="143-ssr-框架运行时"></a>
+
+### 14.3 Nuxt Nitro 的 SSR、请求隔离与错误处理
 
 - [ ] [14.3.1 **Next.js App Router** 深入——React/Next.js 分支选修，覆盖 Server Components 与服务端路由边界](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router.md)
 - [ ] [14.3.2 **Nuxt Nitro** 运行时：请求生命周期、每请求上下文、配置与服务器路由；避免跨用户共享状态](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro.md)
@@ -167,7 +203,9 @@
 
 
 
-### 14.4 Edge Runtime
+<a id="144-edge-runtime"></a>
+
+### 14.4 Edge 部署、API 限制与缓存（选修）
 
 - [ ] [14.4.1 **Edge vs Node**：平台与兼容模式决定 Node API 支持范围；核对冷启动、CPU/内存配额和持久化限制](../notes/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node.md)
 - [ ] [14.4.2 **Vercel Edge Functions / Cloudflare Workers** 使用场景](../notes/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers.md)
@@ -177,7 +215,9 @@
 
 
 
-### 14.5 数据层协作
+<a id="145-数据层协作"></a>
+
+### 14.5 GraphQL、Redis 与数据层协作（按需）
 
 - [ ] [14.5.1 **GraphQL** 深入：Schema Stitching、N+1、DataLoader、Persisted Queries](../notes/14-bff-runtime/14.5-data-layer/14.5.1.graphql.md)
 - [ ] [14.5.2 **Apollo Client / urql** 缓存策略与 SSR](../notes/14-bff-runtime/14.5-data-layer/14.5.2.apollo-client-urql.md)
@@ -187,7 +227,9 @@
 
 
 
-### 14.6 文件与上传
+<a id="146-文件与上传"></a>
+
+### 14.6 分片上传、预签名 URL 与文件校验
 
 - [ ] [14.6.1 **分片上传**、断点续传、并发控制](../notes/14-bff-runtime/14.6-file-upload/14.6.1.item-14-6-1.md)
 - [ ] [14.6.2 **预签名 URL** 直传 OSS / S3](../notes/14-bff-runtime/14.6-file-upload/14.6.2.url.md)
@@ -195,7 +237,9 @@
 
 
 
-### 14.7 能力锚点（阶段 14）
+<a id="147-能力锚点阶段-14"></a>
+
+### 14.7 阶段验收：Node.js、Nuxt Nitro 与 BFF 接口开发
 
 - 承担 BFF 职责时，能实现 **鉴权 + 接口聚合** 并验证超时、错误和多用户隔离；不需要时能说明直连方案
 - 能解释 **Edge vs Origin** 渲染对数据一致性的影响

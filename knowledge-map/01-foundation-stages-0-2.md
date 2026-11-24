@@ -1,17 +1,23 @@
-# 阶段 0–2：基础层
+<a id="阶段-02基础层"></a>
 
-> 环境与心智模型 · Web 基础三件套 · JavaScript 与浏览器  
+# 阶段 0–2：HTML/CSS/JavaScript 与浏览器基础
+
+> Web 环境与 HTTP · 原生页面与交互 · 浏览器渲染与存储\
 > [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./02-engineering-stages-3-5.md)
 
 ---
 
-## 阶段 0：环境与心智模型
+<a id="阶段-0环境与心智模型"></a>
+
+## 阶段 0：Web 开发环境、浏览器与 HTTP 基础
 
 > 主线前置：已有编程经验即可。产出：能解释一次浏览器请求并用 DevTools 定位问题。网络版本、工具命令按需查阅；不要求同时掌握所有包管理器。
 
 
 
-### 0.1 Web 应用是什么
+<a id="01-web-应用是什么"></a>
+
+### 0.1 Web 页面、浏览器与服务器如何协作
 
 > 📖 本章笔记：[notes/00-environment/0.1-what-is-web-app/](../notes/00-environment/0.1-what-is-web-app/README.md)
 
@@ -23,7 +29,9 @@
 
 
 
-### 0.2 开发环境
+<a id="02-开发环境"></a>
+
+### 0.2 Node.js、包管理器、编辑器与 DevTools
 
 - [x] [0.2.1 安装与配置：**Node.js**、**npm / yarn / pnpm**](../notes/00-environment/0.2-dev-environment/0.2.1.node.js.md)
 - [x] [0.2.2 熟练使用 **VS Code / Cursor** 及 Web 相关插件（ESLint、Prettier、Live Server 等）](../notes/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md)
@@ -33,7 +41,9 @@
 
 
 
-### 0.3 网络基础（Web 开发者必备）
+<a id="03-网络基础web-开发者必备"></a>
+
+### 0.3 URL、HTTP、Cookie、DNS 与 WebSocket
 
 > 📖 本章笔记：[notes/00-environment/0.3-network-basics/](../notes/00-environment/0.3-network-basics/README.md)
 
@@ -52,7 +62,9 @@
 
 
 
-## 阶段 1：Web 基础三件套
+<a id="阶段-1web-基础三件套"></a>
+
+## 阶段 1：HTML、CSS 与 JavaScript 页面开发
 
 > 主线前置：阶段 0 的浏览器/请求心智模型。顺序：1.1 语义与表单 → 1.2 布局 → 1.3 交互，1.4 质量要求贯穿练习。产出与验收见[学习主线](../docs/LEARNING_PATH.md)。
 
@@ -246,7 +258,9 @@ Canvas、SVG 脚本和 template/slot 的实现可在 1.3 后回读；只观察�
 
 
 
-### 1.4 基础质量与产品体验（贯穿 1.1–1.3）
+<a id="14-基础质量与产品体验贯穿-1113"></a>
+
+### 1.4 兼容、无障碍、设计稿与失败体验（贯穿 1.1–1.3）
 
 本节从第一张页面起应用，不等到读完 JavaScript 再补质量。阶段 6 深化审计与安全，阶段 12/13 深化测试及兼容治理。
 
@@ -257,13 +271,17 @@ Canvas、SVG 脚本和 template/slot 的实现可在 1.3 后回读；只观察�
 
 ---
 
-## 阶段 2：JavaScript 深入与浏览器原理
+<a id="阶段-2javascript-深入与浏览器原理"></a>
+
+## 阶段 2：JavaScript 异步、浏览器渲染与存储
 
 > 主线先掌握事件循环、资源清理、渲染、HTTP 缓存和存储边界；掌握这些即可进入阶段 3。生成器、模块史、特殊 Web API 可按需回读，不作为首个 Nuxt 应用的全部前置。
 
 
 
-### 2.1 JavaScript 进阶
+<a id="21-javascript-进阶"></a>
+
+### 2.1 原型、this、事件循环与资源清理
 
 - [ ] [2.1.1 **原型链**：`prototype`、`__proto__`、`Object.create`](../notes/02-javascript-browser/2.1-js-advanced/2.1.1.item-2-1-1.md)
 - [ ] [2.1.2 `this` 详解：默认绑定、隐式绑定、显式绑定（`call/apply/bind`）、`new` 绑定、箭头函数](../notes/02-javascript-browser/2.1-js-advanced/2.1.2.this.md)
@@ -279,7 +297,9 @@ Canvas、SVG 脚本和 template/slot 的实现可在 1.3 后回读；只观察�
 
 
 
-### 2.2 浏览器原理
+<a id="22-浏览器原理"></a>
+
+### 2.2 浏览器进程、渲染流水线与 HTTP 缓存
 
 - [ ] [2.2.1 浏览器多进程架构（主进程、渲染进程、GPU 进程等）概览](../notes/02-javascript-browser/2.2-browser-internals/2.2.1.gpu.md)
 - [ ] [2.2.2 **渲染流水线**：HTML 解析 → DOM 树、CSS 解析 → CSSOM → 渲染树 → 布局（Layout/Reflow）→ 绘制（Paint）→ 合成（Composite）](../notes/02-javascript-browser/2.2-browser-internals/2.2.2.item-2-2-2.md)
@@ -293,7 +313,9 @@ Canvas、SVG 脚本和 template/slot 的实现可在 1.3 后回读；只观察�
 
 
 
-### 2.3 浏览器存储
+<a id="23-浏览器存储"></a>
+
+### 2.3 Cookie、Web Storage 与 IndexedDB
 
 - [ ] [2.3.1 `localStorage` / `sessionStorage` API 与限制](../notes/02-javascript-browser/2.3-browser-storage/2.3.1.localstorage.md)
 - [ ] [2.3.2 **Cookie**：属性（`HttpOnly`、`Secure`、`SameSite`、`Domain`、`Path`、`Max-Age`）](../notes/02-javascript-browser/2.3-browser-storage/2.3.2.cookie.md)

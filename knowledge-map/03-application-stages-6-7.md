@@ -1,17 +1,23 @@
-# 阶段 6–7：应用层
+<a id="阶段-67应用层"></a>
 
-> 性能、安全与可访问性 · 首次交付与渲染部署
+# 阶段 6–7：页面质量检查与 Nuxt 部署
+
+> 性能、安全、无障碍与 SEO · Nuxt 构建、部署与回滚\
 > [← 02-engineering](./02-engineering-stages-3-5.md) · [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./04-architecture-stages-8-11.md)
 
 ---
 
-## 阶段 6：性能、安全与可访问性
+<a id="阶段-6性能安全与可访问性"></a>
+
+## 阶段 6：页面性能、Web 安全、无障碍与 SEO
 
 > 前置：已有可运行并接入明确数据契约的应用。这里深化基础阶段已接触的语义、键盘、安全和兼容要求，不是首次引入这些要求。产出：性能测量与安全/可访问性改进记录。验收：能复现问题、说明取舍、比较改进前后证据；自动化检测不等于完整安全或无障碍验收。见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
-### 6.1 性能优化
+<a id="61-性能优化"></a>
+
+### 6.1 LCP/INP/CLS、资源加载与交互性能
 
 
 
@@ -47,7 +53,9 @@
 
 
 
-### 6.2 Web 安全
+<a id="62-web-安全"></a>
+
+### 6.2 XSS、CSRF、依赖和敏感数据防护
 
 - [ ] [6.2.1 **XSS（跨站脚本）**：存储型、反射型、DOM 型；安全输出、净化与 CSP；HttpOnly 限制会话读取，不阻止脚本执行](../notes/06-performance-security/6.2-web-security/6.2.1.xss.md)
 - [ ] [6.2.2 **CSRF（跨站请求伪造）**：Token 验证、SameSite Cookie](../notes/06-performance-security/6.2-web-security/6.2.2.csrf.md)
@@ -59,7 +67,9 @@
 
 
 
-### 6.3 可访问性（a11y）
+<a id="63-可访问性a11y"></a>
+
+### 6.3 键盘、焦点、ARIA 与无障碍验收
 
 - [ ] [6.3.1 WCAG 基本等级（A / AA）概念](../notes/06-performance-security/6.3-a11y/6.3.1.wcag-a-aa.md)
 - [ ] [6.3.2 语义化 HTML 与屏幕阅读器](../notes/06-performance-security/6.3-a11y/6.3.2.html.md)
@@ -71,7 +81,9 @@
 
 
 
-### 6.4 国际化（i18n）
+<a id="64-国际化i18n"></a>
+
+### 6.4 vue-i18n/Nuxt 多语言、日期与数字格式
 
 - [ ] [6.4.1 多语言文案管理方案](../notes/06-performance-security/6.4-i18n/6.4.1.item-6-4-1.md)
 - [ ] [6.4.2 **vue-i18n** 与 Nuxt 国际化接入基础；i18next 随 React 分支选学](../notes/06-performance-security/6.4-i18n/6.4.2.i18next.md)
@@ -80,7 +92,9 @@
 
 
 
-### 6.5 SEO（搜索引擎优化）
+<a id="65-seo搜索引擎优化"></a>
+
+### 6.5 页面元信息、结构化数据与搜索抓取
 
 - [ ] [6.5.1 爬虫工作原理与 SPA 的 SEO 挑战](../notes/06-performance-security/6.5-seo/6.5.1.spa-seo.md)
 - [ ] [6.5.2 语义化 HTML、合理标题层级](../notes/06-performance-security/6.5-seo/6.5.2.html.md)
@@ -94,13 +108,17 @@
 
 
 
-## 阶段 7：首次交付与渲染部署
+<a id="阶段-7首次交付与渲染部署"></a>
+
+## 阶段 7：Nuxt 渲染、构建部署与发布回滚
 
 > 前置：框架、API 和基础质量检查已连通。产出：明确 CSR/静态或 SSR profile 的可部署应用、部署说明与恢复方案。验收：生产构建、深链刷新、配置公开边界、错误页及基本回滚可实际演示；SSR 另验证用户状态与缓存隔离。7.3 为业务选修，不阻塞首次交付。见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
-### 7.1 构建与部署
+<a id="71-构建与部署"></a>
+
+### 7.1 静态/Node 构建、Nginx、CI 与部署
 
 - [ ] [7.1.1 生产构建产物分析：Vite `dist`、Nuxt `.output`、资源哈希与部署 profile](../notes/07-deployment/7.1-build-deploy/7.1.1.dist.md)
 - [ ] [7.1.2 静态资源托管：**Vercel**、**Netlify**、**GitHub Pages**、**Cloudflare Pages**](../notes/07-deployment/7.1-build-deploy/7.1.2.vercel.md)
@@ -112,7 +130,9 @@
 
 
 
-### 7.2 生产渲染、缓存与部署
+<a id="72-生产渲染缓存与部署"></a>
+
+### 7.2 Nuxt CSR/SSR/SSG、缓存与部署验证
 
 Nuxt 的目录、数据生命周期、状态与 hydration 基础先学 4.5。本节聚焦生产 profile、部署环境和缓存/身份边界，不要求重学一套 Nuxt；Next.js 是 React 选修路径。
 
@@ -124,7 +144,9 @@ Nuxt 的目录、数据生命周期、状态与 hydration 基础先学 4.5。本
 
 
 
-### 7.3 业务选修主题（不阻塞首次交付）
+<a id="73-业务选修主题不阻塞首次交付"></a>
+
+### 7.3 桌面壳、可视化与特定 Web 技术（选修）
 
 - [ ] [7.3.1 **微前端** 架构概念（Module Federation 等）](../notes/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1.md)
 - [ ] [7.3.2 **Web Components**：Custom Elements、Shadow DOM](../notes/07-deployment/7.3-advanced-preview/7.3.2.web-components.md)
@@ -138,7 +160,9 @@ Nuxt 的目录、数据生命周期、状态与 hydration 基础先学 4.5。本
 
 
 
-### 7.4 软技能与工程实践
+<a id="74-软技能与工程实践"></a>
+
+### 7.4 需求拆分、代码评审与交付文档
 
 - [ ] [7.4.1 阅读官方文档与 RFC 的能力](../notes/07-deployment/7.4-soft-skills/7.4.1.rfc.md)
 - [ ] [7.4.2 需求分析与技术方案简述](../notes/07-deployment/7.4-soft-skills/7.4.2.item-7-4-2.md)

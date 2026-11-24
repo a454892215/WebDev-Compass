@@ -1,17 +1,23 @@
-# 阶段 3–5：工程层
+<a id="阶段-35工程层"></a>
 
-> 工程化与 TypeScript · Vue 3 + Nuxt 应用开发 · 全栈协作与认证\
+# 阶段 3–5：TypeScript、Vue/Nuxt 与 API 认证
+
+> TypeScript 与构建测试 · Vue 3 + Nuxt · API、登录与授权\
 > [← 01-foundation](./01-foundation-stages-0-2.md) · [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./03-application-stages-6-7.md)
 
 ---
 
-## 阶段 3：工程化与 TypeScript
+<a id="阶段-3工程化与-typescript"></a>
+
+## 阶段 3：TypeScript、Vite、代码检查与测试
 
 > 前置：已能编写基础 HTML/CSS/JavaScript，并理解模块和异步请求。产出：可运行、可构建的 TypeScript 小工程。验收：依赖与锁文件可复现，类型/格式/必要单元测试能独立运行；默认用 pnpm 与 Vite/Nuxt 工具链；npm 用于理解通用命令与初始化入口，Yarn/Webpack 只作按需对照，不要求精通全部工具。学习顺序及选修规则见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
-### 3.1 包管理与项目结构
+<a id="31-包管理与项目结构"></a>
+
+### 3.1 package.json、pnpm、锁文件与项目目录
 
 - [ ] [3.1.1 `package.json`：dependencies vs devDependencies、`scripts`、`engines`](../notes/03-engineering/3.1-package-management/3.1.1.package.json.md)
 - [ ] [3.1.2 **npm / yarn / pnpm** 常用命令：install、run、publish、workspace](../notes/03-engineering/3.1-package-management/3.1.2.npm-yarn-pnpm.md)
@@ -22,7 +28,9 @@
 
 
 
-### 3.2 构建工具
+<a id="32-构建工具"></a>
+
+### 3.2 Vite 开发服务器与生产构建（Webpack 选读）
 
 - [ ] [3.2.1 为什么需要构建工具：模块化、转译、打包、压缩、HMR](../notes/03-engineering/3.2-build-tools/3.2.1.hmr.md)
 - [ ] [3.2.2 **Vite**：项目创建、配置、`index.html` 入口、环境变量（`.env`）](../notes/03-engineering/3.2-build-tools/3.2.2.vite.md)
@@ -34,7 +42,9 @@
 
 
 
-### 3.3 TypeScript
+<a id="33-typescript"></a>
+
+### 3.3 TypeScript 类型、泛型与 tsconfig
 
 - [ ] [3.3.1 为什么使用 TypeScript：类型安全、IDE 支持、可维护性](../notes/03-engineering/3.3-typescript/3.3.1.typescript-ide.md)
 - [ ] [3.3.2 基础类型：`string`、`number`、`boolean`、`array`、`tuple`、`enum`、`any`、`unknown`、`void`、`never`](../notes/03-engineering/3.3-typescript/3.3.2.string.md)
@@ -51,7 +61,9 @@
 
 
 
-### 3.4 代码质量
+<a id="34-代码质量"></a>
+
+### 3.4 ESLint、Prettier 与 Git 提交检查
 
 - [ ] [3.4.1 **ESLint**：规则配置、`eslint-config`、与编辑器集成](../notes/03-engineering/3.4-code-quality/3.4.1.eslint.md)
 - [ ] [3.4.2 **Prettier**：格式化与 ESLint 协作](../notes/03-engineering/3.4-code-quality/3.4.2.prettier.md)
@@ -62,7 +74,9 @@
 
 
 
-### 3.5 测试基础
+<a id="35-测试基础"></a>
+
+### 3.5 Vitest、Vue Test Utils 与 Playwright 入门
 
 - [ ] [3.5.1 测试金字塔：单元测试、集成测试、E2E 测试](../notes/03-engineering/3.5-testing-basics/3.5.1.e2e.md)
 - [ ] [3.5.2 **Vitest**：基本断言、`describe`/`it`、mock 函数；Jest 作为按需对照](../notes/03-engineering/3.5-testing-basics/3.5.2.vitest.md)
@@ -80,7 +94,9 @@
 
 
 
-### 4.1 前端框架共通概念
+<a id="41-前端框架共通概念"></a>
+
+### 4.1 组件、数据流、响应式与客户端路由
 
 - [ ] [4.1.1 声明式 UI vs 命令式 UI](../notes/04-frameworks/4.1-framework-concepts/4.1.1.ui-vs-ui.md)
 - [ ] [4.1.2 组件化：组合、复用、单向数据流](../notes/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2.md)
@@ -92,7 +108,9 @@
 
 
 
-### 4.2 React 生态（选修，不阻塞 Vue/Nuxt 主线）
+<a id="42-react-生态选修不阻塞-vuenuxt-主线"></a>
+
+### 4.2 React、React Router 与 Next.js（选修）
 
 
 
@@ -142,7 +160,9 @@
 
 
 
-### 4.3 Vue 生态
+<a id="43-vue-生态"></a>
+
+### 4.3 Vue 3：组合式 API、Vue Router 与 Pinia
 
 
 
@@ -173,7 +193,9 @@
 
 
 
-### 4.4 CSS 框架与 UI 体系
+<a id="44-css-框架与-ui-体系"></a>
+
+### 4.4 Tailwind CSS、Nuxt UI/Vant 与主题样式
 
 - [ ] [4.4.1 **Tailwind CSS**：工具类、配置、响应式前缀、暗色模式](../notes/04-frameworks/4.4-css-ui/4.4.1.tailwind-css.md)
 - [ ] [4.4.2 设计系统概念：颜色、间距、字体、组件规范](../notes/04-frameworks/4.4-css-ui/4.4.2.item-4-4-2.md)
@@ -184,7 +206,9 @@
 
 
 
-### 4.5 Nuxt 应用开发主线
+<a id="45-nuxt-应用开发主线"></a>
+
+### 4.5 Nuxt：路由布局、SSR 数据、配置与 Nitro
 
 先完成 4.3 Vue 基础，再用本节组织完整应用；7.2 深化生产渲染与部署，不在这里重复编写同一套教程。Nuxt 可以按需求采用 CSR、SSR 或静态生成，不能把 Nuxt 等同于必须运行 Node 服务。
 
@@ -199,13 +223,17 @@
 
 ---
 
-## 阶段 5：全栈协作与认证
+<a id="阶段-5全栈协作与认证"></a>
+
+## 阶段 5：HTTP API 对接、登录与权限控制
 
 > 前置：能完成阶段 4 的框架小应用。产出：按明确契约对接 API、登录/退出及权限反馈，缺少真实后端时使用注明范围的 mock。验收：响应解码、加载/空/错、取消/迟到响应和认证失效可解释并复现；权限由服务端执行，不把前端隐藏控件当授权。见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
-### 5.1 HTTP 客户端与 API 对接
+<a id="51-http-客户端与-api-对接"></a>
+
+### 5.1 Fetch/Nuxt 请求、取消、上传与错误处理
 
 - [ ] [5.1.1 HTTP 客户端选型：原生 Fetch、Nuxt 数据获取与统一错误边界；Axios 按需](../notes/05-fullstack-auth/5.1-http-client/5.1.1.axios.md)
 - [ ] [5.1.2 请求生命周期：AbortController、超时、迟到响应与加载/空/错/重试状态](../notes/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller.md)
@@ -216,7 +244,9 @@
 
 
 
-### 5.2 认证与授权
+<a id="52-认证与授权"></a>
+
+### 5.2 Cookie/Session、Bearer 登录与服务端授权
 
 - [ ] [5.2.1 **Session + Cookie**：会话流程、Secure/HttpOnly/SameSite 与 CSRF 基础边界](../notes/05-fullstack-auth/5.2-auth/5.2.1.session-cookie.md)
 - [ ] [5.2.2 **JWT（JSON Web Token）**：access token、refresh token、存储位置权衡](../notes/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token.md)
@@ -229,7 +259,9 @@
 
 
 
-### 5.3 跨域与安全传输
+<a id="53-跨域与安全传输"></a>
+
+### 5.3 同源、CORS、开发代理与 HTTPS
 
 - [ ] [5.3.1 同源策略详解](../notes/05-fullstack-auth/5.3-cors/5.3.1.item-5-3-1.md)
 - [ ] [5.3.2 **CORS**：简单请求、预检请求（OPTIONS）、服务端响应头配置](../notes/05-fullstack-auth/5.3-cors/5.3.2.cors.md)
@@ -239,7 +271,9 @@
 
 
 
-### 5.4 数据格式与协议
+<a id="54-数据格式与协议"></a>
+
+### 5.4 JSON 校验、API 分页、错误码与数据契约
 
 - [ ] [5.4.1 JSON 与数据契约：字段约定、unknown 响应的运行期校验及 DTO 映射；TS 类型不校验网络数据](../notes/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs.md)
 - [ ] [5.4.2 分页、排序、筛选的 API 参数设计](../notes/05-fullstack-auth/5.4-data-protocols/5.4.2.api.md)
@@ -250,7 +284,9 @@
 
 
 
-### 5.5 实时通信
+<a id="55-实时通信"></a>
+
+### 5.5 WebSocket、SSE 与断线重连
 
 - [ ] [5.5.1 **WebSocket** 客户端 API：连接、发送、心跳、重连](../notes/05-fullstack-auth/5.5-realtime/5.5.1.websocket.md)
 - [ ] [5.5.2 **Socket.IO** 或原生 WebSocket 封装](../notes/05-fullstack-auth/5.5-realtime/5.5.2.socket.io.md)

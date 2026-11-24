@@ -1,17 +1,23 @@
-# 阶段 15：项目整合与附录
+<a id="阶段-15项目整合与附录"></a>
 
-> 项目整合、治理与交付 · 索引 · 里程碑 · 资源规划  
+# 阶段 15：旧项目迁移、评审与团队交付
+
+> 旧项目迁移与交付协作 · 技术索引 · 产出与验收里程碑\
 > [← 05-platform](./05-platform-stages-12-14.md) · [← 返回总览](../KNOWLEDGE_MAP.md)
 
 ---
 
-## 阶段 15：项目整合、治理与工程管理
+<a id="阶段-15项目整合治理与工程管理"></a>
+
+## 阶段 15：旧项目迁移、代码评审与团队交付
 
 > 本阶段将已选主线用于真实项目交付。团队治理、遗留迁移与平台 API 按项目选修，不要求先经历所有岗位或所有迁移场景。完成度表记录正文覆盖，工程能力以可复核的产品产出、排障与取舍为证据；路线选择见[学习主线](../docs/LEARNING_PATH.md)。
 
 
 
-### 15.1 技术决策与协作
+<a id="151-技术决策与协作"></a>
+
+### 15.1 技术方案评审、RFC 与跨团队决策
 
 - [ ] [15.1.1 **技术选型** 流程：PoC、Spike、评审会、决策记录](../notes/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md)
 - [ ] [15.1.2 **Build vs Buy**：自研组件库 vs 采购 SaaS / 开源方案](../notes/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md)
@@ -21,7 +27,9 @@
 
 
 
-### 15.2 Code Review 与质量文化
+<a id="152-code-review-与质量文化"></a>
+
+### 15.2 代码评审、问题复现与质量检查
 
 - [ ] [15.2.1 **Review 清单**：正确性、边界、性能、安全、a11y、可测试性](../notes/15-project-delivery/15.2-code-review/15.2.1.review.md)
 - [ ] [15.2.2 **Review 规模** 控制与 LGTM 文化](../notes/15-project-delivery/15.2-code-review/15.2.2.review.md)
@@ -30,7 +38,9 @@
 
 
 
-### 15.3 工程管理与团队协作
+<a id="153-工程管理与团队协作"></a>
+
+### 15.3 任务拆分、依赖协调与交付跟踪
 
 - [ ] [15.3.1 **任务拆分与协作分工**：Story 分解、联调节奏、模块 Owner](../notes/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md)
 - [ ] [15.3.2 **Pair Programming / Mob** 在前端场景的运用](../notes/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md)
@@ -40,7 +50,9 @@
 
 
 
-### 15.4 遗留系统与迁移
+<a id="154-遗留系统与迁移"></a>
+
+### 15.4 旧项目迁移、依赖升级与回退
 
 - [ ] [15.4.1 **Strangler Fig** 渐进式替换模式](../notes/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md)
 - [ ] [15.4.2 **jQuery / 老 MPA → React/Vue** 迁移策略](../notes/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md)
@@ -51,7 +63,9 @@
 
 
 
-### 15.5 国际化与无障碍（生产级）
+<a id="155-国际化与无障碍生产级"></a>
+
+### 15.5 多语言、RTL 与无障碍交付验收
 
 - [ ] [15.5.1 **i18n 架构**：namespace 懒加载、ICU MessageFormat、复数与性别](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md)
 - [ ] [15.5.2 **RTL** 生产级：逻辑属性、镜像图标、BiDi 混排](../notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md)
@@ -62,7 +76,9 @@
 
 
 
-### 15.6 Web 平台进阶（按业务选学）
+<a id="156-web-平台进阶按业务选学"></a>
+
+### 15.6 浏览器转场、WebRTC、WebAuthn 与 WebGL（选修）
 
 - [ ] [15.6.1 **View Transitions API** 与 SPA 路由动画](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md)
 - [ ] [15.6.2 **Navigation API**](../notes/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md)
@@ -75,7 +91,9 @@
 
 
 
-### 15.7 能力锚点（阶段 15）
+<a id="157-能力锚点阶段-15"></a>
+
+### 15.7 阶段验收：旧项目迁移、代码评审与团队交付
 
 - 能在所负责项目完成一次 **功能交付或适用的渐进迁移**，保留评审、回归和上线证据
 - 能输出 **交付/迁移方案与回退预案**，解释边界和取舍；跨团队范围按实际职责确认
