@@ -186,15 +186,53 @@ def audit(root: Path) -> dict:
     }
 
 
+def completion_table(root: Path, result: dict) -> str:
+    """Render editorial coverage, independently of learner checkbox state."""
+    titles = {}
+    for source in sorted((root / 'knowledge-map').glob('*.md')):
+        for _, line in visible_lines(source.read_text(encoding='utf-8')):
+            match = re.match(r'^## 阶段 (\d+)[：:]\s*(.+?)\s*$', line)
+            if match:
+                titles[int(match[1])] = match[2].replace('|', r'\|')
+
+    def percentage(authored, total):
+        if not total:
+            return '—'
+        if authored == 0:
+            return '0%'
+        if authored == total:
+            return '100%'
+        return f'{authored / total:.1%}'
+
+    rows = [
+        '| 阶段 | 主题 | 知识点 | 已编写 | 待编写 | 正文完成度 |',
+        '|---|---|---:|---:|---:|---:|',
+    ]
+    stages = {int(stage): counts for stage, counts in result['stages'].items()}
+    for stage in sorted(set(titles) | set(stages)):
+        counts = stages.get(stage, {'points': 0, 'authored': 0})
+        total, authored = counts['points'], counts['authored']
+        rows.append(f"| {stage} | {titles.get(stage, '未命名阶段')} | {total} | {authored} | {total - authored} | {percentage(authored, total)} |")
+    total, authored = result['knowledge_points'], result['authored_points']
+    rows.append(f'| **合计** | | **{total}** | **{authored}** | **{total - authored}** | **{percentage(authored, total)}** |')
+    return '\n'.join(rows)
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parent.parent)
     parser.add_argument('--report', action='store_true', help='Print stage coverage separately from learner checkboxes')
-    parser.add_argument('--json', action='store_true', help='Emit machine-readable results')
+    output = parser.add_mutually_exclusive_group()
+    output.add_argument('--json', action='store_true', help='Emit machine-readable results')
+    output.add_argument('--table', action='store_true', help='Print the Markdown stage completion table from current files')
     parser.add_argument('--max-errors', type=int, default=30)
     args = parser.parse_args(argv)
     result = audit(args.root)
-    if args.json:
+    if args.table:
+        print(completion_table(args.root, result))
+        for error in result['errors']:
+            print(f"{error['file']}:{error['line']}: {error['reason']}: {error['target']}", file=sys.stderr)
+    elif args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
         print(f"Markdown {result['documents']} | local links {result['local_links']} | planned notes {result['planned_notes']} | errors {len(result['errors'])}")

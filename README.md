@@ -32,6 +32,7 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 ```bash
 python3 scripts/check_knowledge.py --report
+python3 scripts/check_knowledge.py --table  # 打印各阶段正文完成度表格
 python3 -m unittest discover -s scripts/tests -v
 ```
 

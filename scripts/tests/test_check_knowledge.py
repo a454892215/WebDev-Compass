@@ -1,5 +1,7 @@
 """Regression tests for navigation parsing and planned-content boundaries."""
 import importlib.util
+from contextlib import redirect_stdout, redirect_stderr
+from io import StringIO
 from pathlib import Path
 import sys
 import tempfile
@@ -93,6 +95,33 @@ class KnowledgeAuditTests(unittest.TestCase):
         self.write('knowledge-map/04-test.md', '- [ ] [8.1.1](../notes/08-topic/8.1.1.future.md)\n')
         r = module.audit(self.root)
         self.assertEqual((r['knowledge_points'], r['planned_notes'], len(r['errors'])), (1, 1, 0))
+
+    def test_completion_table_updates_from_files_not_learner_checks(self):
+        self.write('knowledge-map/01-test.md', '## 阶段 1：HTML\n- [ ] [1.1.1](../notes/01-topic/1.1.1.one.md)\n- [ ] [1.1.2](../notes/01-topic/1.1.2.two.md)\n## 阶段 2：浏览器\n- [ ] [2.1.1](../notes/02-topic/2.1.1.three.md)\n')
+        self.write('notes/01-topic/1.1.1.one.md', '# One\n')
+        first = module.completion_table(self.root, module.audit(self.root))
+        self.assertIn('| 1 | HTML | 2 | 1 | 1 | 50.0% |', first)
+        self.assertIn('| 2 | 浏览器 | 1 | 0 | 1 | 0% |', first)
+        self.assertIn('**33.3%**', first)
+        self.write('notes/01-topic/1.1.2.two.md', '# Two\n')
+        second = module.completion_table(self.root, module.audit(self.root))
+        self.assertIn('| 1 | HTML | 2 | 2 | 0 | 100% |', second)
+        self.assertIn('**66.7%**', second)
+
+    def test_completion_table_empty_stage_has_no_division_by_zero(self):
+        self.write('knowledge-map/01-test.md', '## 阶段 0：空阶段\n')
+        table = module.completion_table(self.root, module.audit(self.root))
+        self.assertIn('| 0 | 空阶段 | 0 | 0 | 0 | — |', table)
+        self.assertIn('| **合计** | | **0** | **0** | **0** | **—** |', table)
+
+    def test_table_cli_reports_broken_links_instead_of_silent_success(self):
+        self.write('README.md', '[Broken](missing.md)\n')
+        stdout, stderr = StringIO(), StringIO()
+        with redirect_stdout(stdout), redirect_stderr(stderr):
+            code = module.main(['--root', str(self.root), '--table'])
+        self.assertEqual(code, 1)
+        self.assertIn('| 阶段 | 主题 |', stdout.getvalue())
+        self.assertIn('missing file: missing.md', stderr.getvalue())
 
 
 if __name__ == '__main__':
