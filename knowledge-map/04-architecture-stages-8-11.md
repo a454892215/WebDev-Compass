@@ -7,6 +7,8 @@
 
 ## 阶段 8：前端架构与系统设计
 
+> 阶段 8–11 用于在首个产品交付之后深化架构与生产治理，不是第一次写页面的前置门槛。按实际风险选择专题：微前端、复杂插件系统、CRDT/CQRS 和 Edge 渲染只在业务需要时学习。通用原理以 Vue/Nuxt 为主例，React/Next.js 作为对照选修。先修关系与验收方式见[学习主线](../docs/LEARNING_PATH.md)。
+
 
 
 ### 8.1 架构思维与文档
@@ -22,7 +24,7 @@
 
 ### 8.2 应用架构模式
 
-- [ ] [8.2.1 **Feature-Sliced Design (FSD)**：app / pages / widgets / features / entities / shared](../notes/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md)
+- [ ] [8.2.1 **Feature-Sliced Design (FSD)**：一种可选业务域划分方式；与 Vue/Nuxt 约定目录协调，避免机械套层](../notes/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md)
 - [ ] [8.2.2 **分层架构**：Presentation → Application → Domain → Infrastructure](../notes/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md)
 - [ ] [8.2.3 **Container / Presentation** 组件分离在大型项目中的演进](../notes/08-architecture/8.2-app-architecture/8.2.3.container-presentation.md)
 - [ ] [8.2.4 **模块化路由**：按路由拆包 vs 按功能域拆包的权衡](../notes/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4.md)
@@ -34,10 +36,10 @@
 ### 8.3 渲染架构选型
 
 - [ ] [8.3.1 **CSR / SSR / SSG / ISR / Streaming SSR** 深度对比：TTFB、FCP、SEO、成本、复杂度](../notes/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming.md)
-- [ ] [8.3.2 **React Server Components (RSC)** 与 Server Actions 概念与边界](../notes/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc.md)
+- [ ] [8.3.2 **React Server Components (RSC)** 与 Server Actions 概念与边界——React/Next.js 分支选修](../notes/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc.md)
 - [ ] [8.3.3 **Partial Hydration / Selective Hydration** 与 Islands 架构（Astro 思路）](../notes/08-architecture/8.3-rendering/8.3.3.partial-hydration-selective-hydration.md)
 - [ ] [8.3.4 **水合（Hydration）** 不匹配：成因、检测、修复策略](../notes/08-architecture/8.3-rendering/8.3.4.hydration.md)
-- [ ] [8.3.5 **同构代码** 规范：浏览器 API 守卫、环境分支、动态 import](../notes/08-architecture/8.3-rendering/8.3.5.item-8-3-5.md)
+- [ ] [8.3.5 **同构代码** 规范：浏览器 API 守卫、每请求状态与凭据隔离、序列化和公开 payload 边界](../notes/08-architecture/8.3-rendering/8.3.5.item-8-3-5.md)
 - [ ] [8.3.6 **Edge SSR** vs **Origin SSR**：延迟、缓存、数据一致性](../notes/08-architecture/8.3-rendering/8.3.6.edge-ssr.md)
 - [ ] [8.3.7 输出 **渲染架构决策树**，能向团队解释选型理由](../notes/08-architecture/8.3-rendering/8.3.7.item-8-3-7.md)
 
@@ -68,13 +70,13 @@
 
 ### 8.6 状态与数据架构
 
-- [ ] [8.6.1 **客户端状态 vs 服务端状态** 边界：何时用 Zustand vs TanStack Query](../notes/08-architecture/8.6-state-data/8.6.1.vs.md)
-- [ ] [8.6.2 **Query Key 规范** 与缓存层级设计（全局命名空间）](../notes/08-architecture/8.6-state-data/8.6.2.query-key.md)
+- [ ] [8.6.1 **客户端状态 vs 服务端状态** 边界：Vue/Nuxt 的局部状态、Pinia、useState 与 useAsyncData；Query 库按需对照](../notes/08-architecture/8.6-state-data/8.6.1.vs.md)
+- [ ] [8.6.2 **数据 Key 与缓存层级**：查询身份、用户/租户维度、退出失效与个性化数据隔离；禁止无边界全局共享](../notes/08-architecture/8.6-state-data/8.6.2.query-key.md)
 - [ ] [8.6.3 **Optimistic Update** 冲突检测与回滚策略](../notes/08-architecture/8.6-state-data/8.6.3.optimistic-update.md)
 - [ ] [8.6.4 **Stale-While-Revalidate** 在产品中的用户体验权衡](../notes/08-architecture/8.6-state-data/8.6.4.stale-while-revalidate.md)
 - [ ] [8.6.5 **Offline-first** 架构：IndexedDB、Background Sync、冲突解决思路](../notes/08-architecture/8.6-state-data/8.6.5.offline-first.md)
 - [ ] [8.6.6 **Local-first** 与 CRDT（Yjs、Automerge）基本概念 — 协作场景选学](../notes/08-architecture/8.6-state-data/8.6.6.local-first.md)
-- [ ] [8.6.7 **Event Sourcing / CQRS** 在前端的了解（复杂 B 端）](../notes/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs.md)
+- [ ] [8.6.7 **Event Sourcing / CQRS** 的边界与代价——复杂业务选修，不作为普通状态管理默认方案](../notes/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs.md)
 
 
 
@@ -97,7 +99,7 @@
 - [ ] [9.1.2 **Core Web Vitals** 深度：LCP 元素归因、INP 交互归因、CLS 布局偏移源](../notes/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals.md)
 - [ ] [9.1.3 **web-vitals** 库采集与上报架构](../notes/09-performance/9.1-performance-metrics/9.1.3.web-vitals.md)
 - [ ] [9.1.4 **Performance API**：Navigation Timing、Resource Timing、Long Task API](../notes/09-performance/9.1-performance-metrics/9.1.4.performance-api.md)
-- [ ] [9.1.5 **自定义性能标记**：`performance.mark` / `measure`、React Profiler](../notes/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5.md)
+- [ ] [9.1.5 **自定义性能标记**：`performance.mark` / `measure`、Vue DevTools；React Profiler 为对照选修](../notes/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5.md)
 - [ ] [9.1.6 **性能回归** 检测：CI 中 Lighthouse CI、bundle 体积门禁](../notes/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6.md)
 - [ ] [9.1.7 📱 移动端对照：Web RUM ≈ Firebase Performance / 自建 APM 客户端上报](../notes/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm.md)
 
@@ -109,7 +111,7 @@
 - [ ] [9.2.2 **Bundle 分析**：rollup-plugin-visualizer、webpack-bundle-analyzer、`source-map-explorer`](../notes/09-performance/9.2-performance-budget/9.2.2.bundle.md)
 - [ ] [9.2.3 **CI 门禁**：bundlesize、size-limit、PR 评论机器人](../notes/09-performance/9.2-performance-budget/9.2.3.ci.md)
 - [ ] [9.2.4 **第三方脚本审计** 流程：分类、延迟加载、移除冗余](../notes/09-performance/9.2-performance-budget/9.2.4.item-9-2-4.md)
-- [ ] [9.2.5 **Partytown** 将第三方脚本移至 Web Worker 的思路](../notes/09-performance/9.2-performance-budget/9.2.5.partytown.md)
+- [ ] [9.2.5 **Partytown** 等第三方脚本 Worker 方案——按场景选修，验证兼容、收益与维护成本](../notes/09-performance/9.2-performance-budget/9.2.5.partytown.md)
 
 
 
@@ -118,18 +120,18 @@
 - [ ] [9.3.1 **Critical CSS** 提取与内联策略](../notes/09-performance/9.3-loading-advanced/9.3.1.critical-css.md)
 - [ ] [9.3.2 **字体优化**：`font-display`、subset、preload、FOIT/FOUT 治理](../notes/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2.md)
 - [ ] [9.3.3 **图片管线**：CDN 变换、blur placeholder、LQIP、AVIF/WebP 回退链](../notes/09-performance/9.3-loading-advanced/9.3.3.item-9-3-3.md)
-- [ ] [9.3.4 **Speculation Rules API**、`<link rel="prefetch/prerender">` 产品化](../notes/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api.md)
+- [ ] [9.3.4 **预取/预渲染策略**：Speculation Rules 等按支持矩阵选修，评估流量、隐私与降级](../notes/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api.md)
 - [ ] [9.3.5 **HTTP/3**、Early Hints (103)、103 vs Server Push 历史](../notes/09-performance/9.3-loading-advanced/9.3.5.http.md)
-- [ ] [9.3.6 **Edge 缓存** 与 **CDN 缓存键** 设计（Query String、Cookie Vary）](../notes/09-performance/9.3-loading-advanced/9.3.6.edge.md)
+- [ ] [9.3.6 **Edge/CDN 缓存键**：Query、Cookie、身份与失效边界；验证个性化响应不会跨用户命中](../notes/09-performance/9.3-loading-advanced/9.3.6.edge.md)
 
 
 
 ### 9.4 运行时性能进阶
 
-- [ ] [9.4.1 **Long Task** 分析与拆分：`scheduler.postTask`、React Concurrent Features](../notes/09-performance/9.4-runtime-advanced/9.4.1.long-task.md)
+- [ ] [9.4.1 **Long Task** 分析与拆分：任务分片、Vue 更新批处理；scheduler.postTask 能力检测，React 并发特性为选修](../notes/09-performance/9.4-runtime-advanced/9.4.1.long-task.md)
 - [ ] [9.4.2 **INP 优化**：输入延迟、事件处理器优化、debounce 策略升级](../notes/09-performance/9.4-runtime-advanced/9.4.2.inp.md)
 - [ ] [9.4.3 **内存 profiling**：Heap Snapshot、Detached DOM、SPA 路由切换泄漏](../notes/09-performance/9.4-runtime-advanced/9.4.3.profiling.md)
-- [ ] [9.4.4 **WeakRef / FinalizationRegistry** 在缓存场景的应用](../notes/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry.md)
+- [ ] [9.4.4 **WeakRef / FinalizationRegistry**——高级选修；GC 时机不可依赖，优先显式释放与有界缓存](../notes/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry.md)
 - [ ] [9.4.5 **虚拟列表进阶**：可变高度、滚动回收池、`content-visibility`](../notes/09-performance/9.4-runtime-advanced/9.4.5.item-9-4-5.md)
 - [ ] [9.4.6 **Web Worker** 生产级：任务队列、 transferable objects、Worker 池](../notes/09-performance/9.4-runtime-advanced/9.4.6.web-worker.md)
 - [ ] [9.4.7 **requestIdleCallback** 与低优先级任务调度](../notes/09-performance/9.4-runtime-advanced/9.4.7.requestidlecallback.md)
@@ -138,10 +140,10 @@
 
 ### 9.5 SSR / 流式渲染性能
 
-- [ ] [9.5.1 **Streaming HTML**：`renderToReadableStream`、Suspense 边界](../notes/09-performance/9.5-ssr-streaming/9.5.1.streaming-html.md)
-- [ ] [9.5.2 **选择性水合** 与组件优先级](../notes/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2.md)
+- [ ] [9.5.1 **Streaming HTML**：流式响应、边界与运行环境；以 Nuxt 支持情况验证，React renderToReadableStream 为对照](../notes/09-performance/9.5-ssr-streaming/9.5.1.streaming-html.md)
+- [ ] [9.5.2 **水合成本与组件优先级**：Vue/Nuxt 延迟水合按版本能力验证；React 选择性水合为对照](../notes/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2.md)
 - [ ] [9.5.3 **TTFB vs FCP** 在 SSR 场景的权衡](../notes/09-performance/9.5-ssr-streaming/9.5.3.ttfb-vs-fcp.md)
-- [ ] [9.5.4 **数据预取与水合**：TanStack Query `dehydrate/hydrate`](../notes/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4.md)
+- [ ] [9.5.4 **数据预取与水合**：Nuxt payload/useAsyncData、避免重复请求；Query dehydrate/hydrate 为可选适配](../notes/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4.md)
 - [ ] [9.5.5 **Edge 渲染** 的数据访问限制与缓存策略](../notes/09-performance/9.5-ssr-streaming/9.5.5.edge.md)
 
 
@@ -149,7 +151,7 @@
 ### 9.6 能力锚点（阶段 9）
 
 - 能为项目建立 **性能预算** 并接入 CI
-- 能用 DevTools Memory / Performance 定位一次生产级性能或内存问题
+- 能用 DevTools Memory / Performance 定位一个可复现的性能或内存问题，保留测量与改进证据
 
 ---
 
@@ -185,11 +187,11 @@
 
 - [ ] [10.3.1 **OAuth 2.0 / OIDC** 深入：Authorization Code + **PKCE** 流程](../notes/10-security/10.3-auth-advanced/10.3.1.oauth-oidc.md)
 - [ ] [10.3.2 **Refresh Token** 轮换、Reuse Detection](../notes/10-security/10.3-auth-advanced/10.3.2.refresh-token.md)
-- [ ] [10.3.3 **Token 存储** 权衡：HttpOnly Cookie + BFF vs Memory-only vs Secure Storage](../notes/10-security/10.3-auth-advanced/10.3.3.token.md)
+- [ ] [10.3.3 **Token 存储** 权衡：HttpOnly Cookie + BFF、内存与浏览器存储；原生安全存储仅作边界对照](../notes/10-security/10.3-auth-advanced/10.3.3.token.md)
 - [ ] [10.3.4 **WebAuthn / Passkey** 基本概念](../notes/10-security/10.3-auth-advanced/10.3.4.webauthn-passkey.md)
 - [ ] [10.3.5 **RBAC / ABAC** 在前端的表达能力与 **权限数据** 来源](../notes/10-security/10.3-auth-advanced/10.3.5.rbac-abac.md)
 - [ ] [10.3.6 **JWT** 陷阱：算法混淆、payload 信任、过期与吊销](../notes/10-security/10.3-auth-advanced/10.3.6.jwt.md)
-- [ ] [10.3.7 📱 移动端对照：Web HttpOnly Cookie 会话 ≈ 服务端 Session；RN Keychain ≈ 无 XSS 的本地 Token 存储](../notes/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn.md)
+- [ ] [10.3.7 📱 移动端对照：Web Cookie 会话与原生 Keychain/Keystore 的威胁边界；HttpOnly 不消除 CSRF，安全存储不等于整个应用安全](../notes/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn.md)
 
 
 
@@ -199,24 +201,24 @@
 - [ ] [10.4.2 **Dependabot / Renovate** 策略与 emergency patch 流程](../notes/10-security/10.4-supply-chain/10.4.2.dependabot-renovate.md)
 - [ ] [10.4.3 **SBOM** 概念与 `npm audit`、Socket、Snyk 等工具](../notes/10-security/10.4-supply-chain/10.4.3.sbom.md)
 - [ ] [10.4.4 **Secrets 绝不进前端**：环境变量分层、构建时注入 vs 运行时注入](../notes/10-security/10.4-supply-chain/10.4.4.secrets.md)
-- [ ] [10.4.5 **Source Map** 生产策略：仅上传监控平台、禁止公开访问](../notes/10-security/10.4-supply-chain/10.4.5.source-map.md)
+- [ ] [10.4.5 **Source Map** 生产策略：调试收益、源码暴露与访问控制；按项目选择公开、受限或仅上传监控平台](../notes/10-security/10.4-supply-chain/10.4.5.source-map.md)
 
 
 
 ### 10.5 隐私与合规
 
-- [ ] [10.5.1 **GDPR / 个人信息保护** 对前端的要求：最小采集、 consent、删除权](../notes/10-security/10.5-privacy-compliance/10.5.1.gdpr.md)
-- [ ] [10.5.2 **Cookie Consent** 与 CMP（Cookie Management Platform）集成](../notes/10-security/10.5-privacy-compliance/10.5.2.cookie-consent.md)
+- [ ] [10.5.1 **隐私工程**：数据最小化、保留和删除流程；适用法规及 consent 要求与法务/安全团队确认](../notes/10-security/10.5-privacy-compliance/10.5.1.gdpr.md)
+- [ ] [10.5.2 **Cookie Consent** 与 CMP（Consent Management Platform）集成——按适用业务与合规方案选择](../notes/10-security/10.5-privacy-compliance/10.5.2.cookie-consent.md)
 - [ ] [10.5.3 **PII 脱敏** 展示：日志、Session Replay、错误上报](../notes/10-security/10.5-privacy-compliance/10.5.3.pii.md)
-- [ ] [10.5.4 **CSP / COOP / COEP / CORP** 安全头全套与跨域隔离](../notes/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp.md)
+- [ ] [10.5.4 **CSP / COOP / COEP / CORP** 按威胁与能力需求配置，验证跨域资源兼容与隔离代价](../notes/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp.md)
 - [ ] [10.5.5 **SOC2 / PCI** 对前端工程的常见要求（了解）](../notes/10-security/10.5-privacy-compliance/10.5.5.soc2-pci.md)
 
 
 
 ### 10.6 能力锚点（阶段 10）
 
-- 能为团队输出 **CSP 与 Cookie 策略** 文档
-- 能主持一次前端 **威胁建模** 或安全 Review
+- 能按应用威胁与认证模型输出 **CSP 与 Cookie 策略**，说明适用条件与验证方式
+- 能完成一次前端 **威胁建模** 或安全 Review；团队主持职责按岗位要求深化
 
 ---
 
@@ -262,14 +264,14 @@
 - [ ] [11.4.1 **CDN** 配置协作：缓存规则、Purge、Geo 路由](../notes/11-observability/11.4-infra/11.4.1.cdn.md)
 - [ ] [11.4.2 **Nginx 进阶**：负载均衡、限流、反向代理缓存、WAF 对接](../notes/11-observability/11.4-infra/11.4.2.nginx.md)
 - [ ] [11.4.3 **Docker** 多阶段构建 SSR 应用；健康检查](../notes/11-observability/11.4-infra/11.4.3.docker.md)
-- [ ] [11.4.4 **Kubernetes** 基础：Deployment、HPA、Ingress — SSR 场景了解](../notes/11-observability/11.4-infra/11.4.4.kubernetes.md)
+- [ ] [11.4.4 **Kubernetes** 基础：Deployment、HPA、Ingress——采用该基础设施时选修](../notes/11-observability/11.4-infra/11.4.4.kubernetes.md)
 - [ ] [11.4.5 **GitHub Actions** 进阶：矩阵构建、缓存、环境 secrets、部署审批](../notes/11-observability/11.4-infra/11.4.5.github-actions.md)
 
 
 
 ### 11.5 能力锚点（阶段 11）
 
-- 能主导搭建 **Sentry + Web Vitals** 监控闭环
+- 能为所负责产品建立 **错误监控 + Web Vitals** 闭环，选择适合的采集工具并验证隐私和告警
 - 能设计并文档化 **灰度 + 回滚** 流程
 
 ---

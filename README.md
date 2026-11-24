@@ -2,10 +2,12 @@
 
 面向已有 Android / Flutter / React Native 经验的开发者，逐步建立 Web 原理笔记、可运行示例、工程选型和 AI 协作规范，学习路线覆盖阶段 0–15。
 
+默认框架主线为 **Vue 3 + Nuxt**，React/Next.js 为选修。完整顺序和前置见[学习路径](./docs/LEARNING_PATH.md)，目录结构判断见[审查记录](./docs/CURRICULUM_REVIEW.md)。
+
 ## 阅读入口
 
 - [当前进度与后续计划](./docs/PROGRESS.md)：已编写内容、验证范围及待办。
-- [知识地图总览](./KNOWLEDGE_MAP.md)与[六个分册](./knowledge-map/README.md)：565 个知识点的学习路线。
+- [知识地图总览](./KNOWLEDGE_MAP.md)与[六个分册](./knowledge-map/README.md)：583 个知识点的学习路线。
 - [笔记](./notes/README.md)与[配套示例](./examples/README.md)：原理、移动开发对照与练习。
 - [Nuxt 基座与宿主指南](./framework-guide/README.md)：通用工程规划与独立项目交接。
 - [内容编写与验证规范](./docs/AUTHORING.md)：来源、命名、示例与验收要求。
@@ -18,7 +20,7 @@
 | 阶段 1 · HTML | 19 篇笔记及对应离线示例，覆盖语义、表单与原生元素        |
 | 工程实践专题  | 6 篇规划正文及三仓库实施交接记录                         |
 
-阶段 1 的 CSS、JavaScript，以及阶段 2–15 的详细教材仍待逐节编写。地图复选框保留为学习者进度，正文是否存在由检查器独立统计。清单覆盖不代表正文或学习已完成。
+阶段 1 的 CSS、JavaScript、基础质量专题，以及阶段 2–15 的详细教材仍待逐节编写。地图复选框保留为学习者进度，正文是否存在由检查器独立统计。清单覆盖不代表正文或学习已完成。
 
 ## 示例与检查
 

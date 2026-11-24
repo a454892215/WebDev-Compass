@@ -7,18 +7,20 @@
 
 ## 阶段 12：测试策略与设计系统
 
+> 阶段 12–14 是质量深化、团队平台和服务端协作分支，不要求每个项目依次建设一整套平台。先完成阶段 3 的基础测试和阶段 6–7 的产品验收；组件库、Monorepo、GraphQL、BFF 与 Edge 按复用规模、职责和业务需要选择。详见[学习主线](../docs/LEARNING_PATH.md)。
+
 
 
 ### 12.1 测试策略体系
 
 - [ ] [12.1.1 编写团队 **测试策略文档**：测什么、不测什么、覆盖率预期](../notes/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1.md)
-- [ ] [12.1.2 **测试金字塔** 在 Web 团队的落地比例](../notes/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2.md)
+- [ ] [12.1.2 **测试组合与风险覆盖**：按组件、契约和关键旅程选层级，不把固定比例或覆盖率当唯一目标](../notes/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2.md)
 - [ ] [12.1.3 **Contract Testing**：Pact 等前后端契约测试](../notes/12-testing-design-system/12.1-testing-strategy/12.1.3.contract-testing.md)
 - [ ] [12.1.4 **Visual Regression**：Chromatic、Percy、Lost Pixel](../notes/12-testing-design-system/12.1-testing-strategy/12.1.4.visual-regression.md)
 - [ ] [12.1.5 **Mutation Testing** 概念（Stryker）— 了解](../notes/12-testing-design-system/12.1-testing-strategy/12.1.5.mutation-testing.md)
 - [ ] [12.1.6 **E2E 规模化**：Playwright 并行、Sharding、Test Container](../notes/12-testing-design-system/12.1-testing-strategy/12.1.6.e2e.md)
 - [ ] [12.1.7 **Flaky Test** 治理：重试策略、quarantine、根因分析](../notes/12-testing-design-system/12.1-testing-strategy/12.1.7.flaky-test.md)
-- [ ] [12.1.8 **SSR / Hydration** 专项测试：双端 HTML 一致性](../notes/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration.md)
+- [ ] [12.1.8 **SSR / Hydration** 专项测试：有效内容衔接、重复请求、双用户并发状态/凭据隔离与个性化缓存泄漏](../notes/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration.md)
 
 
 
@@ -46,7 +48,7 @@
 ### 12.4 组件库工程
 
 - [ ] [12.4.1 **Tree-shaking** 友好的导出结构](../notes/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking.md)
-- [ ] [12.4.2 **Peer Dependencies** 管理（React 单例）](../notes/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies.md)
+- [ ] [12.4.2 **Peer Dependencies** 管理：Vue/Nuxt 兼容范围、避免多份框架运行时；React 单例为对照](../notes/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies.md)
 - [ ] [12.4.3 **按需加载** 与 `sideEffects` 声明](../notes/12-testing-design-system/12.4-component-library/12.4.3.item-12-4-3.md)
 - [ ] [12.4.4 **Changelog** 自动化（Changesets）](../notes/12-testing-design-system/12.4-component-library/12.4.4.changelog.md)
 - [ ] [12.4.5 组件 **无障碍** 验收标准内建到 CI](../notes/12-testing-design-system/12.4-component-library/12.4.5.item-12-4-5.md)
@@ -55,8 +57,8 @@
 
 ### 12.5 能力锚点（阶段 12）
 
-- 能定义并推行团队 **测试策略 + Storybook 规范**
-- 能设计一套 **Design Token** 从 Figma 到代码的流水线
+- 能为负责的应用选择 **测试策略与组件文档**，以关键故障和使用场景验证效果
+- 存在跨页面/团队复用需求时，能设计并验证 **Design Token** 从设计到代码的同步机制
 
 ---
 
@@ -82,7 +84,7 @@
 - [ ] [13.2.1 **Changesets** 或 **semantic-release** 自动化版本](../notes/13-platform/13.2-release-deps/13.2.1.changesets.md)
 - [ ] [13.2.2 **内部 npm 包** 发布：Verdaccio / Artifactory / GitHub Packages](../notes/13-platform/13.2-release-deps/13.2.2.npm.md)
 - [ ] [13.2.3 **Renovate / Dependabot** 策略：分组、自动合并条件、major 升级 playbook](../notes/13-platform/13.2-release-deps/13.2.3.renovate-dependabot.md)
-- [ ] [13.2.4 **Lockfile** 政策与 `npm ci` 在 CI 中的强制](../notes/13-platform/13.2-release-deps/13.2.4.lockfile.md)
+- [ ] [13.2.4 **Lockfile** 政策与冻结安装：按 npm/pnpm/yarn 使用对应 CI 命令和锁定版本](../notes/13-platform/13.2-release-deps/13.2.4.lockfile.md)
 - [ ] [13.2.5 **Catalog / Override** 统一传递依赖版本（pnpm catalog）](../notes/13-platform/13.2-release-deps/13.2.5.catalog-override.md)
 
 
@@ -100,7 +102,7 @@
 ### 13.4 浏览器兼容与渐进增强
 
 - [ ] [13.4.1 **Browserslist** 策略与 `@vitejs/plugin-legacy`](../notes/13-platform/13.4-browser-compat/13.4.1.browserslist.md)
-- [ ] [13.4.2 **Polyfill** 按需：`core-js`、Polyfill.io 争议与替代](../notes/13-platform/13.4-browser-compat/13.4.2.polyfill.md)
+- [ ] [13.4.2 **Polyfill** 按需：原生支持、转译边界、可信来源与供应链风险，避免未经审计的远程注入](../notes/13-platform/13.4-browser-compat/13.4.2.polyfill.md)
 - [ ] [13.4.3 **Progressive Enhancement** vs **Graceful Degradation**](../notes/13-platform/13.4-browser-compat/13.4.3.progressive-enhancement.md)
 - [ ] [13.4.4 **Support Matrix** 文档与 QA 对齐流程](../notes/13-platform/13.4-browser-compat/13.4.4.support-matrix.md)
 - [ ] [13.4.5 **Feature Detection** vs User Agent Sniffing](../notes/13-platform/13.4-browser-compat/13.4.5.feature-detection.md)
@@ -121,8 +123,8 @@
 
 ### 13.6 能力锚点（阶段 13）
 
-- 能维护一个 **Monorepo** 含 apps + packages + 统一 CI
-- 能输出 **Support Matrix + Polyfill** 策略文档
+- 有多包需求时能维护 **Monorepo** 与统一检查；否则能解释独立仓库和版本包复用的取舍
+- 能输出 **Support Matrix 与能力回退策略**，说明哪些能力原生使用、需降级或不支持，不默认增加 polyfill
 
 ---
 
@@ -130,7 +132,7 @@
 
 ## 阶段 14：BFF / Node / Edge 运行时
 
-> 高级前端常需主导或深度协作 SSR 运行时与 BFF，本节不要求全栈专家级，但需能 **独立设计与实现中间层**。
+> 使用 SSR、承担 BFF 或服务端协作职责时学习本分支。SPA/静态托管项目不必先实现中间层；选择 Nuxt 时先掌握 Nitro 的请求、状态、配置与部署边界，再按需深入其他服务框架。
 
 
 
@@ -146,7 +148,7 @@
 
 ### 14.2 BFF 实现
 
-- [ ] [14.2.1 **Fastify / Hono / Express** 选型与中间件模式](../notes/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express.md)
+- [ ] [14.2.1 **服务端路由与中间件**：Nuxt/Nitro 为主例；Fastify/Hono/Express 按独立 BFF 需求选修](../notes/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express.md)
 - [ ] [14.2.2 **请求聚合**：并行 vs 串行、超时与 Partial Failure](../notes/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2.md)
 - [ ] [14.2.3 **鉴权中间件**：Session 校验、JWT 验证、权限注入](../notes/14-bff-runtime/14.2-bff-impl/14.2.3.item-14-2-3.md)
 - [ ] [14.2.4 **Rate Limiting** 与 CORS 在 BFF 层统一](../notes/14-bff-runtime/14.2-bff-impl/14.2.4.rate-limiting.md)
@@ -157,17 +159,17 @@
 
 ### 14.3 SSR 框架运行时
 
-- [ ] [14.3.1 **Next.js App Router** 深入：Server Components、Route Handlers、Middleware](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router.md)
-- [ ] [14.3.2 **Nuxt Nitro** 服务器引擎概念](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro.md)
+- [ ] [14.3.1 **Next.js App Router** 深入——React/Next.js 分支选修，覆盖 Server Components 与服务端路由边界](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router.md)
+- [ ] [14.3.2 **Nuxt Nitro** 运行时：请求生命周期、每请求上下文、配置与服务器路由；避免跨用户共享状态](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro.md)
 - [ ] [14.3.3 **数据获取** 在 SSR 中的 waterfall 优化](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.3.item-14-3-3.md)
-- [ ] [14.3.4 **Cookie / Header** 在 Server Component 中的访问](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header.md)
-- [ ] [14.3.5 **Streaming** 与 Error Handling 边界](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming.md)
+- [ ] [14.3.4 **Cookie / Header** 的受信来源与传播：Nuxt 请求上下文、外部 API 转发白名单；Server Component 为对照](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header.md)
+- [ ] [14.3.5 **Streaming 与错误处理**：框架能力、头部发送时机、取消、部分响应与客户端恢复](../notes/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming.md)
 
 
 
 ### 14.4 Edge Runtime
 
-- [ ] [14.4.1 **Edge vs Node** 限制：无 Node API、冷启动、CPU/内存配额](../notes/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node.md)
+- [ ] [14.4.1 **Edge vs Node**：平台与兼容模式决定 Node API 支持范围；核对冷启动、CPU/内存配额和持久化限制](../notes/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node.md)
 - [ ] [14.4.2 **Vercel Edge Functions / Cloudflare Workers** 使用场景](../notes/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers.md)
 - [ ] [14.4.3 **Edge Middleware**：鉴权、Geo 路由、A/B 分流](../notes/14-bff-runtime/14.4-edge-runtime/14.4.3.edge-middleware.md)
 - [ ] [14.4.4 **KV / D1 / Edge Config** 等 Edge 存储](../notes/14-bff-runtime/14.4-edge-runtime/14.4.4.kv-d1-edge-config.md)
@@ -195,7 +197,7 @@
 
 ### 14.7 能力锚点（阶段 14）
 
-- 能独立实现一个 **BFF 层** 完成鉴权 + 接口聚合
+- 承担 BFF 职责时，能实现 **鉴权 + 接口聚合** 并验证超时、错误和多用户隔离；不需要时能说明直连方案
 - 能解释 **Edge vs Origin** 渲染对数据一致性的影响
 
 ---

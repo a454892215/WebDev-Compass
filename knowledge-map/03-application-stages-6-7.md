@@ -1,11 +1,13 @@
 # 阶段 6–7：应用层
 
-> 性能、安全与可访问性 · 部署运维与 SSR 入门  
+> 性能、安全与可访问性 · 首次交付与渲染部署
 > [← 02-engineering](./02-engineering-stages-3-5.md) · [← 返回总览](../KNOWLEDGE_MAP.md) · [下一部分 →](./04-architecture-stages-8-11.md)
 
 ---
 
 ## 阶段 6：性能、安全与可访问性
+
+> 前置：已有可运行并接入明确数据契约的应用。这里深化基础阶段已接触的语义、键盘、安全和兼容要求，不是首次引入这些要求。产出：性能测量与安全/可访问性改进记录。验收：能复现问题、说明取舍、比较改进前后证据；自动化检测不等于完整安全或无障碍验收。见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
@@ -32,7 +34,7 @@
 - [ ] [6.1.2.2 虚拟列表（长列表优化）](../notes/06-performance-security/6.1-performance/6.1.2.2.item-6-1-2-2.md)
 - [ ] [6.1.2.3 防抖节流在滚动、搜索中的应用](../notes/06-performance-security/6.1-performance/6.1.2.3.item-6-1-2-3.md)
 - [ ] [6.1.2.4 Web Worker 处理密集计算](../notes/06-performance-security/6.1-performance/6.1.2.4.web-worker.md)
-- [ ] [6.1.2.5 React/Vue 性能优化实践：memo、key、合理拆分组件、避免内联对象](../notes/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key.md)
+- [ ] [6.1.2.5 框架性能实践：先测量，再按 Vue 响应式或 React 渲染机制优化组件与依赖，不机械共套 memo/内联对象规则](../notes/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key.md)
 - [ ] [6.1.2.6 使用 Performance API 与 Lighthouse 分析](../notes/06-performance-security/6.1-performance/6.1.2.6.performance-api-lighthouse.md)
 
 
@@ -41,13 +43,13 @@
 
 - [ ] [6.1.3.1 浏览器缓存层级](../notes/06-performance-security/6.1-performance/6.1.3.1.item-6-1-3-1.md)
 - [ ] [6.1.3.2 Service Worker 缓存策略（Cache First、Network First 等）](../notes/06-performance-security/6.1-performance/6.1.3.2.service-worker-cache-first-network.md)
-- [ ] [6.1.3.3 应用层缓存：React Query 缓存、HTTP 缓存头设置](../notes/06-performance-security/6.1-performance/6.1.3.3.react-query-http.md)
+- [ ] [6.1.3.3 应用层与 HTTP 缓存：Nuxt 数据 key/失效、HTTP 缓存头；React Query 随 React 分支选学](../notes/06-performance-security/6.1-performance/6.1.3.3.react-query-http.md)
 
 
 
 ### 6.2 Web 安全
 
-- [ ] [6.2.1 **XSS（跨站脚本）**：存储型、反射型、DOM 型；防御（转义、CSP、`HttpOnly` Cookie）](../notes/06-performance-security/6.2-web-security/6.2.1.xss.md)
+- [ ] [6.2.1 **XSS（跨站脚本）**：存储型、反射型、DOM 型；安全输出、净化与 CSP；HttpOnly 限制会话读取，不阻止脚本执行](../notes/06-performance-security/6.2-web-security/6.2.1.xss.md)
 - [ ] [6.2.2 **CSRF（跨站请求伪造）**：Token 验证、SameSite Cookie](../notes/06-performance-security/6.2-web-security/6.2.2.csrf.md)
 - [ ] [6.2.3 **点击劫持**：`X-Frame-Options`、`frame-ancestors`](../notes/06-performance-security/6.2-web-security/6.2.3.item-6-2-3.md)
 - [ ] [6.2.4 敏感信息泄露：不在前端存密钥、Source Map 生产环境处理](../notes/06-performance-security/6.2-web-security/6.2.4.source-map.md)
@@ -72,7 +74,7 @@
 ### 6.4 国际化（i18n）
 
 - [ ] [6.4.1 多语言文案管理方案](../notes/06-performance-security/6.4-i18n/6.4.1.item-6-4-1.md)
-- [ ] [6.4.2 **i18next** / **vue-i18n** 基本使用](../notes/06-performance-security/6.4-i18n/6.4.2.i18next.md)
+- [ ] [6.4.2 **vue-i18n** 与 Nuxt 国际化接入基础；i18next 随 React 分支选学](../notes/06-performance-security/6.4-i18n/6.4.2.i18next.md)
 - [ ] [6.4.3 日期、数字、货币格式化（`Intl` API）](../notes/06-performance-security/6.4-i18n/6.4.3.intl.md)
 - [ ] [6.4.4 RTL（从右到左）布局基本概念](../notes/06-performance-security/6.4-i18n/6.4.4.rtl.md)
 
@@ -86,19 +88,21 @@
 - [ ] [6.5.4 Open Graph 与 Twitter Card（社交分享）](../notes/06-performance-security/6.5-seo/6.5.4.open-graph-twitter-card.md)
 - [ ] [6.5.5 `sitemap.xml`、`robots.txt`](../notes/06-performance-security/6.5-seo/6.5.5.sitemap.xml.md)
 - [ ] [6.5.6 结构化数据（Schema.org / JSON-LD）](../notes/06-performance-security/6.5-seo/6.5.6.schema.org-json-ld.md)
-- [ ] [6.5.7 SSR/SSG 对 SEO 的价值（与 Next.js/Nuxt 关联）](../notes/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt.md)
+- [ ] [6.5.7 SSR/SSG 对 SEO 的价值与 Nuxt 验证；Next.js 作为 React 选修对照](../notes/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt.md)
 
 ---
 
 
 
-## 阶段 7：部署运维与进阶方向
+## 阶段 7：首次交付与渲染部署
+
+> 前置：框架、API 和基础质量检查已连通。产出：明确 CSR/静态或 SSR profile 的可部署应用、部署说明与恢复方案。验收：生产构建、深链刷新、配置公开边界、错误页及基本回滚可实际演示；SSR 另验证用户状态与缓存隔离。7.3 为业务选修，不阻塞首次交付。见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
 ### 7.1 构建与部署
 
-- [ ] [7.1.1 生产构建产物分析：`dist` 目录、资源哈希](../notes/07-deployment/7.1-build-deploy/7.1.1.dist.md)
+- [ ] [7.1.1 生产构建产物分析：Vite `dist`、Nuxt `.output`、资源哈希与部署 profile](../notes/07-deployment/7.1-build-deploy/7.1.1.dist.md)
 - [ ] [7.1.2 静态资源托管：**Vercel**、**Netlify**、**GitHub Pages**、**Cloudflare Pages**](../notes/07-deployment/7.1-build-deploy/7.1.2.vercel.md)
 - [ ] [7.1.3 **Nginx** 基础：静态文件服务、`try_files`、反向代理、gzip](../notes/07-deployment/7.1-build-deploy/7.1.3.nginx.md)
 - [ ] [7.1.4 环境变量在构建与运行时的注入](../notes/07-deployment/7.1-build-deploy/7.1.4.item-7-1-4.md)
@@ -108,17 +112,19 @@
 
 
 
-### 7.2 服务端渲染与全栈框架
+### 7.2 生产渲染、缓存与部署
 
-- [ ] [7.2.1 CSR vs SSR vs SSG vs ISR 概念与选型](../notes/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg.md)
-- [ ] [7.2.2 **Next.js**：页面路由/App Router、SSR/SSG、`getServerSideProps` 或 Server Components 概念](../notes/07-deployment/7.2-ssr/7.2.2.next.js.md)
-- [ ] [7.2.3 **Nuxt**：服务端渲染与静态生成](../notes/07-deployment/7.2-ssr/7.2.3.nuxt.md)
-- [ ] [7.2.4 水合（Hydration）概念](../notes/07-deployment/7.2-ssr/7.2.4.hydration.md)
-- [ ] [7.2.5 同构应用注意事项（浏览器 API 兼容）](../notes/07-deployment/7.2-ssr/7.2.5.api.md)
+Nuxt 的目录、数据生命周期、状态与 hydration 基础先学 4.5。本节聚焦生产 profile、部署环境和缓存/身份边界，不要求重学一套 Nuxt；Next.js 是 React 选修路径。
+
+- [ ] [7.2.1 CSR / SSR / SSG 与增量再生成：按内容时效、缓存失效和托管能力选择生产 profile](../notes/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg.md)
+- [ ] [7.2.2 **Next.js（选修）**：区分路由体系与部署模型，验证服务端/客户端数据及缓存边界](../notes/07-deployment/7.2-ssr/7.2.2.next.js.md)
+- [ ] [7.2.3 **Nuxt 生产部署**：静态托管与 Node SSR、routeRules/缓存及带身份请求；基础见 4.5](../notes/07-deployment/7.2-ssr/7.2.3.nuxt.md)
+- [ ] [7.2.4 Hydration 生产排查：首屏一致性、payload 与重复请求回归，基础见 4.5.2–4.5.3](../notes/07-deployment/7.2-ssr/7.2.4.hydration.md)
+- [ ] [7.2.5 同构部署验收：浏览器 API/依赖兼容、并发用户状态与认证缓存隔离、静态环境限制](../notes/07-deployment/7.2-ssr/7.2.5.api.md)
 
 
 
-### 7.3 进阶主题（持续学习）
+### 7.3 业务选修主题（不阻塞首次交付）
 
 - [ ] [7.3.1 **微前端** 架构概念（Module Federation 等）](../notes/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1.md)
 - [ ] [7.3.2 **Web Components**：Custom Elements、Shadow DOM](../notes/07-deployment/7.3-advanced-preview/7.3.2.web-components.md)

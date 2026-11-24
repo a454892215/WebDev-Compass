@@ -7,6 +7,8 @@
 
 ## 阶段 0：环境与心智模型
 
+> 主线前置：已有编程经验即可。产出：能解释一次浏览器请求并用 DevTools 定位问题。网络版本、工具命令按需查阅；不要求同时掌握所有包管理器。
+
 
 
 ### 0.1 Web 应用是什么
@@ -52,6 +54,8 @@
 
 ## 阶段 1：Web 基础三件套
 
+> 主线前置：阶段 0 的浏览器/请求心智模型。顺序：1.1 语义与表单 → 1.2 布局 → 1.3 交互，1.4 质量要求贯穿练习。产出与验收见[学习主线](../docs/LEARNING_PATH.md)。
+
 
 
 ### 1.1 HTML
@@ -81,11 +85,13 @@
 
 
 
-#### 1.1.3 HTML5 进阶
+#### 1.1.3 原生能力与进阶选读
 
-- [ ] [1.1.3.1 `<canvas>` 2D 绘图基础](../notes/01-web-fundamentals/1.1-html/1.1.3.1.canvas.md)
+Canvas、SVG 脚本和 template/slot 的实现可在 1.3 后回读；只观察示例不等于已掌握 JavaScript。原生 details/dialog、dataset 与基本 SEO 可按当前任务先学。
+
+- [ ] [1.1.3.1 【选修】`<canvas>` 2D 绘图基础](../notes/01-web-fundamentals/1.1-html/1.1.3.1.canvas.md)
 - [ ] [1.1.3.2 `<svg>` 矢量图形基础](../notes/01-web-fundamentals/1.1-html/1.1.3.2.svg.md)
-- [ ] [1.1.3.3 `<template>`、`<slot>`（为 Web Components 打基础）](../notes/01-web-fundamentals/1.1-html/1.1.3.3.template.md)
+- [ ] [1.1.3.3 【选修】`<template>`、`<slot>`（为 Web Components 打基础）](../notes/01-web-fundamentals/1.1-html/1.1.3.3.template.md)
 - [ ] [1.1.3.4 `<details>` / `<summary>`、`<dialog>`、`<progress>`、`<meter>`](../notes/01-web-fundamentals/1.1-html/1.1.3.4.details.md)
 - [ ] [1.1.3.5 `data-*` 自定义属性](../notes/01-web-fundamentals/1.1-html/1.1.3.5.data.md)
 - [ ] [1.1.3.6 **SEO 基础**：语义化、标题层级、meta description、结构化数据（JSON-LD 概念）](../notes/01-web-fundamentals/1.1-html/1.1.3.6.seo.md)
@@ -103,6 +109,7 @@
 - [ ] [1.2.1.3 选择器优先级与特异性（Specificity）计算](../notes/01-web-fundamentals/1.2-css/1.2.1.3.specificity.md)
 - [ ] [1.2.1.4 继承与 `inherit`、`initial`、`unset`、`revert`](../notes/01-web-fundamentals/1.2-css/1.2.1.4.inherit.md)
 - [ ] [1.2.1.5 CSS 变量（Custom Properties）：`--name`、`var()`](../notes/01-web-fundamentals/1.2-css/1.2.1.5.name.md)
+- [ ] [1.2.1.6 完整层叠顺序：来源、重要性、`@layer` 与特异性；避免只比较选择器权重](../notes/01-web-fundamentals/1.2-css/1.2.1.6.cascade-layers.md)
 
 
 
@@ -113,8 +120,11 @@
 - [ ] [1.2.2.3 **定位**：`static`、`relative`、`absolute`、`fixed`、`sticky`](../notes/01-web-fundamentals/1.2-css/1.2.2.3.item-1-2-2-3.md)
 - [ ] [1.2.2.4 **Flexbox**：主轴/交叉轴、`justify-content`、`align-items`、`flex-grow/shrink/basis`、`gap`](../notes/01-web-fundamentals/1.2-css/1.2.2.4.flexbox.md)
 - [ ] [1.2.2.5 **Grid**：`grid-template-columns/rows`、`fr` 单位、`grid-area`、`gap`、隐式网格](../notes/01-web-fundamentals/1.2-css/1.2.2.5.grid.md)
-- [ ] [1.2.2.6 **传统布局**：浮动（float）与清除（clear）— 了解即可，现代项目优先 Flex/Grid](../notes/01-web-fundamentals/1.2-css/1.2.2.6.item-1-2-2-6.md)
-- [ ] [1.2.2.7 **多列布局**（`column-count` 等）基础了解](../notes/01-web-fundamentals/1.2-css/1.2.2.7.item-1-2-2-7.md)
+- [ ] [1.2.2.6 【维护选读】**传统布局**：浮动（float）与清除（clear）— 了解即可，现代项目优先 Flex/Grid](../notes/01-web-fundamentals/1.2-css/1.2.2.6.item-1-2-2-6.md)
+- [ ] [1.2.2.7 【按需选学】**多列布局**（`column-count` 等）基础了解](../notes/01-web-fundamentals/1.2-css/1.2.2.7.item-1-2-2-7.md)
+- [ ] [1.2.2.8 正常流、格式化上下文与外边距折叠：理解布局行为后再选 Flex/Grid](../notes/01-web-fundamentals/1.2-css/1.2.2.8.normal-flow-formatting-context.md)
+- [ ] [1.2.2.9 层叠上下文与 `z-index`：定位、transform、顶层元素与覆盖层排障](../notes/01-web-fundamentals/1.2-css/1.2.2.9.stacking-context.md)
+- [ ] [1.2.2.10 内在尺寸与约束：min/max-content、fit-content、minmax、min-inline-size:0、aspect-ratio](../notes/01-web-fundamentals/1.2-css/1.2.2.10.intrinsic-sizing.md)
 
 
 
@@ -138,6 +148,7 @@
 - [ ] [1.2.4.4 图片响应式：`max-width: 100%`、`<picture>`、`srcset`、`sizes`](../notes/01-web-fundamentals/1.2-css/1.2.4.4.max-width-100.md)
 - [ ] [1.2.4.5 **容器查询**（Container Queries）基本概念](../notes/01-web-fundamentals/1.2-css/1.2.4.5.item-1-2-4-5.md)
 - [ ] [1.2.4.6 📱 移动端对照：CSS Flex/Grid ≈ Flutter Row/Column/Wrap、RN Flexbox；rem ≈ 相对尺寸单位](../notes/01-web-fundamentals/1.2-css/1.2.4.6.css-flex-grid-flutter-row.md)
+- [ ] [1.2.4.7 手机浏览器视口：svh/dvh、safe-area、软键盘和滚动容器；真机验证边界](../notes/01-web-fundamentals/1.2-css/1.2.4.7.mobile-viewport-safe-area.md)
 
 
 
@@ -148,6 +159,7 @@
 - [ ] [1.2.5.3 `transform`：`translate`、`rotate`、`scale`、`skew`](../notes/01-web-fundamentals/1.2-css/1.2.5.3.transform.md)
 - [ ] [1.2.5.4 `cursor`、`user-select`、`pointer-events`](../notes/01-web-fundamentals/1.2-css/1.2.5.4.cursor.md)
 - [ ] [1.2.5.5 性能注意：优先使用 `transform` 和 `opacity` 做动画（合成层）](../notes/01-web-fundamentals/1.2-css/1.2.5.5.transform.md)
+- [ ] [1.2.5.6 尊重用户偏好：prefers-reduced-motion、键盘焦点可见性与触控/悬停差异](../notes/01-web-fundamentals/1.2-css/1.2.5.6.motion-input-preferences.md)
 
 
 
@@ -155,7 +167,7 @@
 
 - [ ] [1.2.6.1 **BEM** 命名规范](../notes/01-web-fundamentals/1.2-css/1.2.6.1.bem.md)
 - [ ] [1.2.6.2 CSS Modules 概念](../notes/01-web-fundamentals/1.2-css/1.2.6.2.css-modules.md)
-- [ ] [1.2.6.3 预处理器基础（**Sass/SCSS**）：变量、嵌套、混入（`@mixin`）、继承](../notes/01-web-fundamentals/1.2-css/1.2.6.3.sass-scss.md)
+- [ ] [1.2.6.3 【选修】预处理器基础（**Sass/SCSS**）：变量、嵌套、混入（`@mixin`）、继承](../notes/01-web-fundamentals/1.2-css/1.2.6.3.sass-scss.md)
 - [ ] [1.2.6.4 原子化 CSS 概念（Tailwind CSS 思路）](../notes/01-web-fundamentals/1.2-css/1.2.6.4.css-tailwind-css.md)
 - [ ] [1.2.6.5 现代 CSS：`:is()`、`:where()`、`clamp()`、`min()`、`max()`、逻辑属性（`margin-inline` 等）](../notes/01-web-fundamentals/1.2-css/1.2.6.5.is.md)
 
@@ -225,7 +237,7 @@
 
 - [ ] [1.3.5.1 回调函数与回调地狱问题](../notes/01-web-fundamentals/1.3-javascript/1.3.5.1.item-1-3-5-1.md)
 - [ ] [1.3.5.2 `XMLHttpRequest` 基础（了解即可，现代用 fetch）](../notes/01-web-fundamentals/1.3-javascript/1.3.5.2.xmlhttprequest.md)
-- [ ] [1.3.5.3 **Fetch API**：GET/POST 请求、请求头、响应处理、`response.json()`](../notes/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api.md)
+- [ ] [1.3.5.3 **Fetch API**：GET/POST 请求、请求头、响应处理、`response.ok`、解析失败与 `response.json()`](../notes/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api.md)
 - [ ] [1.3.5.4 错误处理：`try/catch/finally`、`throw`](../notes/01-web-fundamentals/1.3-javascript/1.3.5.4.try-catch-finally.md)
 - [ ] [1.3.5.5 定时器：`setTimeout`、`setInterval`、`requestAnimationFrame`](../notes/01-web-fundamentals/1.3-javascript/1.3.5.5.settimeout.md)
 - [ ] [1.3.5.6 JSON：`JSON.parse`、`JSON.stringify`](../notes/01-web-fundamentals/1.3-javascript/1.3.5.6.json.parse.md)
@@ -234,7 +246,20 @@
 
 
 
+### 1.4 基础质量与产品体验（贯穿 1.1–1.3）
+
+本节从第一张页面起应用，不等到读完 JavaScript 再补质量。阶段 6 深化审计与安全，阶段 12/13 深化测试及兼容治理。
+
+- [ ] [1.4.1 Web 标准与兼容基础：目标浏览器/WebView、Baseline、能力检测、`@supports` 与渐进增强](../notes/01-web-fundamentals/1.4-quality-basics/1.4.1.standards-baseline.md)
+- [ ] [1.4.2 无障碍基础验收：语义、标签、键盘、焦点、缩放、对比度与文字替代](../notes/01-web-fundamentals/1.4-quality-basics/1.4.2.accessibility-foundations.md)
+- [ ] [1.4.3 开发者设计基础：读设计稿、视觉层级、间距排版、内容优先及加载/空/错/禁用状态](../notes/01-web-fundamentals/1.4-quality-basics/1.4.3.design-interaction-states.md)
+- [ ] [1.4.4 渐进增强与失败体验：慢网/断网、JS或资源失败时的内容与操作，最小数据采集和清楚反馈](../notes/01-web-fundamentals/1.4-quality-basics/1.4.4.progressive-enhancement.md)
+
+---
+
 ## 阶段 2：JavaScript 深入与浏览器原理
+
+> 主线先掌握事件循环、资源清理、渲染、HTTP 缓存和存储边界；掌握这些即可进入阶段 3。生成器、模块史、特殊 Web API 可按需回读，不作为首个 Nuxt 应用的全部前置。
 
 
 
@@ -277,7 +302,9 @@
 
 
 
-### 2.4 Web API 选学
+### 2.4 Web API：路由基础与按需选学
+
+2.4.7 History API 属 SPA 路由基础；Observer 按场景学习，定位、剪贴板、Worker 和通知等依业务选择并检查权限/兼容。
 
 - [ ] [2.4.1 **Intersection Observer**（懒加载、无限滚动）](../notes/02-javascript-browser/2.4-web-apis/2.4.1.intersection-observer.md)
 - [ ] [2.4.2 **Resize Observer**](../notes/02-javascript-browser/2.4-web-apis/2.4.2.resize-observer.md)

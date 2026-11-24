@@ -7,6 +7,8 @@
 
 ## 阶段 3：工程化与 TypeScript
 
+> 前置：已能编写基础 HTML/CSS/JavaScript，并理解模块和异步请求。产出：可运行、可构建的 TypeScript 小工程。验收：依赖与锁文件可复现，类型/格式/必要单元测试能独立运行；默认用 pnpm 与 Vite/Nuxt 工具链；npm 用于理解通用命令与初始化入口，Yarn/Webpack 只作按需对照，不要求精通全部工具。学习顺序及选修规则见[学习路径](../docs/LEARNING_PATH.md)。
+
 
 
 ### 3.1 包管理与项目结构
@@ -44,7 +46,7 @@
 - [ ] [3.3.8 类与访问修饰符：`public`、`private`、`protected`、`readonly`](../notes/03-engineering/3.3-typescript/3.3.8.public.md)
 - [ ] [3.3.9 模块与声明文件（`.d.ts`）](../notes/03-engineering/3.3-typescript/3.3.9..d.ts.md)
 - [ ] [3.3.10 `tsconfig.json` 核心配置：`strict`、`target`、`module`、`paths`（路径别名）](../notes/03-engineering/3.3-typescript/3.3.10.tsconfig.json.md)
-- [ ] [3.3.11 与 React/Vue 结合的 TS 类型（组件 Props、事件类型）— 在阶段 4 深化](../notes/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props.md)
+- [ ] [3.3.11 Vue 组件与 composables 的 TS 类型（Props、事件、返回值）；React 类型为选修对照，阶段 4 深化](../notes/03-engineering/3.3-typescript/3.3.11.react-vue-ts-props.md)
 - [ ] [3.3.12 📱 移动端对照：TypeScript ≈ Dart 的类型系统 / Kotlin 空安全](../notes/03-engineering/3.3-typescript/3.3.12.typescript-dart-kotlin.md)
 
 
@@ -63,9 +65,9 @@
 ### 3.5 测试基础
 
 - [ ] [3.5.1 测试金字塔：单元测试、集成测试、E2E 测试](../notes/03-engineering/3.5-testing-basics/3.5.1.e2e.md)
-- [ ] [3.5.2 **Vitest** / **Jest**：基本断言、`describe`/`it`、mock 函数](../notes/03-engineering/3.5-testing-basics/3.5.2.vitest.md)
-- [ ] [3.5.3 **React Testing Library** / **Vue Test Utils** 组件测试入门](../notes/03-engineering/3.5-testing-basics/3.5.3.react-testing-library.md)
-- [ ] [3.5.4 **Playwright** / **Cypress** E2E 测试概念](../notes/03-engineering/3.5-testing-basics/3.5.4.playwright.md)
+- [ ] [3.5.2 **Vitest**：基本断言、`describe`/`it`、mock 函数；Jest 作为按需对照](../notes/03-engineering/3.5-testing-basics/3.5.2.vitest.md)
+- [ ] [3.5.3 **Vue Test Utils** 组件测试入门；React Testing Library 随 React 分支选学](../notes/03-engineering/3.5-testing-basics/3.5.3.react-testing-library.md)
+- [ ] [3.5.4 **Playwright** E2E 测试概念与关键流程；Cypress 按项目选用](../notes/03-engineering/3.5-testing-basics/3.5.4.playwright.md)
 - [ ] [3.5.5 测试覆盖率与合理预期](../notes/03-engineering/3.5-testing-basics/3.5.5.item-3-5-5.md)
 
 ---
@@ -74,7 +76,7 @@
 
 ## 阶段 4：框架与状态管理
 
-> 主流框架建议至少深入一个（**React** 或 **Vue**）。有 React Native 经验者优先深耕 React 生态。
+> 前置：基础 Web 能力与阶段 3 的 TypeScript 工具链。主线采用 **Vue 3 + TypeScript + Nuxt**，按 **4.1 → 4.3 → 4.5 → 4.4** 阅读；4.2 React/Next 为跨生态选修，React Native 经验可用于概念对照，不要求双修。产出：含列表、表单、路由和明确加载/空/错状态的小应用。验收：刷新和导航行为正确、组件可复用、关键交互及宽窄视口可检查；质量基线从本阶段执行。见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
@@ -84,13 +86,13 @@
 - [ ] [4.1.2 组件化：组合、复用、单向数据流](../notes/04-frameworks/4.1-framework-concepts/4.1.2.item-4-1-2.md)
 - [ ] [4.1.3 虚拟 DOM / 响应式系统原理（概念级）](../notes/04-frameworks/4.1-framework-concepts/4.1.3.dom.md)
 - [ ] [4.1.4 客户端路由 vs 服务端路由](../notes/04-frameworks/4.1-framework-concepts/4.1.4.vs.md)
-- [ ] [4.1.5 受控组件 vs 非受控组件](../notes/04-frameworks/4.1-framework-concepts/4.1.5.vs.md)
+- [ ] [4.1.5 组件表单状态与双向绑定契约；受控/非受控作为 React 选修对照](../notes/04-frameworks/4.1-framework-concepts/4.1.5.vs.md)
 - [ ] [4.1.6 条件渲染、列表渲染与 `key` 的作用](../notes/04-frameworks/4.1-framework-concepts/4.1.6.key.md)
 - [ ] [4.1.7 📱 移动端对照：React ≈ React Native；Vue ≈ 组合 Widget + 响应式状态](../notes/04-frameworks/4.1-framework-concepts/4.1.7.react-react-native-vue-widget.md)
 
 
 
-### 4.2 React 生态
+### 4.2 React 生态（选修，不阻塞 Vue/Nuxt 主线）
 
 
 
@@ -147,9 +149,9 @@
 #### 4.3.1 Vue 3 核心
 
 - [ ] [4.3.1.1 模板语法：`{{ }}`、指令（`v-if`、`v-for`、`v-show`、`v-bind`、`v-on`、`v-model`）](../notes/04-frameworks/4.3-vue/4.3.1.1.v-if-v-for-v-show-v-bind-v-on.md)
-- [ ] [4.3.1.2 组合式 API：`setup`、`ref`、`reactive`、`computed`、`watch`、`watchEffect`](../notes/04-frameworks/4.3-vue/4.3.1.2.setup.md)
+- [ ] [4.3.1.2 组合式 API：`setup`、`ref`、`reactive`、`computed`、`watch`、`watchEffect`；composables 上下文、复用和清理](../notes/04-frameworks/4.3-vue/4.3.1.2.setup.md)
 - [ ] [4.3.1.3 生命周期钩子（`onMounted` 等）](../notes/04-frameworks/4.3-vue/4.3.1.3.onmounted.md)
-- [ ] [4.3.1.4 组件：Props、`emit`、插槽（默认、具名、作用域）](../notes/04-frameworks/4.3-vue/4.3.1.4.emit.md)
+- [ ] [4.3.1.4 组件：Props、`emit`、组件 `v-model` 与插槽（默认、具名、作用域）](../notes/04-frameworks/4.3-vue/4.3.1.4.emit.md)
 - [ ] [4.3.1.5 依赖注入：`provide` / `inject`](../notes/04-frameworks/4.3-vue/4.3.1.5.provide.md)
 - [ ] [4.3.1.6 模板引用：`ref` 获取 DOM](../notes/04-frameworks/4.3-vue/4.3.1.6.ref.md)
 - [ ] [4.3.1.7 动态组件与 `<KeepAlive>`](../notes/04-frameworks/4.3-vue/4.3.1.7.keepalive.md)
@@ -166,8 +168,8 @@
 #### 4.3.3 Vue 工程实践
 
 - [ ] [4.3.3.1 单文件组件（`.vue`）：`<template>`、`<script setup>`、`<style scoped>`](../notes/04-frameworks/4.3-vue/4.3.3.1..vue.md)
-- [ ] [4.3.3.2 组件库：**Element Plus**、**Naive UI**、**Vuetify** 等](../notes/04-frameworks/4.3-vue/4.3.3.2.element-plus.md)
-- [ ] [4.3.3.3 **Nuxt** 入门概念（SSR 框架）](../notes/04-frameworks/4.3-vue/4.3.3.3.nuxt.md)
+- [ ] [4.3.3.2 组件库选型：按桌面/手机场景选择 Nuxt UI、Vant 或其他 Vue 组件库，不要求全部学习](../notes/04-frameworks/4.3-vue/4.3.3.2.element-plus.md)
+- [ ] [4.3.3.3 **Nuxt** 概览：基于 Vue 的应用框架，完整应用主线见 4.5](../notes/04-frameworks/4.3-vue/4.3.3.3.nuxt.md)
 
 
 
@@ -182,14 +184,31 @@
 
 
 
+### 4.5 Nuxt 应用开发主线
+
+先完成 4.3 Vue 基础，再用本节组织完整应用；7.2 深化生产渲染与部署，不在这里重复编写同一套教程。Nuxt 可以按需求采用 CSR、SSR 或静态生成，不能把 Nuxt 等同于必须运行 Node 服务。
+
+- [ ] [4.5.1 官方骨架与目录：文件路由、页面、布局和动态参数](../notes/04-frameworks/4.5-nuxt/4.5.1.scaffold-routing-layouts.md)
+- [ ] [4.5.2 CSR / SSR / SSG 与 hydration 基础：首屏、客户端导航和运行环境](../notes/04-frameworks/4.5-nuxt/4.5.2.rendering-hydration.md)
+- [ ] [4.5.3 `useFetch` / `useAsyncData`：payload、请求状态、取消与刷新；区分提交操作的 `$fetch`](../notes/04-frameworks/4.5-nuxt/4.5.3.data-fetching-lifecycle.md)
+- [ ] [4.5.4 `useState` / Pinia：组件、本应用和每请求状态边界，避免跨用户共享](../notes/04-frameworks/4.5-nuxt/4.5.4.state-request-boundaries.md)
+- [ ] [4.5.5 `runtimeConfig` 与 public 边界：构建期、服务端运行期及静态部署配置](../notes/04-frameworks/4.5-nuxt/4.5.5.runtime-config.md)
+- [ ] [4.5.6 Nitro / server 路由：最小 BFF、输入校验、服务端授权与业务后端边界](../notes/04-frameworks/4.5-nuxt/4.5.6.nitro-server-routes.md)
+- [ ] [4.5.7 plugins / composables / modules / Layers：生命周期、依赖注入与复用职责](../notes/04-frameworks/4.5-nuxt/4.5.7.plugins-modules-layers.md)
+- [ ] [4.5.8 中间件、错误页与 404：浏览器 API 边界，客户端守卫不等于服务端授权](../notes/04-frameworks/4.5-nuxt/4.5.8.middleware-errors-client-boundaries.md)
+
+---
+
 ## 阶段 5：全栈协作与认证
+
+> 前置：能完成阶段 4 的框架小应用。产出：按明确契约对接 API、登录/退出及权限反馈，缺少真实后端时使用注明范围的 mock。验收：响应解码、加载/空/错、取消/迟到响应和认证失效可解释并复现；权限由服务端执行，不把前端隐藏控件当授权。见[学习路径](../docs/LEARNING_PATH.md)。
 
 
 
 ### 5.1 HTTP 客户端与 API 对接
 
-- [ ] [5.1.1 **axios** 封装：实例、拦截器、错误统一处理](../notes/05-fullstack-auth/5.1-http-client/5.1.1.axios.md)
-- [ ] [5.1.2 请求取消：AbortController](../notes/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller.md)
+- [ ] [5.1.1 HTTP 客户端选型：原生 Fetch、Nuxt 数据获取与统一错误边界；Axios 按需](../notes/05-fullstack-auth/5.1-http-client/5.1.1.axios.md)
+- [ ] [5.1.2 请求生命周期：AbortController、超时、迟到响应与加载/空/错/重试状态](../notes/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller.md)
 - [ ] [5.1.3 上传/下载：FormData、Blob、进度监听](../notes/05-fullstack-auth/5.1-http-client/5.1.3.formdata-blob.md)
 - [ ] [5.1.4 API 版本管理与文档阅读（OpenAPI / Swagger）](../notes/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger.md)
 - [ ] [5.1.5 Mock 数据：**MSW (Mock Service Worker)** 或 mock 服务器](../notes/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker.md)
@@ -199,14 +218,14 @@
 
 ### 5.2 认证与授权
 
-- [ ] [5.2.1 **Session + Cookie** 认证流程](../notes/05-fullstack-auth/5.2-auth/5.2.1.session-cookie.md)
+- [ ] [5.2.1 **Session + Cookie**：会话流程、Secure/HttpOnly/SameSite 与 CSRF 基础边界](../notes/05-fullstack-auth/5.2-auth/5.2.1.session-cookie.md)
 - [ ] [5.2.2 **JWT（JSON Web Token）**：access token、refresh token、存储位置权衡](../notes/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token.md)
-- [ ] [5.2.3 前端登录流程：登录 → 存 Token → 请求携带 → 刷新/登出](../notes/05-fullstack-auth/5.2-auth/5.2.3.token.md)
+- [ ] [5.2.3 登录与恢复：按 Cookie/Session 或 Bearer 契约处理会话、刷新、失效和退出，不默认存 Token](../notes/05-fullstack-auth/5.2-auth/5.2.3.token.md)
 - [ ] [5.2.4 请求头：`Authorization: Bearer <token>`](../notes/05-fullstack-auth/5.2-auth/5.2.4.authorization-bearer-token.md)
 - [ ] [5.2.5 **OAuth 2.0** 与第三方登录（微信、GitHub、Google）基本概念](../notes/05-fullstack-auth/5.2-auth/5.2.5.oauth.md)
 - [ ] [5.2.6 **SSO** 单点登录概念](../notes/05-fullstack-auth/5.2-auth/5.2.6.sso.md)
-- [ ] [5.2.7 前端权限控制：路由级、菜单级、按钮级（RBAC 思路）](../notes/05-fullstack-auth/5.2-auth/5.2.7.rbac.md)
-- [ ] [5.2.8 📱 移动端对照：Token 存储 ≈ Keychain/Keystore；Cookie 会话 ≈ 服务端 Session](../notes/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session.md)
+- [ ] [5.2.7 权限反馈：路由、菜单、按钮与 RBAC；前端控制体验，服务端逐请求授权](../notes/05-fullstack-auth/5.2-auth/5.2.7.rbac.md)
+- [ ] [5.2.8 📱 移动端对照：浏览器存储不等于 Keychain/Keystore；比较会话、脚本可读性与威胁边界](../notes/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session.md)
 
 
 
@@ -222,10 +241,10 @@
 
 ### 5.4 数据格式与协议
 
-- [ ] [5.4.1 JSON 设计与前后端字段约定（驼峰 vs 下划线）](../notes/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs.md)
+- [ ] [5.4.1 JSON 与数据契约：字段约定、unknown 响应的运行期校验及 DTO 映射；TS 类型不校验网络数据](../notes/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs.md)
 - [ ] [5.4.2 分页、排序、筛选的 API 参数设计](../notes/05-fullstack-auth/5.4-data-protocols/5.4.2.api.md)
 - [ ] [5.4.3 文件上传接口约定](../notes/05-fullstack-auth/5.4-data-protocols/5.4.3.item-5-4-3.md)
-- [ ] [5.4.4 错误码与统一响应结构（`{ code, data, message }`）](../notes/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message.md)
+- [ ] [5.4.4 HTTP 状态、业务错误与响应契约；`{ code, data, message }` 仅为可选约定，不强制所有接口包壳](../notes/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message.md)
 - [ ] [5.4.5 GraphQL 基本概念（选学）：与 REST 对比](../notes/05-fullstack-auth/5.4-data-protocols/5.4.5.graphql-rest.md)
 - [ ] [5.4.6 gRPC / Protobuf 在 Web 中的了解（grpc-web）](../notes/05-fullstack-auth/5.4-data-protocols/5.4.6.grpc-protobuf-web-grpc-web.md)
 
