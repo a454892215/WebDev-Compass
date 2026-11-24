@@ -11,13 +11,20 @@
     <style>
       #target {
         position: relative;
-        left: 40px;
+        left: var(--offset, 40px);
         transform: none;
         width: 140px;
+        transition: left 180ms linear, transform 180ms linear;
       }
       body[data-active="true"] #target {
         left: 0;
-        transform: translateX(40px);
+        transform: translateX(var(--offset, 40px));
+      }
+      body[data-at-start="true"] .motion-track {
+        --offset: 0px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #target { transition: none; }
       }
     </style>
   </head>
@@ -35,8 +42,10 @@
       </p>
       <section aria-label="实验操作" class="controls">
         <button id="toggle" type="button" aria-pressed="false">
-          切换对照状态</button
+          切换实现路径（left / transform）</button
         ><button id="inspect" type="button">读取实际样式</button>
+        <button id="move" type="button" aria-pressed="false">移动／复位（当前路径）</button>
+        <p id="motion-state" role="status">当前 left 路径，位移 40px。</p>
       </section>
       <section class="lab" aria-label="规则对照区域">
         <div class="motion-track">
@@ -59,8 +68,8 @@
       <section>
         <h2>本例需要回答</h2>
         <ol>
-          <li>切换left与transform两种视觉移动。</li>
-          <li>在Performance中分别录制，比较布局/绘制事件。</li>
+          <li>先切换选定left或transform路径；切换路径时位置应一致，不把此操作当动画对比。</li>
+          <li>各路径下分别点击“移动／复位”至少两次，在Performance中录制等幅往返，比较布局/绘制事件。</li>
           <li>样例只验证属性，不宣称已得到真实设备性能提升。</li>
         </ol>
       </section>
@@ -68,5 +77,22 @@
     <footer>本例离线运行，无账户、无上报。保留浏览器缩放与键盘操作。</footer>
 
     <script src="./assets/lab.js" defer></script>
+    <script>
+      const moveButton = document.querySelector("#move");
+      const motionState = document.querySelector("#motion-state");
+      function describeMotion() {
+        const path = document.body.dataset.active === "true" ? "transform" : "left";
+        const offset = document.body.dataset.atStart === "true" ? 0 : 40;
+        motionState.textContent = `当前 ${path} 路径，位移 ${offset}px。`;
+      }
+      window.applyLessonState = describeMotion;
+      moveButton.addEventListener("click", () => {
+        const atStart = document.body.dataset.atStart !== "true";
+        document.body.dataset.atStart = String(atStart);
+        moveButton.setAttribute("aria-pressed", String(atStart));
+        describeMotion();
+        setTimeout(() => document.querySelector("#inspect").click(), 220);
+      });
+    </script>
   </body>
 </html>

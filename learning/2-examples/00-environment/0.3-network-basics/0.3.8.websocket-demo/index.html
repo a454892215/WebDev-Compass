@@ -61,9 +61,11 @@
       cursor: pointer;
     }
     button.secondary { background: #6c757d; }
+  body { overflow-wrap: anywhere; } pre, #log { max-inline-size: 100%; overflow-x: auto; } :focus-visible { outline: 3px solid #7638a8; outline-offset: 3px; }
   </style>
 </head>
 <body>
+<main>
   <h1>WebSocket 简易聊天</h1>
   <div class="tip">
     先运行 <code>node server.js</code>。打开 DevTools → Network → 筛选 <strong>WS</strong>，查看握手与 Frames。
@@ -74,11 +76,11 @@
   <div id="log"></div>
 
   <div class="row" style="margin-bottom:8px">
-    <input id="name" placeholder="昵称" value="guest" />
+    <label for="name">昵称</label> <input id="name" placeholder="昵称" value="guest" />
     <button id="connect" class="secondary" type="button">连接 / 重连</button>
   </div>
   <div class="row">
-    <input id="text" placeholder="输入消息，Enter 发送" />
+    <label for="text">消息</label> <input id="text" placeholder="输入消息，Enter 发送" />
     <button id="send" type="button">发送</button>
   </div>
 
@@ -150,5 +152,6 @@
 
     connect();
   </script>
+</main>
 </body>
 </html>

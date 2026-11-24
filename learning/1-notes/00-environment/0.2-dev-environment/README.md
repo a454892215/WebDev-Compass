@@ -26,7 +26,7 @@
 完成本节后可逐项确认：
 
 - [ ] `node -v` 与 `npm -v`（或 `pnpm -v`）能输出版本号
-- [ ] 能在 Cursor/VS Code 中格式化代码、看到 ESLint 提示
+- [ ] 能区分格式化、扩展提示与项目 ESLint 配置；只有具备依赖和规则才验收 lint
 - [ ] 能用 Live Server 或 `npx serve` 以 `http://` 协议打开示例
 - [ ] 能在 DevTools 的 Network / Console / Application 面板完成基本操作
-- [ ] 能完成 `clone → branch → commit → push` 基本 Git 流程
+- [ ] 能在临时仓库完成 branch → 选择暂存 → 本地 commit，并解释 push 的授权边界

@@ -35,3 +35,5 @@ python3 -m unittest discover -s scripts/tests -v
 检查器强制文件、编号、映射、锚点和练习/综合任务标准存在。来源正确性、代码行为、练习难度和学习者是否掌握不能靠存在性检查证明，必须另外审查和运行。新增正文必须同时维护契约；预留章节不算交付。
 
 [返回学习入口](../learning/README.md) · [编写规范](./AUTHORING.md)
+
+HTML 资源及导航另用 `python3 scripts/check_learning_resources.py` 检查；阶段质量验收遵循[总则](./AUTHORING.md)，通过逐点审查与验收门禁后单独记录。

@@ -8,7 +8,7 @@
 
 ## 1.1.1.1 综合任务
 
-在学习资源目录综合实践中应用：用最小文档建立自己的学习首页
+在项目副本核对文档模式、title与h1，将资源目录改成自己的课程目录，保留#filters和#results的可访问结构。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.1.doctype-html.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.1.doctype-html-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.1.doctype-html.md)
 
@@ -20,7 +20,7 @@
 
 ## 1.1.1.2 综合任务
 
-在学习资源目录综合实践中应用：为学习目录划分有意义的文档区域
+为综合目录新增“学习帮助”aside与可辨认nav，保持一个main，并用原有skip链接跨过导航进入主内容。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.2.header.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.2.header-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.2.header.md)
 
@@ -32,7 +32,7 @@
 
 ## 1.1.1.3 综合任务
 
-在学习资源目录综合实践中应用：用标题层级与文本语义整理课程说明
+审查综合页h1、筛选h2和卡片h3层级；新增一段含strong/em的使用说明，改字号后仍保留层级。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.3.h1.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.3.h1-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.3.h1.md)
 
@@ -44,7 +44,7 @@
 
 ## 1.1.1.4 综合任务
 
-在学习资源目录综合实践中应用：为学习主题、操作步骤和术语选不同列表
+保留#cards的ul/li集合；在静态资料旁新增ol学习步骤和dl术语，将顺序任务与资源集合分开。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.4.ul.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.4.ul-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.4.ul.md)
 
@@ -56,7 +56,7 @@
 
 ## 1.1.1.5 综合任务
 
-在学习资源目录综合实践中应用：建立目录、详情与页内位置的链接
+为#static-catalog增加页内目录链接及一个有效同仓库详情入口，检查刷新、后退与复制链接，动作仍用button。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.5.a-href.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.5.a-href-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.5.a-href.md)
 
@@ -68,7 +68,7 @@
 
 ## 1.1.1.6 综合任务
 
-在学习资源目录综合实践中应用：交付一张稳定且可理解的内容图片
+在项目副本新增课程封面figure/picture，使用已有本地SVG并保留相应尺寸与alt；阻断图片后课程说明仍可读。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.6.img.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.6.img-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.6.img.md)
 
@@ -80,7 +80,7 @@
 
 ## 1.1.1.7 综合任务
 
-在学习资源目录综合实践中应用：制作学习进度数据表
+为目录新增按主题统计数量的table，带caption和行列头；窄屏只允许统计表局部滚动，保留原卡片列表语义。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.7.table.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.7.table-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.7.table.md)
 
@@ -92,7 +92,7 @@
 
 ## 1.1.1.8 综合任务
 
-在学习资源目录综合实践中应用：检查页面元信息和脚本加载时机
+审查综合目录title、viewport与module入口；在项目副本增加准确description，说明type=module与经典defer差异。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.1.8.meta.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.1.8.meta-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.1.8.meta.md)
 
@@ -104,7 +104,7 @@
 
 ## 1.1.2.1 综合任务
 
-在学习资源目录综合实践中应用：构造可解释的表单数据集
+在#filters增加同name的多选演示控件，先记录FormData.getAll结果，再决定如何扩展只读API查询参数；不要把纯本地收藏开关冒充服务端字段。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.2.1.form.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.2.1.form-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.2.1.form.md)
 
@@ -116,7 +116,7 @@
 
 ## 1.1.2.2 综合任务
 
-在学习资源目录综合实践中应用：用分组与标签表达一份学习偏好表单
+在项目副本为#filters增加“学习偏好”fieldset/legend及textarea备注；辅助预填按钮不得触发查询，请求提交仍由原按钮确认。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.2.2.textarea.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.2.2.textarea-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.2.2.textarea.md)
 
@@ -128,7 +128,7 @@
 
 ## 1.1.2.3 综合任务
 
-在学习资源目录综合实践中应用：比较约束、只读与禁用的提交行为
+在项目副本为关键词添加有说明的pattern约束，并增加只读演示编号和禁用内部字段；记录FormData与原生验证的不同结果。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.2.3.required.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.2.3.required-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.2.3.required.md)
 
@@ -140,7 +140,7 @@
 
 ## 1.1.2.4 综合任务
 
-在学习资源目录综合实践中应用：分别预览 URL 编码、multipart 与 JSON
+记录综合页GET筛选请求的URL；在副本设计一个不发送数据的投稿表单编码预览，比较multipart与JSON，禁止向只读API伪造写入。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.2.4.application-x-www-form-urlencoded.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.2.4.application-x-www-form-urlencoded-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.2.4.application-x-www-form-urlencoded.md)
 
@@ -152,7 +152,7 @@
 
 ## 1.1.2.5 综合任务
 
-在学习资源目录综合实践中应用：完成跨字段校验及错误恢复
+在目录副本新增两次输入练习邮箱的本地偏好表单，原生email校验后再比较一致性，错误修复后原有查询功能仍可用。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.2.5.item-1-1-2-5.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.2.5.item-1-1-2-5-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.2.5.item-1-1-2-5.md)
 
@@ -164,7 +164,7 @@
 
 ## 1.1.3.1 综合任务
 
-在学习资源目录综合实践中应用：把同一数据同时交付为 Canvas 与文字
+为目录增加按主题统计的Canvas概览和等价文本表；列表筛选后同步更新两者，模拟getContext返回null时文本仍更新。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.3.1.canvas.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.3.1.canvas-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.3.1.canvas.md)
 
@@ -176,7 +176,7 @@
 
 ## 1.1.3.2 综合任务
 
-在学习资源目录综合实践中应用：制作可缩放且有名称的 SVG 数据图
+在目录副本用内联SVG显示已收藏比例，同时更新可见文本与desc；主题切换保持对比，图标装饰与信息图名称分开。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.3.2.svg.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.3.2.svg-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.3.2.svg.md)
 
@@ -188,7 +188,7 @@
 
 ## 1.1.3.3 综合任务
 
-在学习资源目录综合实践中应用：组合两个有独立实例的原生学习卡片
+在独立分支把两张资源卡片改为原生Custom Element+template/slot，对比普通DOM版本；保留light DOM正文并记录是否值得在当前项目采用。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.3.3.template.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.3.3.template-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.3.3.template.md)
 
@@ -200,7 +200,7 @@
 
 ## 1.1.3.4 综合任务
 
-在学习资源目录综合实践中应用：让原生折叠与模态对话框正确工作
+为目录增加原生details帮助和清空本页收藏的确认dialog；取消或Esc不得清空，关闭后焦点返回触发按钮，并说明进度与收藏比例测量差异。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.3.4.details.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.3.4.details-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.3.4.details.md)
 
@@ -212,7 +212,7 @@
 
 ## 1.1.3.5 综合任务
 
-在学习资源目录综合实践中应用：用 dataset 记录公开卡片标识和次数
+审查收藏按钮data-resource-id与委托逻辑，在副本加入公开data-click-count并显式转数值；DOM改ID不得被解释为后端授权。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.3.5.data.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.3.5.data-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.3.5.data.md)
 
@@ -224,7 +224,7 @@
 
 ## 1.1.3.6 综合任务
 
-在学习资源目录综合实践中应用：给真实课程内容添加一致的 SEO 元数据
+为静态课程详情页添加与正文一致的title/description及JSON-LD，再从目录普通链接访问；记录源码可读性和上线后的抓取核对步骤，不声称本地已收录。
 
 [原理](../../1-notes/01-web-fundamentals/1.1-html/1.1.3.6.seo.md) · [示例](../../2-examples/01-web-fundamentals/1.1-html/1.1.3.6.seo-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.1-html/1.1.3.6.seo.md)
 
@@ -236,7 +236,7 @@
 
 ## 1.2.1.1 综合任务
 
-把综合页 header 中临时内联颜色改为 styles.css 的类规则，保持 #theme 两种主题行为。
+先在项目副本的 header 添加临时 style="color:tomato" 并观察，再移除内联声明，用 styles.css 的类规则连接 --accent，保持 #theme 两种主题行为。
 
 [原理](../../1-notes/01-web-fundamentals/1.2-css/1.2.1.1.style.md) · [示例](../../2-examples/01-web-fundamentals/1.2-css/1.2.1.1.style-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.2-css/1.2.1.1.style.md)
 
@@ -693,12 +693,12 @@
 
 ## 1.3.1.1 综合任务
 
-为综合项目区分固定配置const与可变筛选条件let，说明收藏数组的更新方式。
+为综合项目区分固定绑定const与可变状态let，分别解释favoriteIds这个Set和resources数组的更新方式。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.1.1.var.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.1.1.var-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.1.var.md)
 
 - [ ] 列出至少两个固定绑定和两个变化状态。
-- [ ] 说明const不冻结商品或收藏对象。
+- [ ] 说明const不冻结资源对象或收藏Set。
 - [ ] 能不用逐行提示说明原因，并在一个变体输入上重复验证。
 
 <a id="p-1-3-1-2"></a>
@@ -709,7 +709,7 @@
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.1.2.string-number-boolean-null-undefined.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.1.2.string-number-boolean-null-undefined-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.2.string-number-boolean-null-undefined.md)
 
-- [ ] 用样本验证数字id和字符串搜索词的区别。
+- [ ] 记录当前API字符串id、字符串搜索词与布尔收藏状态的实际类型，再加入数字id变体验证协议。
 - [ ] 指出一次共享对象修改可能影响原列表的位置。
 - [ ] 能不用逐行提示说明原因，并在一个变体输入上重复验证。
 
@@ -729,7 +729,7 @@
 
 ## 1.3.1.4 综合任务
 
-校验综合项目查询参数中的页码/数量文本，区分空串、0和无效数字。
+在项目副本新增可选页码/数量参数，再校验文本，区分空串、0和无效数字；参考项目尚无分页功能。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.1.4.number.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.1.4.number-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.4.number.md)
 
@@ -741,7 +741,7 @@
 
 ## 1.3.1.5 综合任务
 
-给综合项目分页大小和可选描述设置默认值，保留合法的0/false。
+在项目副本新增分页配置和可选描述，再设计默认值策略，保留业务认可的0/false；不要假定已有分页。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.1.5.item-1-3-1-5.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.1.5.item-1-3-1-5-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.5.item-1-3-1-5.md)
 
@@ -825,7 +825,7 @@
 
 ## 1.3.1.12 综合任务
 
-更新综合项目嵌套筛选配置，验证浅展开不会自动隔离嵌套对象。
+在项目副本引入含嵌套字段的筛选配置并执行更新，验证浅展开不会自动隔离嵌套对象。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.1.12.....md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.1.12....-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.12.....md)
 
@@ -885,7 +885,7 @@
 
 ## 1.3.2.3 综合任务
 
-审查综合项目请求Promise链，补齐return、catch和finally。
+在练习分支把一次load流程改写为Promise链，返回调用方可检查的结果，并安排catch提示和finally恢复；参考实现使用async/await。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.2.3.then.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.2.3.then-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.3.then.md)
 
@@ -897,7 +897,7 @@
 
 ## 1.3.2.4 综合任务
 
-并发读取综合项目两个独立数据源，决定失败时整页失败还是部分显示。
+在项目副本新增第二个本地只读数据源，再并发读取两个独立数据源，决定失败时整页失败还是部分显示。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.2.4.async.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.2.4.async-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.4.async.md)
 
@@ -909,7 +909,7 @@
 
 ## 1.3.2.5 综合任务
 
-评估综合项目分页是否需要生成器，给出适用性分析和一个小序列实现。
+评估目录若增加分页是否需要生成器，给出适用性分析和小序列实现；当前参考项目没有分页。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.2.5.item-1-3-2-5.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.2.5.item-1-3-2-5-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.5.item-1-3-2-5.md)
 
@@ -1029,7 +1029,7 @@
 
 ## 1.3.3.7 综合任务
 
-分析综合项目手动render与未来Vue模板的职责对应。
+分析综合项目手动render与声明式UI的职责；Vue模板仅作后续预告，不要求本阶段先掌握Vue实现。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn.md)
 
@@ -1065,7 +1065,7 @@
 
 ## 1.3.4.3 综合任务
 
-修复综合项目点击收藏按钮内图标时的target定位。
+先在练习副本给收藏按钮加入span或图标，再比较图标、按钮和列表空白处点击的target与动作识别；必要时修复定位。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.4.3.event.target.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.4.3.event.target-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.3.event.target.md)
 
@@ -1125,7 +1125,7 @@
 
 ## 1.3.5.1 综合任务
 
-重构综合项目中的嵌套回调，把请求、转换与渲染分离。
+审查综合项目请求、转换和渲染边界；另构造两步本地回调实验并用命名函数或Promise重构，不假定现有项目有回调地狱。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.5.1.item-1-3-5-1.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.5.1.item-1-3-5-1-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.1.item-1-3-5-1.md)
 
@@ -1153,7 +1153,7 @@
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api.md)
 
-- [ ] 404与坏JSON得到不同诊断。
+- [ ] 非2xx状态（现有503或新增404分支）与坏JSON得到不同诊断。
 - [ ] 快速切换筛选条件时旧响应不能覆盖新条件。
 - [ ] 能不用逐行提示说明原因，并在一个变体输入上重复验证。
 
@@ -1173,7 +1173,7 @@
 
 ## 1.3.5.5 综合任务
 
-清理综合项目的延迟搜索、定时刷新和动画帧。
+在项目副本新增可取消的延迟搜索或定时刷新，另可选加入动画帧；实现销毁清理，不假定参考项目已有这些计时器。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.5.5.settimeout.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.5.5.settimeout-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.5.settimeout.md)
 
@@ -1185,7 +1185,7 @@
 
 ## 1.3.5.6 综合任务
 
-校验综合项目接口JSON和收藏存储结构。
+校验综合项目接口JSON，并为当前仅在内存的收藏设计可选持久化格式；明确这是新增设计，不声称现有项目已存储。
 
 [原理](../../1-notes/01-web-fundamentals/1.3-javascript/1.3.5.6.json.parse.md) · [示例](../../2-examples/01-web-fundamentals/1.3-javascript/1.3.5.6.json.parse-demo.html) · [独立练习](../../3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.6.json.parse.md)
 

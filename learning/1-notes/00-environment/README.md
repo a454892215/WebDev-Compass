@@ -1,9 +1,19 @@
-# 阶段 0：环境与心智模型
+# 阶段 0：Web 开发环境、浏览器与 HTTP 基础
 
-> [← 返回知识库地图](../../../knowledge-map/01-foundation-stages-0-2.md#阶段-0环境与心智模型)
+> [返回知识地图](../../../knowledge-map/01-foundation-stages-0-2.md#阶段-0环境与心智模型)
 
-| 小节 | 说明 | 索引 |
+## 前置、目标与产出
+
+前置：已有一般编程、终端与文件操作经验；无需先会 Vue、Nuxt 或阶段 1 的完整语法。本文中的 DOM、fetch、服务端片段先作为可运行观察对象，语法和实现将在阶段 1–2 深化，不要求此时从零写出。
+
+目标：区分浏览器/服务器职责，能启动本地服务、读懂 URL 与 HTTP 证据，准确识别浏览器特有安全和状态边界。
+
+产出：完成一份[环境与网络观察报告](../../4-practice/00-environment/README.md)，按 19 项任务保存真实证据和未验证边界。资料质量通过与学习者掌握分开记录。
+
+| 顺序 | 小节 | 本节作用 |
 | --- | --- | --- |
-| 0.1 | Web 应用是什么 | [README](./0.1-what-is-web-app/README.md) ✅ |
-| 0.2 | 开发环境 | [README](./0.2-dev-environment/README.md) ✅ |
-| 0.3 | 网络基础 | [README](./0.3-network-basics/README.md) ✅ |
+| 1 | [0.1 Web 应用模型](./0.1-what-is-web-app/README.md) | 请求循环、浏览器、导航模型、同源与移动端边界 |
+| 2 | [0.2 开发环境](./0.2-dev-environment/README.md) | Node、包管理、编辑器、DevTools 与 Git |
+| 3 | [0.3 网络基础](./0.3-network-basics/README.md) | URL、HTTP、存储、DNS/TLS、REST、WS |
+
+先读 0.1 建立模型，再搭 0.2 环境并回跑示例，最后做 0.3 协议观察。网络片段不理解时先看动作与结果，完成阶段 1 后重做实现；SSR/认证/生产服务等留后续深化。[本地示例启动说明](../../2-examples/00-environment/README.md)。

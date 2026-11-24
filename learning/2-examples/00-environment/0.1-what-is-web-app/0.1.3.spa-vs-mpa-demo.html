@@ -31,7 +31,7 @@
       border-radius: 8px;
       padding: 20px;
     }
-    .card h3 { margin-bottom: 8px; }
+    .card h2 { margin-bottom: 8px; }
     .card.mpa { border-top: 3px solid #dc3545; }
     .card.spa { border-top: 3px solid #28a745; }
     nav { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
@@ -70,11 +70,13 @@
       margin-top: 8px;
       white-space: pre-wrap;
     }
+  body { overflow-wrap: anywhere; } pre, #log { max-inline-size: 100%; overflow-x: auto; } :focus-visible { outline: 3px solid #7638a8; outline-offset: 3px; }
   </style>
 </head>
 <body>
+<main>
   <h1>SPA vs MPA 对比演示</h1>
-  <p class="subtitle">对应笔记：<a href="../../../learning/1-notes/00-environment/0.1-what-is-web-app/spa-vs-mpa.md">SPA vs MPA</a></p>
+  <p class="subtitle">对应笔记：<a href="../../../1-notes/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa.md">SPA vs MPA</a></p>
 
   <div class="tip">
     💡 打开 DevTools → <strong>Network</strong> 面板。对比两种模式下页面切换时是否重新加载 HTML。
@@ -84,7 +86,7 @@
     <!-- MPA 模拟 -->
     <div class="card mpa">
       <span class="badge badge-mpa">MPA 模式</span>
-      <h3>多页应用（全页刷新）</h3>
+      <h2>多页应用（全页刷新）</h2>
       <p style="font-size:14px;color:#666;margin-bottom:8px">点击链接会重新加载整个页面</p>
       <nav>
         <a href="?mpa=home" class="mpa-link">首页</a>
@@ -92,14 +94,14 @@
         <a href="?mpa=contact" class="mpa-link">联系</a>
       </nav>
       <div class="view" id="mpa-view">
-        <p>这是 MPA 的「首页」。注意：点击导航时页面会<strong>整体刷新</strong>（白屏闪烁）。</p>
+        <p>这是 MPA 的「首页」。注意：点击导航时页面会<strong>整体刷新</strong>（本页导航到同一文件的不同查询串）。</p>
       </div>
     </div>
 
     <!-- SPA 模拟 -->
     <div class="card spa">
       <span class="badge badge-spa">SPA 模式</span>
-      <h3>单页应用（无刷新切换）</h3>
+      <h2>单页应用（无刷新切换）</h2>
       <p style="font-size:14px;color:#666;margin-bottom:8px">点击按钮只替换内容区域，页面不刷新</p>
       <nav>
         <button class="spa-nav active" data-page="home">首页</button>
@@ -116,9 +118,9 @@
   <script>
     // ── MPA 模拟：通过 URL 参数切换，触发页面内容替换（模拟全页刷新效果） ──
     const mpaPages = {
-      home: '<p>这是 MPA 的「首页」。注意：点击导航时页面会<strong>整体刷新</strong>（白屏闪烁）。</p>',
-      about: '<p>这是 MPA 的「关于」页面。服务器返回了新的 HTML，浏览器重新渲染了整个页面。</p>',
-      contact: '<p>这是 MPA 的「联系」页面。每次切换都重新加载了 CSS 和 JS。</p>',
+      home: '<p>这是 MPA 的「首页」。注意：点击导航时页面会<strong>整体刷新</strong>（本页导航到同一文件的不同查询串）。</p>',
+      about: '<p>这是 MPA 的「关于」页面。浏览器请求同一静态 HTML，再由 JS 读取查询串决定显示；本例不是服务端模板渲染。</p>',
+      contact: '<p>这是 MPA 的「联系」页面。这里发生文档导航；外部 CSS/JS 是否重新下载还取决于缓存。</p>',
     };
 
     function renderMpa() {
@@ -135,7 +137,7 @@
     const spaPages = {
       home: '<p>这是 SPA 的「首页」。切换页面时<strong>不会刷新</strong>，只有内容区域变化。</p>',
       about: '<p>这是 SPA 的「关于」页面。JavaScript 替换了 DOM 内容，没有请求新 HTML。</p><p style="color:#28a745">✓ 无白屏闪烁</p>',
-      contact: '<p>这是 SPA 的「联系」页面。可能同时发起了 API 请求获取数据。</p><p style="color:#28a745">✓ 无白屏闪烁</p>',
+      contact: '<p>这是 SPA 的「联系」页面。真实应用可能发 API，本实验没有发 API。</p><p style="color:#28a745">✓ 无白屏闪烁</p>',
     };
 
     const spaLog = document.getElementById('spa-log');
@@ -160,20 +162,21 @@
         spaLog.textContent =
           `[SPA 路由] pushState → #${page}\n` +
           `[SPA 渲染] 替换 #spa-view 内容（无页面刷新）\n` +
-          `[API 请求] fetch('/api/${page}') — 仅获取 JSON 数据\n` +
+          `[模拟说明] 此处没有 fetch，不能作为 API 抓包证据\n` +
           `导航次数: ${navCount}，页面刷新次数: 0`;
       });
     });
 
-    // 处理浏览器前进/后退
-    window.addEventListener('popstate', (e) => {
-      if (e.state?.page) {
-        document.getElementById('spa-view').innerHTML = spaPages[e.state.page];
-        document.querySelectorAll('.spa-nav').forEach(b => {
-          b.classList.toggle('active', b.dataset.page === e.state.page);
-        });
-      }
-    });
+    // 初始深链接、回到初始条目和前进/后退均从 URL 恢复。
+    function restoreSpa() {
+      const page = location.hash.slice(1);
+      const key = Object.hasOwn(spaPages, page) ? page : 'home';
+      document.getElementById('spa-view').innerHTML = spaPages[key];
+      document.querySelectorAll('.spa-nav').forEach(b => b.classList.toggle('active', b.dataset.page === key));
+    }
+    window.addEventListener('popstate', restoreSpa);
+    restoreSpa();
   </script>
+</main>
 </body>
 </html>

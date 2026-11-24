@@ -1,0 +1,921 @@
+{
+  "reviewedAt": "2026-11-24",
+  "ruleVersion": 1,
+  "scope": "1.3 JavaScript 42 points and 1.4 basic quality 4 points; all four resources read per point.",
+  "points": [
+    {
+      "id": "1.3.1.1",
+      "result": "passed",
+      "evidence": {
+        "review": "TDZ 与 var 初始化区分正确，const 仅约束绑定；去掉首课循环前置，明确对象/异常包装可回读。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.1.var.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.1.var-demo.html",
+        "exampleAssertions": [
+          "const 属性: Lin",
+          "TDZ: ReferenceError"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.1.var.md",
+        "exerciseDebugTask": "把const对象重新赋值，比较它与修改属性分别是否报错。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-1",
+        "practiceTask": "为综合项目区分固定绑定const与可变状态let，分别解释favoriteIds这个Set和resources数组的更新方式。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.2",
+      "result": "passed",
+      "evidence": {
+        "review": "原始值、引用值和参数按值传递区分正确；修改练习为当前 API 字符串 id，不假定数字 id。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.2.string-number-boolean-null-undefined.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.2.string-number-boolean-null-undefined-demo.html",
+        "exampleAssertions": [
+          "首次类型: number",
+          "再次类型: string",
+          "共享属性: 2",
+          "重绑参数后: 2"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.2.string-number-boolean-null-undefined.md",
+        "exerciseDebugTask": "用重新绑定参数的方式试图替换调用方对象，找出未生效原因。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-2",
+        "practiceTask": "核对API项目id、数量、收藏状态的运行期类型，区分引用共享与值复制。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.3",
+      "result": "passed",
+      "evidence": {
+        "review": "Array.isArray、null、跨 realm instanceof 与可伪造 toStringTag 边界齐全；高级标签标为后读。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.3.typeof.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.3.typeof-demo.html",
+        "exampleAssertions": [
+          "typeof: object",
+          "是数组: true",
+          "可伪造标签: [object Date]"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.3.typeof.md",
+        "exerciseDebugTask": "把typeof value === \"object\"直接当作可读字段保证，输入null复现并修正。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-3",
+        "practiceTask": "为综合项目接口解码器增加数组、null、普通对象与字段类型检查。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.4",
+      "result": "passed",
+      "evidence": {
+        "review": "空串转换 0、Boolean非空字符串和 finite 校验一致；最小片段改为显式 inputText，避免未声明 input。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.4.number.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.4.number-demo.html",
+        "exampleAssertions": [
+          "字符串拼接: 21",
+          "转换结果: 3"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.4.number.md",
+        "exerciseDebugTask": "把数量文本直接加1，输入2与空串，定位拼接和空值转换问题。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-4",
+        "practiceTask": "在项目副本新增可选页码/数量参数，再校验文本，区分空串、0和无效数字；参考项目尚无分页功能。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.5",
+      "result": "passed",
+      "evidence": {
+        "review": "严格相等、逻辑返回操作数、??保留0、可选链不校验类型均被示例和排错覆盖。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.5.item-1-3-1-5.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.5.item-1-3-1-5-demo.html",
+        "exampleAssertions": [
+          "或默认值: 10",
+          "空合并默认值: 0",
+          "显示名称: 访客"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.5.item-1-3-1-5.md",
+        "exerciseDebugTask": "用||覆盖数量0，说明错误结果并选择合适规则。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-5",
+        "practiceTask": "在项目副本新增分页配置和可选描述，再设计默认值策略，保留业务认可的0/false；不要假定已有分页。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.6",
+      "result": "passed",
+      "evidence": {
+        "review": "switch return 避免贯穿，与多个if/互斥状态差异讲清；函数包装标注先读1.3.1.8。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.6.if-else.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.6.if-else-demo.html",
+        "exampleAssertions": [
+          "界面状态: 加载中",
+          "空列表: 暂无数据"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.6.if-else.md",
+        "exerciseDebugTask": "删除switch分支的break/return，观察意外贯穿并修复。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-6",
+        "practiceTask": "把综合项目loading/empty/error/success转换为互斥界面状态。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.7",
+      "result": "passed",
+      "evidence": {
+        "review": "for...in字符串属性名与for...of值区别，继承属性和退出条件完整；异步遍历标为Promise后回读。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.7.for.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.7.for-demo.html",
+        "exampleAssertions": [
+          "for in: [\"0:string\",\"1:string\"]",
+          "for of: [\"A\",\"B\"]",
+          "自有键: [\"count\"]"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.7.for.md",
+        "exerciseDebugTask": "把for...of误改for...in，记录拿到的值与类型差异。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-7",
+        "practiceTask": "为综合项目列表处理选择合适遍历方式，并解释为何不for...in数组值。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.8",
+      "result": "passed",
+      "evidence": {
+        "review": "方法接收者、提取丢失this和bind修复一致；箭头不是短写普通函数，练习可独立解释两种修复。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.8.this.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.8.this-demo.html",
+        "exampleAssertions": [
+          "方法调用: 2",
+          "提取后: TypeError",
+          "bind后: 2"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.8.this.md",
+        "exerciseDebugTask": "提取对象方法后独立调用，定位this丢失并提供两种修复。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-8",
+        "practiceTask": "抽出综合项目筛选函数，明确参数、返回值及是否依赖this。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.9",
+      "result": "passed",
+      "evidence": {
+        "review": "词法定义位置与调用位置区分、遮蔽及module顶层不挂window一致；对应排错定位具体绑定。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.9.item-1-3-1-9.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.9.item-1-3-1-9-demo.html",
+        "exampleAssertions": [
+          "闭包读局部: dark",
+          "外层保持: light",
+          "块外访问: ReferenceError"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.9.item-1-3-1-9.md",
+        "exerciseDebugTask": "在内层声明同名变量遮蔽外层，定位实际读取的绑定。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-9",
+        "practiceTask": "将综合项目临时变量限制在函数或模块中，避免无关全局共享。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.10",
+      "result": "passed",
+      "evidence": {
+        "review": "闭包保存绑定当前值而非快照，工厂实例隔离；练习共享绑定故障能检验理解。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.10.closure.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.10.closure-demo.html",
+        "exampleAssertions": [
+          "A第二次: 2",
+          "B第一次: 1",
+          "读取当前绑定: 3"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.10.closure.md",
+        "exerciseDebugTask": "把两个计数器改为共享同一个外层绑定，复现互相影响。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-10",
+        "practiceTask": "用工厂闭包为两个独立列表建立独立筛选/计数环境。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.11",
+      "result": "passed",
+      "evidence": {
+        "review": "map/filter/find/some/every/reduce/forEach返回语义与浅复制边界正确；补充数组解构/剩余项最小代码。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.11.map.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.11.map-demo.html",
+        "exampleAssertions": [
+          "map翻倍: [20,40,10]",
+          "sum: 35",
+          "空数组总和: 0"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.11.map.md",
+        "exerciseDebugTask": "移除reduce初始值后给空数组，解释异常与边界修复。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-11",
+        "practiceTask": "用filter/find/some/reduce实现综合项目筛选、详情查找和统计。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.12",
+      "result": "passed",
+      "evidence": {
+        "review": "对象展开仅复制一层、解构默认只处理undefined明确；补计算属性名代码而非仅标题提及。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.12.....md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.12....-demo.html",
+        "exampleAssertions": [
+          "重命名解构: Ada",
+          "浅拷贝共享: dark",
+          "独立副本: blue",
+          "原对象: dark"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.12.....md",
+        "exerciseDebugTask": "只做一层展开后修改嵌套配置，复现原数据被改变。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-12",
+        "practiceTask": "在项目副本引入含嵌套字段的筛选配置并执行更新，验证浅展开不会自动隔离嵌套对象。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.13",
+      "result": "passed",
+      "evidence": {
+        "review": "UTF16/码点/字素区分正确；补slice/includes片段，将不存在的输入控件操作改为副本修改常量。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.13.slice.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.13.slice-demo.html",
+        "exampleAssertions": [
+          "UTF16长度: 3",
+          "码点数量: 2",
+          "替换全部: b-b"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.13.slice.md",
+        "exerciseDebugTask": "按UTF-16索引截断emoji，解释字符破损和用户可见字符边界。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-13",
+        "practiceTask": "处理综合项目搜索词和长文本展示，区分正规化、截断与安全输出。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.1.14",
+      "result": "passed",
+      "evidence": {
+        "review": "动态类型和隐式转换未被等同于无类型；TS不替代解码、RN不等于DOM宿主已明确。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.1.14.js-dart-kotlin-swift-vs.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.1.14.js-dart-kotlin-swift-vs-demo.html",
+        "exampleAssertions": [
+          "原始字段类型: string",
+          "数值相加: 3",
+          "字符串相加: 21"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.1.14.js-dart-kotlin-swift-vs.md",
+        "exerciseDebugTask": "将API字符串数量误当数字，提出解析、范围和协议三层检查。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-1-14",
+        "practiceTask": "审查综合项目从移动端经验迁移时的三个JS/Web差异。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.1",
+      "result": "passed",
+      "evidence": {
+        "review": "class原型、私有字段、static和super顺序齐全；综合任务允许选择纯函数组合，不强制继承。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.1.class.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.1.class-demo.html",
+        "exampleAssertions": [
+          "A两次: [1,2]",
+          "B一次: 1",
+          "子类: 课堂:1"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.1.class.md",
+        "exerciseDebugTask": "在实例上调用静态方法，定位方法归属而不是加无意义兼容层。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-1",
+        "practiceTask": "比较综合项目状态用class还是模块/组合函数组织的成本，给出小型重构方案。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.2",
+      "result": "passed",
+      "evidence": {
+        "review": "named/default契约、URL解析、只读实时导入与动态import区别成立；明确两文件片段及HTTP模块条件。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.2.import.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.2.import-demo.html",
+        "exampleAssertions": [
+          "默认导出: 本地数学模块",
+          "命名函数: 8"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.2.import.md",
+        "exerciseDebugTask": "把type=module改为经典script，记录静态import语法错误并恢复。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-2",
+        "practiceTask": "把综合项目数据请求与UI渲染拆为真实ESM模块。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.3",
+      "result": "passed",
+      "evidence": {
+        "review": "同步执行与微任务、then返回、catch恢复、finally透传准确；先读回调/同步错误/一次性定时器解除教学跳跃。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.3.then.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.3.then-demo.html",
+        "exampleAssertions": [
+          "then结果: 6",
+          "catch: 预期失败",
+          "finally: 清理",
+          "最终结果: 9"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.3.then.md",
+        "exerciseDebugTask": "then里漏return异步步骤，复现外层链过早结束。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-3",
+        "practiceTask": "在练习分支把一次load流程改写为Promise链，返回调用方可检查的结果，并安排catch提示和finally恢复；参考实现使用async/await。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.4",
+      "result": "passed",
+      "evidence": {
+        "review": "await暂停函数、并发启动/等待、Promise.all不取消其他任务清晰；最小例改async main内部await，避免提前依赖TLA。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.4.async.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.4.async-demo.html",
+        "exampleAssertions": [
+          "启动顺序: [\"A开始\",\"B开始\"]",
+          "聚合结果: [\"A\",\"B\"]",
+          "完成顺序: [\"A开始\",\"B开始\",\"B结束\",\"A结束\"]"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.4.async.md",
+        "exerciseDebugTask": "漏await一个拒绝Promise，解释为什么外层catch没有按期捕获。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-4",
+        "practiceTask": "在项目副本新增第二个本地只读数据源，再并发读取两个独立数据源，决定失败时整页失败还是部分显示。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.5",
+      "result": "passed",
+      "evidence": {
+        "review": "iterator协议、生成器惰性与最终return不作为forof元素讲清；练习可给出无需使用生成器的结论。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.5.item-1-3-2-5.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.5.item-1-3-2-5-demo.html",
+        "exampleAssertions": [
+          "第一项: {\"value\":0,\"done\":false}",
+          "结束: {\"value\":\"done\",\"done\":true}",
+          "已消费序列: []"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.5.item-1-3-2-5.md",
+        "exerciseDebugTask": "重复消费同一个生成器，说明第二次序列为何为空。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-5",
+        "practiceTask": "评估目录若增加分页是否需要生成器，给出适用性分析和小序列实现；当前参考项目没有分页。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.6",
+      "result": "passed",
+      "evidence": {
+        "review": "Map对象身份和Set去重正确；WeakMap允许未注册Symbol而非全部primitive被拒绝，GC不可预测；离线复核Symbol边界。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.6.map.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.6.map-demo.html",
+        "exampleAssertions": [
+          "同一个键: metadata",
+          "新对象键: undefined",
+          "去重: [1,2]",
+          "字符串键: TypeError"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.6.map.md",
+        "exerciseDebugTask": "把两个同字段对象当作同一Map键，记录查找失败原因。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-6",
+        "practiceTask": "为综合项目收藏去重选择Set，为按id查找选择Map，评估WeakMap是否需要。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.7",
+      "result": "passed",
+      "evidence": {
+        "review": "逻辑赋值与??空值策略不同，左侧求值与混用括号边界明确；补充而非重复1.3.1.5基础。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.7.item-1-3-2-7.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.7.item-1-3-2-7-demo.html",
+        "exampleAssertions": [
+          "配置: {\"retries\":0,\"title\":\"未命名\"}",
+          "条件赋值: false",
+          "安全读取: 访客"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.7.item-1-3-2-7.md",
+        "exerciseDebugTask": "将??=换为||=并输入false或0，说明默认值策略差异。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-7",
+        "practiceTask": "检查综合项目默认设置中的||、??与逻辑赋值，保护合法空值策略。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.2.8",
+      "result": "passed",
+      "evidence": {
+        "review": "顶层await仅在支持的模块上下文、依赖延迟和模块实例复用清楚；真实ready.mjs不是字符串伪演示。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.2.8.await.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.2.8.await-demo.html",
+        "exampleAssertions": [
+          "顶层await结果: true",
+          "导入完成后值: 异步模块已就绪"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.2.8.await.md",
+        "exerciseDebugTask": "在模块初始化依赖中加入失败，观察导入者的错误边界。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-2-8",
+        "practiceTask": "评估综合项目初始化是否适合顶层await，对关键路径和失败回退做说明。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.3.1",
+      "result": "passed",
+      "evidence": {
+        "review": "Document/Element/Text分类、children与childNodes及空白节点差异可从实际树观察。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.1.dom-document-element-node-text.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.3.1.dom-document-element-node-text-demo.html",
+        "exampleAssertions": [
+          "元素子节点数: 1",
+          "全部子节点数: 2",
+          "首节点类型: 3"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.1.dom-document-element-node-text.md",
+        "exerciseDebugTask": "用firstChild读取标签属性，但源代码前有文本，定位节点类型。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-3-1",
+        "practiceTask": "用DevTools审查综合项目列表中的Element/Text与实际渲染结构。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.3.2",
+      "result": "passed",
+      "evidence": {
+        "review": "查询null、静态NodeList和实时HTMLCollection差异可观察；明确先提供items根节点。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.2.getelementbyid.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.3.2.getelementbyid-demo.html",
+        "exampleAssertions": [
+          "静态集合: 2",
+          "实时集合: 3",
+          "缺失节点: null"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.2.getelementbyid.md",
+        "exerciseDebugTask": "给静态NodeList追加项目后仍按旧length判断，解释快照行为。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-3-2",
+        "practiceTask": "限制综合项目选择器到当前区域，并检查缺失节点和动态节点集合。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.3.3",
+      "result": "passed",
+      "evidence": {
+        "review": "创建未挂载、append移动、removeChild归属和clone监听器边界正确；监听器克隆扩展在事件后完成。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.3.createelement.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.3.3.createelement-demo.html",
+        "exampleAssertions": [
+          "插入后顺序: [\"B\",\"A\"]",
+          "移动后顺序: [\"A\",\"B\"]",
+          "移除后数量: 1"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.3.createelement.md",
+        "exerciseDebugTask": "把已有节点append到新位置却期望复制，定位节点为何消失。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-3-3",
+        "practiceTask": "为综合项目新增一条列表项，完成安全创建、插入与移除。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.3.4",
+      "result": "passed",
+      "evidence": {
+        "review": "attribute/property、布尔属性存在性、style最终值与dataset字符串均区分；视觉状态与ARIA同步。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.4.setattribute.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.3.4.setattribute-demo.html",
+        "exampleAssertions": [
+          "状态类: true",
+          "ARIA状态: true",
+          "dataset类型: string",
+          "实时value: 运行期值",
+          "初始attribute: 初始值"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.4.setattribute.md",
+        "exerciseDebugTask": "设置disabled=\"false\"后发现控件仍禁用，解释布尔属性。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-3-4",
+        "practiceTask": "同步综合项目收藏按钮的class、aria-pressed与数据属性。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.3.5",
+      "result": "passed",
+      "evidence": {
+        "review": "textContent作为文本与innerHTML注入入口区别正确，示例只安全渲染输入，危险形状不执行。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.5.textcontent.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.3.5.textcontent-demo.html",
+        "exampleAssertions": [
+          "输入创建strong数量: 0",
+          "可信结构strong数量: 1"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.5.textcontent.md",
+        "exerciseDebugTask": "审查一段把外部文本交给innerHTML的代码，只用静态样本分析风险并改textContent；不要执行真实攻击。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-3-5",
+        "practiceTask": "让综合项目安全显示恶意形状的标题或错误文本。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.3.6",
+      "result": "passed",
+      "evidence": {
+        "review": "offset/client/rect盒模型与transform差异正确；真实测量断言200/190/160，避免只看固定说明日志。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.6.offsetwidth-height.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.3.6.offsetwidth-height-demo.html",
+        "exampleAssertions": [
+          "offsetWidth: 200",
+          "clientWidth: 190",
+          "rectWidth: 160"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.6.offsetwidth-height.md",
+        "exerciseDebugTask": "用offsetWidth判断transform后的视觉宽度，定位测量API选错。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-3-6",
+        "practiceTask": "测量综合项目卡片和滚动区域，定位窄屏溢出。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.3.7",
+      "result": "passed",
+      "evidence": {
+        "review": "正文状态驱动原则正确但旧标题DOM≈Widget误导；改DOM节点/原生View/声明式UI区别，并保留模型与DOM未自动同步实验。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn-demo.html",
+        "exampleAssertions": [
+          "仅模型改变: 1",
+          "DOM仍为: 0",
+          "render后DOM: 1"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn.md",
+        "exerciseDebugTask": "只修改模型不调用render，解释界面没有同步的原因。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-3-7",
+        "practiceTask": "分析综合项目手动render与声明式UI的职责；Vue模板仅作后续预告，不要求本阶段先掌握Vue实现。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.4.1",
+      "result": "passed",
+      "evidence": {
+        "review": "add/remove需要相同回调和capture、AbortSignal共同清理正确；最小代码显式查询button并写remove替代方式。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.1.addeventlistener.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.4.1.addeventlistener-demo.html",
+        "exampleAssertions": [
+          "触发次数: 1",
+          "监听状态: 已解除"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.1.addeventlistener.md",
+        "exerciseDebugTask": "用新建箭头函数removeEventListener，复现监听未解除。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-4-1",
+        "practiceTask": "给综合项目视图装配统一的事件订阅与清理入口。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.4.2",
+      "result": "passed",
+      "evidence": {
+        "review": "capture/target/bubble与并非所有事件冒泡齐全；普通DOM为本轮范围，Shadow DOM只提示后续边界。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.2.item-1-3-4-2.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.4.2.item-1-3-4-2-demo.html",
+        "exampleAssertions": [
+          "阶段: outer捕获",
+          "阶段: inner目标 2",
+          "阶段: outer冒泡"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.2.item-1-3-4-2.md",
+        "exerciseDebugTask": "假定focus会像click冒泡，解释应选capture或focusin。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-4-2",
+        "practiceTask": "跟踪综合项目卡片与收藏按钮的传播路径，解释事件阶段。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.4.3",
+      "result": "passed",
+      "evidence": {
+        "review": "target/currentTarget及异步读取上下文区别准确；综合任务先加入span图标样本，不假定当前收藏已有图标故障。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.3.event.target.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.4.3.event.target-demo.html",
+        "exampleAssertions": [
+          "target: SPAN",
+          "currentTarget: container"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.3.event.target.md",
+        "exerciseDebugTask": "直接读取target.dataset却点击了按钮内span，定位动作识别失败。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-4-3",
+        "practiceTask": "先在练习副本给收藏按钮加入span或图标，再比较图标、按钮和列表空白处点击的target与动作识别；必要时修复定位。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.4.4",
+      "result": "passed",
+      "evidence": {
+        "review": "preventDefault不停止传播、stopPropagation不取消默认动作，stopImmediatePropagation区别明确，表单保留验证。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.4.preventdefault.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.4.4.preventdefault-demo.html",
+        "exampleAssertions": [
+          "默认提交已取消: true",
+          "停止传播: 已调用"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.4.preventdefault.md",
+        "exerciseDebugTask": "只stopPropagation却期望阻止表单默认提交，解释两个维度。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-4-4",
+        "practiceTask": "为综合项目搜索表单取消默认导航，保留键盘提交与父层事件协作。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.4.5",
+      "result": "passed",
+      "evidence": {
+        "review": "input/change/submit、IME、脚本赋值不触发用户input解释一致；补onResize函数与解除订阅，避免未定义引用。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.5.click.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.4.5.click-demo.html",
+        "exampleAssertions": [
+          "事件: input 测试",
+          "事件: submit已取消"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.5.click.md",
+        "exerciseDebugTask": "只用keydown追踪文字，说明粘贴或输入法为何遗漏。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-4-5",
+        "practiceTask": "完善综合项目搜索输入、Enter提交及焦点事件，考虑中文输入法。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.4.6",
+      "result": "passed",
+      "evidence": {
+        "review": "动态列表委托使用Element guard、closest白名单和contains边界；新项操作与空白不误删具体验收成立。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.6.event-delegation.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.4.6.event-delegation-demo.html",
+        "exampleAssertions": [
+          "新增后数量: 2",
+          "删除后数量: 1"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.6.event-delegation.md",
+        "exerciseDebugTask": "委托处理不校验closest的动作和容器范围，提出边界修复。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-4-6",
+        "practiceTask": "给综合项目动态列表使用受限事件委托。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.4.7",
+      "result": "passed",
+      "evidence": {
+        "review": "CustomEvent默认不冒泡/不可取消/不composed与dispatch同步、detail共享引用明确；不强制事件总线。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.4.7.customevent.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.4.7.customevent-demo.html",
+        "exampleAssertions": [
+          "分发顺序: 之前",
+          "收到detail: {\"lessonId\":\"js\",\"progress\":100}",
+          "分发顺序: 之后"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.4.7.customevent.md",
+        "exerciseDebugTask": "省略bubbles却期望父节点接收，复现并说明传播契约。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-4-7",
+        "practiceTask": "评估综合项目跨区域刷新是否需要CustomEvent，并定义detail契约。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.5.1",
+      "result": "passed",
+      "evidence": {
+        "review": "回调不一定异步、同步外层try不覆盖未来栈明确；项目任务改审查边界并构造两步小实验，不假定既有回调地狱。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.5.1.item-1-3-5-1.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.5.1.item-1-3-5-1-demo.html",
+        "exampleAssertions": [
+          "开始: 同步",
+          "map回调: 同步 1",
+          "定时回调结果: Ada"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.1.item-1-3-5-1.md",
+        "exerciseDebugTask": "把异步回调内错误交给外层同步try，说明跨调用栈的捕获问题。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-5-1",
+        "practiceTask": "审查综合项目请求、转换和渲染边界；另构造两步本地回调实验并用命名函数或Promise重构，不假定现有项目有回调地狱。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.5.2",
+      "result": "passed",
+      "evidence": {
+        "review": "理论load不等于HTTP成功，但场景原先解析前未检查status；已补检查并真实浏览器复核200及注入404先报HTTP而非SyntaxError。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.5.2.xmlhttprequest.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.5.2.xmlhttprequest-demo.html",
+        "exampleAssertions": [
+          "XHR状态: 200",
+          "XHR用户: Ada"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.2.xmlhttprequest.md",
+        "exerciseDebugTask": "只检查onload而忽略status，复现404被当成功。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-5-2",
+        "practiceTask": "分析综合项目若接入旧XHR接口的适配边界。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.5.3",
+      "result": "passed",
+      "evidence": {
+        "review": "HTTP、JSON解析、协议结构、取消分层成立；本地POST真实回显，服务补realpath防止符号链接逃逸并通过8项HTTP回归。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api-demo.html",
+        "exampleAssertions": [
+          "成功用户: Ada",
+          "HTTP分支: HTTP 404",
+          "解析分支: SyntaxError",
+          "取消分支: AbortError"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.3.fetch-api.md",
+        "exerciseDebugTask": "漏response.ok或未await response.json，分别复现HTTP和解析错误遗漏。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-5-3",
+        "practiceTask": "实现综合项目Fetch加载，覆盖HTTP错误、解析失败、取消和迟到响应。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.5.4",
+      "result": "passed",
+      "evidence": {
+        "review": "同步与await捕获、finally恢复及覆盖return风险明确；排错要求说明异常边界，未声称空catch可解决失败。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.5.4.try-catch-finally.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.5.4.try-catch-finally-demo.html",
+        "exampleAssertions": [
+          "开始loading: true",
+          "错误类型: TypeError",
+          "结束loading: false"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.4.try-catch-finally.md",
+        "exerciseDebugTask": "在finally里return，说明原本异常或返回值为何被覆盖。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-5-4",
+        "practiceTask": "为综合项目异步操作统一恢复loading与安全提示。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.5.5",
+      "result": "passed",
+      "evidence": {
+        "review": "timeout不是实时保证、interval清理和rAF时间戳边界明确；生命周期清理是任务要求，不声称固定毫秒精度。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.5.5.settimeout.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.5.5.settimeout-demo.html",
+        "exampleAssertions": [
+          "interval次数: 3",
+          "rAF: 已执行",
+          "清理: interval已停止"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.5.settimeout.md",
+        "exerciseDebugTask": "不清理interval并重复进入视图，复现重复更新后修复。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-5-5",
+        "practiceTask": "在项目副本新增可取消的延迟搜索或定时刷新，另可选加入动画帧；实现销毁清理，不假定参考项目已有这些计时器。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.3.5.6",
+      "result": "passed",
+      "evidence": {
+        "review": "JSON合法不等于模型正确，undefined/BigInt/Date与深拷贝限制齐全；明确当前收藏仅内存，可选存储格式为扩展任务。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.5.6.json.parse.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.3-javascript/1.3.5.6.json.parse-demo.html",
+        "exampleAssertions": [
+          "字段校验: true",
+          "缺失与空: {\"empty\":null}",
+          "无效JSON: SyntaxError",
+          "BigInt默认编码: TypeError"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.3-javascript/1.3.5.6.json.parse.md",
+        "exerciseDebugTask": "用JSON往返复制Date或BigInt，记录类型变化或异常。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-3-5-6",
+        "practiceTask": "校验综合项目接口JSON，并为当前仅在内存的收藏设计可选持久化格式；明确这是新增设计，不声称现有项目已存储。",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.4.1",
+      "result": "passed",
+      "evidence": {
+        "review": "规范/实现/Baseline/项目矩阵/实际行为区分正确，强制回退不是旧浏览器模拟；修正后续阶段索引误指13。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.4-quality-basics/1.4.1.standards-baseline.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.4-quality-basics/1.4.1.standards-baseline-demo.html",
+        "exampleAssertions": [
+          "Grid 语法支持",
+          "block"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.4-quality-basics/1.4.1.standards-baseline.md",
+        "exerciseDebugTask": "把User-Agent中出现Chrome当作全部能力支持，指出旧WebView和嵌入容器风险。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-4-1",
+        "practiceTask": "在学习资源目录综合实践中应用：为课程目录选择能力并写出回退",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.4.2",
+      "result": "passed",
+      "evidence": {
+        "review": "原生标签、键盘焦点、required/ARIA、对比度和完整WCAG声明边界清楚；最小表单片段补form容器。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.4-quality-basics/1.4.2.accessibility-foundations.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.4-quality-basics/1.4.2.accessibility-foundations-demo.html",
+        "exampleAssertions": [
+          "你好，Demo",
+          "success",
+          "contrast"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.4-quality-basics/1.4.2.accessibility-foundations.md",
+        "exerciseDebugTask": "移除focus-visible样式，体验键盘定位困难，再恢复清晰焦点。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-4-2",
+        "practiceTask": "在学习资源目录综合实践中应用：只用键盘完成带错误恢复的预览",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.4.3",
+      "result": "passed",
+      "evidence": {
+        "review": "设计状态实验明确人工切换而非API，loading/empty/error、aria-busy及长内容与移动UI差异检查具体。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.4-quality-basics/1.4.3.design-interaction-states.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.4-quality-basics/1.4.3.design-interaction-states-demo.html",
+        "exampleAssertions": [
+          "success",
+          "false",
+          "面向桌面与手机用户"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.4-quality-basics/1.4.3.design-interaction-states.md",
+        "exerciseDebugTask": "把所有没有数据的情况都显示为空，说明它如何掩盖正在加载或失败。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-4-3",
+        "practiceTask": "在学习资源目录综合实践中应用：为目录列表补齐设计稿没有的状态",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    },
+    {
+      "id": "1.4.4",
+      "result": "passed",
+      "evidence": {
+        "review": "基础HTML先交付、脚本关闭/取消/网络失败/重试与隐私最小化明确；Abort不等于服务端回滚，模拟弱网范围准确。",
+        "theory": "learning/1-notes/01-web-fundamentals/1.4-quality-basics/1.4.4.progressive-enhancement.md",
+        "example": "learning/2-examples/01-web-fundamentals/1.4-quality-basics/1.4.4.progressive-enhancement-demo.html",
+        "exampleAssertions": [
+          "cancelled",
+          "运行本地示例"
+        ],
+        "exercise": "learning/3-exercises/01-web-fundamentals/1.4-quality-basics/1.4.4.progressive-enhancement.md",
+        "exerciseDebugTask": "只依赖navigator.onLine决定服务健康，说明网络接口与业务接口可达性的区别。",
+        "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-4-4",
+        "practiceTask": "在学习资源目录综合实践中应用：验证脚本缺失、取消和故障恢复",
+        "validation": "本轮逐点静态语义/教学审查；未改行为复用2026-11-24此前Chrome1440/390历史证据；改动XHR/服务边界另见stage-1-js-quality-runtime.json。"
+      },
+      "issues": []
+    }
+  ]
+}

@@ -11,17 +11,17 @@
 - [四部分学习资料](./learning/README.md)：理论、代码示例、独立练习与综合实践。
 - [学习资料结构规范](./docs/LEARNING_STRUCTURE.md)：目录、逐知识点映射与脚本门禁。
 - [Nuxt 基座与宿主指南](./framework-guide/README.md)：通用工程规划与独立项目交接。
-- [内容编写与验证规范](./docs/AUTHORING.md)：来源、命名、示例与验收要求。
+- [阶段编写与验收总则](./docs/AUTHORING.md)：来源、命名、示例与验收要求。
 
 ## 当前覆盖
 
 | 模块 | 已提供内容 |
 | --- | --- |
-| 阶段 0 | 19 篇既有笔记及实践入口，补齐独立练习与综合任务映射；旧正文待专项复审 |
+| 阶段 0 | 19 项四部分资料，已按总则逐篇复审并修正网络与工具陈述 |
 | 阶段 1 | HTML 19、CSS 41、JavaScript 42、基础质量 4，共 106 项四部分资料 |
 | 工程专题 | Nuxt 基座、桌面及手机宿主的规划与独立仓库交接 |
 
-正文覆盖 125/583（约 21.4%），阶段 2–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。验证边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
+正文覆盖 125/583（约 21.4%），阶段 2–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 0、1 总则验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
 
 ## 运行与检查
 
@@ -31,6 +31,8 @@ node learning/4-practice/01-web-fundamentals/server.mjs
 python3 scripts/check_knowledge.py --table
 python3 scripts/check_knowledge.py --report
 python3 scripts/check_learning_delivery.py
+python3 scripts/check_learning_resources.py
+python3 scripts/check_stage_acceptance.py --stage 0 --stage 1
 python3 -m unittest discover -s scripts/tests -v
 ```
 

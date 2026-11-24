@@ -1,0 +1,890 @@
+{
+  "ruleVersion": 1,
+  "stage": 1,
+  "section": "1.2-css",
+  "date": "2026-11-24T15:01:52.246358+00:00",
+  "scope": "41 points reviewed across theory, example source, independent exercise, and integrated-task mapping. Stage-wide acceptance remains parent audit responsibility.",
+  "result": "passed",
+  "reviewed": 41,
+  "points": [
+    {
+      "id": "1.2.1.1",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.1.1.style.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.1.1.style-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.1.1.style.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-1-1",
+      "title": "CSS 的三种引入方式与来源顺序",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：link rel=stylesheet 加载独立资源，便于缓存和复用；style 适合页面级实验，style 属性只影响当前元素。；外部表和 style 都是作者样式，同一层叠条件下再比较特异性与出现顺序，外部 CSS 不天然低于内部 CSS。",
+        "示例源审查：1.2.1.1.style-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“新建一个公告卡片，用外部表提供布局、style提供颜色、内联提供临时覆盖，记录三种声明竞争结果。”；故障注入为“在副本的内联color仍存在时，只把内部style规则移到文末，尝试改变颜色。”；修复判据为“指出移动顺序没有压过内联普通声明；移除内联后内部规则才能按当前条件获胜。”。",
+        "综合映射：在综合页副本header临时添加style=\"color:tomato\"并观察覆盖，再移除并恢复styles.css类规则与主题token，保持 #theme 两种主题行为。；至少两项标准：移除内联声明后计算颜色仍来自 --accent；说明外部表和内嵌style处于同一作者来源，不能只按引入位置判断优先级",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "综合任务原先假设header已有内联色；现明确要求先注入临时声明，再移除并回归主题。公共tasks由主代理同步。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.1.2",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.1.2.hover.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.1.2.hover-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.1.2.hover.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-1-2",
+      "title": "选择器、状态伪类与伪元素",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：元素、类、ID 和属性选择器分别按标签、复用名称、唯一标识和属性值匹配，不用视觉外观反推语义。；组合器空格、>、+、~ 分别表达后代、子代和相邻/后续兄弟关系，结构改变会影响匹配。",
+        "示例源审查：1.2.1.2.hover-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“从空白HTML写三项导航，用类、属性、nth-child和focus-visible表达状态，并保留真实按钮名称。”；故障注入为“仅给导航按钮添加:hover背景且删除焦点outline，再用Tab而非鼠标操作。”；修复判据为“恢复可见的:focus-visible，触控和键盘均能识别并触发同一动作，装饰不承担唯一标签。”。",
+        "综合映射：为 .cards > li 中的收藏按钮定义正常、disabled 与 :focus-visible 状态；用属性/伪类避免误匹配正文链接。；至少两项标准：点击收藏后文案仍由业务逻辑决定，CSS只表现状态；Tab可见焦点；装饰伪元素不承担唯一按钮名称",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.1.3",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.1.3.specificity.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.1.3.specificity-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.1.3.specificity.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-1-3",
+      "title": "特异性：比较 ID、类与元素权重",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：一般选择器以 ID、类/属性/伪类、元素/伪元素三组权重逐组比较，不把三组当十进制相加。；:where() 及其参数为零特异性；:is()、:not()、:has() 的参数采用选择器参数列表中的最大特异性。",
+        "示例源审查：1.2.1.3.specificity-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建同一元素匹配ID、两个class及:where三组规则，手算三组权重并核对获胜声明。”；故障注入为“写一个ID颜色和十个连写class的冲突颜色，禁止!important，误以为class数量可进位。”；修复判据为“记录1-0-0与0-10-0，证实逐组比较而不是十进制相加；通过降低冲突规则耦合修复。”。",
+        "综合映射：给 .hint 制造一条更具体的冲突规则，再在不新增ID或!important的条件下消除对 #status 的意外覆盖。；至少两项标准：写出两条选择器的三组特异性；用DevTools找获胜声明，证明修复没有影响其他 .hint",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.1.4",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.1.4.inherit.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.1.4.inherit-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.1.4.inherit.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-1-4",
+      "title": "继承与 inherit、initial、unset、revert",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：color、font 等通常继承；margin、padding、border 等通常不继承，需按属性定义判断。；inherit 显式采用父元素该属性的计算值；initial 采用规范初始值，不是“浏览器常用默认样式”。",
+        "示例源审查：1.2.1.4.inherit-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建父子两层文本与按钮，对照inherit、initial、unset、revert的颜色和内边距。”；故障注入为“给父节点color:teal，子节点color:initial，却希望子节点保持父颜色。”；修复判据为“改为inherit或unset并解释可继承性；initial仍应回到属性初始值，不把它当父主题。”。",
+        "综合映射：让 .cards 的说明文字通过继承获得 --text，比较局部 color:inherit 与 initial 的计算结果。；至少两项标准：深浅主题文字都可读；解释初始值不等于父元素颜色，不能用all:unset破坏按钮",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.1.5",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.1.5.name.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.1.5.name-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.1.5.name.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-1-5",
+      "title": "CSS 自定义属性与 var 回退",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：--name 定义大小写敏感的自定义属性，var(--name, fallback) 在使用点替换值，普通双横线属性默认继承。；自定义属性可在元素子树覆盖；作用域越贴近组件，越容易避免全局 token 相互污染。",
+        "示例源审查：1.2.1.5.name-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“独立实现一张可切换主题的卡片，局部覆盖--accent，并展示缺失token的var回退。”；故障注入为“令--accent:20px，仍使用color:var(--accent,navy)，观察为何没有采用navy回退。”；修复判据为“解释计算值阶段类型无效与缺失token不同；恢复有效颜色或在输入层校验，不依赖var做类型检查。”。",
+        "综合映射：为 #theme 增加一个 --muted-text 语义token，并仅用于 .hint 和卡片说明。；至少两项标准：切换主题时说明文字更新而非写死色值；局部token覆盖不会改变按钮和链接的 --accent",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.1.6",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.1.6.cascade-layers.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.1.6.cascade-layers-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.1.6.cascade-layers.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-1-6",
+      "title": "完整层叠：来源、重要性、层与权重",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：先过滤选择器/媒体条件，再比较来源及 important、层、特异性，必要时比较作用域接近程度和出现顺序。；普通作者样式中，后声明的层优于早层，未分层普通规则优于已分层普通规则；内联普通声明另有更高位置。",
+        "示例源审查：1.2.1.6.cascade-layers-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(180, 45, 45)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建base/theme两个命名层，分别预测普通声明和!important声明的获胜层并保留对照记录。”；故障注入为“让早层和晚层都声明不同的!important颜色，却按普通层序预测晚层获胜。”；修复判据为“在Styles确认早层重要声明获胜；生产版本移除故障冲突并明确层序。”。",
+        "综合映射：把综合页主题、组件与工具样式按明确 @layer 顺序组织，单独制作一次!important层序反转对照后移除冲突。；至少两项标准：普通层与important层序分别能解释；最终页不依赖全局!important争抢状态",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.1",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.1.item-1-2-2-1.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.1.item-1-2-2-1-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.1.item-1-2-2-1.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-1",
+      "title": "盒模型与 border-box 尺寸",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：content-box 的 width 只指定内容区；左右 padding/border 会加到外部宽度上，margin 仍在盒子之外。；border-box 将 padding/border 包含在指定宽度内，但不包含 margin；内容尺寸不能为负。",
+        "示例源审查：1.2.2.1.item-1-2-2-1-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'boxSizing', 'equals': 'border-box'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建180px卡片与240px父框，分别计算content-box/border-box的内容、边框与margin占位。”；故障注入为“把卡片设为width:100%、content-box、padding:20px并用父级overflow:hidden遮住超宽部分。”；修复判据为“移除遮掩，使用适当box-sizing与约束后边框盒不超过父宽；margin另算且内容可达。”。",
+        "综合映射：检查 #q、select 和 .cards > li 的border-box计量，增加内边距仍保持窄屏不溢出。；至少两项标准：390px下页面没有整页横向滚动；能根据width/padding/border预测目标外边框宽度",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.2",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.2.item-1-2-2-2.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.2.item-1-2-2-2-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.2.item-1-2-2-2.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-2",
+      "title": "display：外部参与方式与内部布局",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：block/inline 描述外部流；flex/grid 建立内部格式化上下文，不能只理解成“横向/纵向”。；inline 通常不接受 width/height 的预期块尺寸；inline-block 在行内占位但可有块尺寸。",
+        "示例源审查：1.2.2.2.item-1-2-2-2-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'display', 'equals': 'flex'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建同样内容的block、inline-block、flex三组对照，再加入可隐藏的原生按钮。”；故障注入为“把按钮仅设opacity:0，当作已删除布局和键盘入口，再用Tab检查。”；修复判据为“指出透明按钮仍占位且可聚焦；按产品需求用hidden/display:none移除，恢复后操作可达。”。",
+        "综合映射：用 .actions 对照block与flex布局，并临时以display:none隐藏重试按钮观察布局和焦点变化。；至少两项标准：恢复后查询/取消/重试都可达；解释none与opacity:0在布局与交互上的差别",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "原例只有span，无法观察Tab移除；改为先在练习副本新增原生按钮再比较。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.3",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.3.item-1-2-2-3.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.3.item-1-2-2-3-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.3.item-1-2-2-3.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-3",
+      "title": "position：正常流、包含块与粘性定位",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：static 留在正常流，top 等 inset 通常不生效；relative 仍保留原位置，视觉偏移不推动相邻元素。；absolute 脱离正常流，相对于最近能建立相应包含块的祖先；“最近定位祖先”是常见情形而非全部规则。",
+        "示例源审查：1.2.2.3.item-1-2-2-3-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'position', 'equals': 'absolute'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写带定位标签的卡片，标出absolute包含块，并另建局部滚动区验证sticky阈值。”；故障注入为“移除卡片的position:relative，保留标签的absolute右上角inset，观察它相对其他祖先定位。”；修复判据为“找到实际包含块，恢复合适祖先定位；sticky需独立确认滚动祖先与inset，不靠巨大z-index。”。",
+        "综合映射：将查询区标题做为局部滚动容器中的sticky元素，明确inset及滚动祖先，再评估是否保留。；至少两项标准：记录包含块/滚动祖先和sticky阈值；页面内容不被覆盖；键盘聚焦输入框时仍可见",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.4",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.4.flexbox.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.4.flexbox-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.4.flexbox.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-4",
+      "title": "Flexbox：轴、收缩、换行与对齐",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：flex-direction 规定主轴；justify-content 沿主轴，align-items 沿交叉轴，不能固定翻译成水平/垂直。；flex-grow/shrink/basis 合作决定尺寸；basis 不是最终宽度，空间分配仍受 min/max 约束。",
+        "示例源审查：1.2.2.4.flexbox-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'flexDirection', 'equals': 'column'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“独立写可换行操作栏，切换row/column并用长按钮名称检查收缩与交叉轴对齐。”；故障注入为“将主轴改为column并保留justify-content:center，期待它把元素水平居中。”；修复判据为“用轴图说明justify-content仍沿主轴；根据目标改align-items，且源顺序不变。”。",
+        "综合映射：调整 .actions 的flex-wrap、gap和对齐，使长按钮名称与只看收藏选项在窄屏自然换行。；至少两项标准：不使用order改变键盘顺序；390px和中间宽度均完整显示操作",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.5",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.5.grid.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.5.grid-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.5.grid.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-5",
+      "title": "Grid：二维轨道、fr 与 minmax",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：grid-template-columns/rows 定义显式轨道；额外内容会生成隐式轨道，grid-auto-* 控制其尺寸。；fr 分配剩余空间，不是固定百分比；minmax(0,1fr) 能允许轨道缩到内容最小宽度以下。",
+        "示例源审查：1.2.2.5.grid-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'gridTemplateColumns', 'contains': ' '}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建带gap的两列资源卡片，比较1fr、百分比与minmax轨道，并保持DOM顺序。”；故障注入为“用grid-template-columns:50% 50%加24px gap，制造容器溢出。”；修复判据为“改用合适fr/minmax分配扣除gap后的剩余空间；长内容另设收缩和换行策略。”。",
+        "综合映射：调整 .cards 的Grid轨道，从两列目标改为auto-fit与可收缩minmax，比较内容驱动的列数。；至少两项标准：长标题不撑破轨道；宽窄视口均按DOM顺序阅读与聚焦",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.6",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.6.item-1-2-2-6.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.6.item-1-2-2-6-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.6.item-1-2-2-6.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-6",
+      "title": "float 与 clear：维护旧布局和文字环绕",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：float 使盒子向一侧浮动，后续行内内容可环绕；它不是通用二维布局系统。；clear 让元素避开相应方向的浮动，常见旧清除技巧会引入额外伪元素。",
+        "示例源审查：1.2.2.6.item-1-2-2-6-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'clear', 'equals': 'both'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“从空白页实现一张插图旁文字环绕的文章卡片，用flow-root包含浮动并用clear分隔末段。”；故障注入为“将文章父容器改display:block，移除正常流文字，仅保留较高float插图，再给父容器固定矮高度。”；修复判据为“删除固定高度并明确包含浮动；父边界覆盖插图，说明float不承担主网格布局。”。",
+        "综合映射：在综合页静态资料说明中做一张可选文字环绕插图对照，用flow-root包含浮动；不将主布局改成float。；至少两项标准：浮动子元素不越过父容器边界；说明这种用途与 .cards 的Grid职责不同",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "原父容器已为flow-root，原文“改为”无对照；改为先移除再恢复。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.7",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.7.item-1-2-2-7.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.7.item-1-2-2-7-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.7.item-1-2-2-7.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-7",
+      "title": "多列排版与内容分段",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：column-count 给出列数目标，column-width 给出理想宽度；浏览器结合可用空间决定实际列。；column-gap 和 column-rule 控制列间距与分隔线，不创造新的语义结构。",
+        "示例源审查：1.2.2.7.item-1-2-2-7-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'columnCount', 'equals': '2'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写三段连续正文的双列排版，添加窄屏单列规则并说明跨列阅读顺序。”；故障注入为“只写column-count:3而不加窄屏策略，在390px下观察每列难读的正文。”；修复判据为“使用合适column-width/媒体条件回到可读列数；不把表单操作分散成难理解的列流。”。",
+        "综合映射：为 #static-catalog 的长说明做双列正文实验，窄屏恢复单列，比较是否比列表更易读。；至少两项标准：列宽与源阅读顺序可解释；表单 .fields 不使用多列排版制造焦点跳跃",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.8",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.8.normal-flow-formatting-context.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.8.normal-flow-formatting-context-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.8.normal-flow-formatting-context.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-8",
+      "title": "正常流、BFC 与外边距折叠",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：正常流中块盒通常沿块轴依次排布，行内内容组成行盒；布局不是每个元素都需要绝对坐标。；相邻块的垂直margin在特定条件下会折叠；父子或空块也可能参与，不是简单把两段margin相加。",
+        "示例源审查：1.2.2.8.normal-flow-formatting-context-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'display', 'equals': 'flow-root'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“做父子margin与相邻兄弟margin两组实验，分别加入border、flow-root和flex并记录折叠条件。”；故障注入为“给普通父盒和首子段各设置margin-top:20px，未加border/padding，误算为40px；再加flow-root但期待内部兄弟margin也全部不折叠。”；修复判据为“分别记录父子和兄弟实际间距；说明BFC边界阻止相关父子折叠，不取消内部所有兄弟折叠。”。",
+        "综合映射：比较综合页section内首段margin的正常流行为与flow-root边界；移除不必要固定高度。；至少两项标准：解释实际发生/未发生折叠的条件；卡片内容增多时父容器随内容增长",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "补清BFC边界阻止相关父子折叠，而内部相邻块仍可能折叠。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.9",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.9.stacking-context.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.9.stacking-context-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.9.stacking-context.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-9",
+      "title": "层叠上下文与 z-index",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：定位元素的非auto z-index、transform、opacity小于1等可建立新的层叠上下文，条件需按规范核对。；每个上下文在父上下文中作为整体排序，内部z-index只影响内部，不能直接与外部同级比较。",
+        "示例源审查：1.2.2.9.stacking-context-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'zIndex', 'equals': '3'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“建立两个并列层叠上下文，在较低父上下文中放z-index很高的标签并解释遮挡。”；故障注入为“仅把内部标签z-index从999改为999999，父上下文仍低于邻居。”；修复判据为“定位并调整真正的祖先上下文或结构；内部数字不跨出父排序，焦点轮廓仍可见。”。",
+        "综合映射：为 .cards > li 增加一个定位标签并建立冲突上下文，定位z-index很大仍被遮挡的原因。；至少两项标准：找出真正创建上下文的祖先；修复时不影响正文焦点轮廓，也不以任意巨大数字遮盖全页",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.2.10",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.2.10.intrinsic-sizing.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.2.10.intrinsic-sizing-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.2.10.intrinsic-sizing.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-2-10",
+      "title": "内在尺寸、最小约束与媒体比例",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：min-content按最小可换行机会度量，max-content不主动换行，fit-content在可用空间和两者之间约束。；Flex/Grid项目自动最小尺寸可能被长URL撑大；min-inline-size:0允许项目收缩，再为文字定义换行或滚动策略。",
+        "示例源审查：1.2.2.10.intrinsic-sizing-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'minInlineSize', 'equals': '0px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建含超长URL的Flex卡片与一张16:9占位媒体，分别处理自动最小尺寸和媒体比例。”；故障注入为“只为Flex项目加min-inline-size:0，却保留nowrap和不可换行长内容，导致文字越过卡片。”；修复判据为“分别修正项目收缩与内容换行/局部滚动；媒体不靠裁字掩盖，并测量实际比例。”。",
+        "综合映射：给接口fixture增加超长无空格标题，验证 .fields > div 与 .cards > li 的min-inline-size和换行策略。；至少两项标准：内容完整可获得，不靠全页overflow:hidden；记录自动最小尺寸与minmax轨道的不同职责",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "原例没有媒体，却要求观察媒体比例；改为独立新增16:9媒体后测量。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.3.1",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.3.1.hex-rgb-rgba-hsl-hsla.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.3.1.hex-rgb-rgba-hsl-hsla-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.3.1.hex-rgb-rgba-hsl-hsla.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-3-1",
+      "title": "颜色语法、透明度与可读性",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：命名色、HEX、rgb()/rgba()、hsl()/hsla() 都能表达颜色；现代rgb/hsl可用空格和斜线alpha语法。；alpha是颜色透明度，不同于把整个元素opacity降低；后者会影响文字、后代与层叠上下文。",
+        "示例源审查：1.2.3.1.hex-rgb-rgba-hsl-hsla-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“为成功/错误提示设计等值HEX、RGB、HSL颜色，并记录文字与最终背景对比及文字状态。”；故障注入为“用容器opacity:.3代替背景alpha，观察后代文字一起变淡。”；修复判据为“把透明度放到背景色alpha，保留文字不透明；对最终合成背景测对比，不能只做编码转换。”。",
+        "综合映射：为 --accent 和 --focus 写出等值HEX/RGB/HSL表达，并分别检查深浅主题文字/背景对比。；至少两项标准：颜色换语法不改变语义状态；错误/收藏不只依赖红绿差异，仍有文字反馈",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.3.2",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.3.2.font-family.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.3.2.font-family-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.3.2.font-family.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-3-2",
+      "title": "字体、行高与文字间距",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：font-family按列表选择可用字体，最后用通用族作为回退；系统字体在不同平台上外观和字宽不一致。；font-size常使用rem/em以响应根字号或局部字号；px不是完全不能缩放，但要尊重用户设置。",
+        "示例源审查：1.2.3.2.font-family-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'lineHeight', 'equals': '30px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“独立排一段正文和两个字号标题，用无单位行高与系统字体回退承受长文和文字放大。”；故障注入为“给文本容器height:40px;overflow:hidden，再将字号从16px改成28px。”；修复判据为“改为内容驱动高度并核对行高；放大后文字完整，不用裁剪修补。”。",
+        "综合映射：调整综合页h1/h2/h3和正文的字号、无单位行高与最大阅读宽度，用长标题复验。；至少两项标准：缩放与长文案时不固定高度裁字；解释字号和行高的继承参照",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.3.3",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.3.3.font-face.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.3.3.font-face-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.3.3.font-face.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-3-3",
+      "title": "@font-face、字体回退与加载策略",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：font-family是自定义家族名，src指向local或url来源；font-style/weight需要与真实字体文件能力匹配。；font-display:swap允许先显示回退字体再替换；交换可能引起布局变化，需考虑回退度量和字形覆盖。",
+        "示例源审查：1.2.3.3.font-face-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'fontFamily', 'contains': 'LessonLocal'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“定义一个不存在的local字体别名并保留系统回退，记录Computed声明与实际Rendered Fonts的差别。”；故障注入为“使用local(\"FontThatDoesNotExistForLesson\")，看到Computed家族名就断言字体已成功加载。”；修复判据为“从字体加载/渲染面板识别回退字体；有授权WOFF2才增加网络加载实验，缺资产不虚称通过。”。",
+        "综合映射：为综合页设计一套系统字体回退方案；如选用自有WOFF2，再在独立资源实验验证font-display和失败回退。；至少两项标准：不为演示下载未授权字体；区分声明了font-family与真正下载/使用成功；没有字体资产时如实记录",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": [
+        "字体网络加载需要授权资产，本页提供本地声明/回退观察，未声称实际下载成功。"
+      ]
+    },
+    {
+      "id": "1.2.3.4",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.3.4.text-align.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.3.4.text-align-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.3.4.text-align.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-3-4",
+      "title": "文本对齐、换行、截断与内容保留",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：用text-align:start/end适配书写方向；对齐与元素本身定位是两件事。；white-space控制空白与换行；overflow-wrap:anywhere适合允许长URL等在必要位置换行。",
+        "示例源审查：1.2.3.4.text-align-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'whiteSpace', 'equals': 'nowrap'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写一个长资源名称，提供自然换行与可展开完整值两种呈现，触控也可读取。”；故障注入为“只设置text-overflow:ellipsis而不约束宽度和white-space/overflow，观察没有省略号。”；修复判据为“组合实际约束并保留可展开完整内容；不能只用hover title作为唯一完整值路径。”。",
+        "综合映射：比较 .cards h3 的自然换行与单行省略，为资源长名称提供可访问的完整内容路径。；至少两项标准：完整名称未从DOM或数据中删除；触控用户不依赖hover title才能读全",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.3.5",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.3.5.background-color.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.3.5.background-color-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.3.5.background-color.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-3-5",
+      "title": "背景图、尺寸、位置与重复",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：background-color在图像未加载时提供底色；多个背景层按列表前者在上叠放。；cover填满区域并可能裁切，contain完整容纳并可能留空；背景定位影响裁掉的内容。",
+        "示例源审查：1.2.3.5.background-color-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'backgroundSize', 'equals': 'cover'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“实现带装饰背景的资源介绍横幅，对照contain/cover并在关图后保留标题和用途。”；故障注入为“删除真实说明文字，改用含文字的背景图充当唯一信息，再禁用背景图片。”；修复判据为“恢复语义文本或合适img/alt；背景失效仍知道内容，关键图表不被cover裁掉。”。",
+        "综合映射：为综合页header添加可选装饰背景，比较contain/cover；页面标题和用途保留真实文字。；至少两项标准：关闭背景图片仍理解页面；裁切不丢失业务信息，也不把关键说明只写进背景",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.3.6",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.3.6.border.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.3.6.border-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.3.6.border.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-3-6",
+      "title": "边框、圆角与阴影的布局边界",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：border-width/style/color共同定义边框；只设置颜色不保证有可见边线，border-style初始为none。；border-radius控制边角形状，可用多个值；它与overflow裁剪及后代绘制的关系需要单独处理。",
+        "示例源审查：1.2.3.6.border-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'borderTopLeftRadius', 'equals': '16px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写两张相邻卡片，对照border与box-shadow尺寸差别，并测试内部按钮焦点。”；故障注入为“只加大box-shadow并假定会把相邻卡片推开，导致阴影重叠；再用overflow:hidden试图遮掉焦点。”；修复判据为“用真实gap/margin管理间距，恢复完整outline；测量边框盒证明阴影不预留布局空间。”。",
+        "综合映射：统一section、.cards > li和按钮的边框/圆角，验证阴影不参与间距并检查焦点轮廓。；至少两项标准：盒尺寸与邻居间距不因阴影误判；不为圆角把可聚焦内容的outline裁掉",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.3.7",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.3.7.overflow.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.3.7.overflow-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.3.7.overflow.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-3-7",
+      "title": "overflow、滚动容器与可达性",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：visible显示溢出，hidden裁剪但可能仍可程序滚动，clip裁剪且不创建滚动容器，auto按需滚动。；overflow-x/y并非总能彼此独立，某些组合会使另一轴的计算值变化；以Computed结果验证。",
+        "示例源审查：1.2.3.7.overflow-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'overflowX', 'equals': 'auto'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“独立实现有名称和键盘入口的长代码滚动区，整页保持正常流。”；故障注入为“把代码区设overflow:clip并移除滚动入口，想通过方向键读出被裁尾部。”；修复判据为“使用受限宽度和overflow:auto并提供可访问名称/焦点；箭头可滚动到尾部，整页不横溢。”。",
+        "综合映射：给综合页增加一块可选长接口示例代码，让它局部滚动而非引起整页溢出。；至少两项标准：滚动区有名称与Tab入口；长代码可达，正文不因全局overflow:hidden被裁",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.4.1",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.4.1.item-1-2-4-1.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.4.1.item-1-2-4-1-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.4.1.item-1-2-4-1.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-4-1",
+      "title": "媒体查询与内容驱动的断点",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：移动优先通常先写单列基础，再用min-width增强宽布局；桌面优先用max-width收敛也可，需团队一致。；width媒体查询以CSS视口判断，不等于物理屏幕像素或操作系统窗口的外边框。",
+        "示例源审查：1.2.4.1.item-1-2-4-1-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'gap', 'equals': '20px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建单列基础与宽屏多列布局，以长内容失效位置确定断点并记录390/700/1440px结果。”；故障注入为“只在390px与1440px做特例，在700px保留三个固定300px列，复现横溢。”；修复判据为“使用内容约束选择媒体条件或内在网格，补测中间宽度；不根据宽度推断输入设备。”。",
+        "综合映射：连续改变 .fields 和 .cards 的可用宽度，基于标题/输入框失效位置选择断点而非设备型号。；至少两项标准：至少记录一处中间宽度结果；鼠标/触控能力不只按视口宽度推断",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "去除并不存在的data布局读数，改为实际媒体匹配及计算轨道。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.4.2",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.4.2.viewport.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.4.2.viewport-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.4.2.viewport.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-4-2",
+      "title": "viewport、CSS 像素与浏览器缩放",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：常用meta viewport为width=device-width, initial-scale=1.0；不能用user-scalable=no阻止读者放大。；devicePixelRatio描述设备像素与CSS像素的比例，仍受浏览器/缩放环境影响，不是业务布局断点。",
+        "示例源审查：1.2.4.2.viewport-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'fontSize', 'equals': '20px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写允许缩放的最小页面，分别记录innerWidth、devicePixelRatio与visualViewport读数及含义。”；故障注入为“把目标盒的CSS宽度设为390px，在DPR=2模拟下误写验收结论“截图宽390物理像素”。”；修复判据为“同时记录CSS盒宽与截图像素，解释差异；保留viewport缩放权限，不把字号切换当设备缩放。”。",
+        "综合映射：核对综合页viewport元信息，使用浏览器缩放和设备模拟观察 #q 与卡片尺寸，保留用户缩放。；至少两项标准：未设置user-scalable=no或maximum-scale=1；区分CSS像素、DPR和可见视口，不声称模拟即真机",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.4.3",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.4.3.rem.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.4.3.rem-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.4.3.rem.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-4-3",
+      "title": "rem、em、百分比和视口单位",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：rem相对根元素字号，em用于font-size时相对父字号，用在其他属性通常相对当前元素字号。；百分比参照依赖具体属性与包含块，height:100%常需要可确定的父高度，不是所有百分比都相对视口。",
+        "示例源审查：1.2.4.3.rem-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'paddingLeft', 'equals': '40px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建根字号16px、局部字号20px的按钮，对照1rem间距、1em内边距和子文字.8em。”；故障注入为“改变父字号却忽略子元素固定font-size:20px，错误预测其1em padding也随父级缩放。”；修复判据为“逐项写出参照元素并读取计算值；若需随局部字号变化，移除不必要固定字号。”。",
+        "综合映射：用rem统一section内间距，以em定义按钮内部间距，修改根字号观察两者变化。；至少两项标准：说明每个单位相对谁；文字放大后按钮不裁字，不能只把rem按固定16px换算",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.4.4",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.4.4.max-width-100.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.4.4.max-width-100-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.4.4.max-width-100.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-4-4",
+      "title": "响应式图片：布局、资源选择与构图",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：图片通常用max-inline-size:100%;block-size:auto保持比例，并用width/height或aspect-ratio提前预留空间。；srcset的w候选需配合sizes说明预期显示宽度，浏览器还会考虑DPR等；不是保证每次选你指定文件。",
+        "示例源审查：1.2.4.4.max-width-100-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'objectFit', 'equals': 'contain'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“用本地宽窄图片写picture/srcset资源选择，并另测object-fit显示盒，保留alt与尺寸。”；故障注入为“把同一大图仅用max-width缩小，声称下载资源已变小；在Network检查实际请求文件。”；修复判据为“分别说明资源选择和显示尺寸；加入适当候选后检查currentSrc，重要图表不被cover裁切。”。",
+        "综合映射：在 .cards > li 中加入一张本地可选信息图，提供alt、尺寸和窄/宽构图候选。；至少两项标准：currentSrc和显示尺寸分别验证；关图仍有含义，cover不得裁关键图表内容",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.4.5",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.4.5.item-1-2-4-5.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.4.5.item-1-2-4-5-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.4.5.item-1-2-4-5.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-4-5",
+      "title": "容器查询：组件根据可用空间变化",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：尺寸查询需要在祖先声明container-type:inline-size或size，并可用container-name命名。；@container通常查询祖先容器；不能让同一个盒子简单地根据自己的尺寸查询再改变自己造成循环。",
+        "示例源审查：1.2.4.5.item-1-2-4-5-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'display', 'equals': 'flex'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“同一视口并排放窄侧栏和宽主体，两张卡片按各自祖先容器调整布局并保留基础样式。”；故障注入为“把container-type从祖先移到被查询卡片自己，同时移除其他命名容器，查询自身改变布局。”；修复判据为“恢复正确祖先容器；固定视口只改变容器宽度也触发布局，不支持时基础内容仍可读。”。",
+        "综合映射：让一个资源卡片根据自身容器而不是整页宽度改变封面/正文排列，对照窄侧栏与宽列表。；至少两项标准：祖先声明inline-size容器而非错误地查询自身；基础布局可用，不支持查询时有合理回退",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.4.6",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.4.6.css-flex-grid-flutter-row.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.4.6.css-flex-grid-flutter-row-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.4.6.css-flex-grid-flutter-row.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-4-6",
+      "title": "把移动布局经验迁移到 CSS",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：Row/Column/RN Flexbox与CSS Flex有共同轴模型；CSS默认收缩、内在最小尺寸和书写方向不能直接照搬。；Wrap可类比flex-wrap，多维对齐常用Grid；列表虚拟化是另一层能力，不由Grid自动实现。",
+        "示例源审查：1.2.4.6.css-flex-grid-flutter-row-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'flexDirection', 'equals': 'column'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“用CSS重建一个熟悉的Row/Wrap布局，写出默认收缩、自动最小尺寸及DOM顺序三个差异。”；故障注入为“用order:-1把第三个按钮放到最前，却不改变DOM，再按Tab观察焦点顺序。”；修复判据为“改为合理DOM顺序或取消视觉重排；解释CSS布局不能等同移动控件参数字典。”。",
+        "综合映射：将 .fields/.actions/.cards 分别映射到熟悉的Row/Wrap/Grid思维，再写出CSS不等价之处。；至少两项标准：实际解释一个min-inline-size或正常流差异；不改DOM源顺序来追求视觉排列",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.4.7",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.4.7.mobile-viewport-safe-area.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.4.7.mobile-viewport-safe-area-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.4.7.mobile-viewport-safe-area.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-4-7",
+      "title": "移动视口、safe-area 与软键盘",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：svh/lvh/dvh分别基于小、大和动态视口尺寸；100dvh能响应浏览器UI变化，但不是保证键盘处理正确的万能公式。；env(safe-area-inset-*)表示设备安全区，需与viewport-fit=cover及产品布局协调；桌面常得到0。",
+        "示例源审查：1.2.4.7.mobile-viewport-safe-area-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'paddingBottom', 'equals': '16px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写可滚动页面及输入区，比较svh/dvh声明与safe-area回退，记录设备验证范围。”；故障注入为“在副本用height:100vh和固定底栏且不预留内容空间，缩小可见区域后观察最后输入项受遮挡。”；修复判据为“优先恢复内容流/滚动和合适空间；模拟仅验证约束，软键盘与刘海效果仍需目标设备证据。”。",
+        "综合映射：在综合页 #q 获取焦点时检查内容和操作区可达，若增加固定底栏则处理safe-area与动态视口。；至少两项标准：记录是否真正做过目标手机键盘测试；模拟视口中的0安全区不能作为删除安全区代码的依据",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": [
+        "safe-area/软键盘为明确的目标设备学习任务，本轮只验证模拟视口声明与回退，不构成真机验收。"
+      ]
+    },
+    {
+      "id": "1.2.5.1",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.5.1.transition.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.5.1.transition-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.5.1.transition.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-5-1",
+      "title": "transition：在状态变化之间插值",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：需有实际起始/结束值和属性变化；transition-property、duration、timing-function、delay分别控制范围和时间。；优先明确属性而不是transition:all，避免未来新增布局属性也意外动画。",
+        "示例源审查：1.2.5.1.transition-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'transform', 'equals': 'matrix(1, 0, 0, 1, 40, 0)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写明确状态切换的短transform过渡，只声明所需属性，并提供reduced-motion终态。”；故障注入为“把transition改all，再临时改变width，观察本不想动画的布局尺寸也延迟。”；修复判据为“明确列出属性，减少动效时取消非必要过渡且终态可见，不用动画承载唯一结果。”。",
+        "综合映射：为综合页 #theme 的视觉状态切换增加短而明确的颜色过渡，避免transition:all。；至少两项标准：只列出实际需要过渡的属性；reduce-motion下状态即时可理解",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.5.2",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.5.2.keyframes.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.5.2.keyframes-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.5.2.keyframes.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-5-2",
+      "title": "keyframes 与 animation 生命周期",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：@keyframes按百分比描述各阶段；animation-name绑定序列，duration与iteration-count控制时长和次数。；fill-mode控制动画前后采用何种样式，不等于修改真实业务状态；动画结束后的语义状态要由逻辑维护。",
+        "示例源审查：1.2.5.2.keyframes-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'animationPlayState', 'equals': 'running'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“独立写一次性keyframes淡入，区分动画播放状态和真实请求成功/失败文本。”；故障注入为“让状态逻辑只在animationend里更新，再用reduce偏好关闭动画，观察业务反馈未出现。”；修复判据为“将真实状态更新与动画回调解耦；无动画、取消和失败时仍有确定文字反馈。”。",
+        "综合映射：为 #status 增加一次性、可关闭的请求结果淡入，加载/错误文字本身不依赖动画。；至少两项标准：没有无限闪烁且不把动画结束当接口完成；取消或失败状态有真实文本，偏好reduce时保留结果",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.5.3",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.5.3.transform.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.5.3.transform-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.5.3.transform.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-5-3",
+      "title": "transform：视觉变化与布局尺寸",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：translate、rotate、scale、skew可组合，组合顺序影响结果，不能任意交换。；transform-origin决定变换原点；百分比translate常相对元素自身参考盒，而不是父容器。",
+        "示例源审查：1.2.5.3.transform-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'transform', 'equals': 'matrix(1.1, 0, 0, 1.1, 0, 0)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“做同一目标的translate/rotate顺序对照，测量视觉矩形与正常流占位，并检查焦点。”；故障注入为“给卡片scale(1.5)却不处理邻居间距，误以为正常流会自动让位。”；修复判据为“测量变换前后布局占位与绘制矩形，限制变换或调整真实布局，按钮/焦点不互相遮挡。”。",
+        "综合映射：给一张 .cards > li 添加可选轻微transform对照，检查其视觉变化不重新占据正常流位置。；至少两项标准：变换不遮挡相邻按钮或焦点；能解释transform创建上下文的副作用",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.5.4",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.5.4.cursor.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.5.4.cursor-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.5.4.cursor.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-5-4",
+      "title": "cursor、user-select 与 pointer-events",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：cursor只改变指针外观，不让div自动成为按钮；动作应使用button，导航用a。；user-select控制文本选择，避免对正文和错误信息全局禁选，用户可能需要复制。",
+        "示例源审查：1.2.5.4.cursor-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'pointerEvents', 'equals': 'none'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“用原生按钮测试pointer-events、disabled与键盘激活，另保留可复制的错误文本。”；故障注入为“只为按钮设置pointer-events:none而不disabled，再Tab聚焦并按Enter。”；修复判据为“解释仍可键盘激活的原因；需真正禁用时采用disabled并说明状态，别用cursor冒充行为。”。",
+        "综合映射：核对 #cancel 的disabled状态与cursor显示，证明pointer-events:none不能代替禁用。；至少两项标准：键盘、鼠标对同一按钮状态一致；正文与错误说明保持可选择复制",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.5.5",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.5.5.transform.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.5.5.transform-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.5.5.transform.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-5-5",
+      "title": "动画性能：测量布局、绘制与合成",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：改变left/width等可能触发布局，颜色/阴影等通常涉及绘制；transform/opacity更有机会在合成阶段处理。；“有机会”不等于保证，图层大小、滤镜、内存和浏览器策略都会影响成本。",
+        "示例源审查：1.2.5.5.transform-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'transform', 'equals': 'matrix(1, 0, 0, 1, 40, 0)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“创建left与transform两条同幅度移动路径，在同一浏览器录制并保存Performance对照。”；故障注入为“对每个卡片永久设置will-change:transform，未录制就声称提高FPS。”；修复判据为“删除未经证明的层提示；记录实际布局/绘制事件与环境，没测到差异也如实说明。”。",
+        "综合映射：录制综合页一个卡片状态变化的Performance对照，比较布局属性变化与transform/opacity实现。；至少两项标准：只报告实际录制结果，不虚构FPS；移除没有证据支持的永久will-change",
+        "本轮运行：docs/audits/stage-1-css-runtime.json，390/1440 × 默认/减少动效 × left/transform，8项通过；两路径往返40px，终态、无JS异常及无整页横溢。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "原模式切换视觉位移相同、没有真正动画；增加选定路径下的移动/复位按钮，8项本轮专项验证通过。"
+      ],
+      "limitations": [
+        "不以教学样例声称生产性能提升；学习者需保存自己的Performance记录。"
+      ]
+    },
+    {
+      "id": "1.2.5.6",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.5.6.motion-input-preferences.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.5.6.motion-input-preferences-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.5.6.motion-input-preferences.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-5-6",
+      "title": "用户动效偏好与不同输入方式",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：prefers-reduced-motion:reduce表示用户希望减少非必要动态效果；可直接取消位移/缩放，同时保留明确状态。；用:focus-visible表达键盘焦点，不为美观删除outline；焦点提示不能只依赖颜色。",
+        "示例源审查：1.2.5.6.motion-input-preferences-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'transform', 'equals': 'matrix(1, 0, 0, 1, 10, 0)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“写支持键盘和触控的状态按钮，在reduce偏好下取消位移但保留状态文字。”；故障注入为“在prefers-reduced-motion:reduce分支把结果提示display:none，错误地把减少动效当隐藏内容。”；修复判据为“只减少非必要动画；状态、错误文字和焦点仍可见，鼠标hover不是唯一反馈。”。",
+        "综合映射：在综合页模拟prefers-reduced-motion并用Tab操作 #theme/#q/查询按钮，检查状态与焦点。；至少两项标准：减少动效后结果、错误与收藏仍明确；不把hover作为触控用户获得信息的唯一方式",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.6.1",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.6.1.bem.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.6.1.bem-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.6.1.bem.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-6-1",
+      "title": "BEM 命名：识别结构与状态",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：block表示独立组件，element常用双下划线表示内部部分，modifier常用双连字符表示变体。；命名帮助读者识别职责，浏览器只把它们当普通类；不要靠命名推断不可覆盖或天然低特异性。",
+        "示例源审查：1.2.6.1.bem-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'borderTopColor', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“给资源卡片列出block/element/modifier命名并实现一个变体，说明命名不等于隔离。”；故障注入为“新增全局h2颜色规则，观察BEM标题仍被匹配，误以为双下划线能隔离。”；修复判据为“用明确局部作用域或层叠组织控制影响；类名仅作约定，状态不要重复存储。”。",
+        "综合映射：给 .cards 组件列出block/element/modifier命名映射，评估是否需要BEM，不强制重写整个项目。；至少两项标准：证明类名约定不会建立浏览器隔离；状态来源仍只有一份，不用多套class/data重复存业务状态",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.6.2",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.6.2.css-modules.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.6.2.css-modules-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.6.2.css-modules.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-6-2",
+      "title": "CSS Modules：构建时类名映射",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：常见*.module.css约定由构建工具识别；import styles后以styles.title取实际类名，映射命名由工具决定。；局部类避免名称碰撞，但不是Shadow DOM；继承、全局选择器和显式global声明仍可能影响。",
+        "示例源审查：1.2.6.2.css-modules-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'color', 'equals': 'rgb(0, 100, 100)'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“在已提供Vite构建实验中分别修改两个同名.card模块，核对生成类与组件引用。”；故障注入为“在普通无构建HTML中import styles from './Card.module.css'，期待浏览器导出类映射对象。”；修复判据为“通过正确构建链生成映射再引用，保留构建命令/产物；手工fixture不算编译通过。”。",
+        "综合映射：把一张综合资源卡片抽到独立Vite CSS Modules练习，验证classes映射；综合页可先保留原生CSS。；至少两项标准：记录真正构建后的类名与组件引用；静态fixture只解释结果，未构建不能标工具链通过",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。",
+        "构建证据复用：learning/4-practice/01-web-fundamentals/toolchain/BUILD_EVIDENCE.md，2026-11-24 14:35 UTC，已存在真实编译及产物断言；本轮未改工具链源码、不重复构建。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.6.3",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.6.3.sass-scss.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.6.3.sass-scss-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.6.3.sass-scss.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-6-3",
+      "title": "Sass/SCSS：构建变量、嵌套与混入",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：$变量和mixin在编译时展开，CSS自定义属性留在浏览器运行期，两者解决不同问题。；嵌套减少重复书写但过深会生成高耦合选择器；@extend会合并选择器，需检查输出体积和意外匹配。",
+        "示例源审查：1.2.6.3.sass-scss-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'borderTopStyle', 'equals': 'dashed'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“在真实构建实验修改Sass函数和mixin，先预测新padding，再编译并比对生成CSS。”；故障注入为“将.scss直接写进link href而跳过编译，浏览器无法执行$变量和@include。”；修复判据为“用Sass构建生成CSS后加载，记录版本与退出码；运行期主题改用CSS变量。”。",
+        "综合映射：在独立临时工具链把卡片token与mixin写成SCSS并编译，再比较是否有必要给综合页引入Sass。；至少两项标准：保留源码、编译器版本、产物和退出码；不把SCSS直接link给浏览器，不将构建变量当运行期主题token",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。",
+        "构建证据复用：learning/4-practice/01-web-fundamentals/toolchain/BUILD_EVIDENCE.md，2026-11-24 14:35 UTC，已存在真实编译及产物断言；本轮未改工具链源码、不重复构建。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "SCSS片段明确scss语言标签，构建入口直达真实实验。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.6.4",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.6.4.css-tailwind-css.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.6.4.css-tailwind-css-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.6.4.css-tailwind-css.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-6-4",
+      "title": "原子化 CSS 与 Tailwind 的构建边界",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：原子类通常表达单一属性或职责，优点是组合与局部修改直观，代价是模板更长且需统一token。；Tailwind的响应式、状态和主题变体由构建工具处理；不是浏览器原生理解md:或hover:前缀。",
+        "示例源审查：1.2.6.4.css-tailwind-css-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'borderTopLeftRadius', 'equals': '16px'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“在真实Tailwind实验增加一个完整断点类，再制造source范围遗漏并通过产物定位。”；故障注入为“把完整静态类改成字符串拼接grid-cols-${count}且删除其他完整候选，重新构建查看缺失规则。”；修复判据为“按当前工具版本提供完整候选或显式来源，重建后验证规则存在；自有lesson类不冒充Tailwind产物。”。",
+        "综合映射：把综合页一组按钮样式分别用语义类和小型自有工具类实现，说明取舍；真正Tailwind构建另行验证。；至少两项标准：自有lesson-*工具类不冒充Tailwind完整输出；模板中完整类候选可被所选工具检测，动态拼接风险有说明",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。",
+        "构建证据复用：learning/4-practice/01-web-fundamentals/toolchain/BUILD_EVIDENCE.md，2026-11-24 14:35 UTC，已存在真实编译及产物断言；本轮未改工具链源码、不重复构建。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。",
+        "消除“真实工具链留待工程阶段”与已有构建实验矛盾，明确fixture与真实构建项目。"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "1.2.6.5",
+      "theory": "learning/1-notes/01-web-fundamentals/1.2-css/1.2.6.5.is.md",
+      "example": "learning/2-examples/01-web-fundamentals/1.2-css/1.2.6.5.is-demo.html",
+      "exercise": "learning/3-exercises/01-web-fundamentals/1.2-css/1.2.6.5.is.md",
+      "practice": "learning/4-practice/01-web-fundamentals/tasks.md#p-1-2-6-5",
+      "title": "现代选择器、流动尺寸与逻辑属性",
+      "result": "passed",
+      "evidence": [
+        "理论机制与边界：:is()组合选择器并采用参数最大特异性；:where()同样可组合但自身及参数为零特异性。；min/max/clamp参与数值计算，需单位可比较；clamp(min,preferred,max)不替代真实内容溢出处理。",
+        "示例源审查：1.2.6.5.is-demo.html，目标[{'kind': 'computed', 'selector': '#target', 'property': 'direction', 'equals': 'rtl'}]；公共lab.js仅切换状态和读取Computed，核心规则在该页CSS。",
+        "练习复核：独立产出为“独立写低特异性默认卡片与RTL逻辑间距，用clamp控制可读字号并比较:is/:where。”；故障注入为“把:where(#card)误换成:is(#card)，导致默认颜色压过普通class定制规则。”；修复判据为“写出0-0-0与1-0-0并恢复可覆盖默认值；RTL只翻转需要随书写方向变化的边。”。",
+        "综合映射：把综合页section与卡片间距整理为逻辑属性，用dir=rtl和长文案检查；默认样式用:where降低权重。；至少两项标准：只翻转应随书写方向变化的边，不机械替换所有物理方向；解释:is与:where的特异性差异及clamp参照",
+        "运行证据复用：docs/stages/webdev-stage1-browser.json，2026-11-24T14:37:06.857Z，390/1440两视口通过；本轮文案调整不改变这些断言。"
+      ],
+      "issues": [],
+      "resolvedIssues": [
+        "原目标与排错偏通用，现增加本点独立产出、故障注入和可测修复判据。"
+      ],
+      "limitations": []
+    }
+  ]
+}

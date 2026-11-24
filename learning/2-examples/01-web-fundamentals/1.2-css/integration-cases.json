@@ -2,7 +2,7 @@
   "cases": [
     {
       "id": "1.2.1.1",
-      "task": "把综合页 header 中临时内联颜色改为 styles.css 的类规则，保持 #theme 两种主题行为。",
+      "task": "在综合页副本header临时添加style=\"color:tomato\"并观察覆盖，再移除并恢复styles.css类规则与主题token，保持 #theme 两种主题行为。",
       "acceptance": [
         "移除内联声明后计算颜色仍来自 --accent",
         "说明外部表和内嵌style处于同一作者来源，不能只按引入位置判断优先级"

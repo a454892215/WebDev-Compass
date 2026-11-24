@@ -1,9 +1,9 @@
 // 教学专用：仓库静态资源 + 本地 POST JSON 回显；不连接外部服务器。
 import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
+import { readFile, realpath } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { resolve, extname, sep } from "node:path";
-const root = fileURLToPath(new URL("../../../../", import.meta.url));
+import { resolve, extname, sep, relative } from "node:path";
+const root = await realpath(fileURLToPath(new URL("../../../../", import.meta.url)));
 const mime = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css",
@@ -79,7 +79,16 @@ const server = createServer(async (request, response) => {
       json(response, 403, { error: "禁止访问" });
       return;
     }
-    const body = await readFile(path);
+    // 字面路径在根目录内仍可能通过符号链接指向外部；读取前再核对真实路径。
+    const actual = await realpath(path);
+    if (
+      !actual.startsWith(root + sep) ||
+      relative(root, actual).split(sep).some((part) => part.startsWith("."))
+    ) {
+      json(response, 403, { error: "禁止访问" });
+      return;
+    }
+    const body = await readFile(actual);
     response.writeHead(200, {
       "Content-Type": mime[extname(path)],
       "Cache-Control": "no-store",

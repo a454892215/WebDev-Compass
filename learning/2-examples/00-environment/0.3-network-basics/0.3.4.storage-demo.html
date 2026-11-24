@@ -31,7 +31,7 @@
       border-radius: 8px;
       padding: 14px;
     }
-    .card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .card h2 { font-size: 1rem; margin-bottom: 8px; }
     input {
       width: 100%;
       padding: 8px 10px;
@@ -62,11 +62,13 @@
       margin-top: 8px;
     }
     .full { grid-column: 1 / -1; }
+  body { overflow-wrap: anywhere; } pre, #log { max-inline-size: 100%; overflow-x: auto; } :focus-visible { outline: 3px solid #7638a8; outline-offset: 3px; }
   </style>
 </head>
 <body>
+<main>
   <h1>Cookie · localStorage · sessionStorage</h1>
-  <p class="sub">对应笔记：<a href="../../../learning/1-notes/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md">0.3.4 存储</a></p>
+  <p class="sub">对应笔记：<a href="../../../1-notes/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md">0.3.4 存储</a></p>
 
   <div class="tip">
     建议用 <strong>Live Server</strong> 以 <code>http://</code> 打开。对照 DevTools → <strong>Application</strong>：
@@ -77,8 +79,10 @@
 
   <div class="grid">
     <div class="card">
-      <h3>localStorage</h3>
+      <h2>localStorage</h2>
+      <label for="ls-key">localStorage 键</label>
       <input id="ls-key" placeholder="key" value="theme" />
+      <label for="ls-val">localStorage 值</label>
       <input id="ls-val" placeholder="value" value="dark" />
       <div>
         <button id="ls-set">写入</button>
@@ -89,8 +93,10 @@
     </div>
 
     <div class="card">
-      <h3>sessionStorage</h3>
+      <h2>sessionStorage</h2>
+      <label for="ss-key">sessionStorage 键</label>
       <input id="ss-key" placeholder="key" value="wizardStep" />
+      <label for="ss-val">sessionStorage 值</label>
       <input id="ss-val" placeholder="value" value="2" />
       <div>
         <button id="ss-set">写入</button>
@@ -101,7 +107,8 @@
     </div>
 
     <div class="card full">
-      <h3>document.cookie（非 HttpOnly）</h3>
+      <h2>document.cookie（非 HttpOnly）</h2>
+      <label for="ck-pair">Cookie 键值（仅演示数据）</label>
       <input id="ck-pair" placeholder="name=value" value="demo_pref=compact" />
       <div>
         <button id="ck-set">设置（Max-Age=3600）</button>
@@ -112,7 +119,7 @@
     </div>
 
     <div class="card full">
-      <h3>快照</h3>
+      <h2>快照</h2>
       <button id="refresh" class="secondary">刷新快照</button>
       <pre id="snap"></pre>
     </div>
@@ -192,5 +199,6 @@
 
     snapshot();
   </script>
+</main>
 </body>
 </html>

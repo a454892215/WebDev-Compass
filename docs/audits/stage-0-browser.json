@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-24T15:00:41.466Z",
+  "browser": "158.0.8127.37",
+  "pages": [
+    {
+      "path": "0.1-what-is-web-app/0.1.1.request-response-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "path": "0.1-what-is-web-app/0.1.3.spa-vs-mpa-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "path": "0.1-what-is-web-app/0.1.4.same-origin-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "path": "0.2-dev-environment/0.2.3.devtools-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "path": "0.3-network-basics/0.3.1.url-parse-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "path": "0.3-network-basics/0.3.2.http-methods-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "path": "0.3-network-basics/0.3.4.storage-demo.html",
+      "width": 390,
+      "status": "passed"
+    },
+    {
+      "path": "0.1-what-is-web-app/0.1.1.request-response-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "path": "0.1-what-is-web-app/0.1.3.spa-vs-mpa-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "path": "0.1-what-is-web-app/0.1.4.same-origin-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "path": "0.2-dev-environment/0.2.3.devtools-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "path": "0.3-network-basics/0.3.1.url-parse-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "path": "0.3-network-basics/0.3.2.http-methods-demo.html",
+      "width": 1440,
+      "status": "passed"
+    },
+    {
+      "path": "0.3-network-basics/0.3.4.storage-demo.html",
+      "width": 1440,
+      "status": "passed"
+    }
+  ],
+  "checks": [
+    "REST list/create/patch/delete204/missing404/badJSON400",
+    "WS two-page open and broadcast"
+  ],
+  "scope": "Headless Chrome 390/1440 CSS-pixel viewports; no real device, no editor UI, no public DNS/TLS/CDN performance claim.",
+  "status": "passed"
+}

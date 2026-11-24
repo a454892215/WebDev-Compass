@@ -49,3 +49,9 @@
 | 1.2.6.5  | [现代选择器、流动尺寸与逻辑属性](./1.2.6.5.is-demo.html)                       |
 
 qa-cases.json提供实际样式断言，integration-cases.json提供逐点综合任务。过渡等待约240ms；reduced-motion、Tab焦点、媒体源和容器宽度还需专项观察。Sass/Modules/Tailwind的源码与构建边界见[说明](./assets/source/README.md)，不伪称静态浏览器能够编译。
+
+CSS Modules、Sass与Tailwind的[真实构建实践](../../../4-practice/01-web-fundamentals/toolchain/README.md)已提供独立项目，静态fixture与真实编译各自标明。
+
+1.2.5.5先选路径，再点击“移动／复位”采集等幅往返；不要把实现路径切换当作性能样本。[本轮专项证据](../../../../docs/audits/stage-1-css-runtime.json)只证明移动和减少动效行为，不提供性能排名。
+
+公共lab.css的全局border-box仅为小型对照页统一外壳；不把它作为大型组件库或Web Components的通用重置建议。真实工程按层和组件边界选择重置范围。

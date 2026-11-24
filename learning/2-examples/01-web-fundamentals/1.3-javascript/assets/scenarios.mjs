@@ -591,6 +591,8 @@ export const scenarios = {
       xhr.send();
     });
     log("XHR状态", response.status);
+    if (response.status < 200 || response.status >= 300)
+      throw new Error("HTTP " + response.status);
     log("XHR用户", JSON.parse(response.text).users[0].name);
   },
   "1.3.5.3": async ({ lab, log, signal, sleep }) => {

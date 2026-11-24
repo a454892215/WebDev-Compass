@@ -27,3 +27,14 @@
 - 遵守 `docs/LEARNING_STRUCTURE.md`；每个已编写知识点必须维护四部分契约 `docs/stages/stage-N.json`，不得用空文件或通用重复任务充数。未来未编写章节保持预留。
 - 内容改动必须通过 `python3 scripts/check_knowledge.py --report` 与 `python3 scripts/check_learning_delivery.py`；检查器改动运行 `python3 -m unittest discover -s scripts/tests -v`。
 - 结构完整、实际运行和学习掌握分别报告，地图复选框不自动勾选。
+
+## 阶段编写与质量验收
+
+- 每次新增、修订或验收阶段知识内容前，必须先读取 `docs/AUTHORING.md`《阶段编写与验收总则》，按 R01–R09 制定并持续更新阶段清单。
+- 正式验收必须逐点审查理论、示例、练习、综合任务与跨章节逻辑；不能仅凭文件存在或脚本通过认定质量达标。
+- 阶段整体达标必须覆盖该阶段全部知识点，具有 `docs/stages/stage-N-acceptance.json` 和逐点审查证据，并通过 `python3 scripts/check_stage_acceptance.py --stage N`。未达标写明具体规则、问题与恢复条件。
+- 代码变更后复验受影响行为；未改且条件适用的旧证据可注明来源复用，不冒充本轮重跑。质量结论不得改变正文完成度表格统计口径或学习者勾选。
+
+- 学习资料 HTML 改动须运行 `python3 scripts/check_learning_resources.py`，检查示例中的资源与返回导航链接；Markdown 检查器不能替代此项。
+
+- 采用总则中的简明教学原则：内容准确、范围完整、前置清楚、层层递进、示例和练习对应。参考项目已有功能必须查实际代码，新增扩展明确标注；不增加重复教学设计表，不把AI审阅当真实学习者试学。

@@ -63,18 +63,20 @@
       word-break: break-all;
     }
     .err { color: #b00020; margin-top: 12px; }
+  body { overflow-wrap: anywhere; } pre, #log { max-inline-size: 100%; overflow-x: auto; } :focus-visible { outline: 3px solid #7638a8; outline-offset: 3px; }
   </style>
 </head>
 <body>
+<main>
   <h1>URL 结构解析</h1>
-  <p class="sub">对应笔记：<a href="../../../learning/1-notes/00-environment/0.3-network-basics/0.3.1.url.md">0.3.1 URL</a></p>
+  <p class="sub">对应笔记：<a href="../../../1-notes/00-environment/0.3-network-basics/0.3.1.url.md">0.3.1 URL</a></p>
 
   <div class="tip">
     使用浏览器 <code>URL</code> 与 <code>URLSearchParams</code> API 拆解地址各部分。注意：<strong>hash 不会发送到服务器</strong>。
   </div>
 
   <label for="url">输入 URL</label>
-  <input id="url" type="text" value="https://user:pass@www.example.com:8443/api/users?q=%E4%B8%AD%E6%96%87&page=2#profile" />
+  <input id="url" type="text" value="https://www.example.com:8443/api/users?q=%E4%B8%AD%E6%96%87&page=2#profile" />
 
   <div class="row">
     <button id="parse">解析</button>
@@ -112,14 +114,16 @@
         const u = new URL(input.value.trim());
         for (const [key, label] of fields) {
           const tr = document.createElement('tr');
-          tr.innerHTML = `<th>${label}<br><code>${key}</code></th><td><code>${u[key] || '（空）'}</code></td>`;
+          const th=document.createElement('th'); th.scope='row'; th.textContent=`${label} (${key})`;
+          const td=document.createElement('td'); td.textContent=u[key] || '（空）'; tr.append(th,td);
           tbody.appendChild(tr);
         }
         const params = [...u.searchParams.entries()]
           .map(([k, v]) => `${k} = ${v}`)
           .join('\n') || '（无）';
         const tr = document.createElement('tr');
-        tr.innerHTML = `<th>查询参数解码<br><code>searchParams</code></th><td><code style="white-space:pre-wrap">${params}</code></td>`;
+        const th=document.createElement('th'); th.scope='row'; th.textContent='查询参数解码 (searchParams)';
+        const td=document.createElement('td'); td.style.whiteSpace='pre-wrap'; td.textContent=params; tr.append(th,td);
         tbody.appendChild(tr);
       } catch (e) {
         errorEl.hidden = false;
@@ -146,5 +150,6 @@
     });
     render();
   </script>
+</main>
 </body>
 </html>

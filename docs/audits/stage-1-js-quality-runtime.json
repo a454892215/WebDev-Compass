@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-24T15:00:41.263Z",
+  "http": [
+    {
+      "name": "normal static",
+      "status": 200,
+      "result": "passed"
+    },
+    {
+      "name": "outside symlink",
+      "status": 403,
+      "result": "passed"
+    },
+    {
+      "name": "hidden-target symlink",
+      "status": 403,
+      "result": "passed"
+    },
+    {
+      "name": "hidden URL",
+      "status": 403,
+      "result": "passed"
+    },
+    {
+      "name": "POST success",
+      "status": 200,
+      "result": "passed"
+    },
+    {
+      "name": "invalid JSON",
+      "status": 400,
+      "result": "passed"
+    },
+    {
+      "name": "invalid title",
+      "status": 422,
+      "result": "passed"
+    },
+    {
+      "name": "wrong method",
+      "status": 405,
+      "result": "passed"
+    }
+  ],
+  "browser": [
+    {
+      "name": "XHR normal response and parse",
+      "result": "passed"
+    },
+    {
+      "name": "XHR HTTP failure checked before JSON; expected error caught",
+      "result": "passed"
+    },
+    {
+      "name": "canonical theory back-link loads",
+      "result": "passed"
+    }
+  ],
+  "scope": "Loopback teaching-service HTTP regression; optional headless Chrome affected XHR behavior; not production/security certification or real device.",
+  "result": "passed"
+}

@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-24T14:59:47.545Z",
+  "browser": "158.0.8127.37",
+  "scope": "Targeted simulated viewport movement and reduced-motion checks; not FPS benchmark or real-device test.",
+  "checks": [
+    {
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "mode": "left",
+      "delta": -40,
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "reducedMotion": "no-preference",
+      "mode": "transform",
+      "delta": -40,
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "reducedMotion": "reduce",
+      "mode": "left",
+      "delta": -40,
+      "status": "passed"
+    },
+    {
+      "width": 390,
+      "reducedMotion": "reduce",
+      "mode": "transform",
+      "delta": -40,
+      "status": "passed"
+    },
+    {
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "mode": "left",
+      "delta": -40,
+      "status": "passed"
+    },
+    {
+      "width": 1440,
+      "reducedMotion": "no-preference",
+      "mode": "transform",
+      "delta": -40,
+      "status": "passed"
+    },
+    {
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "mode": "left",
+      "delta": -40,
+      "status": "passed"
+    },
+    {
+      "width": 1440,
+      "reducedMotion": "reduce",
+      "mode": "transform",
+      "delta": -40,
+      "status": "passed"
+    }
+  ],
+  "status": "passed"
+}

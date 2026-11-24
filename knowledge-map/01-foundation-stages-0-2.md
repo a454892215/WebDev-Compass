@@ -229,7 +229,7 @@ Canvas、SVG 脚本和 template/slot 的实现可在 1.3 后回读；只观察�
 - [ ] [1.3.3.4 属性与样式：`setAttribute`、`classList`（add/remove/toggle）、`style`、`dataset`](../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.4.setattribute.md)
 - [ ] [1.3.3.5 内容：`textContent` vs `innerHTML`（及 XSS 风险）](../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.5.textcontent.md)
 - [ ] [1.3.3.6 尺寸与位置：`offsetWidth/Height`、`clientWidth/Height`、`getBoundingClientRect()`](../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.6.offsetwidth-height.md)
-- [ ] [1.3.3.7 📱 移动端对照：DOM 操作 ≈ 直接操作 Widget 树（Flutter/RN 中较少手写，但理解有助于调试）](../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn.md)
+- [ ] [1.3.3.7 📱 移动端对照：DOM 节点、原生 View 与声明式 UI 的区别（Flutter/RN 中较少手写，但理解有助于调试）](../learning/1-notes/01-web-fundamentals/1.3-javascript/1.3.3.7.dom-widget-flutter-rn.md)
 
 
 

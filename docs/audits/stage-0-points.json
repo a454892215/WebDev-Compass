@@ -1,0 +1,369 @@
+{
+  "stage": 0,
+  "date": "2026-11-24",
+  "reviewer": "audit_stage0",
+  "scope": "19 points reviewed across all four parts; passed means teaching-material quality within declared scope, not learner mastery or production validation",
+  "points": [
+    {
+      "id": "0.1.1",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.1.client-server-model.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-1",
+      "result": "passed",
+      "review": {
+        "theory": "区分本地/远端服务器、HTTP交互与纯本地交互，静态资源并非永不变化。",
+        "example": "本地GET数组与POST201回显运行，标明不持久化。",
+        "exercise": "读取/创建/停服分类具体。",
+        "practice": "对应请求流向与客户端/服务器职责。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.1.2",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.2.browser-role.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.3.devtools-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.2.browser-role.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-2",
+      "result": "passed",
+      "review": {
+        "theory": "修正JS逐行编译、GPU简化和固定RN Bridge类比，原生与WebView分开。",
+        "example": "DevTools页面DOM/网络/Storage运行，面板手动操作作为学习步骤。",
+        "exercise": "DOM/CSS/断点和刷新恢复有明确产出。",
+        "practice": "运行期与源文件差异观察对应目标。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.1.3",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa.md",
+      "example": "learning/2-examples/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.3.spa-vs-mpa.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-3",
+      "result": "passed",
+      "review": {
+        "theory": "明确导航组织和SSR/SSG渲染时机是不同维度；RN仅类比，框架主线改Vue/Nuxt。",
+        "example": "真实文档导航/客户端切换区分，假fetch标为模拟；深链接与回到初始历史条目已复验。",
+        "exercise": "要求区分真实导航、History和模拟日志。",
+        "practice": "项目锚点不冒充SPA路由。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.1.4",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.4.same-origin-policy.md",
+      "example": "learning/2-examples/00-environment/0.1-what-is-web-app/0.1.4.same-origin-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.4.same-origin-policy.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-4",
+      "result": "passed",
+      "review": {
+        "theory": "修正SOP/CSRF、预检阻断、Cookie非端口隔离、模块/font CORS和原生桥边界。",
+        "example": "替换外网误标同源演示，双端口同源/允许CORS/拒绝CORS三分支实测。",
+        "exercise": "origin逐项比较及错误分类具体。",
+        "practice": "跨源成功不等于同源，有对应证据任务。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.1.5",
+      "theory": "learning/1-notes/00-environment/0.1-what-is-web-app/0.1.5.mobile-comparison.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.1-what-is-web-app/0.1.5.mobile-comparison.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-1-5",
+      "result": "passed",
+      "review": {
+        "theory": "删除RN就是SPA与架构完全相同等绝对类比，修正Vue/Nuxt主线。",
+        "example": "复用本地REST实测，类比无需新造工程。",
+        "exercise": "三项可迁移/三项差异可验收。",
+        "practice": "平台边界与桌面手机业务/UI取舍对照。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.2.1",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.1.node.js.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.1.package-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.1.node.js.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-1",
+      "result": "passed",
+      "review": {
+        "theory": "补Node支持周期、Corepack不随25+分发、pnpm布局非安全边界及版本示意说明。",
+        "example": "npm info/start运行成功；复用既有依赖，未执行全新安装。",
+        "exercise": "版本记录、目录与scripts排错明确。",
+        "practice": "manifest/lock/运行工具职责任务可做。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.2.2",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.2.vscode-config/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.2.vs-code-cursor.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-2",
+      "result": "passed",
+      "review": {
+        "theory": "扩展兼容性有条件，明确ESLint依赖与规则不由扩展自动提供。",
+        "example": "配置JSON审读与样本静态页面；完整编辑器UI/扩展安装未执行且不声称通过。",
+        "exercise": "格式化/CLI/个人配置分界清楚。",
+        "practice": "编辑器与命令检查分别记录。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.2.3",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.3.chrome-devtools.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.3.devtools-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.3.chrome-devtools.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-3",
+      "result": "passed",
+      "review": {
+        "theory": "删除无依据80%数字，修正Disable cache作用与性能阶段索引。",
+        "example": "远端Fetch改本地、返回值textContent构建；网络与Storage行为实测。",
+        "exercise": "断点/布局复现报告有预期和实际。",
+        "practice": "面板证据不把清空Console当修复。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.2.4",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.4.git.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.4.git-workflow.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.4.git.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-4",
+      "result": "passed",
+      "review": {
+        "theory": "修正fast-forward不造merge commit；中文提交与选择暂存，远程操作需授权。",
+        "example": "临时仓库实测快进提交数不增加、取消暂存保留文件；未推送。",
+        "exercise": "工作区/暂存/提交分清，操作限临时仓库。",
+        "practice": "提交范围与凭据检查对应目标。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.2.5",
+      "theory": "learning/1-notes/00-environment/0.2-dev-environment/0.2.5.npm-pub-cocoapods-gradle-vite.md",
+      "example": "learning/2-examples/00-environment/0.2-dev-environment/0.2.1.package-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.2-dev-environment/0.2.5.npm-pub-cocoapods-gradle-vite.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-2-5",
+      "result": "passed",
+      "review": {
+        "theory": "修正构建时/运行时与HMR回退边界，避免宣称完全等价。",
+        "example": "package-demo info/start运行；Vite HMR本章为机制对照，后续阶段3实作。",
+        "exercise": "依赖层级、锁文件、版本复现具体。",
+        "practice": "项目环境观察无需此时先会Vite。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.1",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.1.url.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.1.url-parse-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.1.url.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-1",
+      "result": "passed",
+      "review": {
+        "theory": "URLSearchParams空格+与路径%20分开；fragment不传服务端。",
+        "example": "修复查询值innerHTML注入，攻击样本文本化/无img节点、坏URL反馈实测。",
+        "exercise": "重复参数、编码、默认端口可观察。",
+        "practice": "URL解析与HTTP地址证据对应。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.2",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.2.http-https.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.2.http-https.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-2",
+      "result": "passed",
+      "review": {
+        "theory": "明确HTTP1文本示意、2xx不等于业务成功、204空响应与混合内容所属上下文。",
+        "example": "本地201/404页面与REST状态/响应头实际运行。",
+        "exercise": "区分HTTP错误与传输异常。",
+        "practice": "方法状态头部正文记录对应。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.3",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.3.http-http-http.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.3.http-versions.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.3.http-http-http.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-3",
+      "result": "passed",
+      "review": {
+        "theory": "补现代浏览器Server Push收缩、QUIC TLS1.3和共享拥塞影响。",
+        "example": "Protocol清单明确未执行公网h2/h3对照；本地HTTP1服务可观察，不伪造协议。",
+        "exercise": "本地与外网分开、无法观测可记未验证。",
+        "practice": "传输机制分析可在本阶段完成。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.4",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.4.storage-demo.html",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.4.cookie-session-localstorage-sessionstorage.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-4",
+      "result": "passed",
+      "review": {
+        "theory": "修正持久性绝对说法，补same-site/origin、HttpOnly和credentials限制。",
+        "example": "标签页独立/刷新/localStorage实测，补可见label；HttpOnly未假称JS验证。",
+        "exercise": "仅测试键且涵盖副本/共享误判。",
+        "practice": "Session/Storage职责和凭据边界对应。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.5",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.5.dns.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.5.dns-cdn.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.5.dns.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-5",
+      "result": "passed",
+      "review": {
+        "theory": "修正固定示例IP、DNS备案混淆及TTL简化说明。",
+        "example": "DNS/CDN为观察清单，公网查询和命中未实测；明确缓存线索非单头定论。",
+        "exercise": "可选外网观察有未验证出口。",
+        "practice": "IP直连没有DNS耗时可解释。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.6",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.6.tls-ssl.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.6.tls-overview.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.6.tls-ssl.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-6",
+      "result": "passed",
+      "review": {
+        "theory": "TLS1.3证书签名和临时密钥协商分开；混合内容升级/阻止有边界。",
+        "example": "证书/TLS为观察清单；本轮未外网TLS测试，不绕过证书警告。",
+        "exercise": "证书/传输/授权三层区别可验收。",
+        "practice": "本地HTTP不能代替公网TLS结论。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.7",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.7.restful-api.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.7.restful-api.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-7",
+      "result": "passed",
+      "review": {
+        "theory": "明确严格REST无状态与工程Cookie Session折中，修正伪JSON示例。",
+        "example": "本地CRUD、204空体、404、坏JSON400实测；教学内存边界明确。",
+        "exercise": "处理空响应且记录重启丢失。",
+        "practice": "资源/方法语义与持久化边界对应。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.8",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.8.websocket.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.8.websocket-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.8.websocket.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-8",
+      "result": "passed",
+      "review": {
+        "theory": "补HTTP1升级示意范围、浏览器不暴露协议ping、不能任意Authorization、Origin非认证。",
+        "example": "两个页面实际open/message广播通过；极简帧实现无完整ping/分片/鉴权，禁止生产复用。",
+        "exercise": "服务关闭/手动重连步骤具体，不能宣称自动重连。",
+        "practice": "握手帧与HTTP请求区分明确。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    },
+    {
+      "id": "0.3.9",
+      "theory": "learning/1-notes/00-environment/0.3-network-basics/0.3.9.retrofit-okhttp-dio-fetch-axios.md",
+      "example": "learning/2-examples/00-environment/0.3-network-basics/0.3.7.rest-api-demo/README.md",
+      "exercise": "learning/3-exercises/00-environment/0.3-network-basics/0.3.9.retrofit-okhttp-dio-fetch-axios.md",
+      "practice": "learning/4-practice/00-environment/tasks.md#p-0-3-9",
+      "result": "passed",
+      "review": {
+        "theory": "修正Retrofit baseUrl、CancelToken弃用、TS不做运行期验证，移除绕过Pinning建议。",
+        "example": "复用已运行本地REST，平台伪代码对照不称真机或完整移动工程。",
+        "exercise": "传输/HTTP/JSON/业务分类具体。",
+        "practice": "不新增axios依赖，契约复用与平台差异对应。"
+      },
+      "evidence": [
+        "docs/audits/stage-0-review.md",
+        "docs/audits/stage-0-browser.json"
+      ],
+      "issues": []
+    }
+  ]
+}

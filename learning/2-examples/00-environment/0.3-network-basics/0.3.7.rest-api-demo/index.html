@@ -59,9 +59,11 @@
       min-height: 120px;
     }
     ul { margin-top: 8px; padding-left: 18px; }
+  body { overflow-wrap: anywhere; } pre, #log { max-inline-size: 100%; overflow-x: auto; } :focus-visible { outline: 3px solid #7638a8; outline-offset: 3px; }
   </style>
 </head>
 <body>
+<main>
   <h1>REST users CRUD</h1>
   <div class="tip">同域请求本机 API。打开 DevTools → Network，对照方法与状态码。</div>
 
@@ -140,5 +142,6 @@
 
     reload();
   </script>
+</main>
 </body>
 </html>

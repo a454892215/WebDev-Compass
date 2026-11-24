@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 0,
+  "initialStatus": "failed",
+  "status": "passed",
+  "reviewedAt": "2026-11-24T15:12:55.101644+00:00",
+  "sourceFingerprint": "caebd0bd83c40251fe211008e6e36a8467506d605422c554b57c949196ee8e12",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "全部稳定编号、四部分和逐点审查完整，无遗漏或重复冒充。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "目标、前置、推荐顺序与回读清楚；按简化总则和外部教学原则复核，层层递进，无额外教学设计文书。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "逐篇技术审查并修复错误，补核对来源和移动端类比边界。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "示例与说明一致，受影响行为实测；模拟、编译和外部观察分开。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "每点有独立操作、具体标准、可复现排错和有效参考。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "共享综合项目与逐点任务关联，当前实现与新增扩展明确。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "术语、安全、兼容、无障碍和跨章节事实假设已交叉复核。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "必要验证通过，发现的必达问题已修复并复验，历史复用范围明确。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "总览、进度、验证与交接一致，正文、质量和掌握状态分别记录。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-0-review.md",
+        "docs/TEACHING_EVIDENCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-0-points.json"
+  ],
+  "findings": [
+    {
+      "id": "S0-network-model",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "修复SOP/CSRF、Cookie、SPA/SSR等概念，补来源及本地运行证据。"
+    },
+    {
+      "id": "S0-demo-fidelity",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "修复注入/返回链接，改确定性fixture，模拟日志明确标注。"
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-0-browser.json",
+    "docs/audits/stage-0-review.md"
+  ],
+  "limitations": [
+    "AI逐点技术/教学审阅，不是学习者掌握认定。",
+    "浏览器为Chrome模拟视口，未做真机、多浏览器或完整辅助技术认证。",
+    "公网DNS/TLS/CDN/协议对比及生产能力未验证；基础教材观察任务明确边界。"
+  ]
+}

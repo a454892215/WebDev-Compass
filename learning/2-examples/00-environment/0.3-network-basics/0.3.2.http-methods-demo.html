@@ -30,7 +30,7 @@
       padding: 16px;
       margin-bottom: 12px;
     }
-    .card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .card h2 { font-size: 1rem; margin-bottom: 6px; }
     .card p { color: #555; font-size: 0.9rem; margin-bottom: 10px; }
     button {
       background: #0d6efd;
@@ -56,39 +56,40 @@
       min-height: 220px;
       margin-top: 8px;
     }
+  body { overflow-wrap: anywhere; } pre, #log { max-inline-size: 100%; overflow-x: auto; } :focus-visible { outline: 3px solid #7638a8; outline-offset: 3px; }
   </style>
 </head>
 <body>
+<main>
   <h1>HTTP 方法与状态码</h1>
-  <p class="sub">对应笔记：<a href="../../../learning/1-notes/00-environment/0.3-network-basics/0.3.2.http-https.md">0.3.2 HTTP/HTTPS</a></p>
+  <p class="sub">对应笔记：<a href="../../../1-notes/00-environment/0.3-network-basics/0.3.2.http-https.md">0.3.2 HTTP/HTTPS</a></p>
 
   <div class="tip">
-    打开 DevTools → <strong>Network</strong>，再点下方按钮。示例使用公共 API
-    <code>jsonplaceholder.typicode.com</code>（需联网）。注意：<code>fetch</code> 对 4xx/5xx <strong>不抛异常</strong>，需检查 <code>res.ok</code>。
+    打开 DevTools → <strong>Network</strong>，再点下方按钮。示例使用阶段 0 本地服务的 <code>/stage0-api</code> fixture（按本阶段 README 启动）。注意：<code>fetch</code> 对 4xx/5xx <strong>不抛异常</strong>，需检查 <code>res.ok</code>。
   </div>
 
   <div class="card">
-    <h3>GET / POST</h3>
+    <h2>GET / POST</h2>
     <p>观察 Method、Status、Request Payload、Response。</p>
     <button id="btn-get">GET 用户 #1</button>
     <button id="btn-post">POST 新建帖子</button>
   </div>
 
   <div class="card">
-    <h3>状态码分支</h3>
+    <h2>状态码分支</h2>
     <p>对比成功与「资源不存在」。</p>
     <button id="btn-ok">GET 200</button>
     <button id="btn-404" class="warn">GET 故意 404</button>
   </div>
 
   <div class="card">
-    <h3>请求日志</h3>
+    <h2>请求日志</h2>
     <div id="log">等待操作…</div>
   </div>
 
   <script>
     const logEl = document.getElementById('log');
-    const base = 'https://jsonplaceholder.typicode.com';
+    const base = '/stage0-api';
 
     function log(msg) {
       const line = typeof msg === 'string' ? msg : JSON.stringify(msg, null, 2);
@@ -130,8 +131,8 @@
     );
 
     document.getElementById('btn-ok').addEventListener('click', () =>
-      run('GET /posts/1 → expect 200', async () => {
-        const res = await fetch(`${base}/posts/1`);
+      run('GET /users/1 → expect 200', async () => {
+        const res = await fetch(`${base}/users/1`);
         log({ status: res.status, ok: res.ok, note: res.ok ? '业务上可继续 json()' : '应走错误分支' });
       }),
     );
@@ -148,5 +149,6 @@
       }),
     );
   </script>
+</main>
 </body>
 </html>

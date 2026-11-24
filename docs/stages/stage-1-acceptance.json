@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 1,
+  "initialStatus": "failed",
+  "status": "passed",
+  "reviewedAt": "2026-11-24T15:12:55.122018+00:00",
+  "sourceFingerprint": "66a384314c2ee81bea7a5868e234c850d37d294d2f52144396a1b153a183db47",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "全部稳定编号、四部分和逐点审查完整，无遗漏或重复冒充。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "目标、前置、推荐顺序与回读清楚；按简化总则和外部教学原则复核，层层递进，无额外教学设计文书。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "逐篇技术审查并修复错误，补核对来源和移动端类比边界。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "示例与说明一致，受影响行为实测；模拟、编译和外部观察分开。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "每点有独立操作、具体标准、可复现排错和有效参考。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "共享综合项目与逐点任务关联，当前实现与新增扩展明确。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "术语、安全、兼容、无障碍和跨章节事实假设已交叉复核。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "必要验证通过，发现的必达问题已修复并复验，历史复用范围明确。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "总览、进度、验证与交接一致，正文、质量和掌握状态分别记录。",
+      "evidence": [
+        "docs/audits/STAGE_0_1_ACCEPTANCE.md",
+        "docs/audits/stage-1-html-review.md",
+        "docs/audits/stage-1-css-review.md",
+        "docs/audits/stage-1-js-quality-review.md",
+        "docs/TEACHING_EVIDENCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-1-html-points.json",
+    "docs/audits/stage-1-css-points.json",
+    "docs/audits/stage-1-js-quality-points.json"
+  ],
+  "findings": [
+    {
+      "id": "S1-theory-and-prerequisites",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "修复循环先修、片段上下文、移动端标题及安全边界。"
+    },
+    {
+      "id": "S1-demo-and-exercise",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "修复动画/XHR/服务路径、HTML链接；排错及共享任务具体化并核对实际项目。"
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-1-css-runtime.json",
+    "docs/audits/stage-1-js-quality-runtime.json",
+    "docs/stages/webdev-stage1-html.json",
+    "docs/stages/webdev-stage1-browser.json"
+  ],
+  "limitations": [
+    "AI逐点技术/教学审阅，不是学习者掌握认定。",
+    "浏览器为Chrome模拟视口，未做真机、多浏览器或完整辅助技术认证。",
+    "公网DNS/TLS/CDN/协议对比及生产能力未验证；基础教材观察任务明确边界。"
+  ]
+}
