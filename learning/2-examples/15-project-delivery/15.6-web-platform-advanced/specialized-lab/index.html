@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>浏览器选修能力实验</title>
+    <style>
+      body {
+        font: 1rem/1.6 system-ui;
+        margin: 0;
+        background: #f4f7fa;
+        color: #172d43;
+      }
+      main {
+        max-width: 60rem;
+        margin: auto;
+        padding: 1rem;
+      }
+      button {
+        font: inherit;
+        padding: 0.6rem;
+        margin: 0.2rem;
+      }
+      section {
+        border: 1px solid #9aaabe;
+        background: white;
+        padding: 1rem;
+        margin-block: 1rem;
+      }
+      canvas {
+        max-width: 100%;
+        border: 1px solid #65778a;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      :focus-visible {
+        outline: 3px solid #005fbd;
+        outline-offset: 3px;
+      }
+    </style>
+    <script type="importmap">
+      { "imports": { "catalog-utils": "./catalog.mjs" } }
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>浏览器选修能力实验</h1>
+      <p>
+        合成数据、仅本地。不连接支付或真实账户；WebAuthn仅浏览器仪式，不提供登录服务。
+      </p>
+      <section>
+        <h2>Import Maps</h2>
+        <p id="module-result">等待模块；不支持时保留普通内容。</p>
+      </section>
+      <section>
+        <h2>WebAssembly边界</h2>
+        <button id="wasm">运行有界Wasm</button>
+        <pre id="wasm-result" role="status">尚未运行</pre>
+        <p><a href="http://localhost:4576/isolated">隔离文档：共享内存实验</a></p>
+      </section>
+      <section>
+        <h2>WebGL</h2>
+        <canvas
+          id="scene"
+          width="256"
+          height="128"
+          aria-label="蓝底橙色三角形；下方有等价文本"
+          >当前场景为蓝底上倾斜的橙色三角形。</canvas
+        >
+        <p id="scene-text">尚未渲染；文字内容始终可用。</p>
+        <button id="render">渲染</button><button id="release">释放GPU资源</button>
+      </section>
+      <section>
+        <h2>认证与支付边界</h2>
+        <p id="capabilities"></p>
+        <button id="register">生成本地合成凭证</button
+        ><button id="assert">发起合成断言</button>
+        <pre id="auth-result" role="status">尚未运行；自动化测试使用虚拟认证器</pre>
+        <p>Payment Request只检测接口存在，不调用show，也不产生订单。</p>
+      </section>
+      <p>
+        <a href="../README.md">返回选修组（本地静态服务器未映射；请从仓库文档打开）</a>
+      </p>
+    </main>
+    <script>
+      const importMapsAvailable =
+        HTMLScriptElement.supports?.('importmap') &&
+        !new URLSearchParams(location.search).has('no-importmap')
+      if (importMapsAvailable) {
+        const script = document.createElement('script')
+        script.type = 'module'
+        script.src = './app.mjs'
+        document.body.append(script)
+      } else {
+        document.getElementById('module-result').textContent =
+          '未加载ImportMap；基础目录内容仍可读。'
+        for (const button of document.querySelectorAll('button')) button.disabled = true
+      }
+    </script>
+  </body>
+</html>

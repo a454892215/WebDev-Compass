@@ -1,0 +1,83 @@
+{
+  "assumptions": [
+    "只用于确定性教学，duration为工作量区间单位，不是团队排期承诺",
+    "允许不同任务无限并行，未考虑人力/休假/采购等待；风险额外列出，不伪造统计置信度"
+  ],
+  "tasks": [
+    {
+      "id": "contract",
+      "owner": "api-owner",
+      "deps": [],
+      "duration": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "adapter",
+      "owner": "backend-owner",
+      "deps": [
+        "contract"
+      ],
+      "duration": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "ui",
+      "owner": "frontend-owner",
+      "deps": [
+        "contract"
+      ],
+      "duration": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "regression",
+      "owner": "qa-owner",
+      "deps": [
+        "adapter",
+        "ui"
+      ],
+      "duration": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "rehearsal",
+      "owner": "release-owner",
+      "deps": [
+        "regression"
+      ],
+      "duration": [
+        1,
+        2
+      ]
+    }
+  ],
+  "costs": {
+    "reuse": {
+      "license": 1,
+      "integration": 3,
+      "maintenance": 2,
+      "exit": 1
+    },
+    "custom": {
+      "license": 0,
+      "integration": 8,
+      "maintenance": 4,
+      "exit": 2
+    }
+  },
+  "catalog": [
+    {
+      "id": "p1",
+      "title": "合成商品",
+      "priceCents": 2500
+    }
+  ]
+}

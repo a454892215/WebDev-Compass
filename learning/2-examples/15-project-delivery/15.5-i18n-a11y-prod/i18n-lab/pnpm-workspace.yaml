@@ -1,0 +1,7 @@
+packages:
+  - .
+allowBuilds:
+  esbuild: false
+minimumReleaseAgeExclude:
+  - "@axe-core/playwright@4.14.1"
+verifyDepsBeforeRun: error

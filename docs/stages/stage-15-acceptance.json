@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 15,
+  "status": "passed",
+  "reviewedAt": "2026-11-25T13:36:22.188527+00:00",
+  "sourceFingerprint": "7196bc795558e73b09b4fc757caa8ae1fed8ae835096778935ec9c42c5d804b0",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "34编号全部四部分：5+4+5+6+6+8，契约/稳定任务锚点完整。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "问题/契约→评审/协作→切片迁移，i18n/a11y贯穿；浏览器按需且前置/运行条件清楚。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "MWG及Vue/Nuxt/作者/W3C官方核对，币种/范围/SSR/备份/方向/能力保证准确。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "主真实Nuxt/旧MPA与AST，决策/评审/ICU及15项浏览器专项断言实际执行，观察不冒实装。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "每点独立变体、具体故障/定位/恢复与至少两标准，组织活动可个人推演且不伪造同伴。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "34任务含实际切片/独立lab/明确新增，主无支付/多语言/完整3D等事实一致。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "契约字段cents/priceCents归属、只读双跑/双写、模板/批准、语言/方向、仪式/认证等分清。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "导航/焦点/503映射/搜索后退/隔离Worker/资源链接等发现关闭复验，必要门禁通过。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "590/590正文及四部分完整、待0，索引转实践/勘误；学习勾选/能力/生产限制独立。",
+      "evidence": [
+        "docs/audits/STAGE_15_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-15-collaboration-points.json",
+    "docs/audits/stage-15-review-points.json",
+    "docs/audits/stage-15-migration-points.json",
+    "docs/audits/stage-15-i18n-points.json",
+    "docs/audits/stage-15-navigation-points.json",
+    "docs/audits/stage-15-specialized-points.json"
+  ],
+  "findings": [
+    {
+      "id": "template-api",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "URL生成转script computed，实际类型/构建通过。"
+    },
+    {
+      "id": "skip-and-errors",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "skip在nav前且可聚焦；详情503/404分开。"
+    },
+    {
+      "id": "query-focus-history",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "path-only移焦、query同步和后退实际验证。"
+    },
+    {
+      "id": "navigation-history",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "补初始路径拦截，URL+marker+内容验证。"
+    },
+    {
+      "id": "isolation-and-resource",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Worker隔离头/HTML运行路由修复并复验。"
+    },
+    {
+      "id": "language-and-passkey",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "lang/dir分开与多设备凭证备份说明，验证边界准确。"
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-15-practice-runtime.json",
+    "docs/audits/stage-15-collaboration-runtime.json",
+    "docs/audits/stage-15-review-runtime.json",
+    "docs/audits/stage-15-i18n-runtime.json",
+    "docs/audits/stage-15-navigation-runtime.json",
+    "docs/audits/stage-15-specialized-runtime.json"
+  ],
+  "limitations": [
+    "主项目仅公开合成只读目录；没有真实组织审批/采购/Pair/Mob/员工评分/新人试学。",
+    "无真实jQuery运行、生产数据/双写迁移/数据库、全局持久开关、CDN发布或旧系统下线；bucket/rollback仅请求级演示。",
+    "Node ICU与原生浏览器交互分别测试，未把完整多namespace/国际化引擎接入主Nuxt；dayjs/自定义DatePicker/VPAT为官方观察。",
+    "axe与键盘是有限证据，不声称WCAG认证；无读屏/真机/多引擎/真实残障用户试验或完整per-entry滚动验收。",
+    "RTC只同页面双peer数据通道，无远端音视频/权限/STUN/TURN；OPFS只唯一合成文件写读删，无跨会话持久保证。",
+    "WebAuthn仅隔离虚拟认证器仪式无服务端验签/会话，Payment仅接口检测；无真实凭证/商户订单/支付。",
+    "Wasm共享Memory+Worker内JS Atomics不是Wasm pthread；WebGL用SwiftShader，未Three.js/硬件GPU性能/context-loss恢复或生产隔离部署。",
+    "AST只精确命名导入迁移，混合/default拒绝，无全项目符号图/别名路径/业务等价全面保证；未改其他宿主仓库。"
+  ]
+}

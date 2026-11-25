@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>浏览器能力渐进增强实验</title>
+    <style>
+      body {
+        font: 1rem/1.7 system-ui;
+        max-width: 52rem;
+        margin: auto;
+        padding: 1.2rem;
+        color: #142c44;
+        background: #f6f8fb;
+      }
+      button,
+      a {
+        font: inherit;
+        margin: 0.4rem;
+        padding: 0.5rem;
+      }
+      a {
+        color: #0056a6;
+      }
+      button {
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 3px solid #0068c7;
+        outline-offset: 3px;
+      }
+      #route-heading {
+        view-transition-name: route-title;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-group(*) {
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main">跳至主要内容</a>
+    <h1>浏览器能力渐进增强实验</h1>
+    <p>独立原生实验，不接管 Nuxt 路由。所有数据均为本地合成内容。</p>
+    <nav aria-label="实验页面">
+      <a href="http://127.0.0.1:4575/nav/one">视图一</a
+      ><a href="http://127.0.0.1:4575/nav/two">视图二</a>
+    </nav>
+    <main id="main">
+      <h2 id="route-heading" tabindex="-1">视图一</h2>
+      <p id="route-body">本地路由内容</p>
+      <button id="transition">切换局部视图</button
+      ><button id="opfs">OPFS写读删实验</button
+      ><button id="rtc">本地WebRTC数据通道</button>
+      <p id="status" role="status">等待操作</p>
+      <pre id="output"></pre>
+    </main>
+    <script type="module" src="http://127.0.0.1:4575/app.mjs"></script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "15.6.1",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "视图转场在DOM更新前后捕获快照，再把两张状态图衔接；它不是路由器、数据加载器，也不自动管理业务状态或焦点。先保证普通链接/内容切换正确，再在确有连续性收益时增加动画；不为了浏览器新能力给每次交互加特效。\n\n同文档document.startViewTransition(update)包住DOM更新，返回ready/updateCallbackDone/finished等不同阶段的Promise。一个view-transition-name在每一侧必须唯一，多个元素同名会导致转场跳过；DOM更新成功与动画成功要分开。lab只有标题一个route-title，不对所有卡片复制同名。正常等待finished后把焦点放在新标题tabindex=-1；动画跳过仍应保留内容与可达焦点，错误不应用来回滚正确数据。\n\nlab.transitionView先检测API和prefers-reduced-motion。无支持、强制回退或减弱动画时直接update并聚焦；原生路径才调用startViewTransition。CSS也对减弱动画关闭快照动画。网络/数据加载不包含在快照动画里，不能用转场遮住永久等待；请求错误仍需明确可恢复状态。\n\n下面最小调用在navigation-lab/app.mjs上下文，heading为页面现有h2：\n~~~js\nawait transitionView(() => { heading.textContent = '局部详情' })\n~~~\n\nAndroid共享元素动画可帮助理解视觉连续性，但DOM快照、CSS命名、浏览器渲染和路由焦点是不同机制；不等于Flutter Hero自动移植。Nuxt已有路由器，若接入应使用其匹配版本能力和单一更新入口，不再叠一套通用navigate拦截。",
+      "example": "点击“切换局部视图”，内容变为局部详情、标题获焦；本轮Chrome走真实native分支。?fallback=1和reduced-motion分别走直接更新，内容和焦点仍正确。",
+      "exercise": "故障：把两个可见卡片都命名为同一hero，转场跳过；检查命名与ready拒绝，改唯一/动态命名并清理。再删除回退update，会让不支持浏览器按钮无效，恢复普通内容更新。",
+      "practice": "给独立lab新增一个列表→详情的公开卡片，使用唯一转场名并在返回后清理；保留减弱动画和无API回退。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-behaviors/same-document-transitions",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-behaviors/same-document-transitions"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "View Transitions：内容先可用，动画渐进增强",
+      "task": "先完成独立练习的具体变体。为主Nuxt迁移项目评估可选接入；现有主路由不因本lab自动获得此功能。给独立lab新增一个列表→详情的公开卡片，使用唯一转场名并在返回后清理；保留减弱动画和无API回退。",
+      "criteria": [
+        "原生/强制回退/减弱动画三路径都更新同一内容，焦点落点明确。",
+        "同一快照侧没有重复name；取消或跳过动画不丢失可操作内容。"
+      ]
+    }
+  },
+  {
+    "id": "15.6.2",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Navigation API用window.navigation集中表示导航与当前上下文内同源历史条目，navigate事件描述目标、类型、表单、下载和可拦截性。它不是给History.pushState换个名字；finished代表导航处理完成，不能看到URL变了就认为异步UI也已更新。\n\n独立lab只在有API且未强制回退时注册一个navigate处理器。先判断canIntercept、同源、目标路径允许列表，并放过hash、下载与表单，再event.intercept。handler更新文字和document.title，使用focusReset:manual后自己把焦点落到标题；滚动仍由浏览器默认处理，本lab不实现自定义滚动位置数据库。别拦所有地址再把未知链接吞掉，服务端也必须能直接返回深链。\n\n最小模式的上下文是原生lab，不应粘到Nuxt app全局插件中：\n~~~js\nnavigation.addEventListener('navigate', event => {\n  // 完整可拦截性/来源/路径/表单/下载筛选见app.mjs\n  if (!event.canIntercept) return\n})\n~~~\n\n没有能力时普通a href直接整页导航，服务器为/nav/one和/nav/two返回入口并按URL渲染。回退不需要手工伪造新的路由器。真实框架迁移时先确认Vue Router/Nuxt是否已经负责历史、取消、数据与滚动；同一导航应有一个owner，不同时注册两套拦截器。更复杂加载需用事件的取消信号避免迟到结果覆盖新页面。\n\n和Android返回栈相似的是有位置与返回操作，但浏览器还有地址栏、深链、跨源、下载、辅助技术、历史遍历和多标签页；不是Activity栈的等价物。官方当前标Baseline2026不意味着旧WebView都支持，应检测并测试目标浏览器。",
+      "example": "真实navigate拦截跳到/nav/two，保持window内同文档marker、更新标题，再后退回视图一。测试等待页面标题状态，不把goBack调用返回当渲染已完成；强制回退使用普通链接整页加载仍可用。",
+      "exercise": "故障：只检查URL已到/nav/two就立即断言异步内容，会偶发看到旧标题；等待导航finished或页面完成标记。另一故障是无条件intercept把下载吞掉，恢复明确筛选并验证普通行为。",
+      "practice": "在原生lab新增/nav/three并为直接深链、后退、未知路径、锚点及下载列测试；对主Nuxt只写路由owner评审，不另装全局拦截器。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-behaviors/same-document-transitions"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Navigation API：拦截边界、历史与框架路由所有权",
+      "task": "先完成独立练习的具体变体。为主Nuxt迁移项目评估可选接入；现有主路由不因本lab自动获得此功能。在原生lab新增/nav/three并为直接深链、后退、未知路径、锚点及下载列测试；对主Nuxt只写路由owner评审，不另装全局拦截器。",
+      "criteria": [
+        "同文档导航与普通链接回退均可到达新页面，标题/焦点与实际内容一致。",
+        "未知/跨源/表单/下载不被错误接管；说明主Nuxt已有路由owner和深链服务器责任。"
+      ]
+    }
+  },
+  {
+    "id": "15.6.3",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Origin Private File System是浏览器按源隔离的私有存储端点，不是用户“下载”目录，也不是把任意本机路径交给网页。navigator.storage.getDirectory返回该源根句柄；通常无需文件选择授权，但需要安全上下文和浏览器能力。loopback作为可信本地上下文可供实验，生产使用HTTPS。\n\n主线程可用异步getFileHandle、createWritable、write、close；文件关闭完成后再读取。同步访问句柄的同步I/O用于Dedicated Worker，createSyncAccessHandle本身仍返回Promise；不能为了快就在主线程调用。OPFS受配额、站点清理、私密模式与浏览器回收策略影响，浏览器本地草稿不能承诺永久存储。storage.estimate是估计值，persist请求也非一定批准；仍需导出/同步/恢复策略和可解释错误。\n\nlab.opfsRoundTrip每次使用compass-fixture-加randomUUID的唯一文件，只写synthetic-local-draft，读取核对后finally删除这个文件。它不遍历删除用户源目录，不把测试清理写成清空整个OPFS。真实测试进一步确认合成前缀条目不存在。最小调用在lab上下文：\n~~~js\nconst result = await opfsRoundTrip()\n// 完整writer.close与仅本文件的finally清理见app.mjs\n~~~\n\n能力缺失时返回显式“内存草稿/导出”策略说明，不伪装相同持久保证；QuotaExceededError、权限/安全与I/O错误要区分，不能吞异常显示已保存。将OPFS用作离线数据层时还需Schema版本、并发写锁和损坏恢复，非本例一写一读就等于SQLite数据库方案。\n\n和移动App私有目录相似的是不直接展示给文件管理器，但浏览器源/存储分区与站点清理生命周期不同，不能把Android私有文件的持久策略原封不动搬过来。用户敏感数据仍需要访问控制、最少保存和退出清理；源私有不是防同源恶意脚本的加密边界。",
+      "example": "真实Chrome执行getDirectory→唯一文件createWritable/write/close→getFile/text→finally removeEntry；返回合成正文且测试确认没有残留compass-fixture文件。强制缺失路径返回supported:false，不假称已持久化。",
+      "exercise": "故障：写后不await close就立即显示保存成功，错误晚到导致UI与实际内容不符；把成功状态移到完整close之后。若catch所有错误仍返回supported:true，应改为可见失败/显式回退，并保留旧草稿或导出入口。",
+      "practice": "新增可导出的版本化草稿格式，测试未知版本拒绝、正文读取失败和存储不可用回退；只清理由本练习创建的唯一文件。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/File_System_API/Origin_private_file_system",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-behaviors/same-document-transitions"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "OPFS：源私有草稿、配额和可恢复边界",
+      "task": "先完成独立练习的具体变体。为主Nuxt迁移项目评估可选接入；现有主路由不因本lab自动获得此功能。新增可导出的版本化草稿格式，测试未知版本拒绝、正文读取失败和存储不可用回退；只清理由本练习创建的唯一文件。",
+      "criteria": [
+        "close后才显示保存成功，读回正文与版本一致；失败有明确状态和导出恢复。",
+        "不清空整个源；区分配额/站点清理/权限/备份，未测的跨会话持久性不声称通过。"
+      ]
+    }
+  },
+  {
+    "id": "15.6.4",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "WebRTC包含媒体轨道与RTCDataChannel。RTCPeerConnection管理协商和连接；SDP offer/answer描述能力与会话参数，ICE candidates寻找可行路径。信令传递由应用提供，不属于浏览器自动发现所有远端用户。STUN帮助发现地址，TURN在需要时中继；不能把“peer-to-peer”理解为永不经过服务器或无需部署。\n\nlab在同一页面建立两个RTCPeerConnection，iceServers为空，不使用外网STUN/TURN；通过本地函数传offer/answer及候选，候选在对方remoteDescription设置前排队，之后逐个添加。createDataChannel默认带内协商，远端通过datachannel事件接收；只有open后才能send。对方收到synthetic-ping，finally关闭通道、两个peer和超时器。它是真实浏览器WebRTC传输，不是简单Promise模拟，但不代表远程网络可连通。\n\n最小入口在lab模块上下文：\n~~~js\nconst result = await rtcRoundTrip()\n// offer/answer、ICE排队、超时和finally清理见app.mjs\n~~~\n\n数据通道有bufferedAmount/低水位事件，发送大对象需分片、限制缓冲与消息大小，并核对协商能力；不能一次send任意大文件。WebRTC传输有加密，但信令仍需HTTPS、用户认证、房间授权和来源校验，避免被错误peer替换；不要记录可识别地址的完整候选/SDP。\n\n音视频另需getUserMedia安全上下文、用户权限与拒绝/无设备处理、track停止、静音/摄像头状态及真实回声/弱网验证。并发offer冲突宜按官方perfect negotiation模式处理；本lab只单向发起一次协商。类似移动原生实时音视频SDK，但网页还受标签页生命周期、浏览器权限、嵌入策略与支持范围影响。生产TURN、远端、音视频和移动网络都未测；本地通道通过不等于可上线音视频系统。",
+      "example": "真实两个peer以本地SDP/ICE协商打开有序DataChannel并接收synthetic-ping；状态机finally后两peer closed。无摄像头/麦克风、STUN/TURN、远端服务器或公网连通验证。",
+      "exercise": "故障：收到ICE候选时不等remoteDescription就直接addIceCandidate，可能InvalidStateError；按目标peer缓存并在setRemoteDescription后排空。再删finally close会遗留连接，使用关闭状态断言定位，恢复统一清理。",
+      "practice": "把本地通道扩展为有最大消息长度和缓冲阈值的发送器，模拟超时/断开并清理；另写音视频接入的授权、拒绝、停止轨道与TURN验证清单。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Using_data_channels",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-behaviors/same-document-transitions"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "WebRTC：信令、ICE、数据通道与媒体权限边界",
+      "task": "先完成独立练习的具体变体。为主Nuxt迁移项目评估可选接入；现有主路由不因本lab自动获得此功能。把本地通道扩展为有最大消息长度和缓冲阈值的发送器，模拟超时/断开并清理；另写音视频接入的授权、拒绝、停止轨道与TURN验证清单。",
+      "criteria": [
+        "只在open发送，超时与失败释放peer/channel/timer，未知消息长度被拒绝。",
+        "明确本地数据通道与真实音视频/远端连通的证据区别，不记录完整SDP/候选。"
+      ]
+    }
+  }
+]

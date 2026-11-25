@@ -34,3 +34,5 @@
 - [阶段13：pnpm多包管理、版本发布与CI流水线](./13-platform/README.md)：28点四部分、多应用workspace及发布/构建/兼容/DX实验。
 
 - [阶段14：Node.js、Nuxt Nitro 与 BFF 接口开发](./14-bff-runtime/README.md)：29点Nuxt BFF综合项目与29项任务及配套运行边界。
+
+- [阶段15：旧项目迁移、代码评审与团队交付](./15-project-delivery/README.md)：34项综合任务及Nuxt迁移项目；全图正文齐备，学习与生产交付仍需独立证据。

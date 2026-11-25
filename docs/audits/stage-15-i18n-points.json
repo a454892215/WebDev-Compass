@@ -1,0 +1,165 @@
+[
+  {
+    "id": "15.5.1",
+    "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md",
+    "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先把“翻译内容”和“格式化数据”分开。消息key按业务namespace组织，如catalog.count，而不是把中文整句当永久ID；语言、namespace和版本共同决定加载目标。页面进入时加载所需消息，缺key/加载失败有可观察回退；不要把用户传入的locale直接拼成服务器文件路径。SSR需在当前请求确定语言并把一致的公开消息结果交给hydration，避免服务器英文/客户端阿拉伯语产生首屏不一致。全局只读字典可复用，当前用户语言/私有数据不能跨请求共享。\n\nICU MessageFormat不是简单字符串替换。plural按目标语言复数类别选择分支，=0是精确匹配，#在plural中代表格式化数值；one不等于所有语言的“数字1”。select按受控枚举选句式，other作为兜底。性别等信息仅在产品确需且用户明确提供时使用，不能从姓名推断，未知值用中性表达。整句由翻译者调整，不能把半句话拼接强迫所有语言遵守中文词序。\n\n本lab真实运行intl-messageformat10.7.18；messages-en/ar是catalog语义的一组消息按语言动态import，尚未实现完整多namespace业务工程。createMessages各自保存加载Promise，失败后删除该Promise便于重试；字典是公开内容，不放秘密。这个库的ICU语法不能直接当成Vue I18n所有版本默认支持的语法，接Nuxt时先核对所选消息引擎、编译与加载策略。",
+      "example": "运行unit.test.mjs前两项：0/1/3分别No files、1 file、3 files；阿拉伯语2为双数；未知gender走They；未知locale/key拒绝。浏览器页并未打包该ICU库，不能把Node结果当浏览器国际化集成。",
+      "exercise": "把plural的other分支删除，真实编译应拒绝；不要改成count===1就拼s。另将加载失败Promise永久缓存会让恢复后的请求继续失败，清除该项后在同输入重试。",
+      "practice": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在副本新增checkout namespace和三个待翻译key，显式注册locale/namespace加载表；对并发请求去重、加载失败重试和缺key降级写测试，不用任意路径import。",
+      "sources": [
+        "https://formatjs.github.io/docs/intl-messageformat/",
+        "https://formatjs.github.io/docs/core-concepts/icu-syntax/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "按模块加载消息、ICU复数与select",
+      "task": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在副本新增checkout namespace和三个待翻译key，显式注册locale/namespace加载表；对并发请求去重、加载失败重试和缺key降级写测试，不用任意路径import。",
+      "criteria": [
+        "0/1/2/多项按目标语言而非简单加s，select未知值有other。",
+        "新增namespace只按允许表加载，SSR请求语言不共享可变单例；失败与缺key有证据。"
+      ]
+    }
+  },
+  {
+    "id": "15.5.2",
+    "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md",
+    "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "lang决定语言信息和辅助技术发音，dir决定基准文本方向，两者不能互相代替。整体RTL页面用html dir=rtl；结构方向由HTML声明，布局用margin/padding/border-inline-start等逻辑属性随方向变化。不要把整页transform:scaleX(-1)，那会镜像文字和媒体，也不能仅text-align:right就称完整RTL。\n\n只有表达方向的图标按产品语义镜像，如前进/返回箭头；品牌、照片、播放三角、数字和时间轴不能机械全翻。Flex/Grid的视觉顺序与DOM/键盘顺序分别检查，不用row-reverse掩盖错误阅读顺序。混排订单号、邮箱和用户输入使用bdi或合适的dir隔离，未知内容可dir=auto；不要在业务字符串中到处插不可见方向控制字符，日志与复制结果也可能受影响。\n\nlab的card用border-inline-start，切换后实际右边框6px；directional箭头单独镜像，AB-12/34和INV编号在bdi dir=ltr中保持文本顺序。教学控件为英文，body lang=en，阿拉伯语段落单独lang=ar；可以RTL布局内放英文内容，语言和方向是两个轴。这个最小实验不是专业阿拉伯语翻译或所有复杂表格/图表的RTL验收。",
+      "example": "运行浏览器脚本，在1440/390切换dir，断言逻辑起始边框成为右边框，bdi编号仍明确ltr、无横向溢出。断言证明布局属性，不替代人工阅读顺序或读屏测试。",
+      "exercise": "把border-inline-start改成border-left后，RTL仍在左侧，实际right边框断言失败；恢复逻辑属性。另一故障是对main整体scaleX(-1)，发现文字也镜像，改为仅方向图标。",
+      "practice": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在副本加入邮箱、用户昵称和带正负号金额，分别为可信/未知方向内容选择隔离策略；给一个应镜像箭头和一个不镜像品牌图形写检查。",
+      "sources": [
+        "https://www.w3.org/International/questions/qa-html-dir",
+        "https://www.w3.org/International/articles/inline-bidi-markup/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "RTL逻辑布局、图标方向与BiDi隔离",
+      "task": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在副本加入邮箱、用户昵称和带正负号金额，分别为可信/未知方向内容选择隔离策略；给一个应镜像箭头和一个不镜像品牌图形写检查。",
+      "criteria": [
+        "LTR/RTL切换不改DOM阅读顺序，逻辑间距/边框方向正确，窄屏无内容丢失。",
+        "订单号/邮箱复制值不插人为控制字符，镜像只作用于有方向语义的图标。"
+      ]
+    }
+  },
+  {
+    "id": "15.5.3",
+    "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md",
+    "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先区分三类数据：一个绝对瞬间、某地的墙上时间、纯日期。日志/事件时间可用明确Z或offset的ISO8601表示瞬间；预约“每周当地9点”还需IANA时区及重复规则；生日和结算日不能一律转UTC午夜，否则可能跨日。UTC不是所有业务字段都应采用的唯一模型。\n\nIntl.DateTimeFormat只负责按locale和timeZone格式化已确定的瞬间，不替你决定用户输入的歧义。默认运行环境时区可能因服务器和浏览器而异，SSR应显式约定。America/New_York一类区域时区有历史和夏令时规则，固定-05:00不能替代全年纽约时区。春季有不存在的本地小时，秋季同一小时可对应两个瞬间；输入契约必须规定拒绝、选择较早/较晚或要求offset。\n\nlab的instantParts拒绝无offset字符串，再显式formatToParts。2026-03-08纽约01:30后的绝对下一小时显示03:30；2026-11-01两个不同UTC时刻都显示01:30，证明“同一显示”不能当唯一事件ID。Date内部时间戳与显示时区不同，换显示时区不改瞬间。dayjs timezone是可选封装，依赖utc插件，要区分dayjs.tz解析本地时间与dayjs(instant).tz显示转换，keepLocalTime选项也改变含义；本lab未安装dayjs，不把官方对照当实测。",
+      "example": "运行unit.test.mjs第三项，验证DST缺口、重复显示、UTC差异、无offset/无效瞬间与无效zone拒绝。固定输入不依赖开发机当前时区。",
+      "exercise": "把timeZone选项删掉，开发机与CI可能显示不同日期/小时；用固定UTC与纽约断言定位，再恢复显式zone。若后端给无offset的02:30，不用附加Z假装修复业务含义，先修契约。",
+      "practice": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：为订单创建时间、生日、纽约门店每周预约分别定义接口字段模型；增加跨日时区显示和秋季重复小时的消歧测试，并记录SSR/客户端一致策略。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
+        "https://day.js.org/docs/en/plugin/timezone"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "UTC瞬间、业务时区与夏令时",
+      "task": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：为订单创建时间、生日、纽约门店每周预约分别定义接口字段模型；增加跨日时区显示和秋季重复小时的消歧测试，并记录SSR/客户端一致策略。",
+      "criteria": [
+        "明确瞬间/纯日期/当地预约三种契约，不把生日转UTC后造成日期偏移。",
+        "同一瞬间跨时区显示可复现，歧义输入有明确拒绝或消歧规则，不靠运行机器默认zone。"
+      ]
+    }
+  },
+  {
+    "id": "15.5.4",
+    "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md",
+    "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "WCAG2.2的AA意味着满足适用的A和AA成功准则，并满足整页、完整流程、技术支持及不干扰等符合性要求。抽查一个按钮或axe零违规不足以声称整个产品AA。先列版本、页面/流程、语言、视口和状态；对登录、错误、弹窗、空数据等变体逐项选择自动与人工方法，记录适用/不适用理由和未完成项。\n\nWCAG2.2新增要求包含焦点不被遮挡(最低)、拖动替代、目标大小(最低)、一致帮助、冗余输入、可访问认证(最低)等；各准则有适用条件和例外，不能压成“一律24px”“禁止密码”这类口号。焦点可见、对比、键盘、语义、重排/缩放仍需贯穿。自动工具能发现一部分程序性错误，读屏体验、内容替代是否有意义、完整流程可用性还需人工和适用的用户参与。\n\nVPAT是ITI提供的报告模板，用其编写的具体产品报告叫ACR。它不是测试工具、认证徽章或浏览器生成的“合格证”；选择适用标准/版本，给每项支持程度与解释，标明产品版本、评估方法和限制。本轮不对外出具ACR。lab浏览器的选定axe规则和键盘记录只是局部证据；不要把这个小实验的全部结果推成主Nuxt或真实产品已AA。",
+      "example": "运行浏览器脚本，读取dist/browser-results.json中的所选axe标签与键盘项目；然后按WCAG原文列出它没有覆盖的准则和状态。",
+      "exercise": "故障是把axe violations=[]直接写成“全站WCAG2.2 AA”。对照整页/完整流程要求，删去无依据结论，保留真实测试范围并补人工/辅助技术待验项；修复判据是证据与声明一致。",
+      "practice": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：为主迁移项目拟定一页有限范围评估清单，选三个适用准则记录方法/证据/发现；另写一条ACR式说明，明确未做真实读屏和用户试验，不填虚假的Supports。",
+      "sources": [
+        "https://www.w3.org/TR/WCAG22/",
+        "https://www.itic.org/voluntary-product-accessibility-template-vpat/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "WCAG2.2 AA评估范围与VPAT/ACR证据",
+      "task": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：为主迁移项目拟定一页有限范围评估清单，选三个适用准则记录方法/证据/发现；另写一条ACR式说明，明确未做真实读屏和用户试验，不填虚假的Supports。",
+      "criteria": [
+        "范围含完整关键流程与状态，自动/人工证据分开，未验证项明确待验。",
+        "正确区分WCAG符合性、axe结果、VPAT模板与产品ACR，不声称认证或职级达成。"
+      ]
+    }
+  },
+  {
+    "id": "15.5.5",
+    "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa.md",
+    "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "整页跳转时浏览器通常提供新的文档上下文；SPA只替换部分DOM，URL变了并不会自动告诉辅助技术“到了哪里”。导航完成后更新document.title、当前页aria-current和必要的页面标题焦点。目标h1用tabindex=-1可程序聚焦但不增加日常Tab停靠；skip link跨过重复导航直接到有意义内容。不要每次局部过滤、输入或后台刷新都抢焦点。\n\n导航状态通知使用短的role=status文本，内容区域忙碌可aria-busy；不要把整个main设live region导致重复朗读。错误提示与路由成功区分，焦点落点按任务上下文决定；模态交互才约束焦点，不在普通页面拦截Tab。转场动画不会替你管理焦点，尊重prefers-reduced-motion。\n\n滚动需要区分新导航、后退/前进、锚点、异步内容和嵌套容器；恢复应按历史条目而非只按pathname。lab用History API实现最小示意：新导航记录当前位置、标题聚焦preventScroll后置顶，popstate按路径恢复。它刻意没有完整per-entry键、异步布局稳定等待或Nuxt Router接入；测试只核标题/焦点/返回，不称完整滚动恢复已验收。真实Nuxt项目先读框架路由和已有无障碍行为，避免再装第二套路由拦截器。",
+      "example": "浏览器脚本先Tab到skip link并Enter聚焦标题，点击Details后标题/焦点/status更新，再后退返回Catalog；普通Tab仍能离开页面控件序列，不制造全页陷阱。",
+      "exercise": "删除render中的heading.focus，点击链接后焦点仍停旧导航，可能丢失内容上下文；保留真实focus断言恢复目标。仅改颜色或title无法修复焦点。另一故障pathname做key覆盖同路由历史位置，需per-entry键。",
+      "practice": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在隔离副本将滚动表改为每历史条目唯一key，测试同路径两个条目各自位置，并覆盖返回时异步内容高度改变；为失败导航指定标题/焦点回退。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility",
+        "https://developer.mozilla.org/en-US/docs/Web/API/History_API"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "SPA路由的标题、焦点、通知与滚动",
+      "task": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在隔离副本将滚动表改为每历史条目唯一key，测试同路径两个条目各自位置，并覆盖返回时异步内容高度改变；为失败导航指定标题/焦点回退。",
+      "criteria": [
+        "新路由标题与主标题/aria-current一致，焦点落在有意义目标且局部刷新不抢焦点。",
+        "同路径不同历史条目恢复各自位置；明确等待布局、hash与失败策略，不在普通路由设置焦点陷阱。"
+      ]
+    }
+  },
+  {
+    "id": "15.5.6",
+    "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md",
+    "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先确定需求：固定少量选项优先原生select，普通日期输入先评估input type=date；需要搜索建议才用适用combobox模式。ARIA只表达语义，不自动实现键盘。可编辑listbox-popup combobox的DOM焦点留在输入框，用aria-activedescendant引用实际存在的建议项，aria-controls关联listbox，aria-expanded同步可见性，当前项aria-selected与视觉一致。输入编辑快捷键不能被任意覆盖。\n\nlab提供三个城市建议：输入过滤、ArrowDown/Up移动、Enter确认、Escape关闭、blur关闭；点击建议保留输入焦点。它允许自定义文本，不是严格只能选三城的校验器，也没有异步查询/虚拟列表/输入法专项。复杂需求需进一步验证选中状态、空结果和加载失败，不把几项ARIA属性当作完整组件库。\n\n原生dialog.showModal负责顶层、背景交互限制与基础焦点行为；选择初始焦点、Escape关闭、关闭后回到合理触发点仍要测试。浏览器界面可以获得焦点，不能为了所谓“完美trap”阻断用户访问地址栏。本lab测试两个内部控件间Tab，不宣称封锁浏览器chrome。若触发元素已删除，需定义替代返回点。\n\nDatePicker是日期输入+对话框+日历grid的组合，不只是30个按钮。APG示例涉及当前/选中日期、月年导航、方向键、跨月及单个tabstop；官方示例本身是说明性样例，生产前仍需目标浏览器/辅助技术测试。本轮仅官方观察自定义DatePicker，未实现或宣称完整日期网格通过。",
+      "example": "两视口实际测试输入ArrowDown激活city-0、再移动Enter选Cairo、Escape收起；dialog打开自动聚焦关闭按钮，Tab到另一内部按钮，Escape返回触发按钮。DatePicker按APG页面做明确标记的官方观察。",
+      "exercise": "将listbox更新后仍保留aria-activedescendant指向已删除city-0，输入焦点没变但AT引用失效；过滤后清理旧ID，移动时只引用实际项。dialog只设open属性并不等于showModal模态行为，恢复原生方法再验。",
+      "practice": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在副本增加异步城市建议并用请求版本或取消处理晚到结果；另为日期选择器只编制键盘/读屏验收矩阵，未实装保持待验。为dialog触发点删除场景指定替代焦点。",
+      "sources": [
+        "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/",
+        "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+        "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Combobox、日期选择与原生模态框",
+      "task": "将本点用于主Nuxt迁移交付：先审查其已有实现，完成上述独立变体，再写清需要新增的接入与验收；不把独立lab冒称已集成主项目。具体任务：在副本增加异步城市建议并用请求版本或取消处理晚到结果；另为日期选择器只编制键盘/读屏验收矩阵，未实装保持待验。为dialog触发点删除场景指定替代焦点。",
+      "criteria": [
+        "建议项活动ID、展开/选中状态与DOM一致，键盘和指针可完成，晚到结果不能污染新输入。",
+        "原生dialog可关闭并恢复焦点；DatePicker观察与实际组件证据分开，不以ARIA声明等同生产可用。"
+      ]
+    }
+  }
+]

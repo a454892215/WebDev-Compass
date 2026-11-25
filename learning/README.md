@@ -36,3 +36,5 @@
 阶段13：[多包/平台理论](./1-notes/13-platform/README.md)、[实验](./2-examples/13-platform/README.md)、[独立练习](./3-exercises/13-platform/README.md)、[Nuxt/Vite协作workspace](./4-practice/13-platform/README.md)，共28点。下一阶段14。
 
 阶段14：[理论](./1-notes/14-bff-runtime/README.md)、[实验](./2-examples/14-bff-runtime/README.md)、[练习](./3-exercises/14-bff-runtime/README.md)、[Nuxt BFF与29项任务](./4-practice/14-bff-runtime/README.md)。下一阶段15。
+
+阶段15：[理论](./1-notes/15-project-delivery/README.md)、[实验与观察](./2-examples/15-project-delivery/README.md)、[练习](./3-exercises/15-project-delivery/README.md)、[Nuxt迁移与34任务](./4-practice/15-project-delivery/README.md)。590项规划正文全部提供；之后按个人项目复现故障、交付并持续勘误，不自动勾选学习进度。

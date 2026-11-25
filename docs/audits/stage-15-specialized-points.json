@@ -1,0 +1,116 @@
+[
+  {
+    "id": "15.6.5",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先区分两个独立能力：WebAuthn用公钥凭证完成注册/认证仪式，Payment Request提供浏览器支付交互接口。二者都需要安全上下文及用户交互，但“接口存在”“平台认证器可用”“返回了凭证/PaymentResponse”分别不等于用户已登录、资金已结算。它们不应成为普通目录浏览的必需条件。",
+      "example": "自动化verify.mjs先创建临时CDP虚拟认证器，点击生成本地合成凭证和发起断言；实际type为webauthn.create/get、origin为http://localhost:4576、challengeMatches为true，断言signatureBytes大于0，serverVerified始终false。Payment仅记录接口是否存在。测试结束移除认证器并关闭隔离浏览器上下文，不触碰用户真实passkey。",
+      "exercise": "故障设定：把浏览器的challengeMatches:true直接当成“已登录”。通过当前serverVerified:false和缺失服务器验签定位信任边界；修复为只有服务端受验证结果才能建立会话。若扩展虚拟仪式，错误rpId应失败；不能以关闭校验或固定challenge解决。",
+      "practice": "在隔离副本建立服务端验证责任表：challenge生成/存储/消费、RP/origin、UV、凭证归属、验签、业务会话。增加一个过期或已消费challenge的状态模型；Payment写取消与后端待确认的订单状态图，不接真实支付。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/passkey-authentication",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API",
+        "https://www.w3.org/TR/webauthn-3/#sctn-credential-backup"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "WebAuthn仪式、服务端验证与Payment Request边界",
+      "task": "在隔离副本建立服务端验证责任表：challenge生成/存储/消费、RP/origin、UV、凭证归属、验签、业务会话。增加一个过期或已消费challenge的状态模型；Payment写取消与后端待确认的订单状态图，不接真实支付。",
+      "criteria": [
+        "责任表明确前端与服务端，重放/过期挑战拒绝，模型不能冒称密码学验证。",
+        "支付状态区分取消、授权结果和服务端确认；没有真实商户证据就不写支付成功。"
+      ]
+    }
+  },
+  {
+    "id": "15.6.6",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "浏览器原生ESM认识URL形式的模块specifier；catalog-utils这样的裸名需要Import Map映射，或者构建器在构建时处理。Import Map是浏览器解析规则，不安装包、不执行npm脚本、不转译TypeScript、不替你打包tree-shake，也不会让任意npm包自动具备浏览器兼容性。Nuxt/Vite已有模块构建链，不为一个别名再混入第二套运行期依赖解析。",
+      "example": "实际HTTP返回JavaScript MIME，浏览器使用裸名导入catalog.mjs后显示“本地 ESM：目录”。no-importmap分支不会加载依赖模块，保留基础内容且按钮disabled；这验证功能门控，不伪造CDN测试或构建器行为。",
+      "exercise": "把catalog-utils映射改成不存在的./missing.mjs，浏览器模块加载失败且模块结果停在等待。核Network状态、MIME、映射key和请求URL，恢复准确路径。另一故障是移除bootstrap门控后在不支持环境强行加载；保留可读基础页与明确不可用提示。",
+      "practice": "在隔离副本新增formatter裸名映射，返回有单位的展示文本；再画出如果替换成版本固定CDN时的CORS、CSP、完整性、缓存和失败责任表。主Nuxt不因此改用Import Map。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/secure-external-subresources"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Import Maps、原生ESM与CDN信任边界",
+      "task": "在隔离副本新增formatter裸名映射，返回有单位的展示文本；再画出如果替换成版本固定CDN时的CORS、CSP、完整性、缓存和失败责任表。主Nuxt不因此改用Import Map。",
+      "criteria": [
+        "实际裸名导入成功，缺失目标能通过请求状态定位；不把映射称npm安装或TS转译。",
+        "回退不加载无法解析的模块；CDN计划固定版本并分别核CORS/CSP/完整性，不将本地结果称跨源实测。"
+      ]
+    }
+  },
+  {
+    "id": "15.6.7",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Wasm是可移植二进制执行格式，适合已有原生计算库或经过测量的CPU密集任务；不是下载一个.wasm就会比JavaScript快。下载、编译、初始化、数据复制和频繁跨JS/Wasm调用都可能占主要成本。先基准定位，再按批处理buffer边界设计，避免每像素调用一次导出函数。Wasm不能直接替代DOM组件，UI和能力授权仍由Web平台负责。",
+      "example": "真实Chrome执行add得到7、SIMD得到5；grow后旧buffer长度0、新buffer131072。普通文档sharedWorker为null；隔离文档crossOriginIsolated=true、Worker返回1。测试2秒deadline并终止Worker，不留下后台线程。",
+      "exercise": "故障：memory.grow后继续用旧Uint8Array读写，得到脱离视图或无效长度；定位oldBufferDetached，再从新memory.buffer建立视图。线程故障若只给文档设COEP而Worker没有匹配策略，本lab首次执行会Worker错误；补响应头后共享通道才通过。",
+      "practice": "在隔离副本增加有界数组求和的JS/Wasm边界设计及小输入一致性测试，记录批量与逐元素调用的测量条件。另删Worker的COEP响应头复现隔离通道错误，再恢复；不要动主宿主的全局安全策略。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/wasm/cpp-on-the-web",
+        "https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Using_the_JavaScript_API",
+        "https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Memory/Memory",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Wasm的JS边界、SIMD、内存增长与线程条件",
+      "task": "在隔离副本增加有界数组求和的JS/Wasm边界设计及小输入一致性测试，记录批量与逐元素调用的测量条件。另删Worker的COEP响应头复现隔离通道错误，再恢复；不要动主宿主的全局安全策略。",
+      "criteria": [
+        "标量/变体结果与独立JS参考一致，内存上限和grow后新视图有断言，不宣称通用加速倍数。",
+        "区分SIMD、共享Memory+JS Atomics与真正Wasm线程；失败可退标量/JS，Worker按期退出。"
+      ]
+    }
+  },
+  {
+    "id": "15.6.8",
+    "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js.md",
+    "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "WebGL提供基于OpenGL ES的浏览器图形接口，JS提交顶点/缓冲、着色器和绘制状态，GPU执行图形管线。Three.js在其上组织scene、camera、mesh、material、renderer等高层对象；不是Vue组件库，也不能让canvas自动具有语义DOM的键盘/读屏能力。本阶段可视化为选修，商品目录等二维内容不为“现代化”强行搬进3D。",
+      "example": "真实WebGL渲染得到背景[0,64,191,255]、中心橙色[255,128,0,255]，getError为0。释放后buffer句柄状态false；代码同时解除使用并删除program/shader/buffer。fallback参数下不获取WebGL而提供可读文字。未安装Three.js或运行实际context loss。",
+      "exercise": "故障：每次渲染都createBuffer却不delete旧句柄，频繁切换可能累积资源。对照当前render先release的路径，加入创建/释放计数并验证卸载平衡。若canvas不可用却隐藏文字，恢复等价文本和普通详情入口；不要仅关闭GL错误检查。",
+      "practice": "在隔离副本为主Nuxt目录设计可选的3D预览入口，先保留普通详情内容。扩展lab加入ResizeObserver、受控DPR及卸载清理；如选Three.js，再建立真实scene/camera/geometry并按所有权dispose，不说主已有Three预览。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Getting_started_with_WebGL",
+        "https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices",
+        "https://threejs.org/manual/pages/how-to-dispose-of-objects.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/visual-design/apply-webgl-shaders"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "WebGL场景、Three.js职责与GPU资源生命周期",
+      "task": "在隔离副本为主Nuxt目录设计可选的3D预览入口，先保留普通详情内容。扩展lab加入ResizeObserver、受控DPR及卸载清理；如选Three.js，再建立真实scene/camera/geometry并按所有权dispose，不说主已有Three预览。",
+      "criteria": [
+        "实际渲染结果与背景区分，尺寸/DPR改变不越预算；无GPU仍能读取业务内容。",
+        "创建与释放责任清楚，移除DOM不等于dispose；不把SwiftShader像素测试称硬件/Three性能验收。"
+      ]
+    }
+  }
+]

@@ -1,0 +1,56 @@
+import { test, expect } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+test('legacy to Vue slice, state, failure, comparison and focus', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', (e) => errors.push(e.message))
+  await page.goto('/')
+  await page.keyboard.press('Tab')
+  await expect(page.getByRole('link', { name: '跳至内容' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('main')).toBeFocused()
+  await page.getByRole('link', { name: '旧版分组：完整 MPA' }).click()
+  await expect(page).toHaveURL(/legacy\/catalog/)
+  await expect(page.getByRole('heading', { name: '旧版商品目录' })).toBeVisible()
+  await page.getByLabel('搜索商品').fill('背包')
+  await page.getByRole('button', { name: '搜索', exact: true }).click()
+  await expect(page.locator('li')).toHaveCount(1)
+  await page.getByRole('link', { name: '切换新版并保留搜索' }).click()
+  await expect(page.getByRole('heading', { name: '新版商品目录' })).toBeVisible()
+  await expect(page.getByLabel('搜索商品')).toHaveValue('背包')
+  await expect(page.getByRole('link', { name: '旅行背包' })).toBeVisible()
+  await page.getByRole('link', { name: '旅行背包' }).click()
+  await expect(page.getByRole('heading', { name: '旅行背包' })).toBeFocused()
+  await expect(page).toHaveTitle('旅行背包')
+  await page.getByRole('link', { name: '返回目录', exact: true }).click()
+  await expect(page.getByRole('heading', { name: '新版商品目录' })).toBeFocused()
+  await page.getByLabel('搜索商品').fill('不存在')
+  await page.getByRole('button', { name: '搜索', exact: true }).click()
+  await expect(page.getByText('没有匹配商品，请更换搜索词。')).toBeVisible()
+  await expect(page.getByRole('button', { name: '搜索', exact: true })).toBeFocused()
+  await page.goBack()
+  await expect(page.getByLabel('搜索商品')).toHaveValue('')
+  await expect(page.getByRole('link', { name: '旅行背包' })).toBeVisible()
+  await page.goto('/catalog?broken=1')
+  await expect(page.getByRole('alert')).toContainText('503')
+  await page.getByRole('link', { name: '回到旧版并保留搜索' }).click()
+  await expect(page.getByRole('heading', { name: '旧版商品目录' })).toBeVisible()
+  await page.goto('/comparison')
+  await expect(page.getByRole('status').filter({ hasText: '比较一致' })).toBeVisible()
+  await page.getByLabel('注入新版价格差异').check()
+  await expect(page.getByText('p1：changed')).toBeVisible()
+  const colors = await page
+    .locator('.coexist button')
+    .evaluateAll((nodes) => nodes.map((n) => getComputedStyle(n).backgroundColor))
+  expect(colors).toEqual(['rgb(117, 68, 0)', 'rgb(0, 93, 168)'])
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
+        .analyze()
+    ).violations,
+  ).toEqual([])
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+  ).toBe(true)
+  expect(errors).toEqual([])
+})

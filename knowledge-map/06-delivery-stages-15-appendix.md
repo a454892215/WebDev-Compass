@@ -191,7 +191,9 @@ AI 可辅助生成、检索和检查，但提交者需能解释实现、验证�
 
 
 
-## 配套资源规划（本项目目录建议）
+<a id="配套资源规划本项目目录建议"></a>
+
+## 配套资料目录（当前结构）
 
 ```
 WebDev_Compass/
@@ -204,9 +206,13 @@ WebDev_Compass/
 │   ├── 04-architecture-stages-8-11.md
 │   ├── 05-platform-stages-12-14.md
 │   └── 06-delivery-stages-15-appendix.md
-├── learning/1-notes/
-├── learning/2-examples/
-└── projects/
+├── learning/
+│   ├── 1-notes/                 # 理论与原理
+│   ├── 2-examples/              # 代码实验与明确观察
+│   ├── 3-exercises/             # 独立练习与验收
+│   └── 4-practice/              # 综合项目与逐点任务
+├── docs/stages/                # 四部分契约与质量记录
+└── framework-guide/            # 独立工程搭建/交接专题
 ```
 
 

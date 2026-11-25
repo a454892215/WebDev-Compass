@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "stage": 15,
+  "checkedAt": "2026-11-25T13:36:22.188527+00:00",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "nitro": "2.14.0"
+  },
+  "commands": [
+    {
+      "command": "CI=true pnpm install --frozen-lockfile --prefer-offline",
+      "result": "passed",
+      "notes": "713依赖本地复用，明确esbuild allowBuilds false，Nuxt prepare完成"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "checks": [
+        "Nuxt typecheck",
+        "ESLint",
+        "Prettier",
+        "Vitest 3/3",
+        "AST direct/alias 12有效/8错误等价+幂等+2拒绝",
+        "production node-server build"
+      ]
+    },
+    {
+      "command": "pnpm test:e2e",
+      "result": "passed",
+      "tests": 3,
+      "failed": 0,
+      "duration": "3.6s",
+      "notes": "Chrome1440/390两旅程+HTTP专项，最终后台异常日志空"
+    }
+  ],
+  "actual": [
+    "旧MPA搜索→新版保留q/金额→详情路由标题/焦点",
+    "初始skip Tab/Enter可跳过nav，路径切换h1focus，同页搜索按钮不失焦",
+    "query后浏览器返回，URL对应搜索框/列表恢复",
+    "503错误回旧、直接详情深链200、未知404与依赖故障503",
+    "0/99分组302与rollback旧目标、非法bucket400",
+    "真实同源HTTP只读对照与1分差异检测、旧HTML转义和私有字段不外露",
+    "两范围按钮实际Computed背景不同、宽窄无溢出/pageerror、所选axe规则零违规",
+    "AST真实前后ESM执行与清理，非字符串替换"
+  ],
+  "limitations": [
+    "主项目仅公开合成只读目录；没有真实组织审批/采购/Pair/Mob/员工评分/新人试学。",
+    "无真实jQuery运行、生产数据/双写迁移/数据库、全局持久开关、CDN发布或旧系统下线；bucket/rollback仅请求级演示。",
+    "Node ICU与原生浏览器交互分别测试，未把完整多namespace/国际化引擎接入主Nuxt；dayjs/自定义DatePicker/VPAT为官方观察。",
+    "axe与键盘是有限证据，不声称WCAG认证；无读屏/真机/多引擎/真实残障用户试验或完整per-entry滚动验收。",
+    "RTC只同页面双peer数据通道，无远端音视频/权限/STUN/TURN；OPFS只唯一合成文件写读删，无跨会话持久保证。",
+    "WebAuthn仅隔离虚拟认证器仪式无服务端验签/会话，Payment仅接口检测；无真实凭证/商户订单/支付。",
+    "Wasm共享Memory+Worker内JS Atomics不是Wasm pthread；WebGL用SwiftShader，未Three.js/硬件GPU性能/context-loss恢复或生产隔离部署。",
+    "AST只精确命名导入迁移，混合/default拒绝，无全项目符号图/别名路径/业务等价全面保证；未改其他宿主仓库。"
+  ]
+}

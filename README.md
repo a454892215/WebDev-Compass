@@ -32,9 +32,10 @@
 | 阶段 12 | 测试策略8、专项4、设计系统7、组件库5，共24项四部分资料 |
 | 阶段 13 | 多包6、依赖发布5、构建5、兼容7、DX5，共28项四部分资料 |
 | 阶段 14 | Node5、BFF6、SSR5、Edge5、数据层5、上传3，共29项四部分资料 |
+| 阶段 15 | 决策5、评审4、协作5、迁移6、i18n/a11y6、平台选修8，共34项四部分资料 |
 | 工程专题 | Nuxt 基座、桌面及手机宿主的规划与独立仓库交接 |
 
-正文覆盖 556/590（约 94.2%），阶段 15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 14 验收](./docs/audits/STAGE_14_ACCEPTANCE.md)、[阶段 13 验收](./docs/audits/STAGE_13_ACCEPTANCE.md)、[阶段 12 验收](./docs/audits/STAGE_12_ACCEPTANCE.md)、[阶段 11 验收](./docs/audits/STAGE_11_ACCEPTANCE.md)、[阶段 10 验收](./docs/audits/STAGE_10_ACCEPTANCE.md)、[阶段 9 验收](./docs/audits/STAGE_9_ACCEPTANCE.md)、[阶段 8 验收](./docs/audits/STAGE_8_ACCEPTANCE.md)、[阶段 7 验收](./docs/audits/STAGE_7_ACCEPTANCE.md)、[阶段 6 验收](./docs/audits/STAGE_6_ACCEPTANCE.md)、[阶段 5 验收](./docs/audits/STAGE_5_ACCEPTANCE.md)、[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
+正文覆盖 590/590（100%），阶段 0–15 的规划正文均已提供。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 15 验收](./docs/audits/STAGE_15_ACCEPTANCE.md)、[阶段 14 验收](./docs/audits/STAGE_14_ACCEPTANCE.md)、[阶段 13 验收](./docs/audits/STAGE_13_ACCEPTANCE.md)、[阶段 12 验收](./docs/audits/STAGE_12_ACCEPTANCE.md)、[阶段 11 验收](./docs/audits/STAGE_11_ACCEPTANCE.md)、[阶段 10 验收](./docs/audits/STAGE_10_ACCEPTANCE.md)、[阶段 9 验收](./docs/audits/STAGE_9_ACCEPTANCE.md)、[阶段 8 验收](./docs/audits/STAGE_8_ACCEPTANCE.md)、[阶段 7 验收](./docs/audits/STAGE_7_ACCEPTANCE.md)、[阶段 6 验收](./docs/audits/STAGE_6_ACCEPTANCE.md)、[阶段 5 验收](./docs/audits/STAGE_5_ACCEPTANCE.md)、[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
 
 ## 运行与检查
 
@@ -63,7 +64,7 @@ web-common、web-pc-workframe、web-h5-workframe 已另建为三个独立仓库�
 
 Web 技术方案先检索 Modern Web Guidance，再按目标浏览器选择可用能力。本项目支持逐步形成复杂 Web 工程的开发与治理能力，不把目录齐全表述为已达到高级工程师水平。
 
-阶段6：[质量学习入口](./learning/1-notes/06-performance-security/README.md)、[Nuxt三语目录](./learning/4-practice/06-performance-security/README.md)。阶段7已完成，阶段8已完成，阶段9已完成，阶段10已完成，阶段11已完成，阶段12已完成，阶段13已完成，阶段14已完成，下一阶段15：旧项目迁移、代码评审与团队交付。
+阶段6：[质量学习入口](./learning/1-notes/06-performance-security/README.md)、[Nuxt三语目录](./learning/4-practice/06-performance-security/README.md)。阶段7已完成，阶段8已完成，阶段9已完成，阶段10已完成，阶段11已完成，阶段12已完成，阶段13已完成，阶段14已完成，阶段15已完成；后续按真实项目实践、勘误与目标环境验证推进。
 
 阶段7：[部署学习入口](./learning/1-notes/07-deployment/README.md)、[Nuxt三种profile与发布恢复](./learning/4-practice/07-deployment/README.md)。
 
@@ -80,3 +81,5 @@ Web 技术方案先检索 Modern Web Guidance，再按目标浏览器选择可�
 阶段13：[多包与平台入口](./learning/1-notes/13-platform/README.md)、[Nuxt/Vite协作工作台](./learning/4-practice/13-platform/README.md)。
 
 阶段14：[Node/Nitro/BFF理论](./learning/1-notes/14-bff-runtime/README.md)、[Nuxt聚合与运行时实践](./learning/4-practice/14-bff-runtime/README.md)。
+
+阶段15：[交付/迁移理论](./learning/1-notes/15-project-delivery/README.md)、[Nuxt渐进迁移与34任务](./learning/4-practice/15-project-delivery/README.md)。全图正文齐全不代表所有选修已集成进一个生产项目，也不等于学习者已掌握。

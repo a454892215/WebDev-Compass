@@ -1,0 +1,164 @@
+[
+  {
+    "id": "15.4.1",
+    "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md",
+    "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Strangler Fig 是在旧系统外围建立可控接缝，按功能/路由逐步把职责迁往新实现。不是把整个应用复制两份长期维护，也不是把新首页放上线就删除旧系统。先画用户旅程、入口/深链、接口/数据、会话、资源和监控的依赖，再挑一个能独立验证、能回退的小切片。",
+      "example": "先通过/entry?bucket=99进入旧版，搜索背包，再切新版，核对搜索和价格含义保留；阅读shared/catalog.ts与migration/README.md。",
+      "exercise": "把新UI直接依赖旧price字符串同时按分币显示，会产生100倍金额错位。用129.00→12900断言定位单位，修复适配投影，不通过改页面文案掩盖。",
+      "practice": "在隔离副本新增一个库存只读切片，列新旧入口、适配契约和退回路径；保持旧目录可用，不新增真实写操作。",
+      "sources": [
+        "https://martinfowler.com/bliki/StranglerFigApplication.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Strangler Fig：建立接缝，逐个替换产品切片",
+      "task": "在隔离副本新增一个库存只读切片，列新旧入口、适配契约和退回路径；保持旧目录可用，不新增真实写操作。",
+      "criteria": [
+        "切片边界包含路由/数据/用户状态，旧入口、搜索参数与回退实际可用。",
+        "DTO中金额单位明确，私有字段不外露，写数据和旧系统下线未验证范围明确。"
+      ]
+    }
+  },
+  {
+    "id": "15.4.2",
+    "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md",
+    "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先确认旧系统怎样工作：完整页面导航还是局部Ajax、全局事件如何绑定/清理、插件怎样改DOM、路由/表单由谁拥有。Vue可以在旧页挂一个有边界的小组件，也可按路由替换页面。主项目选择路由级并存，旧文档不加载Vue，避免旧脚本和Vue同时修改同一DOM子树。Vue组件接管后不要再让jQuery append/remove那些节点。",
+      "example": "对照旧GET表单与新catalog.vue：过滤、空结果、详情路径与错误退回。确认初始加载不抢焦点，路径切换后标题获焦，搜索更新不强移焦。",
+      "exercise": "把旧全局click监听每次挂载都add却不remove，两轮后一次点击执行两次。用计数和监听引用定位，再在卸载时移除同一函数引用；once不等于完整生命周期管理。",
+      "practice": "写一个旧插件清理清单，并在隔离副本用有界原生事件订阅模拟挂载/卸载两轮，证明一次操作只触发一次；不额外安装全局jQuery。",
+      "sources": [
+        "https://vuejs.org/guide/extras/ways-of-using-vue.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "旧 MPA / jQuery 到 Vue 3：DOM所有权与兼容窗口",
+      "task": "写一个旧插件清理清单，并在隔离副本用有界原生事件订阅模拟挂载/卸载两轮，证明一次操作只触发一次；不额外安装全局jQuery。",
+      "criteria": [
+        "新旧渲染器不争用同一DOM，挂载两轮后无重复事件。",
+        "URL、过滤、深链和关键键盘行为有证据；本例未实际运行jQuery的边界写清。"
+      ]
+    }
+  },
+  {
+    "id": "15.4.3",
+    "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run.md",
+    "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Parallel Run通过旧/新实现处理可比较输入，找出语义差异再决定切流。必须先定义比较范围：排序、默认值、时间、价格单位和允许差异。主项目/api/shadow读取独立旧/新fixture，旧数据经normalizeLegacy后按id比较标题/分币金额，mismatch=1使p1差1分被捕获。比较函数不比较内部成本和临时追踪ID，也不把同一函数调用两次伪装成两个独立实现。",
+      "example": "运行/api/shadow与?mismatch=1，看到一致和p1 changed；请求/entry的0/99/rollback输入核对302和固定Location，q保留。",
+      "exercise": "仅比较数组长度会漏掉p1差1分钱。先注入mismatch=1观察旧比较错误通过，再恢复按id/公开语义比较；不能让新旧共享同一已损坏适配结果后自我证明一致。",
+      "practice": "给只读比较增加新增/删除商品差异，并把百分比边界改为25做0/24/25/99测试；给生产开关写负责人、到期和回退触发条件。",
+      "sources": [
+        "https://martinfowler.com/articles/feature-toggles.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "只读双跑、稳定分组与可执行回退",
+      "task": "给只读比较增加新增/删除商品差异，并把百分比边界改为25做0/24/25/99测试；给生产开关写负责人、到期和回退触发条件。",
+      "criteria": [
+        "新增、缺失、内容变化均识别，差异记录只含允许的公开字段。",
+        "分流边界和退回旧入口实际通过，不双写、不将请求级fixture当生产开关或授权。"
+      ]
+    }
+  },
+  {
+    "id": "15.4.4",
+    "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.4.css.md",
+    "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.4.css-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.4.css.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先用DevTools的Computed/Styles查清哪个声明获胜，再判断规则属于全局重置、旧组件、第三方还是新组件。来源、重要性、层、选择器权重和顺序是不同因素；单纯追加!important通常扩大耦合。普通作者样式中未分层规则优先于命名层，important时层顺序反转，不能把所有旧样式包进一层就假设问题自动解决。具体层叠上下文还与动画/过渡等来源有关，遇到冲突按实际Computed定位。",
+      "example": "打开/comparison，核对旧按钮rgb(117,68,0)、新按钮rgb(0,93,168)，再缩窄视口并用Tab看焦点。阅读SFC scoped与旧MPA stylesheet的文档边界。",
+      "exercise": "把旧规则改为button { background: ... !important }会覆盖新按钮。记录获胜规则与来源，修复命名范围并移除不必要important；不能只给新版再叠更强important。",
+      "practice": "在隔离副本新增一个旧button全局背景故障，先用Computed定位，再收窄为旧范围；另写普通声明与!important的层叠判断说明。",
+      "sources": [
+        "https://vuejs.org/api/sfc-css-features.html#scoped-css",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "遗留 CSS：命名范围、层叠与可达性",
+      "task": "在隔离副本新增一个旧button全局背景故障，先用Computed定位，再收窄为旧范围；另写普通声明与!important的层叠判断说明。",
+      "criteria": [
+        "计算样式证明两个按钮保持各自颜色，窄屏无溢出且焦点可见。",
+        "能解释scoped不阻止所有外部样式/继承，层叠上下文与z-index边界明确。"
+      ]
+    }
+  },
+  {
+    "id": "15.4.5",
+    "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md",
+    "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Big Bang在一个窗口切换整体，优点是过渡期短、少维护双系统，代价是验证面、组织协调与恢复半径集中。渐进迁移把风险拆小，但增加适配层、双路由、监测和清理成本；不是永远更省。先列真实约束：可切接缝、共享写状态、依赖消费者、监管/停机窗口、回退数据兼容、团队容量与可观察性，再比较可行方案。",
+      "example": "以migration/README.md为输入，指出目录为什么可独立替换、哪些保证只因只读fixture成立；对比新增写订单后风险变化。",
+      "exercise": "方案称“随时回退”却先删旧路由或把旧字段不可逆删除。沿回退入口和数据读取链逐项推演，补兼容窗口/恢复步骤；只撤前端提交不能恢复数据。",
+      "practice": "为目录只读与订单写入各写两种候选，明确推荐改变的条件；把适配维护和旧系统清理计入成本。",
+      "sources": [
+        "https://martinfowler.com/bliki/ParallelChange.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Big Bang 与渐进迁移：按耦合和回退成本选择",
+      "task": "为目录只读与订单写入各写两种候选，明确推荐改变的条件；把适配维护和旧系统清理计入成本。",
+      "criteria": [
+        "至少两个可行方案按同一范围比较，关键假设与估算区间明确。",
+        "回退覆盖入口和数据兼容，结论可随约束变化而调整，未执行的评审/生产步骤标待验。"
+      ]
+    }
+  },
+  {
+    "id": "15.4.6",
+    "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.6.codemod.md",
+    "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.6.codemod-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.6.codemod.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Codemod用语法树批量改有结构的代码，但AST正确只证明语法形状可处理，不保证业务等价。先界定可自动修改的输入、拒绝条件和输出契约，保留人工审查。无差别字符串替换容易改动注释、示例、同名局部变量，或者漏掉别名绑定。类型检查、测试和差异审查各覆盖不同风险，不能互相代替。",
+      "example": "主目录执行pnpm test:migration，查看直接导入/alias前后实际运行、12有效与8无效等价、幂等和拒绝歧义断言。",
+      "exercise": "把AST迁移改成全局replace(formatPrice,formatMoney)，字符串和本地绑定也被改，alias调用可能失效。对照现有字符串保持/alias执行断言定位，恢复精确导入和局部绑定保留。",
+      "practice": "在副本增加一个受控导入格式变体，并先写拒绝/正例测试；把命名空间导入列为人工处理，不擅自扩大工具范围。",
+      "sources": [
+        "https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "AST Codemod：保留绑定、拒绝歧义并运行回归",
+      "task": "在副本增加一个受控导入格式变体，并先写拒绝/正例测试；把命名空间导入列为人工处理，不擅自扩大工具范围。",
+      "criteria": [
+        "直接与alias调用实际等价，第二次运行幂等，不改无匹配源码或普通字符串。",
+        "歧义输入明确拒绝，测试包含错误路径，说明未分析跨文件符号/未修改真实宿主项目。"
+      ]
+    }
+  }
+]

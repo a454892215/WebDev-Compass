@@ -1,0 +1,281 @@
+[
+  {
+    "id": "15.1.1",
+    "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md",
+    "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先陈述可观察问题和约束，再比较方案：例如旧目录深链不可中断、已有Vue/Nuxt主线、团队需能回退。把“采用某框架”当需求会过早锁死答案。Spike是限时消除某个不确定性的探索，PoC证明局部可行；二者都不能自动证明可运维、安全或性能达标。先写退出条件，再运行最小实验。\n\nRFC承载待讨论方案、备选与影响，ADR记录一次重要决定及理由/后果。状态需区分提案、接受、被替代；新的证据改变决定时保留历史并链接新记录。Vue官方RFC流程只适用于它界定的实质性框架变化，本项目借鉴“重大变化留理由”，不要求每个修字都开会。\n\ndelivery-lab/decisions.md给出旧目录三种候选，硬约束在成本分数之前。最小记录只需问题、候选、证据、决定者、后果、复查触发条件；未知项明确待验，不堆满看似精确的评分。AI可帮列候选与反例，负责人仍需读取源码、核版本并解释决定。",
+      "example": "读取decisions.md的三候选和未决定项，用本lab契约/排期实验支持一个局部假设；会议与接受状态仍是模板。",
+      "exercise": "故障设定：PoC只打开首页就写“已支持生产SSR”。定位未覆盖的深链、状态隔离、配置和回退；把结论收窄为已测范围，并为阻断项列验证步骤。",
+      "practice": "为主Nuxt迁移写一页RFC，比较保留旧页、逐路由替换和全量重写；定义一个可在隔离副本验证的Spike及退出条件。",
+      "sources": [
+        "https://adr.github.io/",
+        "https://github.com/vuejs/rfcs/blob/master/README.md",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "技术选型：问题、Spike、PoC、RFC与ADR",
+      "task": "为主Nuxt迁移写一页RFC，比较保留旧页、逐路由替换和全量重写；定义一个可在隔离副本验证的Spike及退出条件。",
+      "criteria": [
+        "至少两个可行候选及约束/后果有证据，未验证项不标通过。",
+        "Spike有具体问题、时间盒与停止/继续条件；ADR不抹掉被替代决定。"
+      ]
+    }
+  },
+  {
+    "id": "15.1.2",
+    "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md",
+    "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先区分自研、集成开源、采购托管服务；“开源”等于源码许可方式，不等于零集成、零维护或可随意使用。列出产品适配、目标浏览器、无障碍、SSR、依赖供应链、数据范围和退出能力等必须满足的条件，再比较成本。许可、数据政策和合同义务由相关负责人核实，不能由AI评分代批。\n\n同一时间范围和单位下比较首次集成、持续维护、升级/事故、迁移退出；不能拿自研一季度成本对SaaS首月价格。真实报价与团队工时会变化，本课不推荐具体采购。lab用纯假设数字计算reuse=7、custom=14；把reuse退出成本1变10后总值16，只展示决定对假设敏感，不输出“应买”的自动结论。\n\n评估组件库先跑一个真实产品切片：受控表单、错误状态、键盘/RTL、主题和SSR。功能清单打勾不等于实际兼容。包/服务能否替换、导出数据、销毁凭据和维护停更后的路径，要在集成前考虑。移动端SDK采购经验可借鉴，但Web多出DOM、浏览器支持和服务端渲染边界。",
+      "example": "运行scoped cost测试，比较7/14与16/14，并读decisions.md的硬约束；所有成本均为合成同单位输入。",
+      "exercise": "故障：表格把开源维护成本留空却按0算，或混合月费与季度工时。totalCost缺字段会拒绝；补齐同单位/范围后重算，硬约束不由总分覆盖。",
+      "practice": "为主项目拟采用的一个组件或服务写自研/开源/SaaS比较，统一范围，改变退出成本做敏感性分析，不执行采购。",
+      "sources": [
+        "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "自研、开源与SaaS：同范围成本和退出约束",
+      "task": "为主项目拟采用的一个组件或服务写自研/开源/SaaS比较，统一范围，改变退出成本做敏感性分析，不执行采购。",
+      "criteria": [
+        "说明数字假设、范围和单位，缺失成本不静默按0，至少一次敏感性变化。",
+        "至少列无障碍/SSR/供应链或数据/退出约束，并说明由谁核实；未采购不称已采纳。"
+      ]
+    }
+  },
+  {
+    "id": "15.1.3",
+    "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.3.api.md",
+    "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.3.api-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.3.api.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先约定URL/方法、请求字段、响应/错误、认证授权、分页/排序、时区/货币与兼容窗口，再并行实现。Mock First是用已讨论契约先解除联调依赖，不是让前端随意编造后端保证。Mock应有空数据、失败、越权、超时和边界变体；本lab只覆盖公开目录DTO，不冒充完整HTTP mock或认证服务。\n\nOpenAPI可描述接口并生成文档/客户端，但文件存在不会自动校验网络数据。lab的oldCatalogConsumer是独立运行解码器，要求字符串id/title和非负整数priceCents，允许新增可选currency并只返回已知DTO。title改name、id变数字会实际失败，adaptRenamedCatalog恢复旧契约。这是具体消费者兼容证据，不是任意OpenAPI破坏性差异分析器。\n\n联调顺序是契约审阅→fixture/消费者测试→受控真实服务→灰度观察与回退。字段“新增”仍可能破坏严格消费者、签名或业务语义，不能机械认为所有新增都兼容。旧新客户端并存时先扩展/适配、再迁消费者、最后收旧字段。错误码和权限也属于契约，前端类型一致不等于服务端授权正确。",
+      "example": "六测中的两契约测试真实执行可选字段/私有字段投影、必需字段改名、类型漂移和兼容适配；无真实HTTP联调。",
+      "exercise": "把title改name却仅重生成TypeScript，旧消费者仍报CATALOG_CONTRACT。用固定输入复现，增加兼容适配与旧客户端测试，再决定移除窗口；不能用as断言掩盖。",
+      "practice": "为主Nuxt目录记录一份请求/响应/错误契约，将一处字段改名作为隔离变体，验证旧消费者失败与适配恢复；真实接口联调列待验。",
+      "sources": [
+        "https://spec.openapis.org/oas/v3.1.1.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "跨团队API契约：Mock先行、兼容窗口与联调",
+      "task": "为主Nuxt目录记录一份请求/响应/错误契约，将一处字段改名作为隔离变体，验证旧消费者失败与适配恢复；真实接口联调列待验。",
+      "criteria": [
+        "正例、空/错或类型漂移负例及兼容适配都有实际证据；Mock和真实服务分清。",
+        "契约同时覆盖权限/错误/版本窗口，改名不直接删除旧消费者仍需的字段。"
+      ]
+    }
+  },
+  {
+    "id": "15.1.4",
+    "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre.md",
+    "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "跨角色协作先约定交付物和未决事项由谁决定，而非“大家看过”就算验收。产品确认范围和用户影响；设计提供正常、加载、空、错及不同语言/缩放状态；后端确认数据、错误和授权契约；前端负责实现与浏览器边界；QA组织风险回归；SRE或发布负责人确认运行配置、监测和恢复。这是本课程的可调整分工，不是所有公司必须具备这些岗位。\n\n每个关键决定有一个可联系的负责人和必要替补。负责实现不等于独自批准发布；参与讨论也不等于拥有最终决定权。小团队可一人多帽，仍需把业务验收、技术检查、发布权限区分。QA不能替开发者承担所有测试，SRE接管运行也不替代API授权。\n\nhandoff.md给出合成目录切流的界面：设计状态、DTO、路由、关键旅程、回退触发和操作证据。缺少真实生产环境时保持待演练，不虚构批准/监测数据。移动团队的设计交付与QA协作可复用，但Web还需浏览器矩阵、深链/缓存/SSR和部署恢复责任。",
+      "example": "逐项阅读handoff.md，把“谁交付什么、谁确认、失败找谁”映射到合成目录；没有真实会议或SRE签字。",
+      "exercise": "故障设定：“QA确认页面能打开，所以可切全量”，但无人负责深链回归和开关恢复。查交付界面，指定证据及恢复责任；缺证据时不得把会议结论当测试。",
+      "practice": "给主迁移切片补交接表与未决项清单，列设计状态、API契约、回归、发布/回退负责人；只有实际存在的功能才能标现有。",
+      "sources": [
+        "https://sre.google/sre-book/communication-and-collaboration/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "设计、产品、后端、QA与SRE：明确交付界面",
+      "task": "给主迁移切片补交接表与未决项清单，列设计状态、API契约、回归、发布/回退负责人；只有实际存在的功能才能标现有。",
+      "criteria": [
+        "每个必达交付物有明确负责人/确认方式，未决项有恢复条件。",
+        "关键错误/深链/无障碍和回退有具体入口；无生产环境的项明确待验。"
+      ]
+    }
+  },
+  {
+    "id": "15.1.5",
+    "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.5.estimation.md",
+    "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.5.estimation-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.5.estimation.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "估算服务范围取舍，不是把不确定工作包装成精确日期。先把可验收切片、依赖、人员容量、外部等待和测试/恢复工作列全，给区间及假设，再随真实进展更新。Story Point、工作量、人数和日历工期不是同一单位；不能把点数跨团队直接换成小时，也不能承诺AI生成代码使全部交付时间同比下降。\n\nlab从contract出发，adapter/ui可并行，再回归和演练。schedule逐依赖取最大结束值并加本任务区间，输出[5,10]，直接相加则[6,12]。此处假设无限资源并行、任务输入可信且工作量可相加；没有模拟人手、假期、排队或真实概率，区间不是P50/P90。资源相同、前置依赖或环境争用时，要重新排而不是强开并行。\n\n已识别风险记录发生条件、影响、缓解负责人及何时重估。未知的未知不能靠固定“加20%”证明已覆盖；先用Spike、留恢复余量、缩小批次，报告范围变化。移动开发熟悉的排期方法可迁移，但Web联调、缓存/部署验证和多端浏览器回归仍要计入。",
+      "example": "运行关键路径与环路/缺依赖测试，手算ui结束[3,6]、regression[4,8]、全链[5,10]，明确非真实团队排期。",
+      "exercise": "故障：把所有duration相加当必然工期，或把contract依赖rehearsal制造循环。比较原模型与失败CYCLE，修正真实依赖；不能用删掉测试/恢复任务让时间更好看。",
+      "practice": "为主迁移增加一个外部依赖和一个失败恢复任务，重新画DAG与区间，解释共享人员/环境如何改变可并行性。",
+      "sources": [
+        "https://scrumguides.org/scrum-guide.html",
+        "https://google.github.io/eng-practices/review/developer/small-cls.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "估算：依赖路径、区间与未知风险",
+      "task": "为主迁移增加一个外部依赖和一个失败恢复任务，重新画DAG与区间，解释共享人员/环境如何改变可并行性。",
+      "criteria": [
+        "模型区间与依赖计算可复核，人员/日历/外部等待等未建模假设明确。",
+        "已知风险有触发与重估条件，不把低高界称统计置信区间或承诺日期。"
+      ]
+    }
+  },
+  {
+    "id": "15.3.1",
+    "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md",
+    "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "交付拆分从用户可观察结果开始，例如“一个目录路由可使用且能回退”，再划分契约、适配、UI、回归和发布任务。只按文件夹/角色拆“前端完成、后端完成”容易把真实联调推到最后。每项任务写输入、产出、依赖、负责人和验收；Owner负责推动决定与交接，不代表其他人不能修改模块。\n\ndelivery-lab使用同一组五任务，依赖拓扑检测能找循环或未知节点。它证明计划结构可计算，不证明人已经有时间或技能；同一环境/同一文件的修改应串行协调。前后端可基于明确契约并行，但契约未定、身份未验或同一设备串行测试不因代理数量增加而自动独立。\n\n联调节奏围绕可运行切片：先锁最小契约，提供固定失败输入，尽早联合验证，再扩大流量。阻塞项记录具体依赖与恢复条件，其他独立项继续；不要用“等待后端”掩盖尚可写的消费者测试。AI参与时限定文件与决策边界，由主负责人整合，避免多人/代理同时重写同一文件。",
+      "example": "运行拓扑/环路/缺owner负例；先看fixture的真正依赖，再区分代码并行、资源等待与交接。",
+      "exercise": "将contract依赖rehearsal后形成环，CYCLE拒绝；或删adapter节点仍被regression引用，MISSING_DEPENDENCY拒绝。按实际前置修复，不把所有节点改为无依赖。",
+      "practice": "用主Nuxt迁移的真实目录与路由做一个最小可回退切片任务图，补一个环境共享限制，并指出哪些任务可独立推进。",
+      "sources": [
+        "https://google.github.io/eng-practices/review/developer/small-cls.html",
+        "https://scrumguides.org/scrum-guide.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "按用户切片拆任务：依赖、Owner与联调顺序",
+      "task": "用主Nuxt迁移的真实目录与路由做一个最小可回退切片任务图，补一个环境共享限制，并指出哪些任务可独立推进。",
+      "criteria": [
+        "任务产出、owner、前置与验收具体，环路/缺依赖有固定负例和恢复证据。",
+        "并行方案注明同文件/同环境串行边界，整体墙钟估算不把多人工时相加。"
+      ]
+    }
+  },
+  {
+    "id": "15.3.2",
+    "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md",
+    "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Pair通常用driver操作与navigator审查思路、风险/测试的分工，定期交换；Mob让多人围绕同一工作保持单一操作与轮换。目标是共享判断、快速暴露误解，不是让更多人同时抢键盘。高风险契约改动、复杂无障碍交互或知识转移值得尝试；重复简单任务和需要独立探索的阶段不必强制结对。\n\npair-session.md提供title改名故障的演练卡：共同预测、复现CATALOG_CONTRACT、比较适配与同时升级消费者、解释剩余风险。它是待执行协议，不是已发生的会议。时间盒20分钟为教学选择，可按参与者精力/可访问性调整；同意暂停、独立思考和异步回顾，不能以轮换规则压制不熟悉的人。\n\nAI可充当检索/反例提示工具，但不能把一个人多次询问AI写成两名人类共同审阅。单人替代练习要明确“个人演练”，真实Pair/Mob记录需参与者同意与实际行动证据。移动团队的结对调试经验可复用，本例特有目标是保持Web消费者/部署兼容，而非只让本地页面编译。",
+      "example": "阅读pair-session.md，以契约测试作为演练输入；六测只覆盖代码，不证明真实结对发生或效率提高。",
+      "exercise": "故障设定：driver独占实现、navigator只说LGTM，未有人能解释字段兼容窗口。暂停操作，双方先独立预测失败，再交换角色复现与解释；没有同伴不得捏造轮换记录。",
+      "practice": "围绕主迁移的一处实际风险准备Pair/Mob演练：写共同目标、角色轮换、失败输入和结束解释；无同伴则完成并标注个人替代。",
+      "sources": [
+        "https://martinfowler.com/articles/on-pair-programming.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Pair与Mob：共同推理、角色轮换和适用边界",
+      "task": "围绕主迁移的一处实际风险准备Pair/Mob演练：写共同目标、角色轮换、失败输入和结束解释；无同伴则完成并标注个人替代。",
+      "criteria": [
+        "记录区分真实协作与个人替代，参与者均能解释风险/测试，未用AI冒充同伴。",
+        "目标与时间盒有退出条件，保存可复现失败与决定，保护参与者隐私。"
+      ]
+    }
+  },
+  {
+    "id": "15.3.3",
+    "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3.md",
+    "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "知识分享的产出是别人能够执行任务和纠错，不是幻灯片数量。Tech Talk适合传递一次故障的机制和取舍，Wiki承载可搜索、版本化的操作入口，Onboarding给首次交付路径。避免把同一命令复制到多份文档再各自过期；保留一个权威运行入口并链接，迁移路径时检查实际链接。\n\n先写读者已有知识、当前目标、运行条件、最小步骤、真实预期、故障恢复与未测边界。对有移动经验的新人，说明Web的同源/Cookie、SSR状态、DOM焦点差异；不重复讲所有编程基础，也不假设他知道Nuxt目录。来源和核对日期方便复核，但日期新不等于命令已实测。\n\nlab的README/onboarding.md把可运行的六测试与未做的人类演练分开。主项目运行命令必须引用实际代码；文档owner对版本变更、命令失败、目录迁移等触发负责，收集真实使用反馈后再改。不以AI审阅、文件存在或一次分享活动出席证明新成员掌握。",
+      "example": "对照lab README中的命令、预期[5,10]与模型限制；按onboarding.md确认主项目命令需另查实际README。",
+      "exercise": "故障设定：Wiki写pnpm test:e2e但当前包只有test。查package.json与实际命令，修正文档并从对应目录执行；禁止用旧成功截图代替本次命令。",
+      "practice": "为主迁移做一份可复现故障短讲稿与一页Wiki入口，链接真实命令，指定文档owner及过期触发；试学保持未进行或如实记录。",
+      "sources": [
+        "https://developers.google.com/tech-writing/one/audience",
+        "https://developers.google.com/tech-writing/one/documents",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "知识分享：按任务组织Wiki、演示与维护责任",
+      "task": "为主迁移做一份可复现故障短讲稿与一页Wiki入口，链接真实命令，指定文档owner及过期触发；试学保持未进行或如实记录。",
+      "criteria": [
+        "运行入口、版本、预期和排错与实际文件一致，链接有效且不重复维护多份命令。",
+        "明确读者/范围、owner与过期触发，未试学不写新人验证通过。"
+      ]
+    }
+  },
+  {
+    "id": "15.3.4",
+    "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment.md",
+    "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "本节用于当前项目分工与支持安排，不是招聘评分表。能力维度应从任务风险推导：能否解释浏览器/SSR边界、读接口契约、实现UI与无障碍、复现故障、验证和恢复。用“需协助/可在明确范围独立完成/可评审该类改动”描述具体范围，比一个综合分数更可执行；评价对象是证据与任务，不给人贴固定等级。\n\n让同事或自己选一条旅程：先预测旧消费者改名失败，运行负例、修复适配、解释尚未验证的生产窗口，再看能否处理新输入。示例测试通过只证明这些断言，不证明安全评审、组织协调或所有框架能力；年限、提交数、课程完成度、AI自评分不能替代证据。没有看过真实交付物就保留未知。\n\n将任务分给有相关证据的人，安排有经验reviewer和升级路径；缺能力时缩小切片、结对或学习，而非无限转交。移动经验提供类型、状态与调试基础，Web专项仍需实际验证。记录只保留完成任务所需信息，不采集无关个人资料，不把教学练习用作隐蔽绩效排名。",
+      "example": "以onboarding.md的解释/负例/修复步骤建立证据观察单；不实际评价任何真实员工，不产生排名。",
+      "exercise": "故障设定：“六测绿且有十年移动经验，所以可独立批准WCAG和生产发布”。逐项找缺少的人工/运行/职责证据，恢复未证明状态，安排专项复核。",
+      "practice": "为主迁移挑三类风险任务，列必须的交付证据、需协助项和reviewer能力范围；仅用合成角色，不写个人等级。",
+      "sources": [
+        "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+        "https://sre.google/sre-book/accelerating-sre-on-call/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "按交付证据分工：前端能力维度与复核边界",
+      "task": "为主迁移挑三类风险任务，列必须的交付证据、需协助项和reviewer能力范围；仅用合成角色，不写个人等级。",
+      "criteria": [
+        "分工依据指向具体实现/失败修复/解释，区分已证明、需协助和未知。",
+        "不从正文覆盖或AI评分推导职级，不伪造真实员工评价；高风险有适任复核。"
+      ]
+    }
+  },
+  {
+    "id": "15.3.5",
+    "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist.md",
+    "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "上手目标是能完成一个小而完整、可解释且可回退的交付，不是拿到全部权限或读完所有历史文档。最小路径包括规则/依赖版本、安装运行、系统边界、固定失败、修复回归、评审交接；根据实际项目调整。工具安装成功不等于理解SSR/缓存/授权，首次提交合并也不证明能独立承担所有模块。\n\nonboarding.md面向移动开发者，先跑零依赖lab并解释区间与契约，再按主Nuxt实际README运行一条旅程。环境命令要从package/lock核对，测试分层和失败恢复要可重复。生产访问遵循最小权限，不共享同事账号或真实.env；教学fixture与真实服务配置分开。\n\n安排可联系导师/owner、反馈入口和文档修订条件。真实新人走一次能够发现隐含前置，但本轮只有教材与自动化实验，没有真实试学；因此不能承诺几小时上手或报告新人验证成功。已有移动经验可减少重复编程知识，Web部署与浏览器边界仍必须实作。",
+      "example": "按onboarding.md在本lab实际执行node --test test.mjs，解释六测范围；主项目首次运行单独按其README核实。",
+      "exercise": "故障设定：上手清单跳过锁文件/目录，要求在仓库根运行不存在的脚本。先核实际项目目录和package，再修正命令并记录失败原因；无真实新人时只称作者自测。",
+      "practice": "为主迁移副本编写首个小改动上手清单：运行、复现一个故障、修复、专项测试、评审和回退；由未来使用者反馈修订。",
+      "sources": [
+        "https://sre.google/sre-book/accelerating-sre-on-call/",
+        "https://developers.google.com/tech-writing/one/audience",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "新成员上手：从锁定环境到可回退小交付",
+      "task": "为主迁移副本编写首个小改动上手清单：运行、复现一个故障、修复、专项测试、评审和回退；由未来使用者反馈修订。",
+      "criteria": [
+        "从干净或明确已有环境运行到小交付的步骤可执行，权限和真实凭据不外泄。",
+        "清单有失败恢复/反馈owner，作者自测与真实新人试走区分，不承诺固定掌握时长。"
+      ]
+    }
+  }
+]

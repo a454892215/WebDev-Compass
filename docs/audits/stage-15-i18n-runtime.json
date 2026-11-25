@@ -1,0 +1,86 @@
+{
+  "stage": 15,
+  "group": "15.5",
+  "checkedAt": "2026-11-25T13:28:20.971Z",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "intl-messageformat": "10.7.18",
+    "playwright": "1.65.1",
+    "axe": "4.14.1",
+    "chrome": "158.0.8127.37"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile --offline",
+      "result": "passed",
+      "notes": "锁定依赖与离线冻结安装；安装后无需CLI/云服务。"
+    },
+    {
+      "command": "pnpm test",
+      "result": "passed",
+      "tests": 3,
+      "failed": 0,
+      "actual": [
+        "ICU复数、角色/性别select兜底、locale/key拒绝",
+        "两个formatter并发en/ar各自输出",
+        "DST缺口/重复小时、明确UTC/zone、无offset/invalid输入拒绝"
+      ]
+    },
+    {
+      "command": "pnpm test:browser",
+      "result": "passed",
+      "viewportFlows": 2,
+      "results": [
+        {
+          "viewport": 1440,
+          "checks": [
+            "skip focus",
+            "SPA title/focus/status/back",
+            "RTL logical border and BiDi isolation",
+            "combobox keyboard/active descendant",
+            "native modal focus/Tab/Escape/return",
+            "axe selected rules no violations",
+            "no horizontal overflow/pageerror"
+          ]
+        },
+        {
+          "viewport": 390,
+          "checks": [
+            "skip focus",
+            "SPA title/focus/status/back",
+            "RTL logical border and BiDi isolation",
+            "combobox keyboard/active descendant",
+            "native modal focus/Tab/Escape/return",
+            "axe selected rules no violations",
+            "no horizontal overflow/pageerror"
+          ]
+        }
+      ],
+      "notes": "仅127.0.0.1:4574后台Chrome；退出finally关闭browser/connection/server。"
+    },
+    {
+      "command": "Node/HTML/CSS/Markdown formatting",
+      "result": "passed",
+      "notes": "使用已安装Prettier格式化本lab；格式后Node3测复验，无语义变更。"
+    }
+  ],
+  "findingsClosed": [
+    "单控件dialog的Tab可去浏览器chrome，MWG明确允许；测试改两个内部控件间Tab，不引入全页面trap。",
+    "axe需要browser.newContext，改显式context生命周期后通过。",
+    "RTL英文控件需body lang=en、阿拉伯语段落lang=ar，区分方向与语言。",
+    "方向切换只变dir，英文教学主语言保持html lang=en，不把RTL布局冒称已翻译页面。"
+  ],
+  "scope": [
+    "真实ICU库在Node运行；浏览器HTML未打包该库。",
+    "浏览器真实RTL/键盘/状态与所选axe规则；不是完整WCAG评估。",
+    "dayjs、DatePicker与VPAT/ACR为官方观察/教学任务，未实际安装/出具报告。"
+  ],
+  "limitations": [
+    "No screen reader, real device, WCAG conformance evaluation or real learner trial",
+    "No full custom DatePicker; native dialog and small combobox only",
+    "Scroll restoration stores pathname only; repeated-entry positions require per-entry keys",
+    "No professional translation review, Nuxt i18n integration or production SSR language negotiation",
+    "History scroll uses pathname model; repeated-entry/async layout remains exercise"
+  ]
+}

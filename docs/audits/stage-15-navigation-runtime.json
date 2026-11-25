@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-11-25T13:25:42.073Z",
+  "browser": "158.0.8127.37",
+  "node": "v26.0.0",
+  "passed": 7,
+  "checks": [
+    "15.6.1 actual ViewTransition update+finished focus",
+    "15.6.2 actual intercept link+history back+title",
+    "15.6.3 actual OPFS unique write/read/finally delete",
+    "15.6.4 actual two-peer data channel+close",
+    "OPFS and RTC explicit unsupported fallbacks",
+    "15.6.1/2 forced fallback updates+ordinary document link",
+    "reduced motion bypasses visual transition"
+  ],
+  "errors": [],
+  "scope": "Headless local Chrome only; no audio/video permissions, STUN/TURN, remote peers or Nuxt router integration.",
+  "schemaVersion": 1,
+  "stage": 15,
+  "group": "15.6.1–15.6.4",
+  "command": "pnpm test",
+  "cwd": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/navigation-lab",
+  "dependencyInstall": "pnpm install --prefer-offline passed; exact pnpm-lock.yaml generated (offline initial miss then approved network/cache install).",
+  "limitations": [
+    "Only headless local Chrome; forced fallback is a branch test, not an old-browser compatibility test.",
+    "No audio/video permissions or media devices, remote signaling, STUN/TURN, public connectivity, Nuxt router integration, screen reader or real learner trial."
+  ],
+  "findingsClosed": [
+    "Allow initial / in Navigation intercept so back rerenders initial state; marker and heading assertions retained.",
+    "Wait actual heading after history navigation, not just URL or goBack return.",
+    "Resource URLs explicitly fixed loopback server routes; real browser tested.",
+    "Close HTTP server even if browser launch fails; clean browser/RTC/OPFS fixture in finally."
+  ],
+  "frozenOfflineInstall": "passed: pnpm install --frozen-lockfile --offline, Already up to date (197ms).",
+  "staticChecks": [
+    "Node syntax app.mjs/verify.mjs passed",
+    "Own four points paths/exercise structure passed",
+    "Own navigation HTML local resource errors zero; server route/module URLs actually tested"
+  ]
+}

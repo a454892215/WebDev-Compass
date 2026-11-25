@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "stage": 15,
+  "project": "learning/4-practice/15-project-delivery/nuxt.config.ts",
+  "points": [
+    {
+      "id": "15.1.1",
+      "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md",
+      "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.1.item-15-1-1.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-1"
+    },
+    {
+      "id": "15.1.2",
+      "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md",
+      "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.2.build-vs-buy.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-2"
+    },
+    {
+      "id": "15.1.3",
+      "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.3.api.md",
+      "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.3.api-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.3.api.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-3"
+    },
+    {
+      "id": "15.1.4",
+      "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre.md",
+      "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.4.qa-sre.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-4"
+    },
+    {
+      "id": "15.1.5",
+      "theory": "learning/1-notes/15-project-delivery/15.1-tech-decisions/15.1.5.estimation.md",
+      "example": "learning/2-examples/15-project-delivery/15.1-tech-decisions/15.1.5.estimation-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.1-tech-decisions/15.1.5.estimation.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-1-5"
+    },
+    {
+      "id": "15.2.1",
+      "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.1.review.md",
+      "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.1.review-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.1.review.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-1"
+    },
+    {
+      "id": "15.2.2",
+      "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.2.review.md",
+      "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.2.review-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.2.review.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-2"
+    },
+    {
+      "id": "15.2.3",
+      "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3.md",
+      "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-3"
+    },
+    {
+      "id": "15.2.4",
+      "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule.md",
+      "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-4"
+    },
+    {
+      "id": "15.3.1",
+      "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md",
+      "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.1.task-collaboration.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-1"
+    },
+    {
+      "id": "15.3.2",
+      "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md",
+      "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.2.pair-programming-mob.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-2"
+    },
+    {
+      "id": "15.3.3",
+      "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3.md",
+      "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.3.item-15-3-3.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-3"
+    },
+    {
+      "id": "15.3.4",
+      "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment.md",
+      "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.4.skill-assessment.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-4"
+    },
+    {
+      "id": "15.3.5",
+      "theory": "learning/1-notes/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist.md",
+      "example": "learning/2-examples/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.3-team-collaboration/15.3.5.onboarding-checklist.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-3-5"
+    },
+    {
+      "id": "15.4.1",
+      "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md",
+      "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.1.strangler-fig.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-1"
+    },
+    {
+      "id": "15.4.2",
+      "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md",
+      "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.2.jquery-mpa-react-vue.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-2"
+    },
+    {
+      "id": "15.4.3",
+      "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run.md",
+      "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.3.parallel-run.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-3"
+    },
+    {
+      "id": "15.4.4",
+      "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.4.css.md",
+      "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.4.css-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.4.css.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-4"
+    },
+    {
+      "id": "15.4.5",
+      "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md",
+      "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.5.big-bang-vs-incremental.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-5"
+    },
+    {
+      "id": "15.4.6",
+      "theory": "learning/1-notes/15-project-delivery/15.4-legacy-migration/15.4.6.codemod.md",
+      "example": "learning/2-examples/15-project-delivery/15.4-legacy-migration/15.4.6.codemod-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.4-legacy-migration/15.4.6.codemod.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-4-6"
+    },
+    {
+      "id": "15.5.1",
+      "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md",
+      "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.1.i18n.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-1"
+    },
+    {
+      "id": "15.5.2",
+      "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md",
+      "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.2.rtl.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-2"
+    },
+    {
+      "id": "15.5.3",
+      "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md",
+      "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.3.item-15-5-3.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-3"
+    },
+    {
+      "id": "15.5.4",
+      "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md",
+      "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.4.wcag-aa.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-4"
+    },
+    {
+      "id": "15.5.5",
+      "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa.md",
+      "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.5.spa.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-5"
+    },
+    {
+      "id": "15.5.6",
+      "theory": "learning/1-notes/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md",
+      "example": "learning/2-examples/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.5-i18n-a11y-prod/15.5.6.combobox-datepicker-modal.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-5-6"
+    },
+    {
+      "id": "15.6.1",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.1.view-transitions-api.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-1"
+    },
+    {
+      "id": "15.6.2",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.2.navigation-api.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-2"
+    },
+    {
+      "id": "15.6.3",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.3.opfs-origin-private-file-system.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-3"
+    },
+    {
+      "id": "15.6.4",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.4.webrtc.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-4"
+    },
+    {
+      "id": "15.6.5",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.5.webauthn-payment-request-api.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-5"
+    },
+    {
+      "id": "15.6.6",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.6.import-maps.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-6"
+    },
+    {
+      "id": "15.6.7",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.7.webassembly.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-7"
+    },
+    {
+      "id": "15.6.8",
+      "theory": "learning/1-notes/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js.md",
+      "example": "learning/2-examples/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js-demo.md",
+      "exercise": "learning/3-exercises/15-project-delivery/15.6-web-platform-advanced/15.6.8.webgl-three.js.md",
+      "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-6-8"
+    }
+  ]
+}

@@ -4,9 +4,9 @@
 
 ## 当前覆盖与目录
 
-Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 556 项，待编写 34 项，覆盖约 94.2%；阶段 1 的106项、阶段 2 的33项、阶段3的36项、阶段4的59项、阶段5的31项、阶段6的43项、阶段7的29项、阶段8的39项、阶段9的30项、阶段10的29项、阶段11的21项、阶段12的24项、阶段13的28项及阶段14的29项已提供四部分资料。所有资料统一迁移至 [learning/](../learning/README.md)，工程搭建专题保留在 framework-guide。
+Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 590 项，待编写 0 项，覆盖 100%；阶段 1 的106项、阶段 2 的33项、阶段3的36项、阶段4的59项、阶段5的31项、阶段6的43项、阶段7的29项、阶段8的39项、阶段9的30项、阶段10的29项、阶段11的21项、阶段12的24项、阶段13的28项、阶段14的29项及阶段15的34项已提供四部分资料。所有资料统一迁移至 [learning/](../learning/README.md)，工程搭建专题保留在 framework-guide。
 
-四部分结构检查 556/556 通过。阶段 0、1 已按总则执行逐点复核、修正及必要运行验证，阶段0、1质量结论见[验收记录](./audits/STAGE_0_1_ACCEPTANCE.md)；阶段14见[最新验收](./audits/STAGE_14_ACCEPTANCE.md)，阶段13见[验收记录](./audits/STAGE_13_ACCEPTANCE.md)，阶段12见[验收记录](./audits/STAGE_12_ACCEPTANCE.md)，阶段11见[验收记录](./audits/STAGE_11_ACCEPTANCE.md)，阶段10见[验收记录](./audits/STAGE_10_ACCEPTANCE.md)，阶段9见[验收记录](./audits/STAGE_9_ACCEPTANCE.md)，阶段8见[验收记录](./audits/STAGE_8_ACCEPTANCE.md)，阶段7见[验收记录](./audits/STAGE_7_ACCEPTANCE.md)，阶段6见[验收记录](./audits/STAGE_6_ACCEPTANCE.md)，阶段5见[验收记录](./audits/STAGE_5_ACCEPTANCE.md)，阶段4见[验收记录](./audits/STAGE_4_ACCEPTANCE.md)，阶段3见[验收记录](./audits/STAGE_3_ACCEPTANCE.md)，阶段2见[验收记录](./audits/STAGE_2_ACCEPTANCE.md)。阶段 1 交互和构建验证见[本轮记录](./STAGE_1_VERIFICATION.md)。运行 `python3 scripts/check_knowledge.py --table` 查看实时完成度。
+四部分结构检查 590/590 通过。阶段 0、1 已按总则执行逐点复核、修正及必要运行验证，阶段0、1质量结论见[验收记录](./audits/STAGE_0_1_ACCEPTANCE.md)；阶段15见[最新验收](./audits/STAGE_15_ACCEPTANCE.md)，阶段14见[验收记录](./audits/STAGE_14_ACCEPTANCE.md)，阶段13见[验收记录](./audits/STAGE_13_ACCEPTANCE.md)，阶段12见[验收记录](./audits/STAGE_12_ACCEPTANCE.md)，阶段11见[验收记录](./audits/STAGE_11_ACCEPTANCE.md)，阶段10见[验收记录](./audits/STAGE_10_ACCEPTANCE.md)，阶段9见[验收记录](./audits/STAGE_9_ACCEPTANCE.md)，阶段8见[验收记录](./audits/STAGE_8_ACCEPTANCE.md)，阶段7见[验收记录](./audits/STAGE_7_ACCEPTANCE.md)，阶段6见[验收记录](./audits/STAGE_6_ACCEPTANCE.md)，阶段5见[验收记录](./audits/STAGE_5_ACCEPTANCE.md)，阶段4见[验收记录](./audits/STAGE_4_ACCEPTANCE.md)，阶段3见[验收记录](./audits/STAGE_3_ACCEPTANCE.md)，阶段2见[验收记录](./audits/STAGE_2_ACCEPTANCE.md)。阶段 1 交互和构建验证见[本轮记录](./STAGE_1_VERIFICATION.md)。运行 `python3 scripts/check_knowledge.py --table` 查看实时完成度。
 
 以下为早期 HTML 增量的历史记录，不能用旧分母替代当前统计。
 
@@ -50,7 +50,7 @@ Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 556 项，�
 | 阶段 12 | 24项四部分资料与Vue组件包/Nuxt宿主 | 真实Storybook/SD、tgz/types/CSS、SSR/交互与策略/专项正反例 |
 | 阶段 13 | 28项四部分资料与Nuxt/Vite多包workspace | 真实Turbo缓存、版本/锁、插件/双格式、兼容回退与AST/generator |
 | 阶段 14 | 29项四部分与Nuxt BFF | 真实聚合/会话/限流/错误/SSR隔离，五组独立实验与模型范围见验收 |
-| 阶段 15 | 仅知识点清单 | 待按学习顺序逐节完成 |
+| 阶段 15 | 34项四部分与Nuxt渐进迁移 | 真实旧MPA/SSR切片、只读对照/回退、AST迁移，决策评审/ICU/浏览器实验 |
 | 框架实践专题            | 六篇规划正文及一篇交接记录 | 规划已形成、初始骨架已交付；高级门禁和发布复用待专项验收 |
 
 ## 可续跑待办
@@ -62,11 +62,11 @@ Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 556 项，�
 - [x] G05 编写 1.2 CSS：先选择器/层叠/盒模型，再 Flex/Grid 与响应式；每个知识点提供可观察实验。
 - [x] G06 编写 1.3 JavaScript，并明确 DOM、事件和异步练习的前置知识。
 - [x] G07 专项复审阶段 0 的 CORS、Cookie/SameSite、SPA/SSR 与工具版本陈述，运行相关教学服务。
-- [ ] G08 按阶段 15 逐章扩展，避免一次性生成大量缺少验证的正文。
+- [x] G08 按阶段完成0–15全部590项正文与四部分资料，分组实验及阶段验收分别记录。
 
 本轮收尾要求：新增内容与索引匹配、真实断链为零、计划项与已验证项分开、受影响回归通过、差异审查及本地提交完成。框架代码和高级能力的后续工作留在各自项目，不在本仓库执行。
 
-本轮补充：基础质量 4 项、106 项独立练习和综合任务已提供；四部分目录迁移与门禁已实施。下一正文阶段为阶段 15：旧项目迁移、代码评审与团队交付，G07 的逐篇复审和本地服务验证已完成；公网 DNS/TLS/CDN、真机与多浏览器仍按学习任务需要另行执行。
+本轮补充：基础质量 4 项、106 项独立练习和综合任务已提供；四部分目录迁移与门禁已实施。阶段0–15规划正文已全部提供，后续按实际项目选择独立练习、综合交付、适用环境验证与持续勘误，G07 的逐篇复审和本地服务验证已完成；公网 DNS/TLS/CDN、真机与多浏览器仍按学习任务需要另行执行。
 
 ## 阶段编写与质量验收总则
 
@@ -129,3 +129,7 @@ pnpm11专有配置采用pnpm-workspace.yaml并实查生效；TypeScript6.0.3匹�
 ## 阶段14建设记录
 
 保留29点，正文556/590（94.2%），待34。[规划](./audits/STAGE_14_PLAN_REVIEW.md)及[验收](./audits/STAGE_14_ACCEPTANCE.md)记录全部四部分。主Nuxt真实HTTP/SSR会话隔离、并行聚合、期限/降级、错误/限流和共源Schema已实测；Node、流式、Edge模型、GraphQL/Apollo/SSE及上传状态机各有独立证据。云平台、Redis/数据库、S3/OSS与杀毒未实装，不以本地模型替代生产验证。下一阶段15，学习勾选未动。
+
+## 阶段15建设记录
+
+保留34点，正文590/590（100%），待0。[规划](./audits/STAGE_15_PLAN_REVIEW.md)与[验收](./audits/STAGE_15_ACCEPTANCE.md)记录完整四部分。主Nuxt旧MPA/新页并存，真实搜索/深链、DTO适配、只读双源比较、分流/回退、CSS/焦点以及受限AST迁移已验证；五组独立分工交付决策协作、评审、ICU/RTL/a11y、原生导航/OPFS/RTC与认证/模块/Wasm/GL。真实团队活动、生产写数据迁移、商户支付/服务端WebAuthn、读屏/真机/多引擎仍未执行。全图正文齐全不保证职级或学习掌握，框架独立项目后续验收不被本轮替代。

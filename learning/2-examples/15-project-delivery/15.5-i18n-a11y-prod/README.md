@@ -1,0 +1,12 @@
+# 15.5-i18n-a11y-prod：ICU、RTL、时区与无障碍交付 — 代码与实践示例
+
+先读对应理论与运行条件，再做变体；观察、模型和已执行代码按各点说明区分。
+
+- [15.5.1 按模块加载消息、ICU复数与select](./15.5.1.i18n-demo.md)
+- [15.5.2 RTL逻辑布局、图标方向与BiDi隔离](./15.5.2.rtl-demo.md)
+- [15.5.3 UTC瞬间、业务时区与夏令时](./15.5.3.item-15-5-3-demo.md)
+- [15.5.4 WCAG2.2 AA评估范围与VPAT/ACR证据](./15.5.4.wcag-aa-demo.md)
+- [15.5.5 SPA路由的标题、焦点、通知与滚动](./15.5.5.spa-demo.md)
+- [15.5.6 Combobox、日期选择与原生模态框](./15.5.6.combobox-datepicker-modal-demo.md)
+
+[返回阶段](../README.md)

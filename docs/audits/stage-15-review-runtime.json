@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-11-25T13:23:46.805Z",
+  "node": "v26.0.0",
+  "git": "git version 2.54.0",
+  "checks": [
+    "review failure reproduced and fixed with boundary regression",
+    "checklist cannot pass unresolved blocker; nit does not block",
+    "review slices preserve complete coverage and dependency order",
+    "real isolated Git history identifies a candidate without ranking people",
+    "small extraction preserves characterized valid behavior"
+  ],
+  "passed": 5,
+  "ranked": [
+    {
+      "path": "checkout.mjs",
+      "touches": 3,
+      "manualComplexity": 3,
+      "generated": false,
+      "candidateWeight": 9
+    },
+    {
+      "path": "catalog.mjs",
+      "touches": 1,
+      "manualComplexity": 1,
+      "generated": false,
+      "candidateWeight": 1
+    }
+  ],
+  "scope": "Local synthetic Node functions and an isolated disposable Git history. No real PR approval, browser rendering, production or team evaluation.",
+  "sourceChecks": [
+    "node --check review.mjs passed",
+    "node --check verify.mjs passed",
+    "four point mappings, exercise headings/checklists, owned local links passed; shared task anchors require parent integration"
+  ],
+  "limitations": [
+    "No browser, Nuxt transformation, actual PR approval, production or real learner trial.",
+    "Synthetic history uses task-owned disposable repository; never user history.",
+    "Hotspot weights are subjective teaching inputs, not measured complexity or personnel metrics."
+  ]
+}

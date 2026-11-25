@@ -77,3 +77,5 @@ learning/2-examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 - [阶段13：pnpm多包管理、版本发布与CI流水线](./13-platform/README.md)：28点四部分、多应用workspace及发布/构建/兼容/DX实验。
 
 - [阶段14：Node.js、Nuxt Nitro 与 BFF 接口开发](./14-bff-runtime/README.md)：29点示例及配套运行边界。
+
+- [阶段15：旧项目迁移、代码评审与团队交付](./15-project-delivery/README.md)：34项示例与观察；全图正文齐备，学习与生产交付仍需独立证据。

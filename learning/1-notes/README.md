@@ -53,7 +53,7 @@ learning/1-notes/
 | 0 | [0.3 网络基础](./00-environment/0.3-network-basics/README.md) | ✅ 已完成 |
 | 1 | [1.1 HTML](./01-web-fundamentals/1.1-html/README.md) | 19 篇及配套示例，见本轮验证记录 |
 
-阶段 1 已补齐 HTML 19、CSS 41、JavaScript 42、基础质量 4 项，详见[阶段入口](./01-web-fundamentals/README.md)。总正文 556/590，学习勾选独立记录。
+阶段 1 已补齐 HTML 19、CSS 41、JavaScript 42、基础质量 4 项，详见[阶段入口](./01-web-fundamentals/README.md)。总正文 590/590，学习勾选独立记录。
 
 - [阶段 2：JavaScript、浏览器与存储](./02-javascript-browser/README.md)：原理与机制。
 
@@ -82,3 +82,5 @@ learning/1-notes/
 - [阶段13：pnpm多包管理、版本发布与CI流水线](./13-platform/README.md)：28点四部分、多应用workspace及发布/构建/兼容/DX实验。
 
 - [阶段14：Node.js、Nuxt Nitro 与 BFF 接口开发](./14-bff-runtime/README.md)：29点理论及配套运行边界。
+
+- [阶段15：旧项目迁移、代码评审与团队交付](./15-project-delivery/README.md)：34项理论；全图正文齐备，学习与生产交付仍需独立证据。

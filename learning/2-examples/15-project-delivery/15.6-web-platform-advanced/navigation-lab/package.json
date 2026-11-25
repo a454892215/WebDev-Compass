@@ -1,0 +1,13 @@
+{
+  "name": "@compass/stage15-navigation-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "test": "node verify.mjs",
+    "serve": "node serve.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

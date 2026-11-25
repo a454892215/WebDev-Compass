@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font:
+    1rem/1.8 system-ui,
+    sans-serif;
+  margin: 0;
+  background: #faf7ef;
+  color: #25211b;
+}
+main {
+  max-width: 52rem;
+  margin: auto;
+  padding: 1.5rem;
+}
+a {
+  color: #754400;
+}
+button,
+input {
+  font: inherit;
+  padding: 0.5rem;
+  max-width: 100%;
+}
+li {
+  overflow-wrap: anywhere;
+}
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+:focus-visible {
+  outline: 3px solid #764800;
+  outline-offset: 3px;
+}
+.skip {
+  position: absolute;
+  inset-block-start: -6rem;
+}
+.skip:focus {
+  inset-block-start: 0;
+}

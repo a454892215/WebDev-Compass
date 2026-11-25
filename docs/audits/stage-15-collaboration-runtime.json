@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "stage": 15,
+  "groups": [
+    "15.1",
+    "15.3"
+  ],
+  "checkedAt": "2026-11-25T13:25:05.858810+00:00",
+  "node": "26.0.0",
+  "commands": [
+    {
+      "command": "node --check learning/2-examples/15-project-delivery/15.1-tech-decisions/delivery-lab/model.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "node --test learning/2-examples/15-project-delivery/15.1-tech-decisions/delivery-lab/test.mjs",
+      "result": "passed",
+      "tests": 6,
+      "failed": 0,
+      "durationMs": 64.238834
+    }
+  ],
+  "actual": [
+    "Dependency graph interval calculation [5,10], not naive [6,12]",
+    "Cycle, missing dependency/owner and invalid interval rejection",
+    "Same-scope hypothetical cost arithmetic and sensitivity",
+    "Independent old consumer additive-field projection and breaking change rejection",
+    "Compatibility adapter restores required renamed field"
+  ],
+  "observations": [
+    "RFC/ADR alternatives and decision scope",
+    "Role handoff, Pair/Mob exercise, knowledge sharing and onboarding cards",
+    "Evidence-based task assignment without personal ranking"
+  ],
+  "notRun": [
+    "HTTP mock server or real backend integration",
+    "Actual review meeting or purchase",
+    "Human Pair/Mob or employee skill assessment",
+    "Production rollout or new learner onboarding trial"
+  ],
+  "checks": {
+    "points": 10,
+    "ownLinksAndExerciseStructureErrors": 0
+  },
+  "limits": [
+    "Pure functions and synthetic fixtures do not prove organizational outcomes.",
+    "Infinite resource DAG assumption excludes calendars, capacities and probability distributions.",
+    "No task inputs are real project schedule commitments or current vendor prices.",
+    "Shared integration task anchors and main Nuxt references require parent integration check."
+  ],
+  "mainReadOnlyReview": [
+    "shared/catalog.ts: id/title/cents and normalizeLegacy",
+    "server/routes/entry.get.ts: fixture bucket/percent/rollback, not production flag service",
+    "server/api/shadow.get.ts: read-only synthetic comparison",
+    "package.json: check/test:migration commands exist"
+  ]
+}

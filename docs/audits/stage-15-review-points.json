@@ -1,0 +1,111 @@
+[
+  {
+    "id": "15.2.1",
+    "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.1.review.md",
+    "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.1.review-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.1.review.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "评审先确认用户触发、预期和系统边界，再检查实现。正确性、边界、性能、安全、无障碍和可测试性是需要按改动选择的问题，不是每个PR机械跑全套。纯文案和请求取消涉及的验证范围不同；把检查清单全部勾上而没有证据，会掩盖未知范围。",
+      "example": "运行verify.mjs第一、二项。负例子进程对badTotal(-2)期待拒绝，真实以AssertionError退出1；主验证器确认这是预期失败。修复lineTotal拒绝负数、0、分数、字符串、100、NaN和错误价格；正常返回398，内部字段不出DTO。证据清单在blocking未关闭时false，关闭后即使nit未处理也true。true只代表这个小型清单满足，不是人工LGTM或自动合并。",
+      "exercise": "在副本把decodeLine改成Number(quantity)后校验，字符串2将被接受；现有字符串负例应失败。定位强制转换扩大输入契约，再恢复严格类型。不能把测试改成接受字符串来消除红灯。",
+      "practice": "审查主Nuxt迁移项目实际输入、DTO、旧/新渲染及回退路径，提交至少一条有复现证据的意见；同时在review-lab副本完成标题边界变体。现有lab没有UI/SSR审计器，不把其true清单称主项目安全通过。",
+      "sources": [
+        "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "代码评审：从用户行为到可复现缺陷",
+      "task": "审查主Nuxt迁移项目实际输入、DTO、旧/新渲染及回退路径，提交至少一条有复现证据的意见；同时在review-lab副本完成标题边界变体。现有lab没有UI/SSR审计器，不把其true清单称主项目安全通过。",
+      "criteria": [
+        "坏输入实际被拒绝，正常398与公开字段不变；测试包含缺失、错误类型及长度边界。",
+        "意见包含触发输入、用户影响和复验方法，区分函数测试与真实UI/SSR证据。"
+      ]
+    }
+  },
+  {
+    "id": "15.2.2",
+    "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.2.review.md",
+    "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.2.review-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.2.review.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "小改动的单位是可独立理解、验证和回退的一个行为目的，不是固定行数。一个100行跨三层的身份变更可能比500行生成文件更难审；工具生成和锁文件仍要确认来源及消费结果，不能全部跳过。评审者的上下文和风险比“几个文件”更能决定拆分方式。",
+      "example": "运行validateSlices的真实清单用例：extract→validate且覆盖两ID为true；反序或期待集合多出localize为false。对照fixture-review.md中的提交目的、检查和Nit，说明脚本只检查清单结构，未产生真正Git PR、批准或每提交构建证据。",
+      "exercise": "把validate切片放在extract前面，validateSlices返回false；核depends和实际计划顺序，修复排序。若只是删depends让脚本变绿，却未解释真实依赖，仍不满足评审。",
+      "practice": "给主Nuxt迁移写一份评审切片：契约适配与特征测试、页面接入与相关测试、切流/回退验证。保留真实兼容依赖；把独立练习localize清单作为补充，不声称已经创建或批准线上PR。",
+      "sources": [
+        "https://google.github.io/eng-practices/review/developer/small-cls.html",
+        "https://google.github.io/eng-practices/review/reviewer/standard.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "评审规模与LGTM：完整的小改动，不是行数竞赛",
+      "task": "给主Nuxt迁移写一份评审切片：契约适配与特征测试、页面接入与相关测试、切流/回退验证。保留真实兼容依赖；把独立练习localize清单作为补充，不声称已经创建或批准线上PR。",
+      "criteria": [
+        "每片包含相关测试和可理解上下文，契约变化/特征重构分别标清，不能先部署不兼容的一半。",
+        "缺localize或依赖逆序会被脚本拒绝；人的LGTM声明范围与未测，不用行数作为唯一依据。"
+      ]
+    }
+  },
+  {
+    "id": "15.2.3",
+    "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3.md",
+    "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.3.item-15-2-3.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "技术债是某个权衡造成未来修改成本或风险的累积，不是所有旧代码、无类型代码或不同风格。记录具体受影响行为、复现或历史证据、影响范围、偿还成本和不处理后果。只列“代码烂”没有排期依据；债务也可能是过期契约文档、缺回退演练或仅一人了解的发布路径。",
+      "example": "运行verify.mjs的isolated Git项。它在自己的dist/history-*新建临时仓库，仅本地配置fixture身份、生成六提交、读取真实历史，再在finally删除该目录；不读取主仓库历史或改任何用户提交。报告列3/1/2、排除生成文件、9/1候选排序和改变权重后排序变更。",
+      "exercise": "故障设定：把generated.lock当业务模块、只按提交次数优先重构它，或把catalog人工权重冒称圈复杂度。用原始git log和权重来源核对；修复为过滤/分类并保留业务风险人工复核，不删除不利数据。",
+      "practice": "对主Nuxt目录迁移写三条具体债务候选（例如适配器重复、全局CSS、回退证据缺失），先读实际代码避免虚构缺陷；另完成临时历史变体。候选可判无需处理，必须说明证据、风险和选择，不声称拥有真实生产变更史。",
+      "sources": [
+        "https://git-scm.com/docs/git-log",
+        "https://martinfowler.com/bliki/TechnicalDebt.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "技术债与Hotspot：历史线索、业务风险及偿还验证",
+      "task": "对主Nuxt目录迁移写三条具体债务候选（例如适配器重复、全局CSS、回退证据缺失），先读实际代码避免虚构缺陷；另完成临时历史变体。候选可判无需处理，必须说明证据、风险和选择，不声称拥有真实生产变更史。",
+      "criteria": [
+        "真实历史计数由输出复算，生成文件/重命名/样本窗口等偏差有说明，不把人工权重称静态复杂度实测。",
+        "偿还条目包含用户影响、范围、最小变更、回归及复查条件，不用候选榜评价个人。"
+      ]
+    }
+  },
+  {
+    "id": "15.2.4",
+    "theory": "learning/1-notes/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule.md",
+    "example": "learning/2-examples/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule-demo.md",
+    "exercise": "learning/3-exercises/15-project-delivery/15.2-code-review/15.2.4.boy-scout-rule.md",
+    "practice": "learning/4-practice/15-project-delivery/tasks.md#p-15-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Boy Scout Rule鼓励在当前任务附近留下更易理解的代码，收益来自小步、可核验的清理，不是把“顺手”当无限扩范围授权。先确定当前用户行为和输入域，再做最小提取/命名/去重，保留容易回看和回退的差异；牵涉公共契约或大量调用者时单独规划。",
+      "example": "运行最后一项测试，12组合法输入的legacyView/extractedView深度相等；构造+1分偏移与原输出不等，表明结果差异能被检测。没有执行主Nuxt代码变换、数据库升级或真实页面回归；本例只验证纯函数提取边界。",
+      "exercise": "把multiplyCents改为quantity*unitCents+1，12组前后比较应失败；核对差异而不是更新旧期望。恢复同值后通过。若确需新舍入策略，另开有契约和迁移说明的行为修改。",
+      "practice": "在主Nuxt迁移副本中找一个真实重复或过宽函数，写收益评估，先加受影响路径特征测试再做有界提取；没有合理收益可选择不改并说明。纯函数lab的12组等价不冒充主项目已完成重构。",
+      "sources": [
+        "https://martinfowler.com/bliki/OpportunisticRefactoring.html",
+        "https://google.github.io/eng-practices/review/reviewer/looking-for.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "渐进重构：先保行为，再做有界改进",
+      "task": "在主Nuxt迁移副本中找一个真实重复或过宽函数，写收益评估，先加受影响路径特征测试再做有界提取；没有合理收益可选择不改并说明。纯函数lab的12组等价不冒充主项目已完成重构。",
+      "criteria": [
+        "前后公开字段、值及错误行为在声明输入域内一致，故意改一字段的负例能失败。",
+        "说明提取实际收益和停止边界；输入契约改变另记行为变更，受影响UI/SSR按需补验。"
+      ]
+    }
+  }
+]

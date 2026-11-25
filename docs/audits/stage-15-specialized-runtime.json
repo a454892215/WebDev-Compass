@@ -1,0 +1,81 @@
+{
+  "checkedAt": "2026-11-25T13:27:57.225Z",
+  "node": "v26.0.0",
+  "browser": "158.0.8127.37",
+  "checks": [
+    "native importmap bare specifier resolves local ESM",
+    "actual Wasm scalar/SIMD and memory growth; ordinary document no shared worker",
+    "WebGL actual pixel and buffer release",
+    "virtual authenticator create/get client ceremony, not server verification or login",
+    "PaymentRequest interface presence only, no show/merchant/order",
+    "isolated shared Wasm memory sent to Worker; JS Atomics increment, not compiled pthreads",
+    "forced unavailable fallback keeps text and bounded JS path",
+    "importmap bootstrap feature gate skips dependent module with readable baseline"
+  ],
+  "passed": 8,
+  "failed": 0,
+  "wasm": {
+    "sum": 7,
+    "oldBufferDetached": true,
+    "newBytes": 131072,
+    "simdResult": 5,
+    "crossOriginIsolated": false,
+    "sharedWorker": null
+  },
+  "isolated": {
+    "sum": 7,
+    "oldBufferDetached": true,
+    "newBytes": 131072,
+    "simdResult": 5,
+    "crossOriginIsolated": true,
+    "sharedWorker": 1
+  },
+  "webgl": {
+    "description": "蓝底上倾斜的橙色三角形；原生WebGL着色器和透视投影",
+    "pixel": [
+      0,
+      64,
+      191,
+      255
+    ],
+    "center": [
+      255,
+      128,
+      0,
+      255
+    ],
+    "bufferAlive": true,
+    "error": 0
+  },
+  "limitations": [
+    "Virtual authenticator and browser ceremony only; no server verification, identity provider or real passkeys.",
+    "Payment Request only typeof; no actual payment/UI/canMakePayment or merchant.",
+    "Local native ESM not CDN, scalar/SIMD actual tiny Wasm not compiled Emscripten/pthreads.",
+    "Shared Wasm memory+JS Atomics Worker not a Wasm pthread runtime.",
+    "Native WebGL/SwiftShader not Three.js, hardware GPU or performance evidence.",
+    "Chrome one desktop viewport, forced capability fallback not another browser engine."
+  ],
+  "command": "node learning/2-examples/15-project-delivery/15.6-web-platform-advanced/specialized-lab/verify.mjs",
+  "findingsClosed": [
+    {
+      "issue": "isolated-worker-response",
+      "resolution": "给共享内存Worker响应补COEP，与隔离文档匹配，实际sharedWorker=1复验。"
+    },
+    {
+      "issue": "importmap-baseline-gate",
+      "resolution": "依赖模块仅支持ImportMap时加载，no-importmap真实分支保留基础内容并disabled无实现按钮。"
+    },
+    {
+      "issue": "actual-3d-and-release",
+      "resolution": "使用实际顶点/片元shader和投影绘制，两个像素验证；释放同时解除使用并delete缓冲/程序/着色器。"
+    },
+    {
+      "issue": "current-three-doc-path",
+      "resolution": "旧manual/en路径404，改读当前官方manual/pages/how-to-dispose-of-objects.html。"
+    },
+    {
+      "issue": "runtime-route-offline-resource",
+      "resolution": "隔离入口href使用明确http://localhost:4576/isolated，不再让离线检查器按仓库根路径找虚构文件；8项实际Chrome检查复验通过。"
+    }
+  ]
+}

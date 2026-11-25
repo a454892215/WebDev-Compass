@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font:
+    1rem/1.8 system-ui,
+    sans-serif;
+  background: #f3f6fa;
+  color: #16283b;
+}
+header,
+main {
+  max-width: 58rem;
+  margin-inline: auto;
+  padding: 1.2rem;
+}
+nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+a {
+  color: #005da8;
+}
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  overflow-wrap: anywhere;
+}
+button,
+input {
+  font: inherit;
+  padding: 0.5rem;
+  max-inline-size: 100%;
+}
+button {
+  cursor: pointer;
+}
+form {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+:focus-visible {
+  outline: 3px solid #005da8;
+  outline-offset: 3px;
+}
+.skip {
+  position: absolute;
+  inset-block-start: -6rem;
+}
+.skip:focus {
+  inset-block-start: 0;
+  background: #fff;
+  padding: 0.6rem;
+}
+.product-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+}
+section {
+  background: #fff;
+  padding: 1rem;
+  margin-block: 1rem;
+  border: 1px solid #b8c4d1;
+  min-block-size: 4rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Catalog · Accessibility lab</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body lang="en">
+    <a class="skip" href="#page-title">Skip to main content</a>
+    <header>
+      <nav aria-label="Primary">
+        <a href="http://127.0.0.1:4574/catalog" data-route="catalog" aria-current="page">Catalog</a>
+        <a href="http://127.0.0.1:4574/details" data-route="details">Details</a>
+      </nav>
+    </header>
+    <main>
+      <h1 id="page-title" tabindex="-1">Catalog</h1>
+      <p>Independent local lab; not a conformance certificate.</p>
+      <button id="direction" type="button">Use RTL layout</button>
+      <section class="card" aria-labelledby="mixed-title">
+        <h2 id="mixed-title">Mixed direction content</h2>
+        <p id="mixed" lang="ar">
+          طلب <bdi dir="ltr">INV-2026-17</bdi> من <bdi dir="auto">Ada</bdi>
+        </p>
+        <span class="directional" aria-hidden="true">→</span
+        ><span> Next step</span>
+        <p class="identifier">Reference <bdi dir="ltr">AB-12/34</bdi></p>
+      </section>
+      <p id="route-status" role="status"></p>
+      <div id="route-content"><p>Catalog content</p></div>
+      <section aria-labelledby="controls-title">
+        <h2 id="controls-title">Keyboard components</h2>
+        <label for="city">City suggestions</label
+        ><input
+          id="city"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-controls="cities"
+          aria-expanded="false"
+          autocomplete="off"
+        />
+        <ul
+          id="cities"
+          role="listbox"
+          aria-label="City suggestions"
+          hidden
+        ></ul>
+        <button id="open-dialog" type="button">Open instructions</button>
+        <dialog id="instructions" aria-labelledby="dialog-title">
+          <h2 id="dialog-title">Instructions</h2>
+          <p>Use Tab inside this modal and Escape to close.</p>
+          <form method="dialog">
+            <button autofocus>Close instructions</button>
+          </form>
+          <button type="button">Keep dialog open</button>
+        </dialog>
+      </section>
+      <p><a href="./README.md">Read experiment instructions</a></p>
+    </main>
+    <script src="./ui.mjs" type="module"></script>
+  </body>
+</html>
