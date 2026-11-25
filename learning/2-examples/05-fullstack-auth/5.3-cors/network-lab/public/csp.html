@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CSP对照</title>
+  </head>
+  <body>
+    <main>
+      <h1>CSP阻止内联脚本</h1>
+      <p>外部同源脚本允许，内联脚本应被响应头阻止。</p>
+      <script>
+        window.inlineRan = true;
+      </script>
+      <script src="./allowed.js"></script>
+    </main>
+  </body>
+</html>

@@ -243,6 +243,7 @@
 - [ ] [5.1.4 API 版本管理与文档阅读（OpenAPI / Swagger）](../learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger.md)
 - [ ] [5.1.5 Mock 数据：**MSW (Mock Service Worker)** 或 mock 服务器](../learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker.md)
 - [ ] [5.1.6 环境区分：dev / staging / production 的 baseURL 配置](../learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.6.dev-staging-production-baseurl.md)
+- [ ] [5.1.7 安全重试与幂等：429/Retry-After、重复提交和取消后的结果边界](../learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.7.retry-idempotency.md)
 
 
 
@@ -258,6 +259,7 @@
 - [ ] [5.2.6 **SSO** 单点登录概念](../learning/1-notes/05-fullstack-auth/5.2-auth/5.2.6.sso.md)
 - [ ] [5.2.7 权限反馈：路由、菜单、按钮与 RBAC；前端控制体验，服务端逐请求授权](../learning/1-notes/05-fullstack-auth/5.2-auth/5.2.7.rbac.md)
 - [ ] [5.2.8 📱 移动端对照：浏览器存储不等于 Keychain/Keystore；比较会话、脚本可读性与威胁边界](../learning/1-notes/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session.md)
+- [ ] [5.2.9 Nuxt SSR 会话恢复：当前请求 Cookie 转发、用户隔离与私有响应缓存](../learning/1-notes/05-fullstack-auth/5.2-auth/5.2.9.nuxt-ssr-session.md)
 
 
 
@@ -293,6 +295,6 @@
 - [ ] [5.5.1 **WebSocket** 客户端 API：连接、发送、心跳、重连](../learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.1.websocket.md)
 - [ ] [5.5.2 **Socket.IO** 或原生 WebSocket 封装](../learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.2.socket.io.md)
 - [ ] [5.5.3 **Server-Sent Events (SSE)** 与 WebSocket 场景对比](../learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.3.server-sent-events-sse.md)
-- [ ] [5.5.4 📱 移动端对照：WebSocket ≈ 长连接推送；SSE ≈ 单向流式更新](../learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse.md)
+- [ ] [5.5.4 📱 移动端对照：WebSocket/SSE 与移动长连接、系统推送的机制和生命周期差异](../learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse.md)
 
 ---

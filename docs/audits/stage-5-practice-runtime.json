@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-25",
+  "scope": "Stage5 local Node SSR/API and headless Chrome; no production authentication claim",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "h3": "1.15.11",
+    "nitro": "2.14.0"
+  },
+  "commands": [
+    {
+      "command": "CI=true pnpm install --offline --frozen-lockfile",
+      "result": "passed",
+      "observed": "project-local store and exact lock; nuxt prepare success"
+    },
+    {
+      "command": "pnpm typecheck / pnpm lint / pnpm format:check",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm test",
+      "result": "passed",
+      "tests": 13,
+      "scope": "DTO/pagination, session TTL/revoke/view, owner, stable ordering, idempotency/conflict, If-Match"
+    },
+    {
+      "command": "pnpm build",
+      "result": "passed",
+      "observed": "node-server; no static personalized route generation"
+    },
+    {
+      "command": "pnpm test:e2e, initial run",
+      "result": "partial; four passed, two UI interrupted by strict scalar list locator",
+      "stats": {
+        "startTime": "2026-11-25T07:07:25.513Z",
+        "duration": 5494.027,
+        "expected": 4,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      }
+    },
+    {
+      "command": "pnpm test:e2e --grep 'login, cookie'",
+      "result": "passed",
+      "tests": 2,
+      "stats": {
+        "startTime": "2026-11-25T07:08:51.976Z",
+        "duration": 3000.9779999999996,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reason": "list assertion changed to retryable array text; no product-code change, affected flows only"
+    },
+    {
+      "command": "pnpm test:e2e --project=protocol",
+      "result": "HTTP assertions passed, but unexpected Nitro socket exception found in log; not accepted until final fix",
+      "tests": 2,
+      "stats": {
+        "startTime": "2026-11-25T07:13:32.178Z",
+        "duration": 961.256,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reason": "added cross-owner PATCH rejection; Bob content unchanged in subsequent SSR check"
+    },
+    {
+      "command": "pnpm typecheck / pnpm lint / pnpm test / pnpm build + pnpm test:e2e after bounded-stream fix",
+      "result": "passed",
+      "unitTests": 13,
+      "e2eTests": 6,
+      "stats": {
+        "startTime": "2026-11-25T07:15:50.480Z",
+        "duration": 5536.031,
+        "expected": 6,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "serverUnexpectedExceptionBytes": 0,
+      "observed": "all affected login/upload/JSON paths checked; uncaughtExceptionMonitor and teardown enabled"
+    }
+  ],
+  "finalLogicalCoverage": {
+    "passed": 6,
+    "description": "final full run: four UI tests across two viewports plus two protocol/SSR tests, all passed; earlier partial runs preserved above"
+  },
+  "checks": [
+    "Cookie present, HttpOnly/Lax/local Secure=false; document.cookie cannot read SID",
+    "Origin mismatch/missing CSRF/wrong content type refused; fixture body role does not elevate reader",
+    "login rotates opaque SID and revokes old; logout/expiry invalidate replay; frontend clears private view",
+    "same-role other-owner GET/PATCH404 and unchanged Bob note; reader admin403; real admin200",
+    "SSR current-cookie Alice/Bob/anonymous independent; Cache-Control private,no-store and Vary Cookie; SID absent from payload; SSR anonymous response no Set-Cookie",
+    "stable pagination/query validation, malformed DTO rejected and recovered; title create and URL filter survive refresh",
+    "Idempotency-Key first201/replay200 sameid/conflict409; ETag/If-Match missing428 and stale412",
+    "JSON streaming4096B and multipart total16KiB/file4KiB hard limits, type/UTF8 failures",
+    "real file upload200 saved:false and completed Blob JSON download content/owner/name checked",
+    "two simulated viewports no overflow/pageerror/hydration mismatch; expiry permits second account"
+  ],
+  "findingsClosed": [
+    "same Nuxt session key uses common default factory",
+    "request identity guard also checks epoch and CSRF, including rejection path; catches same-account re-login case by source review",
+    "private notes and admin cache cleared; public mock role never accepted as authority",
+    "SSR session getter is read-only; anonymous cookie bootstrap occurs in browser boundary",
+    "test locator corrected for asynchronous changing list, no fixed sleep",
+    "early default async iterator exit destroyed HTTP socket and triggered Nitro _isIdle exception despite 413; shared reader uses destroyOnReturn:false then drains unbuffered, final monitor log empty"
+  ],
+  "notVerified": [
+    "real passwords/MFA/production IdP/OAuth/SSO",
+    "distributed or durable sessions/idempotency/storage",
+    "production TLS/Secure cookie/real deployment or load",
+    "real mobile devices, other browsers, screen readers, human learner trial",
+    "uncooperative Nuxt HTTP abort race browser scenario; independent deferred fixtures and source guards reviewed"
+  ]
+}

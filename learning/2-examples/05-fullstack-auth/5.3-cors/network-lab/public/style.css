@@ -1,0 +1,28 @@
+body {
+  font: 1rem/1.6 system-ui;
+  margin: 0;
+  background: #f4f7fc;
+  color: #15243c;
+}
+main {
+  max-width: 60rem;
+  margin: auto;
+  padding: 1rem;
+}
+button {
+  font: inherit;
+  min-height: 44px;
+  margin: 0.4rem;
+  padding: 0.4rem 0.7rem;
+}
+output {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+a {
+  color: #164fba;
+}
+:focus-visible {
+  outline: 3px solid #164fba;
+}

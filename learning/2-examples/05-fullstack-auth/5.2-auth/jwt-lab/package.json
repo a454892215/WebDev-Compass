@@ -1,0 +1,15 @@
+{
+  "name": "@compass/stage5-auth-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "check": "node verify.mjs"
+  },
+  "dependencies": {
+    "jose": "6.2.18"
+  }
+}

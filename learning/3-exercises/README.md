@@ -12,3 +12,5 @@
 - [阶段 3：TypeScript、Vite、代码检查与测试](./03-engineering/README.md)：36项独立实现、具体故障与验收。
 
 - [阶段4：Vue 3 + Nuxt](./04-frameworks/README.md)：59项独立练习、具体故障与验收。
+
+- [阶段5：API、会话与服务端授权](./05-fullstack-auth/README.md)：31项独立动手、具体故障与验收。

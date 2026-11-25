@@ -1,0 +1,4 @@
+{
+  "data": { "resource": null },
+  "errors": [{ "message": "Resource denied", "path": ["resource"], "extensions": { "code": "FORBIDDEN" } }]
+}

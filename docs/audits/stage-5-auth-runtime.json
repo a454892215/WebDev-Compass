@@ -1,0 +1,200 @@
+{
+  "date": "2026-11-25",
+  "scope": "stage5.2 real jose/Node contracts and official OAuth/SSO observation; shared Nuxt HTTP/SSR/browser executed by root, evidence inspected here",
+  "jwtLab": {
+    "date": "2026-11-25",
+    "environment": {
+      "node": "v26.0.0",
+      "jose": "6.2.18"
+    },
+    "passed": 16,
+    "checks": [
+      {
+        "id": "jwt-valid",
+        "result": "passed",
+        "observed": "real RS256 signature plus issuer/audience/time/type validation succeeds"
+      },
+      {
+        "id": "decode-is-not-verify",
+        "result": "passed",
+        "observed": "payload decoding exposes forged role; actual verification rejects it"
+      },
+      {
+        "id": "jwt-wrong-key",
+        "result": "passed",
+        "observed": "unrelated public key cannot verify signature"
+      },
+      {
+        "id": "jwt-expired",
+        "result": "passed",
+        "observed": "expired claim rejected with fixed verification time"
+      },
+      {
+        "id": "jwt-future-nbf",
+        "result": "passed",
+        "observed": "not-before in future rejected"
+      },
+      {
+        "id": "jwt-wrong-issuer",
+        "result": "passed",
+        "observed": "correctly signed token with wrong issuer rejected"
+      },
+      {
+        "id": "jwt-wrong-audience",
+        "result": "passed",
+        "observed": "correct signature does not make token valid for another API"
+      },
+      {
+        "id": "jwt-missing-exp",
+        "result": "passed",
+        "observed": "required expiry missing is rejected rather than accepting a timeless token"
+      },
+      {
+        "id": "jwt-wrong-type",
+        "result": "passed",
+        "observed": "configured access-token type boundary rejects another typ"
+      },
+      {
+        "id": "jwt-disallowed-alg",
+        "result": "passed",
+        "observed": "server algorithm allowlist rejects different algorithm before trusting header selection"
+      },
+      {
+        "id": "jwt-max-age",
+        "result": "passed",
+        "observed": "maximum token age policy can be stricter than exp"
+      },
+      {
+        "id": "bearer-header",
+        "result": "passed",
+        "observed": "one header credential parsed; absent/multiple/wrong-scheme/control characters rejected"
+      },
+      {
+        "id": "role-and-owner",
+        "result": "passed",
+        "observed": "object owner restriction applies in addition to role, using trusted server-side user"
+      },
+      {
+        "id": "refresh-singleflight",
+        "result": "passed",
+        "observed": "three same-session callers share one controlled refresh; no real token endpoint"
+      },
+      {
+        "id": "refresh-logout-fence",
+        "result": "passed",
+        "observed": "late refresh after logout cannot restore previous session"
+      },
+      {
+        "id": "refresh-instance-isolation",
+        "result": "passed",
+        "observed": "separate client-session coordinators do not share pending refresh"
+      }
+    ],
+    "limits": [
+      "no browser token storage or HTTPS test",
+      "no real OAuth/OIDC/SSO provider",
+      "refresh uses controlled local Promise, not remote token rotation",
+      "keys are generated per run and never persisted",
+      "Nuxt Cookie/CSRF/SSR checks are performed by the stage capstone separately"
+    ]
+  },
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile --offline",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "checks": 16
+    },
+    {
+      "command": "node --check verify.mjs && node --check contracts.mjs",
+      "result": "passed"
+    }
+  ],
+  "capstone": {
+    "status": "passed within stated scope",
+    "sourceReviewed": [
+      "server/utils/session-store.ts",
+      "server/utils/auth.ts",
+      "server/api/session.get.ts",
+      "server/api/session/bootstrap.post.ts",
+      "server/api/login.post.ts",
+      "server/api/logout.post.ts",
+      "app/pages/index.vue",
+      "app/middleware/admin.ts",
+      "server/middleware/headers.ts",
+      "app/composables/useLabSession.ts"
+    ],
+    "parentFindings": [
+      "keep same-key session useFetch options consistent",
+      "compare epoch/session generation, not only account name, for late results"
+    ],
+    "sourceFindingsClosed": [
+      "useLabSession shares same-key default factory between page and admin middleware",
+      "notes result validity checks epoch, session csrf and account before success/error writes",
+      "admin response has explicit stage5-admin cache key, removed at forget/logout"
+    ],
+    "firstExecution": {
+      "source": "parent /tmp/webdev-stage5-e2e.log and test-results/e2e-results.json inspected",
+      "passed": 4,
+      "failed": 2,
+      "passedScopes": [
+        "protocol/session-CSRF-rotation-owner-admin-revoke-expire",
+        "two-user and anonymous SSR no-store/Vary/payload isolation",
+        "session expiry UI and account change in both viewports"
+      ],
+      "incompleteScopes": [
+        "full UI after search; strict locator resolved transient multiple items before later upload/download/logout assertions"
+      ],
+      "cookieObservation": "existing browser cookie HttpOnly/Lax/Secure:false and document.cookie non-readability assertions occurred before interrupted search"
+    },
+    "executedBy": "root",
+    "inspectedBy": "stage5_auth",
+    "firstStats": {
+      "startTime": "2026-11-25T07:07:25.513Z",
+      "duration": 5494.027,
+      "expected": 4,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "focusedUiStats": {
+      "startTime": "2026-11-25T07:08:51.976Z",
+      "duration": 3000.9779999999996,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "finalCoverage": "6 logical tests have passing evidence: 4 original passed + 2 corrected targeted UI passed; not one all-green initial suite",
+    "closedTestFinding": "Transient list had two elements, scalar strict locator assertion interrupted UI; corrected to array text assertion that retries list content. No product code change for this correction.",
+    "observed": [
+      "fixed Origin and missing CSRF/type refused",
+      "login rotates old SID and old credential gets401",
+      "body/header role does not grant admin; reader forbidden, admin allowed",
+      "owner private object isolation with404 for other reader",
+      "server logout revokes SID; expired protected API401 while session query returns200 user:null",
+      "two concurrent users and anonymous SSR separated; private/no-store/Vary Cookie; no SID in payload; guest SSR does not set Cookie",
+      "browser Cookie actually exists, HttpOnly/Lax/local Secure:false, not document.cookie-readable",
+      "SSR refresh restores Cookie identity; logout/expiry clears private UI; another account can log in",
+      "shared session default factory and epoch/CSRF/account fences verified in source, not a separate controlled browser race run"
+    ]
+  },
+  "notVerified": [
+    "real OAuth/OIDC/SSO provider",
+    "production TLS/Secure-cookie deployment",
+    "real user passwords/MFA",
+    "mobile hardware storage",
+    "other browsers/screen reader/human learner trial"
+  ],
+  "finalIntegratedVerificationByRoot": {
+    "result": "passed",
+    "e2eTests": 6,
+    "unitTests": 13,
+    "unexpectedServerExceptionBytes": 0,
+    "evidence": "docs/audits/stage-5-practice-runtime.json",
+    "boundary": "Executed by main agent after server body-reader fix, not a duplicate run by auth author."
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-25",
+  "scope": "5.1 and 5.4 standalone HTTP/data lab; separate from root Nuxt authentication app",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "runtimeDependencies": [],
+    "browser": "existing macOS Google Chrome headless via stage4 Playwright tool"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile --offline",
+      "result": "passed",
+      "observed": "zero external runtime dependencies; fixed empty lockfile; YAML pnpm11 config"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "groups": 9,
+      "includes": [
+        "Node syntax",
+        "actual loopback HTTP status/JSON/schema/content-type/204",
+        "actual AbortError and timeout",
+        "controlled deferred stale/clear/dispose result guard",
+        "stable bounded offset pagination with tie-break",
+        "automatic multipart boundary and file/total size413, spoofed text415, Blob download",
+        "429 retry success, actual maximum3 attempts, long Retry-After declined,403 not retried,POST retry refused",
+        "server memory idempotency replay and key/body conflict409",
+        "allowlisted URL target checks",
+        "local OpenAPI known invariant checks only"
+      ]
+    },
+    {
+      "command": "pnpm test:browser",
+      "result": "passed",
+      "groups": 2,
+      "checks": [
+        {
+          "width": 390,
+          "passed": true,
+          "observed": "actual search/empty, XHR upload progress100, server413, Blob object URL download, no overflow/pageerror"
+        },
+        {
+          "width": 1440,
+          "passed": true,
+          "observed": "actual search/empty, XHR upload progress100, server413, Blob object URL download, no overflow/pageerror"
+        }
+      ],
+      "additionalObserved": "Downloaded Blob file completed and exact UTF-8 content verified via Playwright download.path(), not just event/name."
+    }
+  ],
+  "source": "learning/2-examples/05-fullstack-auth/5.1-http-client/http-lab",
+  "observationsOnly": [
+    "GraphQL query/variables and local partial data/errors response; no GraphQL executor",
+    "gRPC-Web proto and official proxy/transport/RPC-status reading; no protoc or gRPC service"
+  ],
+  "fixedIssues": [
+    "Sandbox EPERM listen distinguished from a protocol failure and rerun via authorized loopback access.",
+    "Existing Playwright CJS/ESM namespace adapted before successful Chrome checks.",
+    "Negative schema now consumes an actual HTTP wrong-schema fixture; retry cap and multipart total cap explicitly verified."
+  ],
+  "notVerified": [
+    "real business backend or production auth",
+    "MSW service worker registration; chosen alternative is local HTTP mock server",
+    "GraphQL or gRPC execution/production deployment",
+    "real mobile devices or other browsers",
+    "virus scanning or persistent object storage",
+    "production idempotency transaction, expiry and per-user isolation",
+    "human learner trial"
+  ]
+}

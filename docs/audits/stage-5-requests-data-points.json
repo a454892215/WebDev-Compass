@@ -1,0 +1,288 @@
+[
+  {
+    "id": "5.1.1",
+    "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.1.axios.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.1.axios-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.1.axios.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "原生fetch在收到HTTP404/500时通常仍兑现Response；网络失败、取消、某些策略阻止才使Promise拒绝。先检查response.ok/status，再读body；json()只是解析JSON，不验证业务字段。204没有可解析JSON，不能机械对所有成功响应调用json()。响应体通常只能消费一次，需要多次读取时应在消费前clone，不能让日志拦截器先把body读空。",
+        "Nuxt读取优先考虑useFetch/useAsyncData的SSR payload生命周期；事件提交用$fetch并单独处理提交状态。$fetch对非成功状态的异常行为与原生fetch不同，不能把两个实现的错误对象直接当同一契约。封装应保留status、失败类别和取消语义，UI再转换为可理解反馈，不把每种异常都转成空数组。",
+        "Axios在已有项目、拦截器体系或特定适配器需求下可以选择；本章不强装第二套客户端。无论用何库，超时、运行期解码、凭据目标、重试与认证恢复仍是应用协议；不要在一个全局拦截器里无限重试、跳登录或打印敏感请求。"
+      ],
+      "example": "运行pnpm check的第一组：正常页可解码，缺失路由为http404，坏JSON为parse，错误字段为schema，HTML冒充JSON为content-type，204返回null。",
+      "exercise": "将readJSON中的response.ok检查删去，再请求/missing，观察错误被误归为成功或结构失败。恢复HTTP分支，并保留原status供上层判断。",
+      "practice": "在Nuxt资料库副本定位列表读取、详情读取与提交入口，写清各层错误由谁处理；保留一个真实坏结构样本证明运行校验。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.1.2",
+    "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "每次操作创建自己的AbortController，signal传到真实fetch及读取流程；已abort的signal不能复活再用。取消是客户端终止等待/消费的机制，不代表服务器事务回滚。AbortSignal.timeout可提供受支持环境的超时信号，目标浏览器不支持时用显式定时器并在finally清理。不要用Promise.race只让UI先退出却留下后台请求与副作用。",
+        "只靠abort不总够：库、缓存或自定义异步源可能不响应取消。保留请求代次或有效标志，在写状态前核对“还是最新且未离开”。清空输入也必须递增代次并清理旧请求，否则旧结果会把空页面重新填满。finally里也要判断归属，旧请求不能把新请求的loading关掉。",
+        "状态至少区分idle/loading、success、empty与error；取消原因可根据用户动作决定是否静默，但超时不应悄悄称成功。Vue同步setup创建的侦听可随卸载清理，Nuxt数据composable有自身key和刷新规则；不要再叠一套互相争用的watch自动请求。"
+      ],
+      "example": "第二组用真实延迟HTTP验证AbortError和TimeoutError；第三组deferred故意忽略abort，快新结果先返回，慢旧结果后返回仍不覆盖；清空与dispose后的迟到结果也不回写。",
+      "exercise": "删掉own===generation检查，使用故意忽略signal的loader按B→A顺序返回；先看到错误覆盖，再恢复代次保护并复验清空/离开。",
+      "practice": "在Nuxt副本挑选一个依赖输入的读取，先判断是否应使用useFetch的响应式URL，再为手工请求扩展慢旧/快新、清空与离开三种反例。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.1.3",
+    "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.3.formdata-blob.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.3.formdata-blob-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.3.formdata-blob.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "FormData保存字符串或Blob/File字段；以它作为请求体时让浏览器生成Content-Type和boundary。手填multipart/form-data但漏boundary会让服务端无法正确拆分；客户端accept、文件扩展名和MIME只改善选择体验，不能代替服务端限额、格式及权限校验。",
+        "普通浏览器fetch没有可移植的传统上传progress回调；本例需要明确传输进度，因此用XMLHttpRequest.upload的progress，并检查lengthComputable。loaded/total反映传输，不等于服务器校验/存储完成；必须等待最终HTTP响应。上传事件监听在跨域环境还可能影响预检，不能由同源实验推断全部CORS情况。",
+        "下载先检查HTTP状态，再读Blob；URL.createObjectURL用于本地引用，不是公网地址或持久化存储。替换资源或离开页面时revokeObjectURL；不要在浏览器消费前立即撤销导致下载失效。服务端Content-Disposition/文件名应符合协议，客户端可提供安全下载名；跨域可读头仍受暴露规则约束。"
+      ],
+      "example": "浏览器上传5字节note.txt，观察传输进度100及最终201；换1025字节文件得到413。准备下载后真实blob:链接触发sample.txt下载，pagehide释放对象URL。",
+      "exercise": "手写Content-Type:multipart/form-data覆盖浏览器boundary，重现400；删除该头并保持FormData请求体，同一文件恢复成功。",
+      "practice": "主工程已有上传校验和当前页DTO生成Blob下载。对照主工程与独立lab的不同协议；若在副本新增HTTP文件下载或XHR进度，分别验证传输进度、HTTP响应与业务结果，不冒称已有断点续传。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/upload",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.1.4",
+    "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "OpenAPI描述HTTP API的路径、方法、参数位置、请求体、响应与安全方案；Swagger是围绕规范的工具生态，不是所有API的一种固定响应包壳。先确认使用的规范版本和环境，再检查required、可空、范围、枚举、分页和每个状态响应。示例JSON不是约束全集。",
+        "本地规范明确固定为OpenAPI3.1.1，不声称该版本是当前最新。路径/api/v1是本实验的版本约定，URL版本、媒体类型版本或兼容演进各有取舍；新增可选字段通常不等于所有客户端都兼容，严格校验器、枚举新增及语义变化仍需契约回归。移除字段或改变含义不能只改文档版本号而不迁移。",
+        "生成客户端主要改善静态调用体验，运行时后端仍可能偏离文档。代码生成不完成认证/错误处理或unknown响应校验。契约检查既要检查文档结构，也要请求真实fixture比较范围和返回形状；本例只校验自己用到的几个不变量，不冒充完整OpenAPI验证器。"
+      ],
+      "example": "打开本地/openapi.json，找listItems与multipart上传；测试同时检查size.maximum=3并实际发送size=99得到400。观察201/400/413/415对应不同协议分支。",
+      "exercise": "将文档size最大值改成20但服务器仍限制3，写一个size=4的实际请求暴露漂移；修复协议或文档后复验，不只重生成类型。",
+      "practice": "对照Nuxt API实际实现画一张方法/参数/响应/认证表，再为一个已有接口补本地OpenAPI片段和真实响应契约测试。",
+      "source": "https://spec.openapis.org/oas/v3.1.1.html",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.1.5",
+    "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Mock替代的是依赖行为，不是生产系统的真实性。本章选择内建Node HTTP服务器作为真实网络mock：可控制404、坏JSON、错结构、延迟和429，不需要安装MSW才能观察HTTP。MSW则在浏览器Service Worker或Node拦截层保持应用请求调用形态，适合统一handler；它不会自动成为真实业务数据库或服务端权限测试。",
+        "fixture应包含成功、空、错误、慢旧结果、会话失效和边界数据。测试要显式断言命中了预期handler，未知请求不应悄悄代理到生产；每个测试隔离可变计数并在结束清理服务/handler。把所有情况都返回200会掩盖真实的HTTP、解析与业务错误分层。",
+        "浏览器Service Worker有注册、作用域、缓存与生命周期，可能与离线PWA或旧mock冲突。若选择MSW应按当前官方初始化并区分开发开关，不能把mock脚本永久带入生产。本例不注册Service Worker，所以它的结果不证明MSW注册或跨域浏览器策略通过。"
+      ],
+      "example": "HTTP测试自动启动随机loopback端口，访问真实路由并清理；独立浏览器实验监听4401。/api/bad-json确实发坏body，/api/retry先429再200，不是UI按钮切换伪日志。",
+      "exercise": "将错误fixture从503误改200并返回看似成功对象，检查测试是否真的会失败；补明确status和UI失败断言，恢复目标故障后再跑。",
+      "practice": "为资料库新增一个可控错误契约测试，明确是独立fixture还是真实Nitro路径；不要把mock账号/接口通过称为生产认证已验收。",
+      "source": "https://mswjs.io/docs/",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.1.6",
+    "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.6.dev-staging-production-baseurl.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.6.dev-staging-production-baseurl-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.6.dev-staging-production-baseurl.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "dev/staging/production是部署环境约定，不是三个必须复制维护的代码项目。Vite的公开env通常在构建时替换；Nuxt runtimeConfig区分服务端私有与public，Node运行覆盖和静态产物行为不同。环境变量不是自动加密，任何进入浏览器包/payload的值都要当公开。",
+        "同源相对路径可让浏览器访问应用BFF，由服务器控制上游地址。确需跨源baseURL时，使用明确origin allowlist、协议和路径规则，禁止URL用户名密码以及用户输入覆盖任意origin；SSR转发Cookie/Authorization更不能跟着不可信目标走。开源演示中的localhost绝不能直接部署成生产地址。",
+        "不能把跨环境失败都归咎CORS：先检查请求发到哪里、DNS/TLS、状态、响应体和服务端日志。开发代理只改变本地访问路径，不会给生产自动生成代理或授权。配置读入后也要验证格式和预期，而不只用as string压过类型。"
+      ],
+      "example": "测试允许本地origin，拒绝未允许baseURL和把path改成https://other.invalid/steal。没有向这些.invalid目标实际发请求。Nuxt公私运行期边界在主工程另验。",
+      "exercise": "把环境baseURL错写到未允许的origin，先让校验阻止请求，再修正配置；不要通过关闭CORS/浏览器安全设置掩盖目标错误。",
+      "practice": "核对Nuxt宿主公开配置和服务端上游目标；在副本增加allowlist错误样本，证明不会向错误origin转发会话信息。",
+      "source": "https://nuxt.com/docs/4.x/guide/going-further/runtime-config",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.1.7",
+    "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.7.retry-idempotency.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.7.retry-idempotency-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.7.retry-idempotency.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "幂等描述同一请求重复执行的预期效果，不是每次返回完全相同，也不等于服务端实际实现一定正确。GET/HEAD按HTTP语义应安全读取；PUT/DELETE有幂等语义但本实验为了保守只自动重试GET/HEAD。POST不能仅因超时就认定未执行，取消也不能证明回滚。",
+        "只重试协议允许的暂时失败，明确次数、总时间预算、退避和取消。Retry-After可以是秒数或HTTP日期；本例若服务端要求超过本地等待预算，就返回给调用方稍后处理，不把长等待强行缩短造成更早重试。生产需要按负载加入抖动和全局预算，本例固定最多3次便于可重复观察，不声称完整重试框架。",
+        "写入幂等键要由服务端识别与存储，并绑定主体、路由、请求指纹、期限和事务。客户端随便加Idempotency-Key头不会自动安全。独立lab只展示无用户的内存key+body指纹：相同重放返回同一结果，不同body同key为409；进程重启失效、没有数据库原子性，不可直接移植为支付方案。"
+      ],
+      "example": "429+Retry-After:0的真实HTTP在第二次成功；503+120秒只请求一次；403不重试；自动POST被策略拒绝。相同key/body创建返回同id，不同body同key409。 另用持续503+Retry-After:0实证第三次后停止。",
+      "exercise": "将safeRead允许所有method并在POST超时后重发，说明可能重复写入的时间线；恢复只读策略，再用明确服务端key契约验证重放/冲突两种结果。",
+      "practice": "为资料库副本选择一种可安全重试的读取，写次数/时间预算与取消测试；提交路径单独设计重复提交和结果核实，不自动复用读取重试器。",
+      "source": "https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.4.1",
+    "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "JSON只规定数据表示，不规定业务字段一定存在、正确或可信。response.json()返回的结构仍应按unknown处理；as Model只是向检查器作声明，不会检查服务器返回值。还要区分缺失、null、空字符串、0和false，不能用一串truthy判断误删合法值。",
+        "运行解码逐字段检查类型、范围、身份唯一等必要不变量，再返回新的内部对象。DTO到UI模型的映射可以重命名、选择公开字段和处理可选值，但不是任意丢掉错误字段后继续伪装成功。错误应保留适当诊断，向用户呈现不含服务器秘密的反馈。",
+        "小契约可手写guard/decoder，复杂协议可用成熟schema库并固定版本。类型生成、OpenAPI和运行校验要协同维护；校验的严格度需与可扩展性约定一致，不能无意拒绝所有未来可选字段，也不能忽略必要字段改变。"
+      ],
+      "example": "测试用id:42触发schema错误，合法列表得到只含公开id/title的记录；http404、解析失败不混在同一解码错误里。",
+      "exercise": "将错误id先as string再调用字符串方法，重现类型通过但运行失败；回到unknown字段检查，错误在进入组件前被拦截。",
+      "practice": "对照资料库实际DTO与UI字段，增加一个坏类型响应测试；说明何处解析、何处解码、何处给用户反馈。",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.4.2",
+    "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.2.api.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.2.api-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.2.api.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "分页先约定页码从0还是1开始、size上限、排序字段/方向、筛选编码和返回total或nextCursor。重复query参数、负数、小数、超限size都要决定拒绝还是规范化；不要让客户端任意指定数据库列或无限size。URLSearchParams负责编码，不手工拼未转义的用户输入。",
+        "相同标题/时间会造成排序并列，需要稳定唯一tie-breaker，例如title再id。本例固定fixture的offset分页可比较不重不漏；真实数据并发插入/删除时即使稳定排序仍可能跨页漂移，cursor及一致性策略需按后端协议设计，不能用本例证明生产动态列表无重复。",
+        "筛选或排序改变通常应重置页码；空结果与越界空页的反馈应清楚，不能自动把任意错误当第一页。前端key使用业务id，与分页index不同。total与items长度来自不同语义，不把本页2项当全部2项。"
+      ],
+      "example": "测试跨两页合并得到5个不同id；两个同名Vue按a/c排序。size99和重复q被400拒绝，page99得到成功空items，total仍说明匹配总量。",
+      "exercise": "删除id次排序并只按可能重复字段排序，在有数据更新的副本观察边界；恢复明确顺序并记录为何仍需后端一致性契约，不能只靠前端去重掩盖漏项。",
+      "practice": "在资料库副本为现有列表补一个分页/排序契约，核对page/size/q、空页与总量，并说明刷新和条件改变的预期。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.4.3",
+    "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.3.item-5-4-3.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.3.item-5-4-3-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.3.item-5-4-3.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "接口需说明方法、字段名、单/多文件、总请求限额、单文件限额、允许格式、额外字段、认证/CSRF、成功状态与返回记录。客户端accept与MIME都可伪造；服务器要在合适层限流/限额、识别格式和分配安全存储名，不能直接拼用户文件名写目录。",
+        "本例只接收1个file，multipart总量4096字节、单文件1024字节，要求text/plain及.txt，进一步拒绝NUL与非法UTF-8。不存盘、不执行、不声称完整内容安全扫描；PDF/图片/压缩包需要专用解析与安全策略，不能把简单文件头或扩展名当可靠安全认证。",
+        "返回201只表示本实验完成校验，stored:false明确没有存储。生产异步扫描/对象存储可能先202并提供状态查询；进度100%并不表示业务可用。失败413/415/400分别为限额/格式/请求体错误，认证与权限仍要在服务端前置执行。"
+      ],
+      "example": "真实HTTP上传hello/note.txt返回201；1025字节413；声明text/plain但含NUL的伪装文件415；漏boundary400，浏览器行为也复验合法/超限路径。 总multipart超过4096字节也实际413。",
+      "exercise": "只保留file.type检查而接受含NUL伪装文本，观察fixture为何应415；恢复字节/解码检查，并注明复杂格式需要更专业处理。",
+      "practice": "对照Nuxt上传路由的实际限额、内容校验和会话/CSRF策略，补两项失败测试；若新增存储，另行设计生成名与下载授权。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Using_FormData_Objects",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.4.4",
+    "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "HTTP状态表达传输层面的请求处理结果；200可承载业务结果，201表示创建、204无响应体、400输入无效、401缺少/无效认证、403权限拒绝、404资源不存在、409状态冲突、413/415上传问题、429限流、5xx服务端失败。具体协议可用404隐藏资源存在性，不能仅凭403/404推断业务身份。",
+        "{code,data,message}是可选约定，不是Web标准。选择裸数组、资源对象或问题详情等都可以，但成功与失败必须一致可解析；HTTP失败不应为了统一包壳一律改200。用户消息与诊断分开，不能把后端堆栈、数据库信息、Token或原始用户内容直接展示/上报。",
+        "客户端应先识别HTTP，再按Content-Type/空body处理，再按业务契约解码。重试、重新认证和输入纠正是不同恢复动作：400不应自动重试，401恢复有上限，403不应靠刷新Token绕过授权，429遵守等待预算。GraphQL还有data/errors局部结果，见选修点，不能机械套统一包壳。"
+      ],
+      "example": "实验实际看到404、400、403、409、413、415、429/503、201和204不同分支；相同幂等key不同body409不能当认证失败。",
+      "exercise": "把403交给无限登录刷新循环，说明为何权限不会因此增加；改为明确无权反馈，保留服务端逐请求拒绝。",
+      "practice": "先在独立HTTP lab核对204无JSON，再整理Nuxt已有登录/授权/上传/读取状态的恢复策略；在副本新增失败分支测试，不把403自动变成重复登录。",
+      "source": "https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.4.5",
+    "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.5.graphql-rest.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.5.graphql-rest-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.5.graphql-rest.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "GraphQL用schema描述类型与操作，查询选择字段，variables传参数；REST围绕资源和HTTP语义组织，两者都需要输入验证、授权、缓存和可观测性。GraphQL不自动解决N+1、越权、请求成本或版本演进，选择它应基于客户端聚合与组织需求。",
+        "一次执行可能同时返回data和errors，字段可因为失败为null；HTTP请求错误与执行错误的状态处理取决于协议/媒体类型，不能简单规定所有GraphQL结果HTTP200。客户端要决定局部展示、错误反馈和重试，不能只检查response.ok然后无条件读取深层字段。",
+        "本点是本地query/JSON样本与官方操作清单，没有安装GraphQL执行器或访问真实服务。可以观察请求形状和局部错误，但不称schema验证、解析器执行、权限或生产性能通过。Vue/Nuxt主线不要求改用GraphQL。"
+      ],
+      "example": "打开protocol-observations/query.graphql与response.json，指出resource为null以及errors.path的位置，按README追踪HTTP与字段错误两层，不把本地样本叫真实接口。",
+      "exercise": "只看HTTP200就读取response.data.resource.title，用样本重现null错误；改为按data/errors契约展示局部反馈。",
+      "practice": "在独立副本将一个REST读取需求写成GraphQL请求/响应对照，不更换主Nuxt后端；列出权限、局部错误与缓存差异。",
+      "source": "https://graphql.org/learn/serving-over-http/",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.4.6",
+    "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.6.grpc-protobuf-web-grpc-web.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.6.grpc-protobuf-web-grpc-web-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.6.grpc-protobuf-web-grpc-web.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Protobuf用schema和稳定字段编号描述消息，工具生成客户端/服务端代码；.proto不实现业务。gRPC-Web为浏览器限制采用不同于原生gRPC的协议细节，通常经代理转换；浏览器能发fetch并不等于可直接调用所有原生HTTP/2 gRPC服务。",
+        "观察请求媒体类型、消息帧与尾部状态：HTTP200不自动等于RPC成功，还要看gRPC status及metadata；跨域响应头可读性和代理配置仍需核对。text编码与binary模式、unary/服务端流等支持依赖客户端/代理版本，不能把原生gRPC双向流能力全部照搬到Web。",
+        "字段编号是兼容性身份，不应删除后重用为新含义。生成代码和静态类型不替代目标服务验证、认证、deadline、取消与错误处理。本点提供.proto和官方链路观察清单，未安装protoc/Envoy/真实后端；迁移已有Android gRPC经验时尤其要核对Web支持差异。"
+      ],
+      "example": "按protocol-observations/README对照resources.proto，追踪生成客户端→浏览器→代理→后端，并辨认HTTP状态与RPC状态两层。没有伪造RPC成功日志。",
+      "exercise": "把title字段编号2改成现有id的1，指出schema冲突与兼容风险；恢复唯一稳定编号，规划删除字段时的保留策略。",
+      "practice": "在独立方案文档中对照资料库REST读取与gRPC-Web链路，列出新增工具/代理和错误契约；主项目保持现有实现。",
+      "source": "https://grpc.io/docs/platforms/web/basics/",
+      "boundary": "GraphQL/gRPC-Web observation only; local HTTP and Chrome results do not certify production auth/backend.",
+      "runtime": "docs/audits/stage-5-requests-data-runtime.json"
+    },
+    "issues": []
+  }
+]

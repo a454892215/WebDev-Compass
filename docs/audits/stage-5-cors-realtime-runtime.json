@@ -1,0 +1,260 @@
+{
+  "date": "2026-11-25",
+  "environment": {
+    "node": "26.0.0",
+    "browser": "local Chrome headless",
+    "viewports": [
+      390,
+      1440
+    ]
+  },
+  "passed": 11,
+  "checks": [
+    {
+      "name": "ws-origin-rejection",
+      "passed": true,
+      "observed": "Node fixture with wrong Origin receives403; not user authentication proof"
+    },
+    {
+      "name": "cors-390",
+      "passed": true,
+      "observed": {
+        "simple": {
+          "readable": true
+        },
+        "denied": true,
+        "writeBlocked": true,
+        "preflight": {
+          "preflight": true
+        },
+        "preflightBlocked": true,
+        "credential": {
+          "hasCookie": true
+        },
+        "wildcardBlocked": true,
+        "proxy": {
+          "plain": true
+        },
+        "stats": {
+          "writes": 1,
+          "options": 2,
+          "preflightPosts": 1,
+          "blockedPosts": 0,
+          "wsOpened": 0,
+          "wsActive": 0,
+          "sseActive": 0,
+          "lastEventIds": [],
+          "sseSent": []
+        }
+      }
+    },
+    {
+      "name": "jsonp-390",
+      "passed": true,
+      "observed": "local cross-origin script executes callback; no API read permission implied"
+    },
+    {
+      "name": "native-ws-sse-390",
+      "passed": true,
+      "observed": {
+        "ws": {
+          "opens": 2,
+          "reconnects": 1,
+          "messages": [
+            "pong",
+            "echo:again"
+          ]
+        },
+        "sse": {
+          "ids": [
+            "1",
+            "2"
+          ],
+          "last": {
+            "id": 2,
+            "text": "update-2"
+          }
+        },
+        "cleanup": {
+          "writes": 1,
+          "options": 2,
+          "preflightPosts": 1,
+          "blockedPosts": 0,
+          "wsOpened": 2,
+          "wsActive": 0,
+          "sseActive": 0,
+          "lastEventIds": [
+            "",
+            "1"
+          ],
+          "sseSent": [
+            "1",
+            "1",
+            "2"
+          ]
+        }
+      }
+    },
+    {
+      "name": "socketio-390",
+      "passed": true,
+      "observed": "real Socket.IO client/server acknowledgement; not native wire protocol"
+    },
+    {
+      "name": "csp-390",
+      "passed": true,
+      "observed": "self external script executes, inline script blocked; real response CSP/nosniff/referrer headers"
+    },
+    {
+      "name": "cors-1440",
+      "passed": true,
+      "observed": {
+        "simple": {
+          "readable": true
+        },
+        "denied": true,
+        "writeBlocked": true,
+        "preflight": {
+          "preflight": true
+        },
+        "preflightBlocked": true,
+        "credential": {
+          "hasCookie": true
+        },
+        "wildcardBlocked": true,
+        "proxy": {
+          "plain": true
+        },
+        "stats": {
+          "writes": 2,
+          "options": 4,
+          "preflightPosts": 2,
+          "blockedPosts": 0,
+          "wsOpened": 3,
+          "wsActive": 0,
+          "sseActive": 0,
+          "lastEventIds": [
+            "",
+            "1",
+            ""
+          ],
+          "sseSent": [
+            "1",
+            "1",
+            "2",
+            "1",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "jsonp-1440",
+      "passed": true,
+      "observed": "local cross-origin script executes callback; no API read permission implied"
+    },
+    {
+      "name": "native-ws-sse-1440",
+      "passed": true,
+      "observed": {
+        "ws": {
+          "opens": 2,
+          "reconnects": 1,
+          "messages": [
+            "pong",
+            "echo:again"
+          ]
+        },
+        "sse": {
+          "ids": [
+            "1",
+            "2"
+          ],
+          "last": {
+            "id": 2,
+            "text": "update-2"
+          }
+        },
+        "cleanup": {
+          "writes": 2,
+          "options": 4,
+          "preflightPosts": 2,
+          "blockedPosts": 0,
+          "wsOpened": 5,
+          "wsActive": 0,
+          "sseActive": 0,
+          "lastEventIds": [
+            "",
+            "1",
+            "",
+            "",
+            "1"
+          ],
+          "sseSent": [
+            "1",
+            "1",
+            "2",
+            "1",
+            "1",
+            "1",
+            "1",
+            "2"
+          ]
+        }
+      }
+    },
+    {
+      "name": "socketio-1440",
+      "passed": true,
+      "observed": "real Socket.IO client/server acknowledgement; not native wire protocol"
+    },
+    {
+      "name": "csp-1440",
+      "passed": true,
+      "observed": "self external script executes, inline script blocked; real response CSP/nosniff/referrer headers"
+    }
+  ],
+  "notVerified": [
+    "public HTTPS/certificate/HSTS deployment",
+    "real user authentication",
+    "real devices",
+    "other browsers",
+    "production reconnect/load guarantees",
+    "Socket.IO recovery across process loss"
+  ],
+  "commands": [
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "scope": "Node syntax for server and client module"
+    },
+    {
+      "command": "CI=true pnpm install --frozen-lockfile --offline",
+      "result": "passed",
+      "scope": "exact lock and local YAML config"
+    },
+    {
+      "command": "pnpm test",
+      "result": "passed",
+      "checks": 11,
+      "scope": "one explicit wrong-Origin Node handshake and five groups per browser viewport"
+    },
+    {
+      "command": "python3 scripts/check_learning_resources.py",
+      "result": "passed",
+      "observed": "165 HTML pages,617 local references,0 errors at group verification"
+    }
+  ],
+  "fixedIssues": [
+    "Playwright APIResponse uses headers(), not Response.headerValue(); corrected and retested.",
+    "CSP endpoint now uses actual csp.html/allowed.js resources; links and real navigation verified.",
+    "SSE fixture intentionally duplicates id1, seen-set drops it; close/pagehide verified by server counters.",
+    "Known Browser CORS/CSP rejections are expected policy outcomes, not successful reads or network writes that never happened."
+  ],
+  "notes": [
+    "Default page permits local JSONP observation; strict CSP only on /csp(.html).",
+    "WebSocket Origin403 is a browser-origin gate, not authentication; fixture has no private user data.",
+    "SSE cursor demo has fixed events, not durable replay; Socket.IO ack is not persistent transaction confirmation.",
+    "WebSocket test verifies one app ping/pong, not production heartbeat timeout/tuning."
+  ]
+}

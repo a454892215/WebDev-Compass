@@ -1,0 +1,164 @@
+[
+  {
+    "id": "5.3.1",
+    "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.1.item-5-3-1.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.1.item-5-3-1-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.1.item-5-3-1.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-1",
+    "result": "passed",
+    "evidence": {
+      "theory": "源由协议、主机、端口共同决定。http://127.0.0.1:4404与:4405不同源；“站点”用于SameSite等规则，不能用同源代替同站，两端口可以不同源但同站。DOM读取、Fetch响应暴露和脚本嵌入有不同约束，不应统称“所有跨域都禁止”。\n\n同源策略限制不被授权的跨源读取。某些简单跨源请求可以先发送；服务端副作用已经发生，响应却不能被脚本读取。CORS不是CSRF防护，也不是服务器授权。原生客户端或服务器端程序不受浏览器CORS读取规则约束。\n\nfetch的mode:no-cors不会解锁JSON：得到的opaque响应不能读取正常body/status。开发者工具显示网络记录不等于页面脚本可读；不要为消除红字关闭浏览器安全开关。",
+      "example": "点击跨域实验：simple可读，plain读失败；writeBlocked为true，而stats.writes增加。只有这一组本地公开fixture，不涉及真实用户数据。",
+      "exercise": "把对plain的fetch改为mode:no-cors，尝试读取json。记录opaque/不可读结果；修复应明确服务端读授权或同源代理，不关闭浏览器安全设置。",
+      "practice": "Nuxt主工程保持同源Cookie会话；在本双端口实验解释读取失败与写入已发生，副本再画出真实项目源/站点与认证边界。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy",
+      "runtimeGroup": "cors-390/cors-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.3.2",
+    "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.2.cors.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.2.cors-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.2.cors.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-2",
+    "result": "passed",
+    "evidence": {
+      "theory": "满足CORS安全列出方法/头等条件的请求通常无需预检；带application/json、自定义头等请求可能先OPTIONS。预检通过才发送相应实际请求，但预检不是业务提交，也不是登录认证。不要因为OPTIONS没带会话Cookie就先强制401。\n\nAccess-Control-Allow-Origin应匹配允许的完整Origin；带凭据读取还需Access-Control-Allow-Credentials:true。credentials:include只是请求侧意图，不能绕过SameSite、第三方Cookie策略或服务端授权。凭据模式不能配通配*授权读取；允许特定Origin也不意味着该来源可信用户已登录。\n\n动态按允许列表返回Origin时应有Vary:Origin以避免缓存混用；预检还需核对Allow-Methods、Allow-Headers。自定义响应头如ETag需Expose-Headers才能让跨源JS读取；不要盲目允许所有方法/头。",
+      "example": "真实Chrome发送带X-Course与JSON的POST，options计数增加且成功；blocked-preflight实际POST计数始终0。seed设置本地HttpOnly Cookie后，精确Origin凭据读取成功；wildcard即使ACAC:true仍被浏览器拒绝读取。",
+      "exercise": "先把ACAO改为*但保留credentials:include，证明服务器响应200仍读失败；再恢复精确Origin。若Cookie没发，另查SameSite/Secure/域路径而非把所有问题归CORS。",
+      "practice": "在独立CORS实验验证精确来源/凭据/预检，不向Nuxt生产式会话接口添加任意跨源通配；若宿主跨源接入，在副本写完整允许列表与缓存策略。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+      "runtimeGroup": "cors-390/cors-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.3.3",
+    "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.3.vite.config.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.3.vite.config-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.3.vite.config.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-3",
+    "result": "passed",
+    "evidence": {
+      "theory": "浏览器请求同源的/proxy，Node/Vite开发服务器再请求API来源。服务器到服务器这一步不受浏览器CORS读取限制；因此浏览器看到的是同源响应。Vite server.proxy只影响开发服务器，不会自动进入生产静态JS，也不是托管后的反向代理配置。\n\nrewrite必须对应后端路径，changeOrigin主要调整转发Host等行为，不能代替Cookie域/路径、CSRF Origin和真实身份设计。Cookie与Authorization不要不加判断地转发到任意用户指定URL，否则会把开发便利变成凭据泄露或SSRF。\n\nNuxt的server/api本地BFF与Vite开发代理有不同运行生命周期。生产是否需要BFF或反向代理取决于部署和接口契约，不能把开发通过当作部署已完成。",
+      "example": "直接跨源读4405/plain失败，读4404/proxy却得到同一公开JSON。真实转发由server.mjs执行，Vite片段仅对照配置，不冒称本lab启动了Vite。",
+      "exercise": "错误地把/api前缀重复两次，收到404后先查代理重写与真实后端路由。不要通过catch返回空数组掩盖接口失败；修正路径后核对Content-Type和body。",
+      "practice": "对照本lab固定Node代理与Nuxt同源server/api，在副本写开发和生产两张请求拓扑图，不假设开发代理会随静态产物一起运行。",
+      "source": "https://vite.dev/config/server-options#server-proxy",
+      "runtimeGroup": "cors-390/cors-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.3.4",
+    "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.4.jsonp.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.4.jsonp-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.4.jsonp.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-4",
+    "result": "passed",
+    "evidence": {
+      "theory": "JSONP把数据包装成函数调用，通过script加载执行。script嵌入跨源资源与Fetch读取JSON适用不同规则；加载成功意味着远端代码获得页面脚本执行能力，不是只获得一块无害数据。\n\ncallback参数若未经约束也可能成为脚本注入入口。本地实验只允许固定courseReceiver名称、固定公开payload，不拼接不可信代码。它主要适用历史GET式读取，不能提供现代Fetch的错误/status/取消语义，也不能承担登录或敏感变更。\n\nCSP的script-src、第三方脚本信任和供应链风险同样适用。不要让业务后端为了消除跨域报错新增JSONP，更不要把带Token的URL塞进script请求；URL可能进入历史/日志/Referer。",
+      "example": "真实Chrome在4404载入4405的本地脚本，得到courseReceiver回调。对照plain的Fetch仍失败，从而区别脚本执行与JSON暴露权限；没有加载任何外网脚本。",
+      "exercise": "请求callback=alert(1)，确认本地服务器400而不是执行拼接代码。修复历史端点时不要靠字符串替换“净化”任意JavaScript；迁移协议并限制输入。",
+      "practice": "在独立JSONP对照中说明脚本信任风险；为Nuxt迁移方案写Fetch/CORS替代清单，不给当前认证API新增JSONP。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script",
+      "runtimeGroup": "jsonp-390/jsonp-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.3.5",
+    "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.5.content-security-policy.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.5.content-security-policy-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.5.content-security-policy.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-5",
+    "result": "passed",
+    "evidence": {
+      "theory": "HTTPS需要有效证书、正确主机与链、HTTP到HTTPS策略及混合内容检查。已用HTTP发送的敏感数据不能靠随后重定向收回。HSTS只应在确定有效HTTPS覆盖后部署，预加载和includeSubDomains会影响所有相应域，不是本地教程随意开启的开关。\n\nCSP需结合实际脚本/样式/接口来源设计，通常先Report-Only核对合法资源，再使用nonce/hash等适合架构的策略。frame-ancestors防嵌入策略必须通过响应头发送；X-Frame-Options只能表达DENY/SAMEORIGIN等有限策略，不能使用过时ALLOW-FROM表示跨源允许列表。nosniff和Referrer-Policy解决其他边界。\n\n本lab的严格script-src 'self'只是无内联应用的对照，会阻止本地内联script；不能原样粘进Nuxt造成payload/接管脚本失效后宣称“更安全”。完整生产CSP、TLS和权限策略在阶段6/7/10深化。",
+      "example": "进入4404/csp：同源外部allowed.js设置externalRan，内联inlineRan被阻止；自动检查真实CSP响应头。HTTPS证书、混合内容、HSTS按部署观察清单另核对，本轮未做公网验证。",
+      "exercise": "把Nuxt的内联接管脚本意外挡住，定位CSP控制台与响应头，而不是给script-src加入unsafe-inline草率放开。按框架nonce/可信哈希支持修正，并验证正常接管和拒绝非法脚本。",
+      "practice": "结合Nuxt实际接管资源写安全头部署清单；复用本lab CSP拒绝/允许对照，不把本轮HTTP样本当生产TLS验收。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy",
+      "runtimeGroup": "csp-390/csp-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.5.1",
+    "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.1.websocket.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.1.websocket-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.1.websocket.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-1",
+    "result": "passed",
+    "evidence": {
+      "theory": "浏览器WebSocket有CONNECTING/OPEN/CLOSING/CLOSED，发送前检查readyState；大流量还需关注bufferedAmount与协议层限额，浏览器API没有自动提供业务背压策略。message按约定解码，不能相信任意帧都是合法JSON或已授权业务事件。\n\n浏览器构造器不能像Fetch那样任意设置Authorization头；URL票据、Cookie或连接后认证各有威胁边界，票据不得泄露到普通日志。跨源WebSocket不是普通Fetch的CORS预检流程，服务端应校验Origin并单独认证/逐消息授权；Origin不是非浏览器客户端的身份凭证。\n\n浏览器没有Node ws库的ping()方法；本例用应用字符串ping/pong只验证一次往返，不冒称完整定时心跳。断线重连采用有限指数退避，真实项目还应加入抖动、总预算、可见性/离线判断和消息恢复协议。离开页面需清理连接和定时器。",
+      "example": "openSocket真实收到pong，主动发送drop触发1012关闭，有限重连后发送again得到echo:again；stop后服务端活动连接归零，未残留重连。计时器是本地教学短间隔，不是生产调优建议。",
+      "exercise": "把onclose无条件递归创建连接，用户点击停止后仍重连。用stopped标志加clearTimeout修复，并检查服务端active连接及页面离开行为。",
+      "practice": "Nuxt主工程目前没有实时连接；在本独立lab或Nuxt副本新增连接所有者与清理，验证停止、重连预算和错误反馈，不虚构已有推送。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/WebSocket",
+      "runtimeGroup": "native-ws-sse-390/native-ws-sse-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.5.2",
+    "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.2.socket.io.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.2.socket.io-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.2.socket.io.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-2",
+    "result": "passed",
+    "evidence": {
+      "theory": "Socket.IO是包含Engine.IO/Socket.IO编码、事件与确认等机制的应用库，可使用WebSocket或长轮询传输；它不是原生WebSocket协议的同义词。原生WebSocket客户端不能直接当Socket.IO客户端，反过来也不行。\n\nSocket.IO提供库级连接管理、心跳与重连选项；ack表示某个处理器回调，不自动证明事务持久化或恰好一次。默认投递保证、离线缓存、重连恢复和多节点适配需分别查目标版本。业务还需校验消息、认证、房间权限和背压。\n\n浏览器WebSocket-only传输不能依赖自定义头方案；Socket.IO的auth载荷、Cookie、allowRequest、CORS和代理路径各有作用。长轮询与WebSocket跨源约束不完全一样，不能只配cors就忽略握手Origin/会话授权。",
+      "example": "实际Socket.IO4.8.4客户端/服务端完成course-ping→received:ping确认；原生WS实验走独立/ws路径。没有将两套协议混用，也未验证跨进程恢复或持久化投递。",
+      "exercise": "把Socket.IO客户端连到原生/ws路径，定位握手/帧协议错误，而不是反复加CORS头。修正到匹配服务器或改用原生客户端，再验证事件契约。",
+      "practice": "在独立Socket.IO实验做协议与ack观察；如Nuxt宿主未来采用，先定义服务器事件/身份/重连恢复契约，不把当前Cookie登录直接当已完成socket授权。",
+      "source": "https://socket.io/docs/v4/",
+      "runtimeGroup": "socketio-390/socketio-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.5.3",
+    "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.3.server-sent-events-sse.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.3.server-sent-events-sse-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.3.server-sent-events-sse.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-3",
+    "result": "passed",
+    "evidence": {
+      "theory": "响应Content-Type为text/event-stream，事件由空行分隔，data可多行，id影响后续自动重连的Last-Event-ID；retry是重连延时提示，注释可作保活。服务器/代理缓存、缓冲和超时可能让事件迟到，需要按部署检查。\n\nEventSource是服务端到客户端单向事件通道，客户端提交仍走Fetch等HTTP请求。构造器有withCredentials等选项，不能任意设置Authorization请求头；跨源Cookie仍服从CORS/SameSite策略，Bearer需求可考虑受控fetch流等方案，不把长期Token塞URL。\n\n浏览器自动重连不代表自动补齐历史。服务端必须理解cursor、重放窗口和缺口恢复；事件可能重复，客户端需按业务id去重，不能只依赖TCP顺序宣称恰好一次。close()才停止本EventSource；不应再并排维护另一套无界重试定时器。",
+      "example": "真实EventSource收到服务端重复发送的id1但仅应用一次；断流后重连携带Last-Event-ID:1，收到id2后close，页面离开与活动连接归零均验证。",
+      "exercise": "把响应写成普通JSON或漏事件结尾空行，观察事件未分发；修复Content-Type/分隔符并核对代理是否缓冲，不靠刷新页面掩盖。",
+      "practice": "Nuxt主工程暂无实时推送；在独立SSE实验验证id恢复和清理，再为宿主副本定义单向事件、认证与历史窗口，明确新增能力。",
+      "source": "https://html.spec.whatwg.org/multipage/server-sent-events.html",
+      "runtimeGroup": "native-ws-sse-390/native-ws-sse-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.5.4",
+    "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-4",
+    "result": "passed",
+    "evidence": {
+      "theory": "WebSocket双向消息、SSE单向事件和移动系统推送属于不同层。浏览器页面可能被后台节流、冻结或丢弃，电脑休眠/网络切换也会断开；不能假定setInterval在后台持续准时运行。服务端要容忍连接失效，恢复时重新核对会话与数据。\n\npagehide可用于释放页面所有的连接，BFCache恢复后应按需要重新初始化；组件卸载与退出登录也有各自清理点。多个组件或标签页可能意外创建重复连接，需要明确所有者。跨标签共享、Service Worker或通知权限又是独立设计，不在本节虚构已完成。\n\n原生移动客户端可配置的请求头、安全存储和后台执行能力与浏览器不同。浏览器WS/EventSource的认证入口要按实际API约束选择，不能照搬移动Token拦截器或把Cookie等同Keystore。",
+      "example": "本lab停止按钮关闭连接，WS/SSE服务端active归零；连接控制器同时注册pagehide清理。浏览器模拟视口只证明当前前台页面行为，未做手机后台保活或OS通知测试。",
+      "exercise": "两个组件各自启动一个连接且卸载不关闭，服务端active翻倍。为连接指定单一所有者与引用/订阅边界，卸载后验证数量归零；不要单纯增大服务端连接上限。",
+      "practice": "为Nuxt宿主副本新增实时功能前写移动到Web迁移清单，复用lab停止/重连证据；不要声称现有主工程已实现系统推送。",
+      "source": "https://socket.io/docs/v4/#what-socketio-is-not",
+      "runtimeGroup": "native-ws-sse-390/native-ws-sse-1440",
+      "runtime": "docs/audits/stage-5-cors-realtime-runtime.json"
+    },
+    "issues": []
+  }
+]

@@ -1,0 +1,3 @@
+query Resource($id: ID!) {
+  resource(id: $id) { id title }
+}

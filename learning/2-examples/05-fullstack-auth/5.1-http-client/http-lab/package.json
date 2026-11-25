@@ -1,0 +1,14 @@
+{
+  "name": "@compass/stage5-http-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": ">=26.0.0"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check client.mjs && node --test tests/*.test.mjs",
+    "test:browser": "node verify-browser.mjs"
+  }
+}

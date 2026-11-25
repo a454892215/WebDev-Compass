@@ -1,0 +1,247 @@
+[
+  {
+    "id": "5.2.1",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.1.session-cookie.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.1.session-cookie-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.1.session-cookie.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Cookie是传输/存储机制，Session是服务器管理的会话。opaque session ID只作随机索引，身份与权限由服务器查到；不要把客户端给的userId/role当会话身份。成功登录或权限升级需要轮换会话ID并使旧ID失效，防会话固定。服务器还要有到期与撤销判断，浏览器Cookie尚存在不代表会话仍有效。",
+        "HttpOnly降低脚本直接读取Cookie的风险，不能阻止页面中的恶意脚本借用户身份发请求；Secure要求HTTPS传输，SameSite控制跨站携带边界，不等于同源策略或完整CSRF防护。生产可用符合条件的__Host-前缀限制Domain/Path；本地HTTP教学不能把不带Secure的Cookie宣称为生产配置。",
+        "对写操作核对可信目标Origin并验证与会话绑定的同步CSRF token；允许来源不是字符串后缀匹配。token不得放URL/日志。SameSite是纵深防御而非替代。GET不做状态修改；登录入口也有登录CSRF风险，不能只保护登录后的保存。退出应服务器撤销会话并按匹配路径/属性删除Cookie，按应用范围决定是否清理其他浏览器数据。"
+      ],
+      "example": "综合项目观察Set-Cookie、会话恢复、旧ID轮换/过期/撤销；直接HTTP写请求分别移除Origin或CSRF header，应被拒绝。只有浏览器实际断言通过才能称HttpOnly不可被document.cookie读取。",
+      "exercise": "只删UI仍会由/api/session恢复用户；logout后旧Cookie请求/api/notes应401，session查询user:null。",
+      "practice": "已有Cookie教学会话，核对登录轮换、server expiry、退出撤销与CSRF；在副本补一项跨标签页失效反馈，不把真实密码验证算已实现。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html"
+      ],
+      "boundary": "共享Nuxt Cookie/SSR教学工程真实操作",
+      "runtime": "Root real protocol/SSR/UI: Cookie existence/attributes, rotation oldSID401, Origin+CSRF rejection, logout revoke and expiry; local HTTP not production TLS.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.2",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "JWT是一种claims表示格式，可以是签名/完整性保护或加密结构；本实验是签名JWS，payload可读，签名不提供内容保密。JWT不等于OAuth，也不保证一定是access token。API按已配置的发行者、用途、受众、算法和有效期验证，不能让未信任header任意决定验证策略。",
+        "access token用于资源访问，refresh token用于按发行者协议换新token，不能把refresh token当访问凭证发给每个业务API。短access有效期、refresh轮换/复用检测或发送方约束各需服务端支持；删除客户端token不自动撤销仍有效的已签发access token。选择opaque session也完全合理，不必为了“现代”改用JWT。",
+        "本实验固定RS256和at+jwt用途，用成熟jose验证签名、iss、aud、exp/nbf/iat和必要字段。RS256是实验取舍，不是所有系统唯一推荐算法。生产密钥轮换/JWKS信任与缓存另按发行者契约；不要从任意token里的URL下载信任密钥。客户端解码可用于非权威展示，角色与权限最终由服务器认定。"
+      ],
+      "example": "运行jwt-lab：16组真实检查中覆盖签名成功、篡改role、错key、过期、未来nbf、错iss/aud、缺exp、错typ、禁止算法和maxTokenAge。密钥仅在进程中生成，不输出token或私钥。",
+      "exercise": "只用decodeJwt读取role=admin后放行；用实验现成篡改token重现解码可见而签验失败，恢复服务器固定验证策略，再验证合法token不受影响。",
+      "practice": "主项目采用opaque Cookie session，JWT留独立实验。在副本撰写改用Bearer的协议差异清单，实际运行篡改/过期/错受众反例，不把主项目说成JWT认证。",
+      "sources": [
+        "https://www.rfc-editor.org/rfc/rfc7519.html",
+        "https://www.rfc-editor.org/rfc/rfc8725.html",
+        "https://github.com/panva/jose"
+      ],
+      "boundary": "真实Node/jose实验与主项目HTTP观察",
+      "runtime": "Own jose lab: real RS256 verification and signature/claim/type/algorithm negative checks among16 groups.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.3",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.3.token.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.3.token-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.3.token.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Cookie/Session应用可查询会话恢复；本项目session查询200 user:null与受保护API401分清，不必额外把token写localStorage。页面有匿名/恢复中/成功/失效/失败状态，网络失败不能一概当密码错误，也不应把恢复期间的未定状态立刻解释为永久匿名。Nuxt首次SSR可携带当前请求Cookie获取同一用户，客户端接管复用结果，细节见5.2.9。",
+        "Bearer协议只有明确支持refresh时才刷新；同一客户端会话的并发401可共享一次refresh Promise，最多有限重试，刷新端点自己的401不能递归。非幂等写操作不能不加判断自动重放。刷新token轮换、复用检测是发行者服务器能力，本地single-flight不能替代它。",
+        "退出/身份切换应使本应用的旧请求代次失效、清理用户专属状态及请求缓存；迟到的/me或refresh不能重新写回旧身份。多标签页需要按实际Cookie/存储与消息约定协调，但跨标签通知不能替代服务器撤销。每应用/会话创建刷新协调器，SSR进程级单例会把不同用户的请求混在一起。"
+      ],
+      "example": "jwt-lab真实验证3并发调用只执行1次loader、logout后迟到结果拒绝、两个实例不共享pending。Cookie登录恢复/过期/退出以综合项目HTTP/浏览器结果另验。",
+      "exercise": "让所有401都触发同一个拦截器refresh，包括refresh端点本身，画出递归链；改为端点排除与一次重试。再在受控Promise实验中退出后释放旧值，必须被session epoch拦住。",
+      "practice": "已有Cookie恢复/失效/退出。副本补会话恢复错误反馈与退出后迟到保护；single-flight只在独立Bearer协调实验，不虚构主项目refresh endpoint。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://www.rfc-editor.org/rfc/rfc9700.html",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+      ],
+      "boundary": "真实Node/jose实验与主项目HTTP观察",
+      "runtime": "Own controlled Promise: singleflight/logout generation/instance isolation; root Cookie refresh/expiry/logout UI. No remote token endpoint or real refresh rotation.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.4",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.4.authorization-bearer-token.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.4.authorization-bearer-token-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.4.authorization-bearer-token.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Bearer表示持有该凭证即可按协议使用，不要求token一定是JWT；应通过HTTPS Authorization header发送，避免放URL、Referer、日志或错误上报。不同协议可能使用opaque token或签名token，服务端解析后仍要查验。认证失败通常401并按协议给WWW-Authenticate，已认证但无权限通常403；具体隐藏资源存在性可选择404。",
+        "header格式与token验证是两步。不要把Basic或逗号拼接的多凭证当Bearer；HTTP scheme大小写不敏感。浏览器跨源Authorization通常触发CORS预检，允许发送header不等于凭证有效。跳转或转发到别的origin时不能无条件携带凭证。",
+        "CSRF依赖凭证发送方式与请求上下文分析，不是“用JWT就不会CSRF”。若token放HttpOnly Cookie由浏览器自动发送，仍检查Cookie写操作；若由脚本读出的Bearer header，XSS就可能盗用/调用。服务端到服务端的credential转发要明确目标allowlist和最小headers，不能把来访请求全部headers原样发给第三方。"
+      ],
+      "example": "运行jwt-lab的bearer-header组：合法方案大小写、opaque值可解析；缺失、多凭证、错误scheme和控制字符被拒绝。JWT验签另由真实jose实验执行，没有把解析当认证。",
+      "exercise": "在API URL加?token=...而不是Authorization，以Network观察URL暴露风险；用教学假值重现后改header并删除日志样本。不要向公网提交真实token。",
+      "practice": "主Cookie项目不需要Authorization token。独立lab解释Bearer解析/签验及401/403矩阵；若副本接真实Bearer后台，先明确HTTPS、受众与允许转发目标。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Authorization",
+        "https://www.rfc-editor.org/rfc/rfc6750.html",
+        "https://www.rfc-editor.org/rfc/rfc9110.html"
+      ],
+      "boundary": "真实Node/jose实验与主项目HTTP观察",
+      "runtime": "Own actual Bearer syntax and jose verification boundaries; main app is Cookie, not a Bearer server.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.5",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.5.oauth.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.5.oauth-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.5.oauth.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "OAuth是授权框架，OIDC在其上定义身份层和ID Token等验证规则。第三方平台可能提供OAuth后再调用身份API，不能把所有“用某平台登录”都直接称OIDC。应优先成熟提供方SDK/服务器集成；浏览器是public client，无法保护静态嵌入的client secret。",
+        "当前安全基线采用Authorization Code并按客户端和发行者要求使用PKCE（S256）；授权事务绑定验证器/挑战，回调的redirect URI严格登记。不要把Implicit或Resource Owner Password当新应用默认。OAuth BCP允许在满足条件时由PKCE或OIDC nonce提供CSRF保护，但不能据此随便删掉库需要的state；必须核对提供方支持与事务/用户代理绑定。",
+        "回调先核验对应事务、允许redirect目标、发行者与错误，再按协议换码；OIDC还验证ID Token签名/iss/aud/time及适用nonce。state处理事务/CSRF，nonce关联ID Token、防重放，PKCE约束码兑换，三者用途不能混为一项万能参数。不要将任意returnTo当重定向目标；错误页不记录code/token/secret。"
+      ],
+      "example": "执行oauth-sso-observation.md的授权码观察清单，只阅读官方配置/协议示例并画数据边界；本轮没有client ID/真实账户，不调用微信/GitHub/Google，不伪造“第三方登录通过”。",
+      "exercise": "把returnTo=https://attacker.example.test直接传给最终重定向，或把state写成常量；在纸面/本地URL样本重现缺少绑定/allowlist的问题，改用一次性事务与限定站内目标，不能仅用includes域名。",
+      "practice": "主项目只有公开fixture登录选择，没有真实第三方认证。完成OAuth/OIDC协议与回调威胁清单；副本未来接提供方须另行配置与实测，不能把选择alice当OAuth登录。",
+      "sources": [
+        "https://www.rfc-editor.org/rfc/rfc9700.html",
+        "https://openid.net/specs/openid-connect-core-1_0.html",
+        "https://developers.google.com/identity/openid-connect/openid-connect",
+        "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps"
+      ],
+      "boundary": "官方协议观察清单（未接第三方服务）",
+      "runtime": "Official protocol/design observation only; no real provider, client registration or callback execution.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.6",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.6.sso.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.6.sso-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.6.sso.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "SSO是一种跨应用认证体验，常由共同IdP和OIDC/SAML等协议提供；不是把一个localStorage token复制到不同域，也不是跨域Cookie可随便读取。每个应用仍可能建立自己的会话，并在受信任协议结果基础上校验身份与访问范围。用OIDC时用户标识结合issuer与subject，不能自动把相同email当跨发行者的同一人。",
+        "IdP已有会话可以减少下一应用的交互，但仍可能需要同意、MFA或重新认证；SSO不是绕过授权。本应用退出撤销本应用会话，IdP或其他应用可能仍登录。单点退出取决于提供方/协议与前通道、后通道等集成，不能仅删除本地Cookie就承诺所有会话失效。",
+        "跨站隐私限制、第三方Cookie限制和嵌入上下文会影响静默恢复，不能假定隐藏iframe总能工作。用顶级授权重定向等受支持流程，保持失败/重新登录路径。企业目录、角色映射和会话时长需要按业务契约审查；主教学项目只有一个本地应用，不具备SSO证明。"
+      ],
+      "example": "用oauth-sso-observation.md画A、B、IdP三份会话，填写A本地logout后每份是否仍存在。本轮仅官方协议/边界观察，不搭建假IdP来冒称企业SSO验收。",
+      "exercise": "把A退出按钮文案写成“退出所有应用”却只删除A的Cookie；用三会话图指出B/IdP未变化，改准确文案或集成提供方支持的logout机制后再验。",
+      "practice": "本地Cookie应用退出只针对该应用会话。完成桌面/手机未来SSO信任与退出矩阵，不宣称本次已接IdP或全局单点退出。",
+      "sources": [
+        "https://openid.net/specs/openid-connect-core-1_0.html",
+        "https://openid.net/specs/openid-connect-rpinitiated-1_0.html",
+        "https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Third-party_cookies"
+      ],
+      "boundary": "官方协议观察清单（未接第三方服务）",
+      "runtime": "Official A/B/IdP trust and logout observation only; no real SSO or global logout.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.7",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.7.rbac.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.7.rbac-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.7.rbac.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "认证回答当前身份，授权判断能否对这个资源执行这个操作。RBAC把权限映射到角色，现实还常有对象所有者/租户/状态等条件；只检查reader角色不足以允许读取别人的私有文档。信任的身份来自服务器会话或已验证token，不来自body.userId、query.role或隐藏表单字段。",
+        "路由、菜单和按钮控制体验与反馈；服务器在每次受保护请求中执行策略。匿名通常401，已登录但不允许403；为避免暴露资源存在性可用一致的404，须在契约中写清。默认拒绝未知角色/操作；分页、导出、上传和实时通道也应按相同策略过滤。",
+        "权限改变或退出后前端缓存可能仍有旧数据，应明确清理/重新获取。UI不显示按钮不等于服务器安全，显示按钮也不能保证请求一定成功。角色策略测试至少包括匿名、owner、非owner同角色、admin和不存在资源，必要时检查写入后状态真的未变化。"
+      ],
+      "example": "jwt-lab验证owner reader允许、另一reader拒绝、admin允许。综合项目再用两份真实Cookie上下文直接访问资源、管理接口；纯策略函数不替代HTTP集成证据。",
+      "exercise": "把列表隐藏非owner条目但详情API只按id返回；直接替换URL的id重现越权，修到服务端策略并加入同角色跨用户负例。",
+      "practice": "已有owner/admin与PATCH；副本新增删除接口，直接请求验证非owner拒绝且资源未变。",
+      "sources": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403"
+      ],
+      "boundary": "真实Node/jose实验与主项目HTTP观察",
+      "runtime": "Own owner/admin predicate + root direct API reader403/other-owner404/admin200; frontend visibility does not authorize.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.8",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "localStorage/sessionStorage面向同源脚本，主要区别包括生命周期与作用域，不提供“脚本无法读”的秘密容器；XSS可读取其中凭证。IndexedDB也不是凭证保险箱。内存降低持久化暴露，但恶意页面脚本仍可能调用应用能力，刷新恢复也需设计。",
+        "HttpOnly Cookie不给document.cookie读取，但浏览器会按规则自动发送，需处理CSRF和请求授权；Secure不是防XSS的开关。浏览器保存密码或WebAuthn凭证是另一类平台能力，不能与应用自存Bearer字符串混同。移动OS安全存储具备不同进程/硬件/访问控制边界，也不是能消除所有恶意代码和授权问题的保证。",
+        "本路线默认按后端会话契约选择，不能统一规定“token永远放localStorage”或“所有应用只能Cookie”。区分同源脚本、第三方嵌入、服务端渲染、网络传输、设备丢失和撤销需求，再决定最小暴露方案。桌面/手机Web都仍是浏览器安全模型，H5不因手机运行就自动获得原生Keychain。"
+      ],
+      "example": "浏览器观察脚本存储可读与服务端HttpOnly cookie不可通过document.cookie直接获取的区别；本轮移动比较不运行Android/iOS存储API，不声称硬件安全认证。",
+      "exercise": "给sessionStorage变量改名secureToken后认为安全；用同源脚本仍能getItem重现。改存储名称没有改变威胁边界，应重新选凭证/会话契约并减少暴露。",
+      "practice": "核对主项目没有向Web Storage写凭证，并观察HttpOnly cookie/公开用户信息边界。副本完成存储威胁矩阵，不把H5当原生安全存储。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies",
+        "https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html"
+      ],
+      "boundary": "共享Nuxt Cookie/SSR教学工程真实操作",
+      "runtime": "Root browser Cookie present/HttpOnly and JS non-readability; Web Storage/OS comparison based on official docs, no native hardware test.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "5.2.9",
+    "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.9.nuxt-ssr-session.md",
+    "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.9.nuxt-ssr-session-demo.md",
+    "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.9.nuxt-ssr-session.md",
+    "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-9",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "浏览器端相对请求通常按同源规则发送Cookie。SSR的普通$fetch不会自动把浏览器来的Cookie原样转发；Nuxt相对URL useFetch在服务端借助当前请求fetch转发适当headers。useRequestFetch可显式获取当前请求上下文；不要把所有headers或Cookie转发到任意外部baseURL。目标必须可信，Cookie是凭证。 当前Nuxt useRequestFetch只对以/开头路径转发，绝对URL不自动携带，即使同应用。",
+        "useFetch/useAsyncData的payload让浏览器接管复用SSR读取结果，但用户信息会进入客户端payload，必须只返回允许公开给当前用户的DTO；HttpOnly session ID本身不应被塞进useState或payload。请求局部useState不是服务器会话数据库，也不是跨用户全局状态。模块顶层ref、全局pending refresh、共享API client里可变Authorization都可能串用户。",
+        "个人页和私有API明确禁用共享缓存，例如Cache-Control: private,no-store；不要对个性化页配置静态预渲染、共享swr/isr缓存而不分析隔离。普通SSR内部请求收到Set-Cookie也不代表自动附加到浏览器外层响应；登录/轮换应走明确返回Cookie的响应边界，代理时按框架支持逐个转发Set-Cookie并保留安全属性。SSR渲染不应凭空刷新会话并假定Cookie已送达。"
+      ],
+      "example": "主工程用alice与bob两个独立Cookie上下文直接访问SSR个人页并并发请求，检查各自内容、no-store头和payload不含session ID；刷新恢复、失效与退出另验证。JWT协调实验的实例隔离只作局部补充，不当SSR证明。",
+      "exercise": "在模块顶层保存lastUser或给个性化页开启共享缓存，先用alice后用bob重现风险；修为请求局部状态和正确缓存策略，再交替并发验证，而不是只清一次浏览器缓存。",
+      "practice": "已有SSR会话恢复与私有响应；验证alice/bob/匿名交替并发、no-store和payload无session ID。副本引入外部API前先列凭证转发allowlist，不把任意baseURL当可信。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://nuxt.com/docs/4.x/api/composables/use-request-fetch",
+        "https://nuxt.com/docs/4.x/getting-started/state-management",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control"
+      ],
+      "boundary": "共享Nuxt Cookie/SSR教学工程真实操作",
+      "runtime": "Root two-user/anonymous concurrent SSR, Cookie forwarding, private cache headers, payload no SID and no SetCookie on anonymous read.",
+      "runtimeRecord": "docs/audits/stage-5-auth-runtime.json"
+    },
+    "issues": []
+  }
+]

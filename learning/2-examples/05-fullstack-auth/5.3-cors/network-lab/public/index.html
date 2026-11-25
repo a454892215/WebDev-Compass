@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CORS与实时通信实验</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>CORS与实时通信实验</h1>
+      <p>
+        只连接127.0.0.1的4404/4405。先观察请求是否发送，再看浏览器是否允许读取响应。
+      </p>
+      <button id="cors" type="button">运行跨域读取与写入实验</button
+      ><button id="live" type="button">运行WS与SSE实验</button
+      ><button id="stop" type="button">停止实时连接</button
+      ><output id="result" aria-live="polite">等待操作</output>
+      <p><a href="./csp.html">查看CSP实验</a></p>
+    </main>
+    <script type="module" src="./client.mjs"></script>
+  </body>
+</html>

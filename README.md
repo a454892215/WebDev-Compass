@@ -7,7 +7,7 @@
 ## 阅读入口
 
 - [当前进度与后续计划](./docs/PROGRESS.md)：已编写内容、验证范围及待办。
-- [知识地图总览](./KNOWLEDGE_MAP.md)与[六个分册](./knowledge-map/README.md)：585 个知识点的学习路线。
+- [知识地图总览](./KNOWLEDGE_MAP.md)与[六个分册](./knowledge-map/README.md)：587 个知识点的学习路线。
 - [四部分学习资料](./learning/README.md)：理论、代码示例、独立练习与综合实践。
 - [学习资料结构规范](./docs/LEARNING_STRUCTURE.md)：目录、逐知识点映射与脚本门禁。
 - [Nuxt 基座与宿主指南](./framework-guide/README.md)：通用工程规划与独立项目交接。
@@ -22,9 +22,10 @@
 | 阶段 2 | JavaScript进阶11、浏览器原理9、存储4、Web API 9，共33项四部分资料 |
 | 阶段 3 | 包管理6、Vite构建7、TypeScript12、代码质量6、测试5，共36项四部分资料 |
 | 阶段 4 | 共通7、React选修26、Vue13、UI4、Nuxt9，共59项四部分资料 |
+| 阶段 5 | 请求7、认证9、CORS5、数据6、实时4，共31项四部分资料 |
 | 工程专题 | Nuxt 基座、桌面及手机宿主的规划与独立仓库交接 |
 
-正文覆盖 253/585（约 43.2%），阶段 5–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
+正文覆盖 284/587（约 48.4%），阶段 6–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 5 验收](./docs/audits/STAGE_5_ACCEPTANCE.md)、[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
 
 ## 运行与检查
 
@@ -35,7 +36,7 @@ python3 scripts/check_knowledge.py --table
 python3 scripts/check_knowledge.py --report
 python3 scripts/check_learning_delivery.py
 python3 scripts/check_learning_resources.py
-python3 scripts/check_stage_acceptance.py --stage 0 --stage 1 --stage 2 --stage 3 --stage 4
+python3 scripts/check_stage_acceptance.py --stage 0 --stage 1 --stage 2 --stage 3 --stage 4 --stage 5
 python3 -m unittest discover -s scripts/tests -v
 ```
 
@@ -43,7 +44,9 @@ python3 -m unittest discover -s scripts/tests -v
 
 阶段3使用独立pnpm工程，先从[阶段入口](./learning/1-notes/03-engineering/README.md)按推荐顺序学习，再运行[阅读任务板](./learning/4-practice/03-engineering/README.md)。TS源码需经Vite转换，不能直接用上述静态服务运行。
 
-阶段4先从[Vue/Nuxt学习入口](./learning/1-notes/04-frameworks/README.md)开始，再运行[Nuxt资料库](./learning/4-practice/04-frameworks/README.md)。开始前复核规划补齐watch清理与页面元信息2点，原有编号保留，总规划更新为585项；React仍是选修。
+阶段4先从[Vue/Nuxt学习入口](./learning/1-notes/04-frameworks/README.md)开始，再运行[Nuxt资料库](./learning/4-practice/04-frameworks/README.md)。开始前复核规划补齐watch清理与页面元信息2点，原有编号保留，当时总规划更新为585项；React仍是选修。
+
+阶段5先读[API/会话学习入口](./learning/1-notes/05-fullstack-auth/README.md)，运行[Nuxt私人笔记](./learning/4-practice/05-fullstack-auth/README.md)。规划复核补安全重试/幂等及SSR会话/私有缓存两点；本地协议实验与真实生产身份系统分明。
 
 ## 独立框架边界
 

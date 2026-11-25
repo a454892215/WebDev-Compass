@@ -1,0 +1,7 @@
+syntax = "proto3";
+package compass.learning;
+service ResourceService {
+  rpc GetResource (GetResourceRequest) returns (ResourceReply);
+}
+message GetResourceRequest { string id = 1; }
+message ResourceReply { string id = 1; string title = 2; }

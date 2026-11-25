@@ -14,3 +14,5 @@
 - [阶段 3：TypeScript、Vite、代码检查与测试](./03-engineering/README.md)：Vite+TS阅读任务板及36项逐点综合任务。
 
 - [阶段4：Vue 3 + Nuxt](./04-frameworks/README.md)：Nuxt资料库及59项主线/选修任务。
+
+- [阶段5：API、会话与服务端授权](./05-fullstack-auth/README.md)：Nuxt私人笔记与31项综合任务。

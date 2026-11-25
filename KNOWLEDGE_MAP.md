@@ -65,4 +65,4 @@ flowchart TD
 
 [学习顺序与验收](./docs/LEARNING_PATH.md) · [本次目录审查](./docs/CURRICULUM_REVIEW.md) · [正文建设进度](./docs/PROGRESS.md) · [内容规范](./docs/AUTHORING.md) · [框架专题](./framework-guide/README.md)
 
-阶段 1 已提供 106 项四部分资料，统一入口见 [learning/](./learning/README.md)。阶段2已提供33项、阶段3已提供36项、阶段4已提供59项四部分资料与综合实践；下一批从 **阶段5：HTTP API对接、登录与权限控制**开始。阶段4先核对规划补齐侦听清理与页面元信息，当前总图585项，React/Next保留选修。独立工程开发继续在 web-common 与各宿主项目中进行。
+阶段 1 已提供 106 项四部分资料，统一入口见 [learning/](./learning/README.md)。阶段2已提供33项、阶段3已提供36项、阶段4已提供59项、阶段5已提供31项四部分资料与综合实践；下一批从 **阶段6：页面性能、Web安全、无障碍与SEO**开始。阶段5先核对规划补齐安全重试/幂等及SSR会话/私有缓存，当前总图587项，React/Next保留选修。独立工程开发继续在 web-common 与各宿主项目中进行。

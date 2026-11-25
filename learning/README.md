@@ -16,3 +16,5 @@
 阶段3新增[理论入口](./1-notes/03-engineering/README.md)、[真实实验](./2-examples/03-engineering/README.md)、[独立练习](./3-exercises/03-engineering/README.md)与[阅读任务板](./4-practice/03-engineering/README.md)，共36点。
 
 阶段4：先读[Vue/Nuxt主线入口](./1-notes/04-frameworks/README.md)，再运行[真实实验](./2-examples/04-frameworks/README.md)、完成[独立练习](./3-exercises/04-frameworks/README.md)与[Nuxt综合项目](./4-practice/04-frameworks/README.md)。共59项，React26项为选修。
+
+阶段5：从[API/会话主线](./1-notes/05-fullstack-auth/README.md)阅读，再运行[实验](./2-examples/05-fullstack-auth/README.md)、完成[独立练习](./3-exercises/05-fullstack-auth/README.md)与[Nuxt私人笔记](./4-practice/05-fullstack-auth/README.md)。共31项，已接入/模拟/观察类型分明。

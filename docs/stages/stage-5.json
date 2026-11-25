@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "stage": 5,
+  "project": "learning/4-practice/05-fullstack-auth/nuxt.config.ts",
+  "points": [
+    {
+      "id": "5.1.1",
+      "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.1.axios.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.1.axios-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.1.axios.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-1"
+    },
+    {
+      "id": "5.1.2",
+      "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.2.abortcontroller.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-2"
+    },
+    {
+      "id": "5.1.3",
+      "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.3.formdata-blob.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.3.formdata-blob-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.3.formdata-blob.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-3"
+    },
+    {
+      "id": "5.1.4",
+      "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.4.api-openapi-swagger.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-4"
+    },
+    {
+      "id": "5.1.5",
+      "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.5.msw-mock-service-worker.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-5"
+    },
+    {
+      "id": "5.1.6",
+      "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.6.dev-staging-production-baseurl.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.6.dev-staging-production-baseurl-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.6.dev-staging-production-baseurl.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-6"
+    },
+    {
+      "id": "5.1.7",
+      "theory": "learning/1-notes/05-fullstack-auth/5.1-http-client/5.1.7.retry-idempotency.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.1-http-client/5.1.7.retry-idempotency-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.1-http-client/5.1.7.retry-idempotency.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-1-7"
+    },
+    {
+      "id": "5.2.1",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.1.session-cookie.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.1.session-cookie-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.1.session-cookie.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-1"
+    },
+    {
+      "id": "5.2.2",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.2.jwt-json-web-token.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-2"
+    },
+    {
+      "id": "5.2.3",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.3.token.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.3.token-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.3.token.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-3"
+    },
+    {
+      "id": "5.2.4",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.4.authorization-bearer-token.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.4.authorization-bearer-token-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.4.authorization-bearer-token.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-4"
+    },
+    {
+      "id": "5.2.5",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.5.oauth.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.5.oauth-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.5.oauth.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-5"
+    },
+    {
+      "id": "5.2.6",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.6.sso.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.6.sso-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.6.sso.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-6"
+    },
+    {
+      "id": "5.2.7",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.7.rbac.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.7.rbac-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.7.rbac.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-7"
+    },
+    {
+      "id": "5.2.8",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.8.token-keychain-keystore-cookie-session.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-8"
+    },
+    {
+      "id": "5.2.9",
+      "theory": "learning/1-notes/05-fullstack-auth/5.2-auth/5.2.9.nuxt-ssr-session.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.2-auth/5.2.9.nuxt-ssr-session-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.2-auth/5.2.9.nuxt-ssr-session.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-2-9"
+    },
+    {
+      "id": "5.3.1",
+      "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.1.item-5-3-1.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.1.item-5-3-1-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.1.item-5-3-1.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-1"
+    },
+    {
+      "id": "5.3.2",
+      "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.2.cors.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.2.cors-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.2.cors.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-2"
+    },
+    {
+      "id": "5.3.3",
+      "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.3.vite.config.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.3.vite.config-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.3.vite.config.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-3"
+    },
+    {
+      "id": "5.3.4",
+      "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.4.jsonp.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.4.jsonp-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.4.jsonp.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-4"
+    },
+    {
+      "id": "5.3.5",
+      "theory": "learning/1-notes/05-fullstack-auth/5.3-cors/5.3.5.content-security-policy.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.3-cors/5.3.5.content-security-policy-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.3-cors/5.3.5.content-security-policy.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-3-5"
+    },
+    {
+      "id": "5.4.1",
+      "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.1.json-vs.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-1"
+    },
+    {
+      "id": "5.4.2",
+      "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.2.api.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.2.api-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.2.api.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-2"
+    },
+    {
+      "id": "5.4.3",
+      "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.3.item-5-4-3.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.3.item-5-4-3-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.3.item-5-4-3.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-3"
+    },
+    {
+      "id": "5.4.4",
+      "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.4.code-data-message.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-4"
+    },
+    {
+      "id": "5.4.5",
+      "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.5.graphql-rest.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.5.graphql-rest-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.5.graphql-rest.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-5"
+    },
+    {
+      "id": "5.4.6",
+      "theory": "learning/1-notes/05-fullstack-auth/5.4-data-protocols/5.4.6.grpc-protobuf-web-grpc-web.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.4-data-protocols/5.4.6.grpc-protobuf-web-grpc-web-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.4-data-protocols/5.4.6.grpc-protobuf-web-grpc-web.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-4-6"
+    },
+    {
+      "id": "5.5.1",
+      "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.1.websocket.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.1.websocket-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.1.websocket.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-1"
+    },
+    {
+      "id": "5.5.2",
+      "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.2.socket.io.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.2.socket.io-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.2.socket.io.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-2"
+    },
+    {
+      "id": "5.5.3",
+      "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.3.server-sent-events-sse.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.3.server-sent-events-sse-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.3.server-sent-events-sse.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-3"
+    },
+    {
+      "id": "5.5.4",
+      "theory": "learning/1-notes/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse.md",
+      "example": "learning/2-examples/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse-demo.md",
+      "exercise": "learning/3-exercises/05-fullstack-auth/5.5-realtime/5.5.4.websocket-sse.md",
+      "practice": "learning/4-practice/05-fullstack-auth/tasks.md#p-5-5-4"
+    }
+  ]
+}

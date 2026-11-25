@@ -57,3 +57,5 @@ learning/2-examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 工程类知识点可使用同编号Markdown操作卡链接真实源码工程；不要求每点都是单独HTML。具体映射以docs/stages中的契约为准。
 
 - [阶段4：Vue 3 + Nuxt](./04-frameworks/README.md)：真实Vue/React/Tailwind实验、Nuxt工程与明确的观察清单。
+
+- [阶段5：API、会话与服务端授权](./05-fullstack-auth/README.md)：真实HTTP/JWT/CORS/WS/SSE实验及Nuxt综合工程。

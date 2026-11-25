@@ -1,0 +1,145 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f4f6fb;
+  --panel: #fff;
+  --text: #16213b;
+  --muted: #425777;
+  --accent: #1849c6;
+  --border: #c8d2e4;
+  font-family: system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101827;
+    --panel: #18243a;
+    --text: #eef3ff;
+    --muted: #bdccec;
+    --accent: #a9c5ff;
+    --border: #607395;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+.shell {
+  width: min(100% - 2rem, 70rem);
+  margin: auto;
+}
+header,
+footer {
+  padding: 1.5rem 0;
+}
+.brand {
+  font-weight: 700;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+main {
+  min-height: 60vh;
+}
+h1 {
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+}
+h2 {
+  font-size: 1.2rem;
+}
+.cards {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1rem;
+}
+.card {
+  padding: 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  background: var(--panel);
+  overflow-wrap: anywhere;
+}
+label {
+  display: block;
+  margin-top: 0.6rem;
+}
+input,
+button {
+  font: inherit;
+  max-width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  padding: 0.5rem 0.7rem;
+}
+input {
+  width: 100%;
+  color: var(--text);
+  background: var(--panel);
+}
+button {
+  cursor: pointer;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  background: var(--panel);
+  color: var(--accent);
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+button[aria-pressed='true'] {
+  border: 2px solid var(--accent);
+}
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.tag,
+.badge {
+  color: var(--muted);
+}
+.skip {
+  position: absolute;
+  top: -10rem;
+  padding: 0.6rem;
+  background: var(--panel);
+}
+.skip:focus {
+  top: 0.5rem;
+}
+
+section {
+  padding: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  margin-block: 1rem;
+}
+form {
+  margin-block: 1rem;
+}
+select {
+  font: inherit;
+  min-height: 2.75rem;
+  max-width: 100%;
+  color: var(--text);
+  background: var(--panel);
+}
+ul {
+  padding-left: 1.2rem;
+  overflow-wrap: anywhere;
+}
+nav a {
+  margin-right: 1rem;
+}

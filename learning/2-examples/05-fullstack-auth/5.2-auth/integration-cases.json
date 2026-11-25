@@ -1,0 +1,74 @@
+[
+  {
+    "id": "5.2.1",
+    "task": "已有Cookie教学会话，核对登录轮换、server expiry、退出撤销与CSRF；在副本补一项跨标签页失效反馈，不把真实密码验证算已实现。",
+    "acceptance": [
+      "旧会话在登录轮换或退出后不能再访问受保护API；过期由服务器判断。",
+      "缺失/错误CSRF或不允许Origin的写请求失败，合法写入仍可用；本地HTTP限制明确。"
+    ]
+  },
+  {
+    "id": "5.2.2",
+    "task": "主项目采用opaque Cookie session，JWT留独立实验。在副本撰写改用Bearer的协议差异清单，实际运行篡改/过期/错受众反例，不把主项目说成JWT认证。",
+    "acceptance": [
+      "篡改payload或错误key被真实密码学验证拒绝，decode成功不算授权成功。",
+      "正确签名但错误用途/受众/时间被拒绝；说明退出后的access撤销取决于服务器策略。"
+    ]
+  },
+  {
+    "id": "5.2.3",
+    "task": "已有Cookie恢复/失效/退出。副本补会话恢复错误反馈与退出后迟到保护；single-flight只在独立Bearer协调实验，不虚构主项目refresh endpoint。",
+    "acceptance": [
+      "按契约区分匿名/过期、受保护接口401与网络错误；session查询200 user:null不当作已登录。",
+      "logout后慢结果不复活旧身份；刷新有上限，并发只在同一会话内合并。"
+    ]
+  },
+  {
+    "id": "5.2.4",
+    "task": "主Cookie项目不需要Authorization token。独立lab解释Bearer解析/签验及401/403矩阵；若副本接真实Bearer后台，先明确HTTPS、受众与允许转发目标。",
+    "acceptance": [
+      "解析与验证分别有反例，坏token不能因格式正确通过。",
+      "token不出现在URL/日志；能解释CORS预检与服务器授权分别负责什么。"
+    ]
+  },
+  {
+    "id": "5.2.5",
+    "task": "主项目只有公开fixture登录选择，没有真实第三方认证。完成OAuth/OIDC协议与回调威胁清单；副本未来接提供方须另行配置与实测，不能把选择alice当OAuth登录。",
+    "acceptance": [
+      "能区分OAuth授权、OIDC认证与本应用会话，明确secret不进入浏览器包。",
+      "回调事务与redirect验证逐项列出；缺真实提供方条件明确标为未实测。"
+    ]
+  },
+  {
+    "id": "5.2.6",
+    "task": "本地Cookie应用退出只针对该应用会话。完成桌面/手机未来SSO信任与退出矩阵，不宣称本次已接IdP或全局单点退出。",
+    "acceptance": [
+      "A/B/IdP三份会话与访问范围分清，不把域名相似当共享身份。",
+      "明确本地/IdP/全应用退出的实际能力与未验证条件，能描述恢复失败回退。"
+    ]
+  },
+  {
+    "id": "5.2.7",
+    "task": "已有owner/admin教学策略及PATCH版本检查；直接API验证alice/bob/admin而非只看按钮。在副本新增删除接口，验证非owner拒绝且资源未变。",
+    "acceptance": [
+      "同角色非owner不能读取/改写他人资源，admin能力和匿名路径有明确结果。",
+      "只改DOM/请求body里的role不能升级权限；API失败反馈保留可恢复路径。"
+    ]
+  },
+  {
+    "id": "5.2.8",
+    "task": "核对主项目没有向Web Storage写凭证，并观察HttpOnly cookie/公开用户信息边界。副本完成存储威胁矩阵，不把H5当原生安全存储。",
+    "acceptance": [
+      "能说明HttpOnly防直接读但不防同源恶意请求；Web Storage仍脚本可读。",
+      "本地观察仅教学值并清理；方案说明包含CSRF/XSS和服务器撤销，不等价Keychain。"
+    ]
+  },
+  {
+    "id": "5.2.9",
+    "task": "已有SSR会话恢复与私有响应；验证alice/bob/匿名交替并发、no-store和payload无session ID。副本引入外部API前先列凭证转发allowlist，不把任意baseURL当可信。",
+    "acceptance": [
+      "两份独立Cookie请求的SSR内容/payload不串，匿名不能从缓存拿到上个用户数据。",
+      "payload不含session ID，私有响应不共享缓存，凭证只转发可信目标；Set-Cookie回程边界说明准确。"
+    ]
+  }
+]
