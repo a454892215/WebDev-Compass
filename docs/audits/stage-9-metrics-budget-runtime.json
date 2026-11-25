@@ -1,0 +1,260 @@
+{
+  "stage": 9,
+  "group": "9.1-performance-metrics/9.2-performance-budget",
+  "startedAt": "2026-11-25T09:41:33Z",
+  "recordedAt": "2026-11-25T09:49:58.952618+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "web-vitals": "6.2.3",
+    "vite": "8.3.8",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "nodeTests": 4,
+    "viteBuild": "passed",
+    "budget": {
+      "total": {
+        "raw": 17207,
+        "gzip": 6681
+      },
+      "limits": {
+        "raw": 100000,
+        "gzip": 50000
+      },
+      "passed": true,
+      "scope": "sum of every JS/CSS artifact, not initial-route transfer, Brotli or CPU/hydration cost",
+      "negativeCases": [
+        "one-byte limit CLI1",
+        "missing directory CLI1",
+        "empty assets throw",
+        "invalid limits throw"
+      ]
+    },
+    "browser": {
+      "passed": 2,
+      "results": [
+        {
+          "width": 390,
+          "metrics": [
+            {
+              "name": "LCP",
+              "id": "v6-1795600104525-8676279025472",
+              "value": 60,
+              "route": "/metrics-lab",
+              "build": "teaching-v1",
+              "parts": {
+                "timeToFirstByte": 4.699999928474426,
+                "resourceLoadDelay": 0,
+                "resourceLoadDuration": 0,
+                "elementRenderDelay": 55.300000071525574
+              }
+            },
+            {
+              "name": "CLS",
+              "id": "v6-1795600104578-8836792652423",
+              "value": 0.08629789173789174,
+              "route": "/metrics-lab",
+              "build": "teaching-v1",
+              "parts": {}
+            },
+            {
+              "name": "INP",
+              "id": "v6-1795600104525-6626109739244",
+              "value": 120,
+              "route": "/metrics-lab",
+              "build": "teaching-v1",
+              "parts": {
+                "inputDelay": 0,
+                "processingDuration": 90.69999992847443,
+                "presentationDelay": 29.300000071525574
+              }
+            }
+          ],
+          "raw": {
+            "longtask": [
+              {
+                "entryType": "longtask",
+                "duration": 92,
+                "startTime": 94.39999997615814
+              }
+            ],
+            "navigation": [
+              {
+                "entryType": "navigation",
+                "duration": 22.699999928474426,
+                "startTime": 0
+              },
+              {
+                "entryType": "navigation",
+                "duration": 22.699999928474426,
+                "startTime": 0
+              }
+            ],
+            "resource": [
+              {
+                "entryType": "resource",
+                "duration": 4.600000023841858,
+                "startTime": 7.699999928474426
+              },
+              {
+                "entryType": "resource",
+                "duration": 4.300000071525574,
+                "startTime": 7.799999952316284
+              },
+              {
+                "entryType": "resource",
+                "duration": 2.399999976158142,
+                "startTime": 48.60000002384186
+              }
+            ],
+            "measure": [
+              {
+                "entryType": "measure",
+                "duration": 21,
+                "startTime": 959.2999999523163
+              }
+            ]
+          },
+          "supportedEntryTypes": [
+            "element",
+            "event",
+            "first-input",
+            "interaction-contentful-paint",
+            "largest-contentful-paint",
+            "layout-shift",
+            "long-animation-frame",
+            "longtask",
+            "mark",
+            "measure",
+            "navigation",
+            "paint",
+            "resource",
+            "soft-navigation",
+            "visibility-state"
+          ],
+          "noExternalRequests": true,
+          "localSnapshotCount": 1,
+          "badPayloadStatus": 400,
+          "oversizeStatus": 413
+        },
+        {
+          "width": 1440,
+          "metrics": [
+            {
+              "name": "LCP",
+              "id": "v6-1795600105670-8957458230522",
+              "value": 36,
+              "route": "/metrics-lab",
+              "build": "teaching-v1",
+              "parts": {
+                "timeToFirstByte": 3.799999952316284,
+                "resourceLoadDelay": 0,
+                "resourceLoadDuration": 0,
+                "elementRenderDelay": 32.200000047683716
+              }
+            },
+            {
+              "name": "CLS",
+              "id": "v6-1795600105703-9536467890999",
+              "value": 0.041767489711934155,
+              "route": "/metrics-lab",
+              "build": "teaching-v1",
+              "parts": {}
+            },
+            {
+              "name": "INP",
+              "id": "v6-1795600105670-1537051333947",
+              "value": 120,
+              "route": "/metrics-lab",
+              "build": "teaching-v1",
+              "parts": {
+                "inputDelay": 0.20000004768371582,
+                "processingDuration": 90.60000002384186,
+                "presentationDelay": 29.199999928474426
+              }
+            }
+          ],
+          "raw": {
+            "longtask": [
+              {
+                "entryType": "longtask",
+                "duration": 91,
+                "startTime": 72.89999997615814
+              }
+            ],
+            "navigation": [
+              {
+                "entryType": "navigation",
+                "duration": 20.199999928474426,
+                "startTime": 0
+              },
+              {
+                "entryType": "navigation",
+                "duration": 20.199999928474426,
+                "startTime": 0
+              }
+            ],
+            "resource": [
+              {
+                "entryType": "resource",
+                "duration": 3.299999952316284,
+                "startTime": 7.299999952316284
+              },
+              {
+                "entryType": "resource",
+                "duration": 3.399999976158142,
+                "startTime": 7.399999976158142
+              }
+            ],
+            "measure": [
+              {
+                "entryType": "measure",
+                "duration": 21.799999952316284,
+                "startTime": 936.3999999761581
+              }
+            ]
+          },
+          "supportedEntryTypes": [
+            "element",
+            "event",
+            "first-input",
+            "interaction-contentful-paint",
+            "largest-contentful-paint",
+            "layout-shift",
+            "long-animation-frame",
+            "longtask",
+            "mark",
+            "measure",
+            "navigation",
+            "paint",
+            "resource",
+            "soft-navigation",
+            "visibility-state"
+          ],
+          "noExternalRequests": true,
+          "localSnapshotCount": 1,
+          "badPayloadStatus": 400,
+          "oversizeStatus": 413
+        }
+      ]
+    },
+    "formatting": "existingPrettier tool;final build/Node/budget rerun;browser results reused unchanged behavior"
+  },
+  "commands": [
+    "pnpm build",
+    "pnpm test",
+    "pnpm budget",
+    "pnpm verify",
+    "pnpm install --frozen-lockfile --offline"
+  ],
+  "notRun": [
+    "Lighthouse/LHCI/WebPageTest remote",
+    "realRUM/productionp75",
+    "fetchLater fullsession delivery",
+    "Partytown or graphical bundle plugins",
+    "real mobile/crossbrowser/screenreader/human trial"
+  ],
+  "cleanup": "4518 closed,no externalrequests,no persistentcollector;browser contexts closed"
+}

@@ -1,0 +1,257 @@
+[
+  {
+    "id": "9.1.1",
+    "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.1.lab-vs-rum.md",
+    "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.1.lab-vs-rum-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.1.lab-vs-rum.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Lab控制设备/网络/场景，适合定位与回归；RUM覆盖实际访问分布、缓存、交互和用户路径。一次自动化不能代表真实p75，实验LCP/TBT不等于某产品的场INP。冷热缓存、后台加载、地理和设备分组必须随结果保存；没有代表性样本就只能报告本轮条件。",
+      "example": "运行metrics-lab两视口并保存真实数值；对照telemetry.mjs的percentile75([1,2,3,4])=3是nearest-rank合成演示，不把两个视口平均或四个数字称RUM。Lighthouse/WebPageTest仅官方观察，本轮未运行。",
+      "exercise": "故障：把实验室一次分数100写成移动用户p75通过。用同一lab的环境字段定位口径错误，删除无数据结论并制定实际采样计划。",
+      "practice": "给冷加载、回访缓存、长停留多次操作设计三种采样情景，说明和现有lab哪些不同。",
+      "sources": [
+        "https://web.dev/articles/lab-and-field-data-differences",
+        "https://web.dev/articles/vitals"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.1.2",
+    "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals.md",
+    "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "当前CWV为LCP、INP、CLS，良好边界LCP≤2.5s、INP≤200ms、CLS≤0.1，场评估按访问p75并区分设备。LCP可拆TTFB/资源等待/传输/渲染；INP拆输入延迟/处理/呈现延迟，遵循库算法而非把每个event都max；CLS会话窗口与近期输入排除规则不能简化成位移总和。",
+      "example": "lab真实web-vitals/attribution注册LCP/INP/CLS，90ms阻塞与650ms后位移使指标变化。用app.mjs的report断点在本机临时观察metric.attribution；INP数值分项可安全记录，lcpEntry.element/interactionTarget/位移目标不发送到collector。",
+      "exercise": "故障：用Lighthouse TBT替代INP，或将业务fetch完成耗时当INP。检查指标定义与时间原点，恢复库计算及独立业务measure。",
+      "practice": "把单个长handler分块后对照输入/处理/呈现三段，另给一张首屏图片的LCP资源链假设，说明如何证伪。",
+      "sources": [
+        "https://web.dev/articles/vitals",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/identify-inp-causes",
+        "https://github.com/GoogleChrome/web-vitals"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.1.3",
+    "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.3.web-vitals.md",
+    "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.3.web-vitals-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.3.web-vitals.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "按页面生命周期注册一次onLCP/onINP/onCLS，部分指标要交互/hidden才回调，没有回调不等于0。reportAllChanges是本地诊断选择，按同一name/id更新最新value或按协议累加delta，不能重复累加value；bfcache恢复可产生新metric id。采样与路由模板、字段白名单、大小/数量上限和保留期限一起设计。",
+      "example": "读telemetry.mjs与collector：只保留固定route/build、短期id、value和允许的数值分项；真实浏览器确认URL token/DOM未发送，非法url字段400。仅点击才POST本地快照并确认204，不实现关页完整会话投递。",
+      "exercise": "故障：每次Vue路由变化重复调用onINP并上传完整attribution，造成多Observer与私有目标泄露。保持一次注册，限定安全payload并测试去重。",
+      "practice": "在副本加入安全枚举的device cohort和固定访问采样决定，测试相同id更新/达到上限/不采样/未知字段。",
+      "sources": [
+        "https://github.com/GoogleChrome/web-vitals",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/full-session-analytics"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.1.4",
+    "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.4.performance-api.md",
+    "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.4.performance-api-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.4.performance-api.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Navigation/Resource/Longtask提供诊断条目，duration/startTime相对当前timeOrigin，不和Date.now直接相减。Observer需按supportedEntryTypes检测、需要时buffered并清理；缓冲区有限。跨源Resource Timing字段受Timing-Allow-Origin等限制，transferSize=0可能来自缓存/不可见，不足以单独证明零网络开销。",
+      "example": "lab按能力注册navigation/resource/longtask/measure，原始条目只保留type/duration/startTime并上限30。两视口实测有导航、资源、90ms longtask；没有观测跨源真实CDN或TAO。",
+      "exercise": "故障：从getEntriesByType一次快照推断整个长会话，或把0 transferSize断言必命中缓存。改Observer并记录头/请求上下文，保留不确定性。",
+      "practice": "在副本分别记录冷资源和再次加载的条目，说明哪些是观测、哪些缓存推断；模拟不支持longtask的分支。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver",
+        "https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.1.5",
+    "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5.md",
+    "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "业务交互跨异步读取和DOM更新，可用稳定命名mark/measure定位；它不自动等于INP或“浏览器已画出”。同名重复mark需清理或加操作标识，否则读错起点。Vue nextTick确认更新批次，不保证像素已展示；React Profiler只在React选修场景使用。",
+      "example": "点击lab记录业务耗时，先清同名mark/measure，等待合成20ms任务、写DOM后标结束，真实measure条目出现；明确该结束是DOM写入，不是FCP/下一帧保证。主Nuxt业务measure由主项目说明另验。",
+      "exercise": "故障：第二次操作仍引用第一次start导致耗时不断增大。清理或operation id配对，以同一操作重复两次验证不累积。",
+      "practice": "给成功/失败/取消建立相同边界的业务计时，防止重复点击引用旧起点，并解释该指标和INP分别回答什么。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure",
+        "https://vuejs.org/api/general.html#nexttick"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.1.6",
+    "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6.md",
+    "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "自动化要区分稳定的字节库存和有噪声的实验指标。LHCI collect/assert可按环境收集与断言，但分数浮动、样本次数和失败策略必须记录；TBT仍不是INP。固定依赖和构建产物，真实超限要使pipeline非零，不得网络失败/无报告就通过。",
+      "example": "运行lab build/test/budget；4组Node中真实Vite资产通过声明阈值，极低阈值、缺目录和空报告确实失败。LHCI仅读官方配置collect/assert/numberOfRuns，未在本轮装/运行LHCI或远端CI。",
+      "exercise": "故障：budget失败后用||true继续部署，或CI空目录测出0。移除旁路，保持空报告失败并观察退出码。",
+      "practice": "在隔离副本把字节阈值降至1并让quality命令停止；再给Lighthouse噪声指标写复核策略，不自动无限重跑追分。",
+      "sources": [
+        "https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md",
+        "https://developer.chrome.com/docs/lighthouse/performance/performance-scoring"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.1.7",
+    "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm.md",
+    "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "移动APM和Web RUM都观察真实体验，但Web文档导航、SPA、bfcache、浏览器后台/销毁、网络可见性与原生进程生命周期不同。Firebase SDK经验可用于采样/聚合，不代表指标、时钟、权限和投递能直接复用。不得以原生安全存储或单例经验推断浏览器脚本能保密。",
+      "example": "按lab route模板、短期metric id、build和白名单分项，写Web文档访问与SPA业务measure的区别；用浏览器是否交互/hidden决定指标可用性，SDK平台对照为官方观察，不启原生App。",
+      "exercise": "故障：把每次URL hash变化当新pageview并重复注册采集器。按框架路由/能力检测选择事件，保持度量语义和注册生命周期。",
+      "practice": "将移动APM方案“启动到退出单次trace+完整页面URL”改成Web访问/路由与指标模型，删掉私有query字段并定义缺样本处理。",
+      "sources": [
+        "https://firebase.google.com/docs/perf-mon",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/interaction-paint-timing"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.2.1",
+    "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.1.performance-budget.md",
+    "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.1.performance-budget-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.1.performance-budget.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "预算是按用户目标和约束设定的限制，不是统一行业数字。字节、请求、CPU、LCP/INP分别测不同问题；相同gzip体积可有不同执行/渲染成本。要明确所有资产还是入口闭包、raw/gzip/Brotli、设备网络/缓存、回归baseline与负责人；压缩体积小不保证交互快。",
+      "example": "lab budget.mjs读取真实dist全部JS/CSS逐文件求raw与gzip总和，教学阈值100000/50000字节；它不是初始路由transfer。主Nuxt可调用同一脚本，阈值与本例不同须按自身报告选择。",
+      "exercise": "故障：gzip全文件拼接后压缩当每文件传输总和，或把MiB/MB混用。改逐文件同一编码口径，保留raw与gzip和文件表。",
+      "practice": "为首屏低端手机约束选字节和一次业务交互两个独立预算，给一项例外、期限与验证方式。",
+      "sources": [
+        "https://web.dev/articles/performance-budgets-101",
+        "https://web.dev/articles/vitals"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.2.2",
+    "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.2.bundle.md",
+    "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.2.bundle-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.2.bundle.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "文件大小表回答大文件在哪里，模块可视化回答内容来自哪些依赖；入口闭包/懒块/重复模块/side effects和source map需分别核对。source-map-explorer需要适配产物与map；webpack分析器不直接适用于所有Vite输出。Vite8采用Rolldown/Oxc，不能假定旧Rollup插件完全兼容。",
+      "example": "先读lab真实Vite build报告与budget按raw排序的文件表，再用官方visualizer/webpack analyzer/source-map-explorer文档选适配当前工具链的方案；本轮没安装这些图形分析插件，文件表不是模块树可视化。",
+      "exercise": "故障：删除map后让map分析工具报错却仍截图旧报告。重新构建适配报告或明确缺证据，不把旧树图当本次新包分析。",
+      "practice": "在副本新增一个合理按需模块，比较入口闭包与all-assets库存，查明是否只移动成本而未减少首次实际下载。",
+      "sources": [
+        "https://vite.dev/guide/migration.html",
+        "https://github.com/btd/rollup-plugin-visualizer",
+        "https://github.com/webpack-contrib/webpack-bundle-analyzer",
+        "https://github.com/danvk/source-map-explorer"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.2.3",
+    "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.3.ci.md",
+    "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.3.ci-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.3.ci.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "门禁应读取本次构建、明确阈值、返回可靠退出码，并把报告与提交/profile关联。依赖cache不等于产物，旧report不能替代新构建。PR机器人只是展示通道，还需权限/私有报告治理；不必为单项目同时装bundlesize和size-limit。",
+      "example": "本组真正执行Vite build和通用budget CLI，unit用spawnSync检查强制超额/缺目录exit1。主Nuxt package可复用该工具读取.output/public/_nuxt；远端CI/PR评论没有执行。",
+      "exercise": "故障：脚本只console.log超限但exit0。加入可验证退出码并用子进程负例确认，恢复合理预算再通过。",
+      "practice": "给本地quality链加入build && budget，用1字节阈值验证后续命令不执行；再写可信分支/最小权限的发布前条件。",
+      "sources": [
+        "https://docs.github.com/en/actions/reference/security/secure-use",
+        "https://github.com/ai/size-limit"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.2.4",
+    "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.4.item-9-2-4.md",
+    "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.4.item-9-2-4-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.4.item-9-2-4.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "审计先列脚本所有者、业务目的、执行/网络/DOM成本、数据流、更新与移除方案。第三方库自托管仍有执行与供应链风险；脚本延迟不等于隐私合规，cookie同意和功能需求需另定义。先移除无效/重复脚本，再按用户动作加载并测完整流程。",
+      "example": "metrics-lab浏览器记录真实请求，仅loopback、无外部请求；web-vitals是打包依赖而非外部网络脚本。用Network/Performance与dependency清单对照，真实供应商SDK本轮未接入，不假装已审计广告/聊天服务。",
+      "exercise": "故障：把脚本移到footer便声称不阻塞或不泄露。用执行任务与payload实际内容定位，按需加载/最小化而非仅换位置。",
+      "practice": "在副本加一个明确的本地第三方替身，比较默认加载和用户动作加载，设计失败回退与移除；不要向真实外网发送用户样本。",
+      "sources": [
+        "https://web.dev/articles/efficiently-load-third-party-javascript",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.2.5",
+    "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.5.partytown.md",
+    "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.5.partytown-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.5.partytown.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Partytown将适合的第三方代码移到Worker并代理需要的主线程访问，不是让普通DOM代码原生跑在Worker。跨线程和DOM代理有延迟与兼容成本，UI密集脚本常不合适；服务商文档、CSP、网络转发、事件顺序和失败降级需逐项验证。它也不是安全沙箱或消除数据泄露的承诺。",
+      "example": "阅读Partytown官方trade-offs，列UI-intensive/DOM throttling/network proxy与fallback问题；本轮没有安装Partytown，metrics-lab无真实外部脚本，因此不虚构Worker收益测量。",
+      "exercise": "故障：worker中脚本需要立即同步DOM返回，改时序后业务失效。依据代理/节流限制复现并将该脚本留主线程或替换，不能强称所有SDK兼容。",
+      "practice": "对分析计数SDK与含输入表单的聊天UI两类需求作选择，给出需要实测的事件/网络/权限与退出条件；可选择暂不采用。",
+      "sources": [
+        "https://partytown.qwik.dev/trade-offs/",
+        "https://partytown.qwik.dev/"
+      ],
+      "runtime": "docs/audits/stage-9-metrics-budget-runtime.json",
+      "boundary": "Local synthetic visits/real artifacts and explicit official observations, not production RUM/remote CI/tool installation"
+    },
+    "issues": []
+  }
+]

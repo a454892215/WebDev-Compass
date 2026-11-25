@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>运行时性能实验</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./app.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <h1>运行时性能与资源生命周期</h1>
+      <p>
+        本地合成实验；longtask/EventTiming不是完整生产INP，heap快照会改变环境。
+      </p>
+      <a href="./README.md">运行说明</a>
+      <section>
+        <h2>任务与反馈</h2>
+        <button id="block">同步阻塞90ms</button
+        ><button id="slice">分片工作</button
+        ><button id="cancel">取消分片</button>
+        <p id="feedback" role="status">尚未运行</p>
+        <pre id="task-result"></pre>
+      </section>
+      <section>
+        <h2>资源生命周期</h2>
+        <button id="leak">模拟20次卸载未清理</button
+        ><button id="clean">清理引用与监听</button>
+        <p id="memory" role="status">0 个强引用</p>
+      </section>
+      <section>
+        <h2>可变高度窗口</h2>
+        <p>
+          窗口外项目不在DOM；搜索、打印、读屏和逐项操作请切换全量模式。本例项目没有内部可聚焦控件。
+        </p>
+        <button id="full">切换全量模式</button
+        ><button id="grow">增加首行高度并保持锚点</button>
+        <div
+          id="viewport"
+          tabindex="0"
+          role="region"
+          aria-label="课程列表滚动区域"
+        >
+          <div id="list" role="list"></div>
+        </div>
+        <p id="range" role="status"></p>
+      </section>
+      <section>
+        <h2>Worker与空闲任务</h2>
+        <button id="worker">Worker计算</button
+        ><button id="idle">安排可取消空闲任务</button>
+        <p id="background" role="status"></p>
+      </section>
+    </main>
+  </body>
+</html>

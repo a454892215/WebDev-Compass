@@ -1,0 +1,98 @@
+{
+  "stage": 9,
+  "group": "9.3-loading-advanced",
+  "startedAt": "2026-11-25T09:41:43Z",
+  "recordedAt": "2026-11-25T09:48:42.466932+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "playwright": "1.65.1",
+    "chrome": "158.0.8127.37"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "node": {
+      "passed": 4,
+      "failed": 0,
+      "cases": [
+        "query/langkey + header presence bypass",
+        "speculation capability and saveData fallback",
+        "real publiccache + four concurrent credential scopes + later public unchanged",
+        "real HTTP103 information Link then final200"
+      ]
+    },
+    "browser": [
+      {
+        "viewportWidth": 390,
+        "currentSrc": "http://127.0.0.1:4519/assets/hero-640.avif",
+        "naturalWidth": 358,
+        "loaded": true,
+        "width": "640",
+        "height": "240",
+        "background": "url(\"http://127.0.0.1:4519/assets/placeholder.svg\")",
+        "cssEnd": 617.5,
+        "fcp": 132,
+        "fontRequests": 1,
+        "fontStatus": [
+          {
+            "family": "LabRoboto",
+            "status": "loaded",
+            "display": "swap"
+          }
+        ],
+        "overflow": false,
+        "speculationSupported": true,
+        "speculationExecution": "Hint emitted only;actual prefetch/prerender not asserted"
+      },
+      {
+        "viewportWidth": 1440,
+        "currentSrc": "http://127.0.0.1:4519/assets/hero-640.avif",
+        "naturalWidth": 640,
+        "loaded": true,
+        "width": "640",
+        "height": "240",
+        "background": "url(\"http://127.0.0.1:4519/assets/placeholder.svg\")",
+        "cssEnd": 609.2000000476837,
+        "fcp": 128,
+        "fontRequests": 1,
+        "fontStatus": [
+          {
+            "family": "LabRoboto",
+            "status": "loaded",
+            "display": "swap"
+          }
+        ],
+        "overflow": false,
+        "speculationSupported": true,
+        "speculationExecution": "Hint emitted only;actual prefetch/prerender not asserted"
+      }
+    ],
+    "syntax": "node --check server.mjs/verify.mjs passed",
+    "staticResourcesAtReview": {
+      "html": 182,
+      "references": 681,
+      "errors": 0
+    }
+  },
+  "font": {
+    "family": "Roboto",
+    "sourceCss": "https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap",
+    "fontUrl": "https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbVmUiAo.woff2",
+    "licenseUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/OFL.txt",
+    "subset": "Google Fonts provided final Latin subset;not locally subset or benchmarked",
+    "bytes": 21884,
+    "retrieved": "2026-11-25",
+    "sha256": "425c0713a8176f92273d378599c7eac57de7fafabd4bd0ed457b70eb8f80d371"
+  },
+  "reproduction": "learning/2-examples/09-performance/9.3-loading-advanced/loading-lab/README.md",
+  "cleanup": "Chrome/context/server closed in finally;4519 no listener",
+  "limitations": [
+    "Single local headless Chrome environment,not realmobile/crossbrowser/screenreader",
+    "No production RUM or browserH3/TLS/CDN deployment",
+    "Speculation hint generated only;no assertion of prefetch/prerender execution/hit",
+    "Subset supplied by Google,not local fonttoolrun;onlyLatin;fallback modes not all disabled/tested",
+    "Syntheticcache is not authentication or actual CDN policy",
+    "FCP/CSS numbers are single controlled local measurements,not productionbudget guarantee"
+  ],
+  "evidenceReuse": "Final credential/103 changes only server HTTP Node paths;4 Node tests rerun;unaffected earlier2viewport evidence retained,not falsely claimed rerun"
+}

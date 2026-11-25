@@ -1,0 +1,149 @@
+[
+  {
+    "id": "9.4.1",
+    "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.1.long-task.md",
+    "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.1.long-task-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.1.long-task.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Long Task按整个任务占用而非单个函数名判断，超过50ms的任务可能延迟输入与绘制。Vue nextTick等待DOM刷新，不等于浏览器已经绘制，也不保证耗时计算已经分片。采用时间预算分片、scheduler.yield能力检测和setTimeout回退；scheduler.postTask是按优先级安排新任务，不和yield连续任务语义完全等同。任务更新UI后还应让出，取消/离开用epoch或signal阻止旧工作写回。50ms是longtask定义阈值，不是所有操作应恰好跑50ms的产品目标。",
+      "example": "先点同步阻塞90ms，观察反馈文字赋值不能保证阻塞期间已呈现；再点分片工作，真实6×12ms合成工作在yield间分开。PerformanceObserver读取原始longtask，取消测试同一轮启动后立即取消，旧结果不回写。没有声称分片总时长更短。",
+      "exercise": "故障：循环里只await Promise.resolve()，微任务持续清空使新任务/绘制仍被推迟。改为实际任务让出，保留原始timeline/longtask或受控工作记录，不只看按钮文案。",
+      "practice": "在主Nuxt副本新增本地合成批处理，再用时间预算/能力检测改为分片，添加离开或替换输入时取消。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/break-up-long-tasks",
+        "https://vuejs.org/api/general.html#nexttick"
+      ],
+      "runtime": "docs/audits/stage-9-runtime-runtime.json",
+      "review": "docs/audits/stage-9-runtime-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.4.2",
+    "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.2.inp.md",
+    "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.2.inp-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.2.inp.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "INP针对一次访问中交互延迟的代表值，包含input delay、processing duration与presentation delay；正式聚合须使用正确算法或web-vitals，不能用单个handler用时、longtask或TBT替代。EventTiming的processingStart/End帮助定位处理部分，duration量化并可能受隐私精度影响；没有超过上报阈值的条目不能记为INP=0。先提供即时状态，再减少阻塞/同步布局/过大更新；把请求等待或最终内容完成延迟和下一帧响应区分。",
+      "example": "lab真实click与event条目记录interactionId、processingStart/End和duration，阻塞/分片按钮的结果用于诊断，不称本地数据就是生产INP。完整web-vitals采集见9.1，soft-navigation等新指标按支持检测。",
+      "exercise": "故障：只把handler包performance.measure并报告“INP=12ms”。保留该measure为应用耗时，另采标准交互条目/官方库并标清未覆盖呈现与输入等待。",
+      "practice": "在副本为搜索新增即时反馈，再把耗时处理拆开；记录EventTiming条目与处理/呈现差异，不对业务写操作随意debounce。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/identify-inp-causes",
+        "https://web.dev/articles/inp"
+      ],
+      "runtime": "docs/audits/stage-9-runtime-runtime.json",
+      "review": "docs/audits/stage-9-runtime-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.4.3",
+    "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.3.profiling.md",
+    "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.3.profiling-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.3.profiling.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "移除DOM不代表没有引用；window监听、闭包、数组、timer或缓存可保留已卸载对象和节点。一次heap增大可能是缓存/GC时机，不能只看总MB判泄漏。对可重复进入/退出场景采baseline/操作后/清理后，按构造器与Retainers看谁持有，必要时比较对象数量。Heap snapshot是侵入式诊断，会暂停页面并改变GC，真实项目profile可能含敏感数据，不随意上传。",
+      "example": "lab故意new20个Stage9RetainedPanel，把node append后remove却留在数组和window监听；实际CDP HeapProfiler保存三快照，构造器对象0→20→0，泄漏态有Array element强入边。清理既移除监听又清空数组，原始文件可Load到DevTools Memory查看Retainers。",
+      "exercise": "故障：只node.remove()或只retainedPanels.length=0，window监听闭包仍持有对象。沿snapshot入边定位handler/array，成对清理并用相同操作复验。",
+      "practice": "在独立副本构造路由挂载/卸载20次的合成面板，对比少清一种资源与完整dispose；保存三快照或同等真实引用证据。",
+      "sources": [
+        "https://developer.chrome.com/docs/devtools/memory-problems/heap-snapshots",
+        "https://developer.chrome.com/docs/devtools/memory-problems"
+      ],
+      "runtime": "docs/audits/stage-9-runtime-runtime.json",
+      "review": "docs/audits/stage-9-runtime-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.4.4",
+    "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry.md",
+    "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "WeakRef不强持有对象，但deref何时为undefined由GC决定；同一job内已取出的目标通常保持可用。FinalizationRegistry回调可能晚到或不执行，不能用于必须释放的Worker、DOM监听、连接、锁或计费资源。heldValue若反向强引用目标会破坏目的。优先明确dispose、缓存容量/TTL与作用域；WeakMap适合附着元数据，也不是可枚举自动清空业务store。",
+      "example": "本点类型为官方机制阅读与安全最小片段：运行deref只能观察当时对象，lab的清理成功来自显式dispose与heap诊断，而非等待finalizer。没有编造固定延时后GC一定发生的测试。",
+      "exercise": "故障：FinalizationRegistry注册{target}当heldValue并等待回调关连接。删除反向引用，必须关闭的连接改显式dispose；回调只做允许丢失的辅助工作。",
+      "practice": "设计一个最多100项的可重建缓存，明确淘汰与dispose；若选择WeakRef，说明缺失时重建和未执行finalizer的影响。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef",
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry"
+      ],
+      "runtime": "docs/audits/stage-9-runtime-runtime.json",
+      "review": "docs/audits/stage-9-runtime-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.4.5",
+    "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.5.item-9-4-5.md",
+    "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.5.item-9-4-5-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.5.item-9-4-5.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "固定itemHeight无法表示折行/图片/动态内容。保存已知/估算高度及前缀和，用二分定位scrollTop对应索引；测量变化要更新后续偏移，保留可见项目与项内偏移，否则上方内容变高会跳动。content-visibility保留DOM而跳过部分渲染，不等于虚拟列表移除DOM，不能把两者当完全相同策略。真实动态测量还需ResizeObserver、批处理和避免反馈循环，本lab用真实配置的可变高度演示定位，不假装完整自动测量库。",
+      "example": "lab1000项高度32/40/48/56循环，窗口<30 DOM、全量1000 DOM；首行增加20px后scrollTop同步+20且同一可见行相对位置不变。行没有内部可聚焦控件；说明窗口外查找/读屏/打印/交互问题，全量模式是显式回退，不称完整无障碍认证。",
+      "exercise": "故障：用固定32px乘index定位混合高度，越往后误差越大。对照真实前缀/scrollTop与首行变高，更新偏移并保持锚点，而非硬设scrollTop=0。",
+      "practice": "副本新增一行可展开说明，增加高度后保持当前可见锚点；给搜索/打印或键盘逐项操作选择全量/不同分页方案。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility",
+        "https://vuejs.org/guide/best-practices/performance.html#virtualize-large-lists"
+      ],
+      "runtime": "docs/audits/stage-9-runtime-runtime.json",
+      "review": "docs/audits/stage-9-runtime-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.4.6",
+    "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.6.web-worker.md",
+    "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.6.web-worker-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.6.web-worker.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Worker不直接操作DOM，也不是无限吞吐；启动、消息、结构化克隆和内存有成本。按任务id匹配结果、限制活动数/队列、处理error与dispose。transfer list转移ArrayBuffer所有权，发送端buffer detach，不能继续读取或假定可复用；TypedArray的buffer才是可转移对象。终止Worker会中断当前工作，需要拒绝待处理Promise并清理队列；合作式取消需任务主动检查，不能靠主线程标志改变Worker同步循环。",
+      "example": "lab为1活动+最多2排队的单Worker池，第四项立即Queue full。真实transfer后主buffer.byteLength=0、三个结果正确；cancelAll拒绝活动和队列并terminate，下次submit按需新建成功。不是多worker伸缩/跨标签调度或生产吞吐证明。",
+      "exercise": "故障：postMessage把buffer放transfer list后仍读取原TypedArray，或只terminate却不reject排队Promise。改为明确所有权/副本策略，统一结束路径并测试取消/重启。",
+      "practice": "在副本把一个可重放纯计算接入有界池，设计取消/输入替换和失败UI，测不同输入量的克隆/转移成本。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Transferable_objects",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Worker/terminate"
+      ],
+      "runtime": "docs/audits/stage-9-runtime-runtime.json",
+      "review": "docs/audits/stage-9-runtime-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.4.7",
+    "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.7.requestidlecallback.md",
+    "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.7.requestidlecallback-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.7.requestidlecallback.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "requestIdleCallback让非关键工作在空闲预算中分片；timeRemaining只是当前回调预算，didTimeout为true不代表获得无限空闲时间。timeout让任务最终有机会运行，却可能在忙碌时执行，仍要限制每批工作。支持不全面，setTimeout回退是普通任务，不应伪造真实空闲预算。不能把首次交互、必要内容或关键持久化完全依赖空闲调度；pagehide时取消或可靠保存另设计。",
+      "example": "labqueueIdle使用原生能力与cancelIdleCallback；forceFallback测可取消计时器，回退显式didTimeout:true/timeRemaining:0。取消后不执行；无论idle还是timeout都不做无限循环，本例仅写一条诊断状态。",
+      "exercise": "故障：while(deadline.didTimeout||deadline.timeRemaining()>0)不断处理无上限队列，timeout时变成长任务。加每批数量/时间上限，再调度剩余工作并可取消。",
+      "practice": "在副本新增可推迟的索引预热，每批固定上限，支持用户触发时优先/取消，提供无requestIdleCallback回退。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Window/cancelIdleCallback"
+      ],
+      "runtime": "docs/audits/stage-9-runtime-runtime.json",
+      "review": "docs/audits/stage-9-runtime-review.md"
+    },
+    "issues": []
+  }
+]

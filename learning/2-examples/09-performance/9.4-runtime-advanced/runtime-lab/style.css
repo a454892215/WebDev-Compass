@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #182741;
+  font:
+    16px/1.6 system-ui,
+    sans-serif;
+}
+main {
+  inline-size: min(100% - 2rem, 65rem);
+  margin-inline: auto;
+}
+section {
+  margin-block: 2rem;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: white;
+  border: 1px solid #526581;
+  min-block-size: 44px;
+  padding: 0.5rem;
+  margin: 0.2rem;
+}
+button:focus-visible,
+a:focus-visible,
+#viewport:focus-visible {
+  outline: 3px solid #145ab0;
+  outline-offset: 3px;
+}
+#viewport {
+  block-size: 300px;
+  overflow: auto;
+  border: 1px solid #526581;
+  overflow-anchor: none;
+}
+#list {
+  position: relative;
+}
+#list > [role="listitem"] {
+  position: absolute;
+  inset-inline: 0;
+  padding-inline: 0.5rem;
+  border-block-end: 1px solid #ccd3e0;
+  background: white;
+  overflow: hidden;
+  white-space: nowrap;
+}
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+a {
+  color: #124c94;
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "9.3.1",
+    "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.1.critical-css.md",
+    "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.1.critical-css-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.1.critical-css.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "关键CSS不是全部CSS都内联，而是当前页面/视口首屏呈现必须的样式集合。内联可减少请求链，却增加HTML体积、重复传输与CSP管理成本；拆分需按路由/断点/状态覆盖，不能只在一张截图上提取。焦点、错误和必要布局不能被误归为非关键。CSS media拆分和延后激活是不同机制，预加载也不会自动应用样式。",
+      "example": "lab首屏layout/focus内联，600ms延迟的noncritical.css以media=print下载，模块等load再切all；实际FCP早于CSS responseEnd。这里只延迟离屏装饰，没有运行自动Critical提取器，也没有证明业务LCP改善。无JS时装饰不激活，但正文/链接/焦点仍可用。",
+      "exercise": "故障：在隔离副本先新增outline:none重置，再把唯一替代:focus-visible样式移到延迟CSS，前600ms可能没有可见焦点；原lab没有该重置。用延迟资源和Tab复现，恢复关键焦点样式后同路验证；不要假定浏览器默认轮廓本来不可见，也不能只看CSS200。",
+      "practice": "在副本增加窄屏菜单与错误提示状态，列出必需样式；只延后确实不影响首屏/键盘的装饰，并比较HTML增量与资源发现顺序。",
+      "source": "https://web.dev/articles/extract-critical-css",
+      "runtime": "docs/audits/stage-9-loading-runtime.json",
+      "review": "docs/audits/stage-9-loading-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.3.2",
+    "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2.md",
+    "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "字体有发现链、下载、解析与字形覆盖。WOFF2/子集能减少字节，但语言覆盖和license先满足；unicode-range选择哪些资源需要下载，不是对已下载字体自动做本地子集。font-display控制阻塞/交换窗口，swap可能产生FOUT与布局变化，optional等策略有不同取舍；指标需看真实字体与回退度量。",
+      "example": "lab携官方Roboto Latin400 WOFF2与OFL许可证，font-display:swap；相同URL的preload/as/type/crossorigin与CSS匹配，真实一个资源请求、FontFace loaded。中文由系统字体回退。本轮没有运行subset工具，也未做慢网FOIT/FOUT视觉持续时间/跨语言审校。",
+      "exercise": "故障：preload URL多一个查询串但CSS仍旧URL，产生不复用/额外请求。用ResourceTiming/Network定位请求身份，统一URL后复验；不能只比较文件名。",
+      "practice": "将标题改为另一语言或字重，先检查字形覆盖和实际需求，再决定是否加新子集/预加载；比较一个必需字重和全家族预加载的请求集合。",
+      "source": "https://web.dev/articles/optimize-webfont-loading",
+      "runtime": "docs/audits/stage-9-loading-runtime.json",
+      "review": "docs/audits/stage-9-loading-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.3.3",
+    "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.3.item-9-3-3.md",
+    "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.3.item-9-3-3-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.3.item-9-3-3.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "图片管线从源图、编码、尺寸变体到HTML选择和缓存。AVIF/WebP可能减少字节，但质量/解码/支持/业务图像决定取舍；picture类型回退和srcset/sizes分别负责格式与尺寸。LQIP必须与最终固有比例一致，不能用模糊图代替可访问描述，也不能为“懒加载”推迟LCP候选。CDN变换还需有限参数、缓存键、原图权限和失效策略。",
+      "example": "lab以原创几何fixture提供AVIF/WebP/PNG两尺寸，640×240固有尺寸、比例一致LQIP、首屏high非lazy；Chrome实读currentSrc与完成解码。没有CDN服务，源码回退链不等于本轮禁用所有格式后都实测。小几何图压缩比不推业务照片收益。",
+      "exercise": "故障：CSS把图片限制640px，sizes却写100vw且无上限，宽屏选择过大资源。记录容器宽度与currentSrc，修正sizes后对照；不要靠删除所有大图掩盖DPR需求。",
+      "practice": "给副本增加一个更宽容器与DPR2场景，按实际布局改sizes并补合适候选；若设计CDN变换，仅允许固定尺寸/格式集合，不接任意远程源URL。",
+      "source": "https://web.dev/articles/serve-responsive-images",
+      "runtime": "docs/audits/stage-9-loading-runtime.json",
+      "review": "docs/audits/stage-9-loading-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.3.4",
+    "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api.md",
+    "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "preload供当前页面，prefetch给未来资源，prerender会加载并执行未来页面，成本和副作用不同。SpeculationRules是浏览器可忽略的提示，不是确定调度承诺；支持、用户设置、Save-Data和内存会影响执行。只选择高概率安全只读目标；预渲染可能提前触发脚本、API和遥测，需激活检测与延迟副作用。正常链接始终保留。",
+      "example": "lab仅在用户动作后探测HTMLScriptElement.supports(speculationrules)，Save-Data跳过，插入固定公开next.html的prefetch建议并保留正常链接；单测验证不支持/节流回退。浏览器验证规则与导航，没有声称实际prefetch/prerender、命中或带宽收益。",
+      "exercise": "故障：用所有a.href生成prerender列表，退出GET或计数脚本被提前运行。只在合成副本审查与复现；删副作用候选，后台控制台检查，不在真实账户上试错。",
+      "practice": "在副本把候选从全部链接改成有限公开内容白名单；为Save-Data/不支持与未命中设计正常导航，说明激活前哪些业务动作必须延后。",
+      "source": "https://developer.chrome.com/docs/web-platform/prerender-pages",
+      "runtime": "docs/audits/stage-9-loading-runtime.json",
+      "review": "docs/audits/stage-9-loading-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.3.5",
+    "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.5.http.md",
+    "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.5.http-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.5.http.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "HTTP/3使用QUIC，可降低部分连接/传输阻塞成本，但丢包、拥塞、握手复用、服务端与浏览器支持决定结果；应用依赖瀑布不会因升级协议消失。103是最终响应前的Informational Hints，让支持的浏览器更早发现子资源；不是最终200，也不是服务器主动推完整资源。HTTP/2 Server Push是另一机制，Chrome已移除支持，不应按老教程作为默认方案。",
+      "example": "lab Node客户端实际先收到103 Link后收到最终200；它运行HTTP/1.1，只验证信息响应机制。浏览器实际利用103通常需支持的H2/H3部署链，反向代理可能吞103；本轮无真实TLS/H3/CDN/ServerPush或线上TTFB改善。",
+      "exercise": "故障：把103当最终成功并提前结束响应，客户端拿不到页面；修复为103后保留最终200。另若代理剥离103，应从整条链定位，不修改HTML掩盖。",
+      "practice": "为实际托管写协议核对清单：浏览器nextHopProtocol/网络协商、代理是否转发103、提示与最终资源身份是否一致；在本lab用Node information事件区分103与最终状态。",
+      "source": "https://developer.chrome.com/docs/web-platform/early-hints",
+      "runtime": "docs/audits/stage-9-loading-runtime.json",
+      "review": "docs/audits/stage-9-loading-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "9.3.6",
+    "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.6.edge.md",
+    "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.6.edge-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.6.edge.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "缓存键必须包含实际影响可共享输出的维度，且在查缓存前决定是否能共享。只规范化已明确语义的query，不随意删除语言/分页/版本。Vary表达响应受哪些请求头影响，但不能替代CDN实际key/旁路配置；Cookie/Authorization/用户数据通常需旁路公共缓存，私有响应no-store，服务端内部缓存也要独立管理。失效、容量与部署版本是设计一部分。",
+      "example": "lab公开key为v1/q/lang，参数顺序不影响相同结果，未知维度不缓存；最多32项。Cookie/Authorization任意存在即旁路、private/no-store；四并发alice/bob合成请求各自读取，公开缓存保持public。scope可伪造，非真实认证；此内存模型不是实际CDN部署。",
+      "exercise": "故障：缓存只按pathname，q/lang不同却复用第一次响应。用两个固定查询复现，补key与失效再跑；只clearNuxtData不会清理边缘副本。",
+      "practice": "在副本新增region输出维度，先故意漏key稳定复现错误命中，再补key/失效；设计凭据请求在边缘lookup前旁路，不以URL里加scope当授权。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary",
+      "runtime": "docs/audits/stage-9-loading-runtime.json",
+      "review": "docs/audits/stage-9-loading-review.md"
+    },
+    "issues": []
+  }
+]

@@ -1,0 +1,7 @@
+/* No critical layout or focus styling lives here. */
+#decoration {
+  background: #dde9f7;
+  border: 2px solid #60708c;
+  border-radius: 1rem;
+  padding: 1rem;
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>性能采集与预算实验</title>
+    <script type="module" src="./app.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <h1>性能采集与预算实验</h1>
+      <p>
+        仅本地内存观察；点击发送才向当前loopback服务提交最小快照，不联系外部服务。
+      </p>
+      <div id="shift-target">
+        <h2>可观察课程</h2>
+        <p>真实浏览器度量不等于生产RUM或已达标。</p>
+      </div>
+      <div class="actions">
+        <button id="block">制造90ms合成长任务</button
+        ><button id="shift">650ms后插入位移样本</button
+        ><button id="measure">记录交互业务耗时</button
+        ><button id="send">发送本地最小快照</button>
+      </div>
+      <p role="status" id="status">采集中，仅内存</p>
+      <pre id="metrics" aria-label="指标快照"></pre>
+      <a href="./README.md">实验说明</a>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>加载边界实验</title>
+    <link
+      rel="preload"
+      href="./assets/roboto-latin-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <style>
+      @font-face {
+        font-family: LabRoboto;
+        src: url("./assets/roboto-latin-400.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        unicode-range: U+0000-00FF;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f3f6fb;
+        color: #152b49;
+        font-family: LabRoboto, system-ui, sans-serif;
+      }
+      .shell {
+        inline-size: min(100% - 2rem, 52rem);
+        margin-inline: auto;
+      }
+      main {
+        padding-block: 1rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      a {
+        color: #114c9c;
+      }
+      button {
+        min-block-size: 44px;
+        padding: 0.5rem;
+        font: inherit;
+        background: #fff;
+        color: #152b49;
+        border: 1px solid #60708c;
+      }
+      :focus-visible {
+        outline: 3px solid #114c9c;
+        outline-offset: 3px;
+      }
+      figure {
+        margin: 1rem 0;
+        max-inline-size: 640px;
+        background: #adc6e6 url("./assets/placeholder.svg") center/cover;
+      }
+      img {
+        display: block;
+        inline-size: 100%;
+        block-size: auto;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .spacer {
+        height: 1200px;
+      }
+    </style>
+    <link
+      id="noncritical"
+      rel="stylesheet"
+      href="./noncritical.css"
+      media="print"
+    />
+    <script type="module" src="./app.mjs"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <h1>LOAD 加载边界实验</h1>
+      <p>首屏样式直接可用；延迟到达的非关键样式只改变下方卡片装饰。</p>
+      <figure id="preview">
+        <picture
+          ><source
+            type="image/avif"
+            srcset="./assets/hero-320.avif 320w, ./assets/hero-640.avif 640w"
+            sizes="(max-width:672px) calc(100vw - 32px), 640px" />
+          <source
+            type="image/webp"
+            srcset="./assets/hero-320.webp 320w, ./assets/hero-640.webp 640w"
+            sizes="(max-width:672px) calc(100vw - 32px), 640px" />
+          <img
+            id="hero"
+            src="./assets/hero-640.png"
+            width="640"
+            height="240"
+            fetchpriority="high"
+            alt="几何形状课程封面"
+        /></picture>
+      </figure>
+      <button id="speculate" type="button">为公开下一页添加预取建议</button>
+      <p id="spec-status" role="status">
+        尚未添加建议；不预取账户或有副作用页面。
+      </p>
+      <a href="./next.html">正常链接始终可用</a>
+      <p><a href="./README.md">实验说明</a></p>
+      <div class="spacer" aria-hidden="true"></div>
+      <section id="decoration">
+        <h2>离屏非关键装饰</h2>
+        <p>此处样式延后，不承担首屏布局或焦点可见性。</p>
+      </section>
+    </main>
+  </body>
+</html>

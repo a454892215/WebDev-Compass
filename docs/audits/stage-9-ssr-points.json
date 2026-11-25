@@ -1,0 +1,92 @@
+[
+  {
+    "id": "9.5.1",
+    "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.1.streaming-html.md",
+    "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.1.streaming-html-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.1.streaming-html.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "流式响应可先发送可用HTML，后续内容逐步到达；是否能提前呈现仍受代理缓冲、压缩、浏览器解析、样式和传输影响。一次response.write/sendStream不等于组件Streaming SSR。当前Nuxt4.7 Node产物renderer.mjs明确await renderer.renderToString后组织页面，本项目没有据此宣称Vue Suspense会自动把未完成页面分段发出。React流式API仅对照，不把React API搬进Nuxt。",
+      "example": "主/stream-demo通过H3 v1 sendStream与ReadableStream先enqueue静态完整head/h1，40ms后enqueue剩余HTML。它不经过Nuxt组件水合，所有内容为固定合成文本。主SSR首页仍正常renderToString；HTTP测试读取流并记录实际多段，而不是把最终text()时间当首块时间。",
+      "exercise": "故障：代理先await upstream.text()再返回，流退化为完整缓冲。用reader逐段观察和Network定位；改为适当转发流并检查代理/压缩配置，不能仅把header写成chunked。",
+      "practice": "在副本加入一个会缓冲整个响应再发送的代理，与直接端点比较第一段可见时机；故障和修复只在本地。",
+      "source": "https://v1.h3.dev/utils/response",
+      "review": "docs/audits/stage-9-ssr-review.md",
+      "runtime": "Main4unit,3E2E,type/lint/build and actual JS/CSS budget pass; independent source/prose review agrees. No productionRUM/Edge/React stream deployment."
+    },
+    "issues": []
+  },
+  {
+    "id": "9.5.2",
+    "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2.md",
+    "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SSR HTML已经可见，但组件仍需客户端接管事件；延迟水合把非关键组件的接管延后，不等同永远无JS、减少所有下载或自动改善INP。Nuxt defineLazyHydrationComponent支持visible/idle/interaction等策略，使用字面策略与直接import以便编译宏识别。重要导航、表单或首个交互不可因追分失效；React选择性水合为对照选修。",
+      "example": "主OptionalPanel的SSR内容先存在，hydrate-on-interaction=click。onMounted记录局部mark，父级@hydrated显示状态；首次点击需正确回放使计数从0变1。mark在挂载前清旧值、卸载时释放，不让反复导航无限积累。",
+      "exercise": "故障：把宏策略放到外部变量而未确认编译支持，或用never策略包住必须交互的按钮。先查编译结果与官方限制，恢复可交互策略并复验首个动作。",
+      "practice": "在副本改成visible并把面板置于可滚动的远处；再比较interaction，记录何时接管而非猜“加载更少”。",
+      "source": "https://nuxt.com/docs/4.x/api/utils/define-lazy-hydration-component",
+      "review": "docs/audits/stage-9-ssr-review.md",
+      "runtime": "Main4unit,3E2E,type/lint/build and actual JS/CSS budget pass; independent source/prose review agrees. No productionRUM/Edge/React stream deployment."
+    },
+    "issues": []
+  },
+  {
+    "id": "9.5.3",
+    "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.3.ttfb-vs-fcp.md",
+    "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.3.ttfb-vs-fcp-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.3.ttfb-vs-fcp.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "服务端读取时间只是TTFB中的部分工作；TTFB还可能包含导航重定向、连接、网络、代理、排队与SSR。FCP是浏览器首次内容绘制，受HTML解析、阻塞CSS/字体、主线程和可见性影响。TTFB降低不必然同幅改善FCP；个性化缓存、数据一致性和成本需一起判断。LCP/INP/CLS是当前CWV，TTFB/FCP是诊断指标。",
+      "example": "主API执行两独立30ms合成等待：serial先后、parallel同时。API Server-Timing:catalogue记录服务函数跨度，不是整页SSR跨度，也未自动透传到HTML导航。测试每模式各3样本，另记录Navigation.responseStart与FCP原始值，不当web-vitals校正TTFB或生产p75。",
+      "exercise": "故障：页面显示durationMs:30就称TTFB30，忽略SSR和网络。对照API Server-Timing、文档navigation时间与paint各自来源，改正命名再定位慢段。",
+      "practice": "把数据任务人为加依赖（summary必须用course结果），说明为何不能盲并行；为原独立任务保留barrier测试与实际样本。",
+      "source": "https://web.dev/articles/ttfb",
+      "review": "docs/audits/stage-9-ssr-review.md",
+      "runtime": "Main4unit,3E2E,type/lint/build and actual JS/CSS budget pass; independent source/prose review agrees. No productionRUM/Edge/React stream deployment."
+    },
+    "issues": []
+  },
+  {
+    "id": "9.5.4",
+    "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4.md",
+    "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "useAsyncData/useFetch把SSR结果序列化到payload供客户端接管；组件setup裸$fetch没有同样机制，可能重复读取。key应包含影响远程结果的身份/参数，不能盲共享；payload进入浏览器因此不能包含秘密。依赖顺序与请求去重是两个问题：并行优化不会自动补payload，payload也不会让本来独立的串行任务并行。",
+      "example": "主首页key为stage9:catalogue:mode，requestFetch调用真实本地API，serial/parallel模式真实触发不同源调度。浏览器初始没有额外/api/catalog请求；客户端模式导航会按新key读取，刷新重新SSR，这是正常生命周期，不叫重复bug。",
+      "exercise": "故障：两个读取用同key却不同handler/参数，只因为URL不一样就以为Nuxt能区分。明确数据身份和选项一致性，恢复维度并用serial↔parallel回归。",
+      "practice": "仅在SSR副本将useAsyncData改为setup裸await requestFetch，比较初始浏览器请求；再故意删除mode key维度，观察是否复用错误结果或违反同key选项一致性。",
+      "source": "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+      "review": "docs/audits/stage-9-ssr-review.md",
+      "runtime": "Main4unit,3E2E,type/lint/build and actual JS/CSS budget pass; independent source/prose review agrees. No productionRUM/Edge/React stream deployment."
+    },
+    "issues": []
+  },
+  {
+    "id": "9.5.5",
+    "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.5.edge.md",
+    "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.5.edge-demo.md",
+    "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.5.edge.md",
+    "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Edge靠近用户不等于靠近数据库。跨地域读取、连接模型、写一致性、缓存失效、冷启动与费用可能抵消传输收益。Node原生模块/fs/长连接限制、包兼容与适配器都须核对，不能把Node输出目录直接上传任意Worker。缓存个性化响应必须包含身份边界或默认旁路，HTTP no-store不替代服务端授权。",
+      "example": "类型：官方部署与源审观察。主nuxt.config固定node-server，构建产物有Node入口，未部署Edge。按Nitro provider文档列运行支持/数据位置/缓存键/失效/凭据/回退六项，和9.3独立缓存key实验对照；本地HTTP不是真实CDN。",
+      "exercise": "故障：把服务器session结果放只按path缓存的Edge响应，或把Node fs依赖打入Worker。先做本地允许列表与缓存分区反例，再按真实平台适配；不因CI编译过就称生产隔离通过。",
+      "practice": "假设数据库仅单区而用户跨三地区，比较Origin SSR+CDN静态资源与Edge SSR两候选；列可测条件和回退。",
+      "source": "https://nitro.build/deploy",
+      "review": "docs/audits/stage-9-ssr-review.md",
+      "runtime": "Main4unit,3E2E,type/lint/build and actual JS/CSS budget pass; independent source/prose review agrees. No productionRUM/Edge/React stream deployment."
+    },
+    "issues": []
+  }
+]

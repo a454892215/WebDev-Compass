@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 9,
+  "status": "passed",
+  "reviewedAt": "2026-11-25T09:53:29.193874+00:00",
+  "sourceFingerprint": "179bb857d7cea3bebd0bdb8e265b9711af51f2feb5f3f0c29dbae19752abfe85",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "30 unique points and complete four-part mappings;existing topics absorb real omissions.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "Measure/define budget before targeted loading/runtime/SSR change;prerequisites and optional tools explicit.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "Primary MWG/framework/metric sources and versions checked;INP/nextTick,Lab/RUM and HTTP/componentstream separated.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "Real web-vitals,artifact budget,loading/heap/worker and mainSSR;observational tools not claimed run.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "Concrete independent variants,two criteria,reproducible faults and references per point.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "30tasks correspond to mainNuxt/separate labs/clear extensions or official observation.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "Timing scope,byte policy,privacy/cache,SSRpayload and sources align.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "Collector413,workererror cleanup,input/cache details corrected and affected checks pass.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "425/590authored72.0%;indexes/limits/nextstage10 aligned;learner checkboxes unchanged.",
+      "evidence": [
+        "docs/audits/STAGE_9_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-9-metrics-budget-points.json",
+    "docs/audits/stage-9-loading-points.json",
+    "docs/audits/stage-9-runtime-points.json",
+    "docs/audits/stage-9-ssr-points.json"
+  ],
+  "findings": [
+    {
+      "id": "measurement-boundary",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Real metrics vs raw entries,nextTick vs paint/INP,synthetic samples vs RUM/p75 explicit."
+    },
+    {
+      "id": "streaming-scope",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "CompiledNuxt awaitrenderToString;separate H3 HTTPstream actually2chunks not component streamingSSR."
+    },
+    {
+      "id": "collector-limit",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Bounded read/drain then413;two viewport failure paths rerun."
+    },
+    {
+      "id": "worker-lifecycle",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Old workererror guard,Uint32alignment,postMessage throw settled;3Node+2browser rerun."
+    },
+    {
+      "id": "cache-and-css-premise",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Credential presence incl empty values bypass;viewport/source dimensions separated;fault begins with explicit outline removal."
+    },
+    {
+      "id": "real-budget-gate",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Shared tool reads actual Nuxt output;build precedes budget;empty/missing/invalid/overbudget negatives passed inlab."
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-9-metrics-budget-runtime.json",
+    "docs/audits/stage-9-loading-runtime.json",
+    "docs/audits/stage-9-runtime-runtime.json",
+    "docs/audits/stage-9-ssr-runtime.json",
+    "docs/audits/stage-9-practice-runtime.json"
+  ],
+  "limitations": [
+    "No production RUM/p75,remoteCI,Lighthouse/LHCI,Partytown or graphic bundle tooling run.",
+    "Raw HTTPstream not Nuxt componentStreamingSSR;timing samples synthetic.",
+    "No productionEdge/CDN/H3/proxy,realmobile,screenreader or human learnertrial.",
+    "Heap fixture counts/retainer evidence not proof of all pages being leakfree."
+  ]
+}

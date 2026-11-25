@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "stage": 9,
+  "project": "learning/4-practice/09-performance/nuxt.config.ts",
+  "points": [
+    {
+      "id": "9.1.1",
+      "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.1.lab-vs-rum.md",
+      "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.1.lab-vs-rum-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.1.lab-vs-rum.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-1"
+    },
+    {
+      "id": "9.1.2",
+      "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals.md",
+      "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.2.core-web-vitals.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-2"
+    },
+    {
+      "id": "9.1.3",
+      "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.3.web-vitals.md",
+      "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.3.web-vitals-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.3.web-vitals.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-3"
+    },
+    {
+      "id": "9.1.4",
+      "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.4.performance-api.md",
+      "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.4.performance-api-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.4.performance-api.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-4"
+    },
+    {
+      "id": "9.1.5",
+      "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5.md",
+      "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-5"
+    },
+    {
+      "id": "9.1.6",
+      "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6.md",
+      "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-6"
+    },
+    {
+      "id": "9.1.7",
+      "theory": "learning/1-notes/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm.md",
+      "example": "learning/2-examples/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-1-7"
+    },
+    {
+      "id": "9.2.1",
+      "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.1.performance-budget.md",
+      "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.1.performance-budget-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.1.performance-budget.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-1"
+    },
+    {
+      "id": "9.2.2",
+      "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.2.bundle.md",
+      "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.2.bundle-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.2.bundle.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-2"
+    },
+    {
+      "id": "9.2.3",
+      "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.3.ci.md",
+      "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.3.ci-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.3.ci.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-3"
+    },
+    {
+      "id": "9.2.4",
+      "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.4.item-9-2-4.md",
+      "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.4.item-9-2-4-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.4.item-9-2-4.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-4"
+    },
+    {
+      "id": "9.2.5",
+      "theory": "learning/1-notes/09-performance/9.2-performance-budget/9.2.5.partytown.md",
+      "example": "learning/2-examples/09-performance/9.2-performance-budget/9.2.5.partytown-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.2-performance-budget/9.2.5.partytown.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-2-5"
+    },
+    {
+      "id": "9.3.1",
+      "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.1.critical-css.md",
+      "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.1.critical-css-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.1.critical-css.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-1"
+    },
+    {
+      "id": "9.3.2",
+      "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2.md",
+      "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.2.item-9-3-2.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-2"
+    },
+    {
+      "id": "9.3.3",
+      "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.3.item-9-3-3.md",
+      "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.3.item-9-3-3-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.3.item-9-3-3.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-3"
+    },
+    {
+      "id": "9.3.4",
+      "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api.md",
+      "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.4.speculation-rules-api.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-4"
+    },
+    {
+      "id": "9.3.5",
+      "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.5.http.md",
+      "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.5.http-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.5.http.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-5"
+    },
+    {
+      "id": "9.3.6",
+      "theory": "learning/1-notes/09-performance/9.3-loading-advanced/9.3.6.edge.md",
+      "example": "learning/2-examples/09-performance/9.3-loading-advanced/9.3.6.edge-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.3-loading-advanced/9.3.6.edge.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-3-6"
+    },
+    {
+      "id": "9.4.1",
+      "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.1.long-task.md",
+      "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.1.long-task-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.1.long-task.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-1"
+    },
+    {
+      "id": "9.4.2",
+      "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.2.inp.md",
+      "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.2.inp-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.2.inp.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-2"
+    },
+    {
+      "id": "9.4.3",
+      "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.3.profiling.md",
+      "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.3.profiling-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.3.profiling.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-3"
+    },
+    {
+      "id": "9.4.4",
+      "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry.md",
+      "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.4.weakref-finalizationregistry.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-4"
+    },
+    {
+      "id": "9.4.5",
+      "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.5.item-9-4-5.md",
+      "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.5.item-9-4-5-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.5.item-9-4-5.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-5"
+    },
+    {
+      "id": "9.4.6",
+      "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.6.web-worker.md",
+      "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.6.web-worker-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.6.web-worker.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-6"
+    },
+    {
+      "id": "9.4.7",
+      "theory": "learning/1-notes/09-performance/9.4-runtime-advanced/9.4.7.requestidlecallback.md",
+      "example": "learning/2-examples/09-performance/9.4-runtime-advanced/9.4.7.requestidlecallback-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.4-runtime-advanced/9.4.7.requestidlecallback.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-4-7"
+    },
+    {
+      "id": "9.5.1",
+      "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.1.streaming-html.md",
+      "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.1.streaming-html-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.1.streaming-html.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-1"
+    },
+    {
+      "id": "9.5.2",
+      "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2.md",
+      "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.2.item-9-5-2.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-2"
+    },
+    {
+      "id": "9.5.3",
+      "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.3.ttfb-vs-fcp.md",
+      "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.3.ttfb-vs-fcp-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.3.ttfb-vs-fcp.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-3"
+    },
+    {
+      "id": "9.5.4",
+      "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4.md",
+      "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.4.item-9-5-4.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-4"
+    },
+    {
+      "id": "9.5.5",
+      "theory": "learning/1-notes/09-performance/9.5-ssr-streaming/9.5.5.edge.md",
+      "example": "learning/2-examples/09-performance/9.5-ssr-streaming/9.5.5.edge-demo.md",
+      "exercise": "learning/3-exercises/09-performance/9.5-ssr-streaming/9.5.5.edge.md",
+      "practice": "learning/4-practice/09-performance/tasks.md#p-9-5-5"
+    }
+  ]
+}

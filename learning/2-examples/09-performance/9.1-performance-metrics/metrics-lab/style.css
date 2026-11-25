@@ -1,0 +1,37 @@
+:root {
+  font-family: system-ui;
+  color: #182b44;
+  background: #f2f6fb;
+}
+* {
+  box-sizing: border-box;
+}
+main {
+  inline-size: min(100% - 2rem, 60rem);
+  margin-inline: auto;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+button {
+  font: inherit;
+  min-height: 44px;
+  padding: 0.6rem;
+  border: 1px solid #506784;
+  background: white;
+  color: inherit;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 3px solid #125c9c;
+  outline-offset: 3px;
+}
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+a {
+  color: #124c9c;
+}

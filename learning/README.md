@@ -24,3 +24,5 @@
 阶段7：[部署理论](./1-notes/07-deployment/README.md)、[三种profile与发布实践](./4-practice/07-deployment/README.md)，共29点。下一阶段8。
 
 阶段8：[架构理论](./1-notes/08-architecture/README.md)、[模块化工作台](./4-practice/08-architecture/README.md)，共39点四部分资料。下一阶段9。
+
+阶段9：[性能理论](./1-notes/09-performance/README.md)、[Nuxt首屏/水合](./4-practice/09-performance/README.md)，共30点。下一阶段10。

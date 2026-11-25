@@ -123,7 +123,7 @@
 - [ ] [9.1.4 **Performance API**：Navigation Timing、Resource Timing、Long Task API](../learning/1-notes/09-performance/9.1-performance-metrics/9.1.4.performance-api.md)
 - [ ] [9.1.5 **自定义性能标记**：`performance.mark` / `measure`、Vue DevTools；React Profiler 为对照选修](../learning/1-notes/09-performance/9.1-performance-metrics/9.1.5.item-9-1-5.md)
 - [ ] [9.1.6 **性能回归** 检测：CI 中 Lighthouse CI、bundle 体积门禁](../learning/1-notes/09-performance/9.1-performance-metrics/9.1.6.item-9-1-6.md)
-- [ ] [9.1.7 📱 移动端对照：Web RUM ≈ Firebase Performance / 自建 APM 客户端上报](../learning/1-notes/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm.md)
+- [ ] [9.1.7 📱 移动端对照：Web RUM 与 Firebase Performance/APM：指标、采样与页面生命周期差异](../learning/1-notes/09-performance/9.1-performance-metrics/9.1.7.web-rum-firebase-performance-apm.md)
 
 
 
