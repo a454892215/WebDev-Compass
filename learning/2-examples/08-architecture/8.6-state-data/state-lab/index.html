@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>状态与离线草稿实验</title
+  ><link rel="stylesheet" href="style.css" />
+  <main>
+    <h1>状态与离线草稿实验</h1>
+    <p>公开合成scope，不是登录。草稿仅本浏览器保存，服务端演示ack仅内存。</p>
+    <label for="scope">演示范围</label
+    ><select id="scope">
+      <option value="alice">Alice</option>
+      <option value="bob">Bob</option>
+    </select>
+    <h2>本地草稿与待重试队列</h2>
+    <label for="draft">草稿</label
+    ><textarea id="draft" maxlength="1000"></textarea
+    ><button id="save" type="button">保存本地草稿</button
+    ><button id="queue" type="button">加入待发送队列</button
+    ><button id="retry" type="button">显式重试</button>
+    <p id="status" role="status">正在打开本地存储</p>
+    <p id="pending">待发送：0</p>
+    <h2>过期数据刷新</h2>
+    <p id="stale-data">已缓存课程：Vue 3</p>
+    <button id="refresh-fail" type="button">模拟刷新失败</button
+    ><button id="refresh-ok" type="button">模拟刷新成功</button>
+    <p id="stale-status" role="status">内容可用</p>
+    <p>
+      刷新按钮使用受控结果；离线重试使用真实HTTP与浏览器断网。不是生产SWR或Background
+      Sync。
+    </p>
+    <a href="README.md">运行与边界</a>
+  </main>
+  <script type="module" src="app.mjs"></script>
+</html>

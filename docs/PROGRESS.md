@@ -4,9 +4,9 @@
 
 ## 当前覆盖与目录
 
-Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 356 项，待编写 234 项，覆盖约 60.3%；阶段 1 的106项、阶段 2 的33项、阶段3的36项、阶段4的59项、阶段5的31项、阶段6的43项及阶段7的29项已提供四部分资料。所有资料统一迁移至 [learning/](../learning/README.md)，工程搭建专题保留在 framework-guide。
+Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 395 项，待编写 195 项，覆盖约 66.9%；阶段 1 的106项、阶段 2 的33项、阶段3的36项、阶段4的59项、阶段5的31项、阶段6的43项、阶段7的29项及阶段8的39项已提供四部分资料。所有资料统一迁移至 [learning/](../learning/README.md)，工程搭建专题保留在 framework-guide。
 
-四部分结构检查 356/356 通过。阶段 0、1 已按总则执行逐点复核、修正及必要运行验证，阶段0、1质量结论见[验收记录](./audits/STAGE_0_1_ACCEPTANCE.md)；阶段7见[最新验收](./audits/STAGE_7_ACCEPTANCE.md)，阶段6见[验收记录](./audits/STAGE_6_ACCEPTANCE.md)，阶段5见[验收记录](./audits/STAGE_5_ACCEPTANCE.md)，阶段4见[验收记录](./audits/STAGE_4_ACCEPTANCE.md)，阶段3见[验收记录](./audits/STAGE_3_ACCEPTANCE.md)，阶段2见[验收记录](./audits/STAGE_2_ACCEPTANCE.md)。阶段 1 交互和构建验证见[本轮记录](./STAGE_1_VERIFICATION.md)。运行 `python3 scripts/check_knowledge.py --table` 查看实时完成度。
+四部分结构检查 395/395 通过。阶段 0、1 已按总则执行逐点复核、修正及必要运行验证，阶段0、1质量结论见[验收记录](./audits/STAGE_0_1_ACCEPTANCE.md)；阶段8见[最新验收](./audits/STAGE_8_ACCEPTANCE.md)，阶段7见[验收记录](./audits/STAGE_7_ACCEPTANCE.md)，阶段6见[验收记录](./audits/STAGE_6_ACCEPTANCE.md)，阶段5见[验收记录](./audits/STAGE_5_ACCEPTANCE.md)，阶段4见[验收记录](./audits/STAGE_4_ACCEPTANCE.md)，阶段3见[验收记录](./audits/STAGE_3_ACCEPTANCE.md)，阶段2见[验收记录](./audits/STAGE_2_ACCEPTANCE.md)。阶段 1 交互和构建验证见[本轮记录](./STAGE_1_VERIFICATION.md)。运行 `python3 scripts/check_knowledge.py --table` 查看实时完成度。
 
 以下为早期 HTML 增量的历史记录，不能用旧分母替代当前统计。
 
@@ -43,7 +43,8 @@ Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 356 项，�
 | 阶段 5 | 31项理论/实验/练习/综合任务 | 真实HTTP/会话/CSRF/授权/SSR隔离、JWT与跨源/实时协议，见阶段5验收 |
 | 阶段 6 | 43项四部分资料与Nuxt三语目录 | 真实lab与SSR、键盘、axe验证 |
 | 阶段 7 | 29项四部分资料与三种Nuxt产物 | SSR/SSG/CSR、Nginx、回滚与选修原生实验 |
-| 阶段 8–15 | 仅知识点清单 | 待按学习顺序逐节完成 |
+| 阶段 8 | 39项四部分资料与模块化工作台 | 边界图/SSR/DTO、跨源隔离、HTTP超时、IndexedDB与离线队列 |
+| 阶段 9–15 | 仅知识点清单 | 待按学习顺序逐节完成 |
 | 框架实践专题            | 六篇规划正文及一篇交接记录 | 规划已形成、初始骨架已交付；高级门禁和发布复用待专项验收 |
 
 ## 可续跑待办
@@ -55,11 +56,11 @@ Vue 3 + Nuxt 为主线，React/Next 为选修。共 590 项，正文 356 项，�
 - [x] G05 编写 1.2 CSS：先选择器/层叠/盒模型，再 Flex/Grid 与响应式；每个知识点提供可观察实验。
 - [x] G06 编写 1.3 JavaScript，并明确 DOM、事件和异步练习的前置知识。
 - [x] G07 专项复审阶段 0 的 CORS、Cookie/SameSite、SPA/SSR 与工具版本陈述，运行相关教学服务。
-- [ ] G08 按阶段 8–15 逐章扩展，避免一次性生成大量缺少验证的正文。
+- [ ] G08 按阶段 9–15 逐章扩展，避免一次性生成大量缺少验证的正文。
 
 本轮收尾要求：新增内容与索引匹配、真实断链为零、计划项与已验证项分开、受影响回归通过、差异审查及本地提交完成。框架代码和高级能力的后续工作留在各自项目，不在本仓库执行。
 
-本轮补充：基础质量 4 项、106 项独立练习和综合任务已提供；四部分目录迁移与门禁已实施。下一正文阶段为阶段 8：Vue/Nuxt模块划分、状态与渲染选型，G07 的逐篇复审和本地服务验证已完成；公网 DNS/TLS/CDN、真机与多浏览器仍按学习任务需要另行执行。
+本轮补充：基础质量 4 项、106 项独立练习和综合任务已提供；四部分目录迁移与门禁已实施。下一正文阶段为阶段 9：Web Vitals测量与性能优化，G07 的逐篇复审和本地服务验证已完成；公网 DNS/TLS/CDN、真机与多浏览器仍按学习任务需要另行执行。
 
 ## 阶段编写与质量验收总则
 
@@ -94,3 +95,7 @@ pnpm11专有配置采用pnpm-workspace.yaml并实查生效；TypeScript6.0.3匹�
 ## 阶段7本轮交付
 
 规划补7.1.8最小监测、7.1.9发布回滚，共29点，全图590点；正文356/590，60.3%。[规划复核](./audits/STAGE_7_PLAN_REVIEW.md)与[验收](./audits/STAGE_7_ACCEPTANCE.md)记录三种Nuxt真实构建/HTTP/浏览器、Nginx/回滚、选修原生实验及未测范围。远程CI、云平台、Docker运行未冒称通过；主线0–7资料齐全不等于学习者已掌握。下一阶段8，旧段落保留各阶段当时口径。
+
+## 阶段8本轮交付
+
+保留39点，修正Module Federation集成分类、源码依赖箭头和移动类比；全图仍590点，正文395/590（66.9%）。[规划](./audits/STAGE_8_PLAN_REVIEW.md)和[验收](./audits/STAGE_8_ACCEPTANCE.md)记录模块化工作台、依赖门禁、SSR/DTO、隔离/BFF/状态独立lab。真实身份、生产容量/部署、未安装的RSC/Edge/CRDT等未冒称完成。下一阶段9，旧段落保留历史口径。

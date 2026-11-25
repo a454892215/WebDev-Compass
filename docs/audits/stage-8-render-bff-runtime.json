@@ -1,0 +1,89 @@
+{
+  "stage": 8,
+  "group": "8.3-rendering + 8.5-bff",
+  "startedAt": "2026-11-25T09:23:09Z",
+  "recordedAt": "2026-11-25T09:31:10.844035+00:00",
+  "versions": {
+    "node": "26.0.0"
+  },
+  "localLab": {
+    "command": "node --test learning/2-examples/08-architecture/8.5-bff/bff-lab/verify.mjs",
+    "passed": 2,
+    "failed": 0,
+    "checks": [
+      "DTO allowlist/null/malformed types/invalid and overflow UTC date",
+      "real HTTP aggregation fixed loopback upstream",
+      "four concurrent alice/bob scopes",
+      "optional timeout200 degraded progress:null warnings",
+      "required timeout504 malformedDTO502",
+      "upstream close cancellation on deadline",
+      "v1/v2 compatible fields and Deprecation structured date/Sunset HTTPdate",
+      "unknownURL parameter400 no upstream request;unknownscope400;POST405"
+    ],
+    "cleanup": "Both BFF4514 and ephemeral upstream closed;in-flight fixture timers cancelled",
+    "scope": "Public synthetic fixture;not authentication or production P95"
+  },
+  "sharedNuxt": {
+    "status": "passed",
+    "executedBy": "root",
+    "reviewedBy": "stage8_render_bff",
+    "version": "Nuxt4.7.0 / Vue3.5.46 / TS6.0.3 / Node26 / pnpm11.4",
+    "checks": {
+      "typecheck": "passed",
+      "eslint": "passed",
+      "vitest": 9,
+      "productionSSRBuild": "passed",
+      "explicitLocalImportEdges": 18,
+      "boundaryErrors": 0,
+      "playwright": {
+        "startTime": "2026-11-25T09:29:11.396Z",
+        "duration": 4196.8679999999995,
+        "expected": 5,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "actualCases": [
+      "Four concurrent scopes in rawSSR200 no-store;no other fixture/internal markers",
+      "API and page invalidscope400;missingcourse/asset404",
+      "optional progress200 null+warning retains courses",
+      "Two viewports no initial duplicateAPI/hydration/pageerror;keyboard/axe/overflow",
+      "Scope/favorites/filter/history/detail navigation and reload"
+    ],
+    "sourceRead": [
+      "nuxt.config.ts",
+      "server/api/workspace.get.ts",
+      "server/features/workspace/application/load.ts",
+      "server/features/workspace/infra/fixtures.ts",
+      "shared/contracts/workspace.ts",
+      "app/pages/index.vue",
+      "app/features/catalog/composables/useWorkspace.ts",
+      "tests/e2e/flow.spec.ts",
+      "tests/e2e/http.spec.ts",
+      "docs/RFC.md",
+      "docs/ADR-001.md",
+      "docs/ARCHITECTURE.md"
+    ],
+    "boundary": "Actual main adapters are in-process Promise fixtures, not HTTP lab. No NodeSSR performance guarantee. Initial two browser test failures were URL race in test;await actual URL then final5 passed, no fixed sleep."
+  },
+  "officialObservation": [
+    "React RSC/Server Functions",
+    "Astro Islands",
+    "GraphQL response/authorization/security",
+    "Cloudflare runtime compatibility",
+    "Nuxt rendering/SSR/state/payload",
+    "RFC9745 and RFC8594"
+  ],
+  "notVerified": [
+    "No RSC/Astro/GraphQL framework install",
+    "No ISR/streaming/Edge production deployment",
+    "No real authentication or private tenant service",
+    "No real mobile/assistive technology/learner trial"
+  ],
+  "historyReused": {
+    "source": "docs/audits/stage-7-practice-runtime.json",
+    "date": "2026-11-25",
+    "scope": "Previously accepted SSR/SSG/CSR actual profiles only;not rerun this stage"
+  }
+}

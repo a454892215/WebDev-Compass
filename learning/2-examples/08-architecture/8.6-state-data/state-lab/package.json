@@ -1,0 +1,17 @@
+{
+  "name": "@compass/stage8-state-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "test": "node --test tests/unit.test.mjs",
+    "serve": "node server.mjs",
+    "verify": "node verify.mjs"
+  },
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 8,
+  "status": "passed",
+  "reviewedAt": "2026-11-25T09:35:52.985344+00:00",
+  "sourceFingerprint": "955c61e1ac8c6780da04cac9055666d765cd2d4aeeb14ac90a90134acff5420a",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "39 unique points and four-part mappings complete, existing misleading map titles corrected.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "Constraints/modules/state/BFF/rendering order explicit; complex patterns optional.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "Primary MWG/framework/standards checked; runtime/source/call and fixture/auth boundaries distinguished.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "Real main10unit,18edges,build,5E2E and separate module/BFF/state mechanisms; observations explicit.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "Concrete variants/two criteria/fault/reference; readonlySSR fault premise fixed as clearly added exercise.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "39 tasks map to real main/lab or explicit extensions and official observations.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "Public feature facade,ports,DTO,state key,C4 and implementation facts align.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "Directory/index cycle resolution and schema regressions fixed; affected checks pass.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "395/590 authored;indexes,limitations and nextstage9 synchronized;learner checkboxes unchanged.",
+      "evidence": [
+        "docs/audits/STAGE_8_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-8-architecture-docs-points.json",
+    "docs/audits/stage-8-modules-micro-points.json",
+    "docs/audits/stage-8-render-bff-points.json",
+    "docs/audits/stage-8-state-data-points.json"
+  ],
+  "findings": [
+    {
+      "id": "map-concept",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "MF runtime loading/source dependency vs invocation/mobile comparison corrected without renumbering."
+    },
+    {
+      "id": "directory-index-graph",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Only file targets resolve;new temporary alias/index/cycle regression;10unit passed."
+    },
+    {
+      "id": "readonly-SSR-exercise",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Plain module-ref substitution not claimed observable;explicit new lastScope fault and source-risk distinction."
+    },
+    {
+      "id": "router-test-race",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Wait for committed URL before reload;5final browser tests passed without sleep."
+    },
+    {
+      "id": "schema-types",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Explicit type,unique IDs/nonblank labels in isolation lab;3Node+2viewport affected groups rerun."
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-8-architecture-docs-runtime.json",
+    "docs/audits/stage-8-modules-micro-runtime.json",
+    "docs/audits/stage-8-render-bff-runtime.json",
+    "docs/audits/stage-8-state-data-runtime.json",
+    "docs/audits/stage-8-practice-runtime.json"
+  ],
+  "limitations": [
+    "Public synthetic scopes are not authentication/authorization.",
+    "Main BFF is process-local fixture;real deadline/HTTP only independent lab.",
+    "No production capacity/cloud/Edge/realmobile/screenreader/learner trial.",
+    "Limited explicit import guard is not complete Nuxt graph or sandbox.",
+    "Uninstalled RSC/ISR/GraphQL/CRDT etc marked observation;stage7 profiles reused historically."
+  ]
+}

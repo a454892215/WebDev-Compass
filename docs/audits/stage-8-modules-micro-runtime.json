@@ -1,0 +1,96 @@
+{
+  "stage": 8,
+  "group": "8.2-app-architecture/8.4-micro-frontends",
+  "recordedAt": "2026-11-25T09:32:41.385037+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenInstall": "passed",
+    "nodeTests": {
+      "passed": 3,
+      "failed": 0,
+      "schemaRegressions": [
+        "missing/null id rejected before regex coercion",
+        "duplicate id rejected",
+        "blank accessible label rejected",
+        "unknown attributes/too many fields rejected"
+      ]
+    },
+    "browserGroups": [
+      {
+        "width": 390,
+        "passed": true,
+        "lifecycle": {
+          "delta": 1,
+          "stopped": true,
+          "unmounted": 2
+        },
+        "colors": [
+          "rgb(150, 20, 20)",
+          "rgb(15, 76, 129)"
+        ],
+        "messageChecks": "real cross-origin valid, wrong-source frame, invalid version, and same target WindowProxy after origin navigation rejected",
+        "schema": {
+          "rejected": true,
+          "images": 0,
+          "label": "<img src=x onerror=alert(1)>"
+        },
+        "routes": "history/reload/404"
+      },
+      {
+        "width": 1440,
+        "passed": true,
+        "lifecycle": {
+          "delta": 1,
+          "stopped": true,
+          "unmounted": 2
+        },
+        "colors": [
+          "rgb(150, 20, 20)",
+          "rgb(15, 76, 129)"
+        ],
+        "messageChecks": "real cross-origin valid, wrong-source frame, invalid version, and same target WindowProxy after origin navigation rejected",
+        "schema": {
+          "rejected": true,
+          "images": 0,
+          "label": "<img src=x onerror=alert(1)>"
+        },
+        "routes": "history/reload/404"
+      }
+    ],
+    "htmlResourcesSnapshot": {
+      "pages": 178,
+      "references": 665,
+      "errors": 0
+    }
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile",
+    "pnpm test",
+    "pnpm verify"
+  ],
+  "actual": [
+    "trusted registry lifecycle/idempotent dispose",
+    "same class name actual computed styles across shadow",
+    "real cross-origin postMessage source/origin/version rejection including same target WindowProxy after navigation",
+    "finite schema validation before safe DOM rendering",
+    "history links, direct reload and real404"
+  ],
+  "mainSourceReviewed": [
+    "app/features/catalog/application/view.ts",
+    "app/features/catalog/components/CourseList.vue",
+    "server/features/workspace/domain/ports.ts",
+    "server/features/workspace/application/load.ts",
+    "server/api/workspace.get.ts"
+  ],
+  "notExecuted": [
+    "Webpack Federation/single-spa",
+    "production remote/team deployment",
+    "real authentication or plugin permission sandbox",
+    "cross-browser/real mobile/screen reader/learner trial"
+  ],
+  "cleanup": "4513/4516 and Chrome closed in finally; no stage/commit"
+}

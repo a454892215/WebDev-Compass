@@ -1,0 +1,236 @@
+[
+  {
+    "id": "8.2.1",
+    "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md",
+    "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "FSD是一套带层/切片/片段语义与导入约束的组织方法，不等同所有按功能划分的目录。官方层含app/pages/widgets/features/entities/shared，processes已废弃；无需全建。不同业务slice通常不横向深导入，公开API控制协作边界。Nuxt的app/pages是路由约定，server是执行边界，不能为了复制FSD树把服务端代码挪进浏览器。中小项目可采用较少的feature+shared，明确叫项目适配而非完整FSD认证。",
+      "example": "阅读主Nuxt的app/features/catalog与shared契约；对照FSD layers/import规则，列出哪些采用、哪些不采用。独立lab是机制实验，不称严格FSD实现。",
+      "exercise": "故障：reports直接import catalog/application的内部函数，双方随后互引；定位业务边界与隐式协议，改为公开用例或真正共享契约。",
+      "practice": "在副本新增reports业务域，只提取真正公共的契约，画出与catalog的依赖。",
+      "source": "https://feature-sliced.design/docs/reference/layers",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.2.2",
+    "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md",
+    "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Presentation展示交互，Application编排用例，Domain表达稳定规则，Infrastructure实现网络/存储端口。运行时可能从页面调用应用再访问适配器；源码依赖不应机械形成Domain→Infrastructure。端口由内层定义或用最小结构类型描述，外层组合具体实现；依赖反转让应用可以用合成端口验证。不是每个小函数都要interface/class/四层目录；跨层DTO校验和权限仍需明确责任。",
+      "example": "在lab运行pnpm test，listTitles用异步合成port成功，坏DTO拒绝；再核读主项目端口注入与server/api组合位置，不把fixture调用写成真实远程HTTP。",
+      "exercise": "故障：Domain import $fetch或server私密配置，导致规则测试必须启动框架；从错误依赖边反推端口，并在组合根注入。",
+      "practice": "在副本替换一个内存adapter为可控失败adapter，保持应用核心不认识Nuxt/DOM。",
+      "source": "https://www.typescriptlang.org/docs/handbook/2/objects.html",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.2.3",
+    "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.3.container-presentation.md",
+    "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.3.container-presentation-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.3.container-presentation.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "容器负责数据获取、URL/状态与失败分支；展示组件接收明确props并发出意图事件。分离的收益是可独立验证UI与复用，不是所有组件都必须成对命名Container/View。Vue props单向传递，但嵌套对象仍能被子组件间接修改，不能误认只读类型就是深不可变；用事件把所有权留给调用者。复杂编排常放composable而非再包三层组件。",
+      "example": "核读主项目features/catalog/components与application，定位UI输入/输出、请求和过滤责任。lab插件只验证挂载/销毁，不冒称Vue组件测试。",
+      "exercise": "故障：子卡直接改course.selected并发起请求，父层失去一致更新入口；改为emit意图，由容器处理并覆盖失败状态。",
+      "practice": "把一个课程卡独立展示，增加空标题回退与select事件，不读取全局路由或直接写父对象。",
+      "source": "https://vuejs.org/guide/components/props.html",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.2.4",
+    "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4.md",
+    "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "路由是用户可见地址与历史契约，功能域是业务代码边界，chunk是构建产物边界，三者不一一对应。Nuxt pages约定通常生成按需页面入口；公共依赖可能被提到共享chunk，同一功能也可能跨多个路由。不要因为目录放在feature就保证分包、懒加载或权限隔离。直接访问/刷新、参数变更、未知路由和资源404都需按托管能力实测。",
+      "example": "lab点击目录/报表后reload，未知文档和missing.js都404。主项目页面构建由主代理另验；不把lab两段文字叫两个独立部署子应用。",
+      "exercise": "故障：两个模块都调用pushState并假设独占根路由，后退后界面不同步；确定唯一路由所有者、前缀和激活协议。",
+      "practice": "为独立reports模块分配前缀，写出父子路由、未知URL与上线/下线策略。",
+      "source": "https://nuxt.com/docs/4.x/directory-structure/app/pages",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.2.5",
+    "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.5.ui.md",
+    "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.5.ui-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.5.ui.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "配置描述允许的UI结构，解释器把白名单节点映射到已审核组件。JSON Schema可以验证对象形状，但不会自动完成所有权限、URL安全、跨字段业务规则或渲染净化。需要版本、数量/文本长度限制、未知节点/属性策略和错误回退；先整体校验再修改DOM，避免半渲染。配置不是任意JavaScript，不用eval或配置里的组件路径加载任意代码。",
+      "example": "lab用parseFields+renderForm渲染label/input；带onclick未知属性拒绝，恶意标签留为文本，原有效表单保持。",
+      "exercise": "故障：直接把配置label写innerHTML或执行onClick字符串；用同一恶意输入复现后改textContent与显式事件白名单。",
+      "practice": "新增required布尔字段及最多三个控件的业务限制，先验证后渲染；为未知版本做可读错误。",
+      "source": "https://json-schema.org/understanding-json-schema/reference/object",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.2.6",
+    "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.6.item-8-2-6.md",
+    "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.6.item-8-2-6-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.6.item-8-2-6.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "可信插件可通过受限注册表声明能力、输入与生命周期；mount返回幂等dispose，卸载释放事件/计时器/订阅。扩展点应有版本、重复/未知注册拒绝、错误隔离和可恢复宿主。注册表本身不会隔离执行权限，同页JS仍能读DOM与共享环境；不可信代码需要独立信任边界如受限iframe与消息协议，再核对浏览器限制。插件抛错前创建的资源仍需作者自行清理，不能声称registry自动撤销任意副作用。",
+      "example": "lab注册counter1，未知插件/重复注册拒绝，重挂后全局tick只处理一次，卸载后tick不再改变计数；真实factory属于可信本地代码。",
+      "exercise": "故障：每次mount加匿名全局监听，dispose无法remove同一函数；稳定函数引用并复测卸载后不响应、重挂一次。",
+      "practice": "在副本添加可控失败插件，定义宿主回退与失败前资源释放，再测试卸载/重挂。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.4.1",
+    "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1.md",
+    "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "微前端首先是团队/业务独立交付选择，模块化单体同样能按域组织。多团队可独立构建、部署和回滚，但仍共享用户旅程、URL、身份、无障碍和监测。技术栈共存可能帮助迁移，也带来重复依赖与体验协调；独立仓库不自动产生独立运行隔离。需用发布节奏/组织边界证据支持，不以“项目大”或AI写代码快单独决定。",
+      "example": "官方观察：读single-spa动机，把课程目录/报表画为同一宿主两个假设域，列独立发布的收益与代价；主Nuxt保持单应用。",
+      "exercise": "故障：分成三个repo却每次必须同时升级共享私有store；用一次跨团队升级路径指出耦合，先稳定契约而非再拆仓库。",
+      "practice": "给三个团队不同发布节奏的场景比较模块化单体/微前端，并为当前单团队场景写不采用理由。",
+      "source": "https://single-spa.js.org/docs/microfrontends-concept/",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.4.2",
+    "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2.md",
+    "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "构建组合把依赖纳入当前构建，运行集成在运行时加载/激活独立产物。Module Federation通过构建配置生成container与运行时代码，remote模块通常运行时异步加载，不能简单称纯构建时方案。single-spa负责激活/卸载编排，iframe提供不同document/源边界，WebComponent提供组件接口/封装；它们不是同一维度替换项，也可以组合。每种选择核对部署、共享依赖、失败、路由、样式与权限。",
+      "example": "先读Webpack local/remote模块正文，标注构建产物和运行加载；lab真实iframe消息只展示源/窗口边界，不声称实现ModuleFederation或single-spa。",
+      "exercise": "故障：把远端JS当iframe权限边界，认为跨团队加载就安全；画出同页执行权限，改用可信契约或真正隔离环境。",
+      "practice": "为同框架推荐卡和不可信第三方小工具分别选集成方式，解释为什么不复用一个方案。",
+      "source": "https://webpack.js.org/concepts/module-federation/",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.4.3",
+    "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.3.module-federation.md",
+    "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.3.module-federation-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.3.module-federation.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "container暴露模块、宿主异步取remote；模块加载和执行有失败与兼容边界。shared/singleton影响实例与版本协商，不保证任意版本兼容，也不是所有依赖都该singleton。Vue重复实例可能增加成本或造成上下文问题，但强制单例又会耦合升级；需固定可接受版本、初始化顺序、远端入口可达性及回退。remoteEntry与其chunk发布时序、旧资源保留、缓存和跨域路径要共同验证。",
+      "example": "官方观察：沿webpack container/init/get与shared文档梳理一次宿主加载远端；本轮未安装Webpack联邦或启动真实remote，lab registry不替代版本协商。",
+      "exercise": "故障：只覆盖remoteEntry却立即删旧hashchunk，旧页面动态加载404；从Network与版本信息定位，按发布策略保留旧资产。",
+      "practice": "为旧宿主+新remote写兼容矩阵，增加远端不可达/版本不符/旧chunk丢失三种恢复方案。",
+      "source": "https://webpack.js.org/concepts/module-federation/#sharing-hints",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.4.4",
+    "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.4.item-8-4-4.md",
+    "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.4.item-8-4-4-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.4.item-8-4-4.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "CSS Modules通过构建重命名降低类冲突；Vue scoped依赖选择器转换，两者不是运行权限隔离。ShadowDOM限制普通选择器跨树，但可继承属性、CSS自定义属性、slot与::part等有明确通道；closed也不是保密沙箱。CSS-in-JS库可能有全局reset、主题/顺序与运行成本，不能只看技术名保证隔离。要定义允许共享的design tokens、基线与主题，避免每子应用各自重置整个document。",
+      "example": "lab全局.badge红色，而shadow内同名.badge保持蓝色；读取computedStyle比较，两视口真实通过。这里只证实这个选择器案例，不认证所有CSS隔离。",
+      "exercise": "故障：子应用导入全局button{all:unset}破坏宿主焦点和按钮；定位全局规则，限制作用域并补焦点样式。",
+      "practice": "为另一个模块增加相同.badge与全局button reset，比较CSSModules/scoped/Shadow的可控范围，并定义一个主题token。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scoping",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.4.5",
+    "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.5.item-8-4-5.md",
+    "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.5.item-8-4-5-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.5.item-8-4-5.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "宿主统一决定根URL与激活条件，子模块在分配前缀内管理细节或仅发导航意图。需要约定push/replace/back、基路径、重复激活、卸载清理、权限失败与404；多个router各监听history容易产生不同步。服务端直接访问与客户端导航都要路由到相同模块，资源缺失不能混为子应用404。Nuxt单应用原生router通常足够，微前端编排是另加责任。",
+      "example": "lab由一个history owner处理/catalog.html、/reports.html和popstate，直接刷新报表可用，/unknown HTTP404且显示未知；不是完整子应用路由框架。",
+      "exercise": "故障：卸载模块后仍监听popstate并更新旧DOM；用连续切换复现，dispose时移除稳定handler再验。",
+      "practice": "新增/report/detail路径和返回操作，写下哪个模块拥有pushState、谁负责unknown和资源404。",
+      "source": "https://single-spa.js.org/docs/configuration/",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.4.6",
+    "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.6.item-8-4-6.md",
+    "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.6.item-8-4-6-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.6.item-8-4-6.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "事件协议应小而稳定：版本、类型、允许载荷、数据最小化、发送者/接收者与释放时机。CustomEvent适合同document意图，composed控制是否跨Shadow；BroadcastChannel用于相同源且满足存储分区条件的上下文，不是跨源总线，也没有业务授权。postMessage可跨窗口/源，必须校验精确origin、event.source与数据形状，发送敏感数据指定targetOrigin。共享全局store容易绑定身份/版本/生命周期，不让事件携带原始token。",
+      "example": "lab真实4513↔4516跨源iframe：目标窗口合法v1接受；同源但非目标frame、错误origin、目标frame错误v2均拒绝。BroadcastChannel仅官方观察，未称已部署跨标签身份同步。",
+      "exercise": "故障：只检查data.type或origin.includes(trusted)，相似域/其他frame即可绕过；改严格相等+source+完整解析后重跑相同输入。",
+      "practice": "增加requestId和允许事件白名单；关闭模块时释放监听，写出敏感数据不进入协议的约束。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.4.7",
+    "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.7.item-8-4-7.md",
+    "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.7.item-8-4-7-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.7.item-8-4-7.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "单团队统一发布、跨域强事务、共享大量内部store、无独立失败边界时，微前端可能增加网络、版本、监测、无障碍与运维成本。不要为了同时支持所有框架或把慢构建藏到多个仓库而引入；先测瓶颈，使用模块化、按需路由、清晰公开API与构建缓存。AI降低编码成本不消除协议、回滚和组织协调成本。决定“不采用”同样是有证据的架构产出，后续约束改变可用ADR重新评估。",
+      "example": "以主Nuxt单团队课程场景写ADR：保留模块边界与共享契约，不引入真实微前端；用lab故障边界说明未来要验证什么，而不是把它称生产拆分成果。",
+      "exercise": "故障：拆后每个小改动仍要求全部应用升级且缺任一remote整页白屏；定位契约/启动耦合，优先局部回退或合并不必要边界。",
+      "practice": "当新增两个团队独立发布但共用身份/设计系统时，更新ADR，给引入阈值、回滚与退出策略。",
+      "source": "https://single-spa.js.org/docs/microfrontends-concept/",
+      "verification": "docs/audits/stage-8-modules-micro-runtime.json",
+      "boundary": "Actual native lab mechanisms/source observation; no Module Federation/single-spa deployment or main-project registry/schema."
+    },
+    "issues": []
+  }
+]

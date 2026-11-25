@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  /><title>模块边界实验</title
+  ><link rel="stylesheet" href="./style.css" />
+  <body>
+    <main>
+      <h1>模块边界实验</h1>
+      <nav aria-label="模块导航">
+        <a href="./catalog.html" data-route>目录</a>
+        <a href="./reports.html" data-route>报表</a>
+      </nav>
+      <p id="route"></p>
+      <section>
+        <h2>可信插件生命周期</h2>
+        <div id="mount"></div>
+        <p>计数 <output id="ticks">0</output></p>
+        <button id="remount" type="button">卸载后重挂</button>
+      </section>
+      <section>
+        <h2>样式范围</h2>
+        <span class="badge" id="global">全局标签</span>
+        <div id="shadow"></div>
+      </section>
+      <section>
+        <h2>配置表单</h2>
+        <div id="fields"></div>
+      </section>
+      <section>
+        <h2>跨源通信</h2>
+        <iframe
+          title="受信课程子页"
+          id="trusted"
+          src="http://127.0.0.1:4516/child.html"
+        ></iframe
+        ><iframe
+          title="非目标窗口"
+          id="other"
+          src="http://127.0.0.1:4516/child.html"
+        ></iframe
+        ><iframe title="非受信来源" id="bad-origin" src="./child.html"></iframe>
+        <p>已接受 <output id="message">无</output></p>
+      </section>
+      <p><a href="./README.md">运行说明</a></p>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

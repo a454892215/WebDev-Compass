@@ -1,0 +1,78 @@
+{
+  "stage": 8,
+  "group": "8.6-state-data",
+  "startedAt": "2026-11-25T09:23:23+00:00",
+  "recordedAt": "2026-11-25T09:30:19.206229+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenInstall": "passed;explicit network after missing offline tarball",
+    "nodeTests": {
+      "passed": 4,
+      "failed": 0,
+      "scope": [
+        "key scope/query",
+        "old failure/new success/latest rejection",
+        "scope epoch and revision guard",
+        "stale controlled model and pure projection"
+      ]
+    },
+    "browser": [
+      {
+        "width": 390,
+        "result": "passed",
+        "facts": [
+          "real IndexedDB persisted reload and scoped drafts",
+          "real browser offline keeps durable outbox",
+          "explicit retry ACK-only delete and same-ID HTTP dedupe",
+          "changed payload sameID409",
+          "actual expectedRevision409/current unchanged",
+          "controlled stale error keeps prior data",
+          "no page errors or horizontal overflow"
+        ]
+      },
+      {
+        "width": 1440,
+        "result": "passed",
+        "facts": [
+          "real IndexedDB persisted reload and scoped drafts",
+          "real browser offline keeps durable outbox",
+          "explicit retry ACK-only delete and same-ID HTTP dedupe",
+          "changed payload sameID409",
+          "actual expectedRevision409/current unchanged",
+          "controlled stale error keeps prior data",
+          "no page errors or horizontal overflow"
+        ]
+      }
+    ],
+    "nodeSyntax": [
+      "app.mjs",
+      "storage.mjs"
+    ],
+    "format": "Prettier readable source;not claimed new behavior run"
+  },
+  "actualHTTP": [
+    "POST/api/value expectedRevision returns409 after first update",
+    "POST/api/sync same scope+id dedupes;different payload sameID409"
+  ],
+  "storage": "Real IndexedDB transactioncomplete; draft and outbox reload persistence; separate scope",
+  "offline": "Actual Chrome context.setOffline HTTPfailure, pending remains;explicit retry after restoration",
+  "mainSourceReview": [
+    "useWorkspace scope/degraded key;q local filter",
+    "useFavorites useState scope:slug boolean publicfixture",
+    "routeRules no-store/cache:false/prerender:false"
+  ],
+  "mainRuntime": "Executed by root and audited in full-stage report, not duplicated by this group",
+  "limitations": [
+    "Public scope fixtures not authentication",
+    "No service-worker app shell/offline navigation or Background Sync",
+    "Server dedupe/revisions in-memory only;no production persistent exactly-once",
+    "Controlled optimistic/stale models;not general mutation/network benchmark",
+    "No Yjs/Automerge installation or persistent event store",
+    "No real device/cross-browser/screen-reader/human learner trial"
+  ],
+  "cleanup": "Browser contexts and dedicated IndexedDB deleted;4515 server and Chrome closed;no listening port"
+}

@@ -1,0 +1,47 @@
+body {
+  font: 1rem/1.6 system-ui;
+  color: #17243d;
+  background: #f4f7fb;
+  margin: 0;
+}
+main {
+  max-inline-size: 65rem;
+  margin: auto;
+  padding: 1rem;
+  overflow-wrap: anywhere;
+}
+button,
+input,
+a {
+  font: inherit;
+  min-block-size: 44px;
+}
+button,
+input {
+  max-inline-size: 100%;
+  border: 1px solid #60708c;
+  padding: 0.4rem;
+}
+a {
+  color: #124c9c;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid #124c9c;
+  outline-offset: 3px;
+}
+.badge {
+  color: rgb(150, 20, 20);
+}
+section {
+  margin-block: 1rem;
+}
+iframe {
+  inline-size: min(100%, 20rem);
+  block-size: 7rem;
+  border: 1px solid #60708c;
+}
+label {
+  display: block;
+}

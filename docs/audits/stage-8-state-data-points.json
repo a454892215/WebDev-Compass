@@ -1,0 +1,150 @@
+[
+  {
+    "id": "8.6.1",
+    "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.1.vs.md",
+    "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.1.vs-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.1.vs.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先问谁是事实来源、谁需要共享、保留多久、由哪个作用域拥有，再选API。输入草稿/展开属于组件，能分享和刷新恢复的筛选属于URL，跨组件客户端偏好可用useState/Pinia，远程结果由useAsyncData/useFetch维护读取状态。不要把所有服务端DTO复制到一个永不过期的全局store，导致两份事实互相覆盖。\n\nNuxt useState在当前应用/SSR请求中共享，并把可序列化值放payload，不是服务器进程级单例。模块顶层export const x=ref(...)可能跨请求共享；普通只读常量与可变用户状态不同。Pinia也需要正确SSR实例生命周期，不因叫store就自动隔离。敏感值不能因放在useState就留在服务器。",
+      "example": "先列主工作台中草稿、scope/filter、列表结果、收藏的所有者；再运行state-lab观察草稿持久化是单独明确选择，而不是所有UI状态默认写入IndexedDB。主项目实际源码与SSR记录由集成验收核对。",
+      "exercise": "故障：模块顶层ref保存当前用户，然后两个SSR请求读到同一可变对象。只在隔离副本用合成scope复现，改为每请求/应用创建；不能用串行测试掩盖。",
+      "practice": "在副本为“刷新后筛选保留、未提交文字不进入分享URL、跨组件收藏同步”写一张状态归属清单并实现一处变体。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/getting-started/state-management",
+        "https://vuejs.org/guide/scaling-up/state-management.html"
+      ],
+      "runtime": "docs/audits/stage-8-state-data-runtime.json",
+      "review": "docs/audits/stage-8-state-data-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "8.6.2",
+    "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.2.query-key.md",
+    "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.2.query-key-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.2.query-key.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "查询key描述“这份结果由哪些输入决定”：资源/版本、筛选、页码、语言、必要的用户或租户维度。key不是凭据，不放Token。不同用户需要同形查询不等于可共享结果；同key调用还必须保持数据处理选项一致。\n\n浏览器/ServiceWorker、Nuxt客户端payload/应用缓存、Nitro、反向代理/CDN和后端缓存是不同层。客户端clearNuxtData不能清掉CDN；no-store也不代替Nitro cache:false或认证。退出/换租户时先撤销可见私有数据、取消/隔离旧请求，再按业务清理相关key/持久化；只在名字里加userId还不足以阻止迟到响应回写。",
+      "example": "pnpm test验证不同scope或query生成不同key，旧epoch响应被拒；主Nuxt查询scope实际由URL传入，公开fixture不是登录，不能把scope参数当访问控制。",
+      "exercise": "故障：只clearNuxtData后仍给服务端/account套公开swr。检查实际响应与所有缓存层，敏感路径旁路并重测并发；不要宣称清客户端解决所有层。",
+      "practice": "在隔离副本遗漏key中的scope，观察两个查询互相复用；恢复key并为切换scope时迟到结果加epoch/取消保护。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/api/composables/use-async-data",
+        "https://nuxt.com/docs/4.x/api/utils/clear-nuxt-data"
+      ],
+      "runtime": "docs/audits/stage-8-state-data-runtime.json",
+      "review": "docs/audits/stage-8-state-data-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "8.6.3",
+    "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.3.optimistic-update.md",
+    "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.3.optimistic-update-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.3.optimistic-update.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "乐观更新先展示预期结果，服务端确认后成为事实；失败必须区分网络未知、明确拒绝与版本冲突。多次操作/迟到响应使“保存旧快照，失败整页回滚”危险：旧失败可能覆盖新成功。给操作稳定标识、scope/epoch和服务端revision，确认值与临时显示值分开。\n\n本lab仅演示一个数值的latest-intent模型：旧失败不能回滚最新成功，当前失败回到最新确认值；换scope后旧响应无效。真实HTTP /api/value按expectedRevision比较，过期409并返回当前公开fixture值，客户端需重读/提示冲突再决定重试。集合、库存、支付、多实体事务需要更具体协议，不能照搬此简单模型。",
+      "example": "pnpm test运行旧失败/新成功、当前失败、跨scope与低revision反例。pnpm verify另真实POST /api/value：第一次expectedRevision1成功，第二次同版本409且服务端当前值不变；不是仅打印预编日志。",
+      "exercise": "故障：catch统一state.value=snapshot。让A后失败、B先成功，观察值回到旧数据；改用操作归属/确认值与版本检查。",
+      "practice": "给lab模型新增“服务端明确拒绝”和“发送后响应丢失”两种输入，解释何时可回滚、何时应按operation id核对结果；再测试scope切换。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409"
+      ],
+      "runtime": "docs/audits/stage-8-state-data-runtime.json",
+      "review": "docs/audits/stage-8-state-data-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "8.6.4",
+    "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.4.stale-while-revalidate.md",
+    "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.4.stale-while-revalidate-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.4.stale-while-revalidate.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SWR在允许短暂过期的场景先用已有数据再刷新；收益是连续性，代价是用户可能看到旧值。需要定义新鲜期、可接受过期时长、错误展示、刷新时机与失效。余额/权限等敏感决策不应仅凭过期视图执行写操作。\n\nHTTP Cache-Control的stale-while-revalidate、ServiceWorker策略、Nuxt数据刷新与应用自己保留旧结果不是同一实现。本lab staleResult是纯应用模型：成功替换数据并清错误，失败保留原数据且显示可能过期；不把catch返回空数组当成功，也不宣称配置了生产HTTP SWR。缺首次数据的错误要显示无数据，不能虚构旧结果。",
+      "example": "运行页面点击“模拟刷新失败/成功”，核对旧文字保留、错误出现、成功替换；Node与浏览器均验证。按钮使用可控结果，不把它声称真实外网刷新或生产缓存命中。",
+      "exercise": "故障：刷新catch直接返回[]，UI显示“没有课程”掩盖网络错误。恢复data/error分离，验证旧列表与失败说明同时存在。",
+      "practice": "把已有数据与首次读取均失败两种情景分别实现；加入一项过期标识与显式重试，不把错误藏在console。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control",
+        "https://nuxt.com/docs/4.x/api/composables/use-async-data"
+      ],
+      "runtime": "docs/audits/stage-8-state-data-runtime.json",
+      "review": "docs/audits/stage-8-state-data-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "8.6.5",
+    "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.5.offline-first.md",
+    "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.5.offline-first-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.5.offline-first.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先明确断网时哪些读取/编辑仍应工作，再设计本地事实与同步协议。IndexedDB提供异步结构化存储和事务；request成功不等于整个事务完成，保存提示应等transaction.complete，并处理abort、配额、blocked、版本升级与存储驱逐。它不是原生安全存储，也不能承诺永久不丢。\n\n离线写队列需要scope、稳定operation id、基准版本、去重与确认后删除；服务器也需持久幂等保证。navigator.onLine只是提示，不等于服务健康；显式请求失败才是本次证据。Background Sync依赖安全上下文/ServiceWorker和支持情况，调度不能保证按时执行，必须有前台显式重试。\n\n本lab已有页面可断网写草稿和入队，真实IndexedDB刷新恢复；没有App Shell/SW离线导航，断网刷新页面仍可能打不开。服务端幂等表只在本进程，重启丢失；这不是完整离线PWA或生产同步后端。",
+      "example": "pnpm verify真正设置浏览器offline，确认HTTP重试失败但队列仍在；恢复网络后显式重试，只删匹配ack项。相同scope/id重复HTTP只应用一次，复用id改payload409；草稿按Alice/Bob分开，刷新恢复。",
+      "exercise": "故障：fetch发出后立即delete outbox，响应丢失则内容永久丢失。把删除移到response.ok且ack匹配之后，故意断网复验队列保留。",
+      "practice": "在副本保存两scope草稿并模拟断网、配额/事务abort和服务端409；把“待发送”与“已确认”分开，明确本地清理/退出策略。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Background_Synchronization_API",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine"
+      ],
+      "runtime": "docs/audits/stage-8-state-data-runtime.json",
+      "review": "docs/audits/stage-8-state-data-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "8.6.6",
+    "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.6.local-first.md",
+    "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.6.local-first-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.6.local-first.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Local-first强调本地可用、数据所有权与同步协作，不只是给云应用加缓存。CRDT在指定数据类型与更新合并规则下支持并发副本最终收敛；仍需要传输、持久化、身份授权、文档生命周期和资源限制。Yjs/Automerge提供实现，不能用简单对象spread合并冒充CRDT。\n\n收敛并不保证业务意图没有冲突：两人同时改价格、删除后编辑、库存约束仍需要产品规则。CRDT不是加密、权限系统或服务器事务替代品；撤销、版本迁移、离线大增量、恶意更新都要有协议。仅单人草稿通常用IndexedDB加明确同步就足够，不为时髦引入完整协作系统。",
+      "example": "类型：官方观察。阅读Yjs shared types/updates与network agnostic说明，用两离线编辑者列增量传递、授权、持久化和业务限制。lab只运行本地草稿/队列，未装Yjs或Automerge，不把它们声称协作已实现。",
+      "exercise": "故障：把两个JSON文档按后到覆盖，称为CRDT。用两人分别添加不同段落证明丢改动，选择明确冲突提示或真正协作库，不更名掩盖。",
+      "practice": "为课程协作笔记写两备选：单人草稿+提交、CRDT协作；给同时插入、删除后编辑和权限撤回三种情景定义预期与未解问题。",
+      "sources": [
+        "https://docs.yjs.dev/",
+        "https://automerge.org/docs/hello/"
+      ],
+      "runtime": "docs/audits/stage-8-state-data-runtime.json",
+      "review": "docs/audits/stage-8-state-data-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "8.6.7",
+    "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs.md",
+    "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "CQRS将命令处理和查询模型分开，可共用一个数据存储，不强制消息队列或微服务。Event Sourcing以追加事件作为事实来源，通过重放建立状态或读投影；二者能组合也能分别采用，前端action日志/Redux devtools不是自动成为事件溯源。\n\n需要同时设计事件版本、乐观并发、幂等消费、顺序、投影延迟、重建/快照与补偿。事件不可变不等于写入天然无冲突，两个命令读同版本仍须revision检查。隐私删除/审计保留也可能冲突，不能永远保存PII来换重放能力。普通课程CRUD多半不值得承担全部代价。",
+      "example": "pnpm test验证有限事件数组投影与未知事件拒绝。再按Microsoft CQRS/Event Sourcing官方正文列命令/查询/事件/投影的职责；这是小模型与文档观察，不是持久事件系统或分布式一致性演练。",
+      "exercise": "故障：投影consumer重复收到added事件就重复加数。说明示例project输入假定已去重；在副本加eventId去重并测试重复，但不要把纯函数去重说成事务性exactly-once。",
+      "practice": "给普通课程收藏写CRUD与CQRS/事件溯源两个方案，明确为何当前不选复杂方案；若新增审计要求，列事件schema演进与投影落后时用户体验。",
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs",
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing"
+      ],
+      "runtime": "docs/audits/stage-8-state-data-runtime.json",
+      "review": "docs/audits/stage-8-state-data-review.md"
+    },
+    "issues": []
+  }
+]

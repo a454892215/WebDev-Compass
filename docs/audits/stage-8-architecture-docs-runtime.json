@@ -1,0 +1,17 @@
+{
+  "stage": 8,
+  "group": "8.1-architecture-docs",
+  "type": "Actual source/document review with independent peer findings and shared real execution",
+  "checks": [
+    "RFC three alternatives,ADR,NFR and C4 match actual implementation",
+    "Directory/index parser fix plus real temporary project cycle regression",
+    "Readonly SSR ref exercise premise corrected;new extension clearly marked",
+    "Main10unit,5E2E,18local edges,build and no-store/DTO/per-scope behavior evidence"
+  ],
+  "sharedEvidence": "docs/audits/stage-8-practice-runtime.json",
+  "limitations": [
+    "No real team/learner trial or production architecture certification",
+    "New intentionally broken SSR lastScope exercise variant not executed in main",
+    "Guard does not parse full Nuxt generated/runtime/external module graph"
+  ]
+}

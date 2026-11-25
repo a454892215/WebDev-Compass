@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  /><title>课程子页</title>
+  <body>
+    <button type="button" id="send">发送课程</button
+    ><button type="button" id="wrong-version">发送错误版本</button>
+    <script type="module">
+      document.querySelector("#send").onclick = () =>
+        parent.postMessage(
+          { v: 1, type: "course:selected", slug: "vue" },
+          "http://127.0.0.1:4513",
+        );
+      document.querySelector("#wrong-version").onclick = () =>
+        parent.postMessage(
+          { v: 2, type: "course:selected", slug: "vue" },
+          "http://127.0.0.1:4513",
+        );
+    </script>
+  </body>
+</html>

@@ -24,7 +24,7 @@
 - [ ] [8.1.3 **架构图** 绘制：C4 模型（Context / Container / Component）基础](../learning/1-notes/08-architecture/8.1-architecture-docs/8.1.3.item-8-1-3.md)
 - [ ] [8.1.4 **边界划分**：按业务域（Domain）vs 按技术层（Layer）的利弊](../learning/1-notes/08-architecture/8.1-architecture-docs/8.1.4.item-8-1-4.md)
 - [ ] [8.1.5 **依赖规则**：单向依赖、禁止循环依赖、eslint-plugin-boundaries 等 enforcement](../learning/1-notes/08-architecture/8.1-architecture-docs/8.1.5.item-8-1-5.md)
-- [ ] [8.1.6 📱 移动端对照：Android 模块化 / Flutter Feature Module ≈ 前端 Feature-Sliced 划分](../learning/1-notes/08-architecture/8.1-architecture-docs/8.1.6.android-flutter-feature-module-feature-sliced.md)
+- [ ] [8.1.6 📱 移动端对照：Android / Flutter 模块化与 Vue/Nuxt 业务边界：相似目标与不同运行约束](../learning/1-notes/08-architecture/8.1-architecture-docs/8.1.6.android-flutter-feature-module-feature-sliced.md)
 
 
 
@@ -33,7 +33,7 @@
 ### 8.2 Vue/Nuxt 业务分层与依赖划分
 
 - [ ] [8.2.1 **Feature-Sliced Design (FSD)**：一种可选业务域划分方式；与 Vue/Nuxt 约定目录协调，避免机械套层](../learning/1-notes/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md)
-- [ ] [8.2.2 **分层架构**：Presentation → Application → Domain → Infrastructure](../learning/1-notes/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md)
+- [ ] [8.2.2 **分层架构**：区分调用流程与源码依赖，以端口隔离 Infrastructure](../learning/1-notes/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md)
 - [ ] [8.2.3 **Container / Presentation** 组件分离在大型项目中的演进](../learning/1-notes/08-architecture/8.2-app-architecture/8.2.3.container-presentation.md)
 - [ ] [8.2.4 **模块化路由**：按路由拆包 vs 按功能域拆包的权衡](../learning/1-notes/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4.md)
 - [ ] [8.2.5 **配置驱动 UI**：JSON Schema 表单、低代码渲染引擎思路](../learning/1-notes/08-architecture/8.2-app-architecture/8.2.5.ui.md)
@@ -60,7 +60,7 @@
 ### 8.4 微前端与 Module Federation（按需）
 
 - [ ] [8.4.1 **微前端** 动机：独立部署、团队自治、技术栈共存](../learning/1-notes/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1.md)
-- [ ] [8.4.2 **集成方式**：构建时（Module Federation）vs 运行时（single-spa、iframe、Web Components）](../learning/1-notes/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2.md)
+- [ ] [8.4.2 **集成方式**：构建期组合、运行时模块加载（Module Federation）、应用编排与 iframe/Web Components 边界](../learning/1-notes/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2.md)
 - [ ] [8.4.3 **Module Federation** 深入：shared 依赖、singleton、版本对齐、远程入口](../learning/1-notes/08-architecture/8.4-micro-frontends/8.4.3.module-federation.md)
 - [ ] [8.4.4 **样式隔离**：Shadow DOM、CSS Modules、CSS-in-JS 冲突、全局污染](../learning/1-notes/08-architecture/8.4-micro-frontends/8.4.4.item-8-4-4.md)
 - [ ] [8.4.5 **路由协调**：基座路由、子应用激活、404 与 deep link](../learning/1-notes/08-architecture/8.4-micro-frontends/8.4.5.item-8-4-5.md)

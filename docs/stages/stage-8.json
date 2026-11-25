@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "stage": 8,
+  "project": "learning/4-practice/08-architecture/nuxt.config.ts",
+  "points": [
+    {
+      "id": "8.1.1",
+      "theory": "learning/1-notes/08-architecture/8.1-architecture-docs/8.1.1.rfc-adr.md",
+      "example": "learning/2-examples/08-architecture/8.1-architecture-docs/8.1.1.rfc-adr-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.1-architecture-docs/8.1.1.rfc-adr.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-1-1"
+    },
+    {
+      "id": "8.1.2",
+      "theory": "learning/1-notes/08-architecture/8.1-architecture-docs/8.1.2.nfr.md",
+      "example": "learning/2-examples/08-architecture/8.1-architecture-docs/8.1.2.nfr-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.1-architecture-docs/8.1.2.nfr.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-1-2"
+    },
+    {
+      "id": "8.1.3",
+      "theory": "learning/1-notes/08-architecture/8.1-architecture-docs/8.1.3.item-8-1-3.md",
+      "example": "learning/2-examples/08-architecture/8.1-architecture-docs/8.1.3.item-8-1-3-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.1-architecture-docs/8.1.3.item-8-1-3.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-1-3"
+    },
+    {
+      "id": "8.1.4",
+      "theory": "learning/1-notes/08-architecture/8.1-architecture-docs/8.1.4.item-8-1-4.md",
+      "example": "learning/2-examples/08-architecture/8.1-architecture-docs/8.1.4.item-8-1-4-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.1-architecture-docs/8.1.4.item-8-1-4.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-1-4"
+    },
+    {
+      "id": "8.1.5",
+      "theory": "learning/1-notes/08-architecture/8.1-architecture-docs/8.1.5.item-8-1-5.md",
+      "example": "learning/2-examples/08-architecture/8.1-architecture-docs/8.1.5.item-8-1-5-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.1-architecture-docs/8.1.5.item-8-1-5.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-1-5"
+    },
+    {
+      "id": "8.1.6",
+      "theory": "learning/1-notes/08-architecture/8.1-architecture-docs/8.1.6.android-flutter-feature-module-feature-sliced.md",
+      "example": "learning/2-examples/08-architecture/8.1-architecture-docs/8.1.6.android-flutter-feature-module-feature-sliced-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.1-architecture-docs/8.1.6.android-flutter-feature-module-feature-sliced.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-1-6"
+    },
+    {
+      "id": "8.2.1",
+      "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md",
+      "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.1.feature-sliced-design-fsd.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-1"
+    },
+    {
+      "id": "8.2.2",
+      "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md",
+      "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.2.item-8-2-2.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-2"
+    },
+    {
+      "id": "8.2.3",
+      "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.3.container-presentation.md",
+      "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.3.container-presentation-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.3.container-presentation.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-3"
+    },
+    {
+      "id": "8.2.4",
+      "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4.md",
+      "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.4.item-8-2-4.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-4"
+    },
+    {
+      "id": "8.2.5",
+      "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.5.ui.md",
+      "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.5.ui-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.5.ui.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-5"
+    },
+    {
+      "id": "8.2.6",
+      "theory": "learning/1-notes/08-architecture/8.2-app-architecture/8.2.6.item-8-2-6.md",
+      "example": "learning/2-examples/08-architecture/8.2-app-architecture/8.2.6.item-8-2-6-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.2-app-architecture/8.2.6.item-8-2-6.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-2-6"
+    },
+    {
+      "id": "8.3.1",
+      "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming.md",
+      "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-1"
+    },
+    {
+      "id": "8.3.2",
+      "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc.md",
+      "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-2"
+    },
+    {
+      "id": "8.3.3",
+      "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.3.partial-hydration-selective-hydration.md",
+      "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.3.partial-hydration-selective-hydration-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.3.partial-hydration-selective-hydration.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-3"
+    },
+    {
+      "id": "8.3.4",
+      "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.4.hydration.md",
+      "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.4.hydration-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.4.hydration.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-4"
+    },
+    {
+      "id": "8.3.5",
+      "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.5.item-8-3-5.md",
+      "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.5.item-8-3-5-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.5.item-8-3-5.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-5"
+    },
+    {
+      "id": "8.3.6",
+      "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.6.edge-ssr.md",
+      "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.6.edge-ssr-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.6.edge-ssr.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-6"
+    },
+    {
+      "id": "8.3.7",
+      "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.7.item-8-3-7.md",
+      "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.7.item-8-3-7-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.7.item-8-3-7.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-7"
+    },
+    {
+      "id": "8.4.1",
+      "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1.md",
+      "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.1.item-8-4-1.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-1"
+    },
+    {
+      "id": "8.4.2",
+      "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2.md",
+      "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.2.item-8-4-2.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-2"
+    },
+    {
+      "id": "8.4.3",
+      "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.3.module-federation.md",
+      "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.3.module-federation-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.3.module-federation.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-3"
+    },
+    {
+      "id": "8.4.4",
+      "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.4.item-8-4-4.md",
+      "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.4.item-8-4-4-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.4.item-8-4-4.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-4"
+    },
+    {
+      "id": "8.4.5",
+      "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.5.item-8-4-5.md",
+      "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.5.item-8-4-5-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.5.item-8-4-5.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-5"
+    },
+    {
+      "id": "8.4.6",
+      "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.6.item-8-4-6.md",
+      "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.6.item-8-4-6-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.6.item-8-4-6.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-6"
+    },
+    {
+      "id": "8.4.7",
+      "theory": "learning/1-notes/08-architecture/8.4-micro-frontends/8.4.7.item-8-4-7.md",
+      "example": "learning/2-examples/08-architecture/8.4-micro-frontends/8.4.7.item-8-4-7-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.4-micro-frontends/8.4.7.item-8-4-7.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-4-7"
+    },
+    {
+      "id": "8.5.1",
+      "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.1.bff-backend-for-frontend.md",
+      "example": "learning/2-examples/08-architecture/8.5-bff/8.5.1.bff-backend-for-frontend-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.1.bff-backend-for-frontend.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-1"
+    },
+    {
+      "id": "8.5.2",
+      "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.2.bff-vs-api-bff.md",
+      "example": "learning/2-examples/08-architecture/8.5-bff/8.5.2.bff-vs-api-bff-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.2.bff-vs-api-bff.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-2"
+    },
+    {
+      "id": "8.5.3",
+      "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.3.graphql-bff.md",
+      "example": "learning/2-examples/08-architecture/8.5-bff/8.5.3.graphql-bff-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.3.graphql-bff.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-3"
+    },
+    {
+      "id": "8.5.4",
+      "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.4.api.md",
+      "example": "learning/2-examples/08-architecture/8.5-bff/8.5.4.api-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.4.api.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-4"
+    },
+    {
+      "id": "8.5.5",
+      "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.5.dto.md",
+      "example": "learning/2-examples/08-architecture/8.5-bff/8.5.5.dto-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.5.dto.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-5"
+    },
+    {
+      "id": "8.5.6",
+      "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.6.bff-gateway-api-adapter.md",
+      "example": "learning/2-examples/08-architecture/8.5-bff/8.5.6.bff-gateway-api-adapter-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.6.bff-gateway-api-adapter.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-6"
+    },
+    {
+      "id": "8.6.1",
+      "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.1.vs.md",
+      "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.1.vs-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.1.vs.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-1"
+    },
+    {
+      "id": "8.6.2",
+      "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.2.query-key.md",
+      "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.2.query-key-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.2.query-key.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-2"
+    },
+    {
+      "id": "8.6.3",
+      "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.3.optimistic-update.md",
+      "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.3.optimistic-update-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.3.optimistic-update.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-3"
+    },
+    {
+      "id": "8.6.4",
+      "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.4.stale-while-revalidate.md",
+      "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.4.stale-while-revalidate-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.4.stale-while-revalidate.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-4"
+    },
+    {
+      "id": "8.6.5",
+      "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.5.offline-first.md",
+      "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.5.offline-first-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.5.offline-first.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-5"
+    },
+    {
+      "id": "8.6.6",
+      "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.6.local-first.md",
+      "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.6.local-first-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.6.local-first.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-6"
+    },
+    {
+      "id": "8.6.7",
+      "theory": "learning/1-notes/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs.md",
+      "example": "learning/2-examples/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs-demo.md",
+      "exercise": "learning/3-exercises/08-architecture/8.6-state-data/8.6.7.event-sourcing-cqrs.md",
+      "practice": "learning/4-practice/08-architecture/tasks.md#p-8-6-7"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "stage": 8,
+  "executedBy": "root",
+  "recordedAt": "2026-11-25T09:31:40.993715+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenInstall": "passed",
+    "typecheck": "passed",
+    "eslint": "passed",
+    "unit": 10,
+    "architectureBoundaries": {
+      "explicitLocalEdges": 18,
+      "errors": 0,
+      "guardRegressionTests": 5
+    },
+    "productionSSRBuild": "passed",
+    "playwright": {
+      "startTime": "2026-11-25T09:29:11.396Z",
+      "duration": 4196.8679999999995,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "actualCases": [
+    "four parallel SSR scopes;no-store;DTO/internal marker/server canary excluded",
+    "optional fail200/null/warning with courses preserved;invalidscope400;missing404",
+    "two viewports URL submitted filter,scope switch,emitted favorites,scope separation,optional recovery,keyboard/axe,detail/title/reload",
+    "URL refresh/history and ephemeral favorites reset;zero hydration errors/no initial duplicatebrowserAPI"
+  ],
+  "testSource": [
+    "learning/4-practice/08-architecture/tests/e2e/http.spec.ts",
+    "learning/4-practice/08-architecture/tests/e2e/flow.spec.ts",
+    "learning/4-practice/08-architecture/tests/unit/boundaries.test.ts",
+    "learning/4-practice/08-architecture/tests/unit/workspace.test.ts"
+  ],
+  "limitations": [
+    "Main upstream is process-local synthetic adapter, not realHTTP;HTTPlab separately",
+    "Scope is public fixture selection, not authentication or authorization",
+    "No real mobile/screen reader/human trial/production capacity/deployment",
+    "Explicit-import guard is limited, not full Nuxt graph or sandbox"
+  ],
+  "findingsClosed": [
+    "First two reload cases raced router.push; assert URL committed before reload. Five final tests passed without fixed sleeps.",
+    "Directory alias first candidate was a directory; require isFile and add real temporary project directory/index cycle regression."
+  ]
+}

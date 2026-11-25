@@ -1,0 +1,43 @@
+:root {
+  font-family: system-ui, sans-serif;
+  background: #f4f7fb;
+  color: #17243d;
+}
+* {
+  box-sizing: border-box;
+}
+main {
+  max-inline-size: 52rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  overflow-wrap: anywhere;
+}
+textarea {
+  display: block;
+  inline-size: 100%;
+  min-block-size: 7rem;
+  font: inherit;
+  border: 1px solid #60708c;
+}
+button,
+select {
+  font: inherit;
+  min-block-size: 44px;
+  margin: 0.4rem;
+  padding: 0.5rem;
+  color: inherit;
+  background: white;
+  border: 1px solid #60708c;
+}
+label {
+  display: block;
+}
+button:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #124c9c;
+  outline-offset: 2px;
+}
+a {
+  color: #124c9c;
+}

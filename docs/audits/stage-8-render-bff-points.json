@@ -1,0 +1,264 @@
+[
+  {
+    "id": "8.3.1",
+    "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming.md",
+    "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.1.csr-ssr-ssg-isr-streaming.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "CSR、SSR描述初始呈现主要在哪执行，SSG描述何时生成；有Node服务器并不自动意味着SSR。SSR可能提高原始HTML可用性，但仍有JS接管、服务端计算与数据延迟。SSG适合可枚举且允许构建时快照的公开内容；CSR可适合已登录交互工具，但仍需加载/失败、链接、无障碍和搜索需求。 ISR/后台再验证依框架和托管缓存能力，Nuxt Node swr与平台isr、浏览器HTTP缓存不同。Streaming提前发送壳或边界内容，不会自动缩短总数据时间；代理缓冲、错误状态何时已提交、CSP和接管策略也须验证。不要把TTFB小直接等于FCP/LCP好，更不能仅凭SSR承诺排名。",
+      "example": "核读主代理Nuxt4.7 Node SSR真实生产构建与5项E2E；SSR原始HTML带scope课程且接管可交互。比较SSG/CSR明确复用2026-11-25阶段7三profile历史runtime，不重跑、不称Streaming/ISR通过。",
+      "exercise": "故障：方案把静态public上传后期待运行时Cookie聚合和SSR。先查看有无server入口，再选择Node/API或改变需求；恢复后直接访问详情并核对HTTP状态。",
+      "practice": "为公开周更文档、每秒行情、带身份工作台各选候选模式，给同一工作台两种方案并说明何时推翻决定。",
+      "source": [
+        "https://nuxt.com/docs/4.x/guide/concepts/rendering",
+        "https://nuxt.com/docs/4.x/getting-started/deployment"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.3.2",
+    "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc.md",
+    "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.2.react-server-components-rsc.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "RSC是React的服务端组件模型，不是SSR的别名。Server Component代码可在构建或请求阶段运行，不直接作为其客户端组件代码发送；输出、传给Client Component的props和序列化数据仍会被浏览器看见。Client Component也可能参与服务器初始HTML生成，use client不等于永远不在服务器执行。 Server Function/Action形成可被客户端调用的服务端入口，不是自动可信的本地函数。每次调用均需验证输入、身份/资源权限、CSRF或框架规定的来源保护；不可依赖UI隐藏、不可猜函数标识或闭包变量代替授权。框架/打包器支持随版本变化，Nuxt Vue方案不硬套React指令。",
+      "example": "类型：React官方文档观察。分别读Server Components与use server，标出执行位置、发送数据和可调用边界；对主Nuxt把server/api、payload及Vue组件对应到职责而非API名字。不装Next/RSC，不声称编译通过。",
+      "exercise": "故障：把数据库token作为Client Component prop，认为父组件在server所以保密。追踪输出/props，改为最小公开DTO；真正泄露过的token另需撤销/轮换，不能只删UI。",
+      "practice": "给“只有管理员可改课程”画一次Server Action请求链，把身份/授权/输入验证放到服务端，并指出哪些返回字段将对浏览器公开。",
+      "source": [
+        "https://react.dev/reference/rsc/server-components",
+        "https://react.dev/reference/rsc/server-functions",
+        "https://react.dev/reference/rsc/use-server"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.3.3",
+    "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.3.partial-hydration-selective-hydration.md",
+    "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.3.partial-hydration-selective-hydration-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.3.partial-hydration-selective-hydration.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Islands把大部分内容作为非交互HTML，独立交互区按需要加载客户端能力；Astro的client:*指令决定客户端岛何时初始化。不同框架的partial/selective/lazy hydration术语不能直接互换：React选择性接管、Vue延迟接管和Astro岛的边界/协调机制不同。 延迟接管减少立即工作，但交互前未就绪、布局变化、焦点/事件重放及跨岛状态都有成本。静态HTML仍需语义与可用链接，重要任务不能永远等不可达触发条件；普通动态import不是已经构建Islands系统。Nuxt特性应按当前版本和具体组件能力验证，不默认开启实验组件。",
+      "example": "类型：Astro与Nuxt官方观察。把课程介绍、搜索、结算分别划为静态/可延后/立即交互，记录触发、无JS行为、共享状态与失败回退。本轮不安装Astro，不把主Nuxt普通SSR组件称岛。",
+      "exercise": "故障：关键按钮只在永远没进入视口的祖先事件后接管。用键盘路径推演并改为立即就绪或原生导航，不用spinner掩盖永久不可用。",
+      "practice": "将公开介绍页设计成两个互不依赖交互区；再加入“结算需立即键盘使用”约束，修改触发与回退。",
+      "source": [
+        "https://docs.astro.build/en/concepts/islands/",
+        "https://nuxt.com/docs/4.x/guide/best-practices/performance"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.3.4",
+    "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.4.hydration.md",
+    "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.4.hydration-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.4.hydration.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "服务器HTML和客户端首次渲染需采用同一输入与有效DOM结构。时间、随机数、隐式时区、setup中读window/localStorage、浏览器修正非法嵌套、第三方提前改DOM都可能造成不匹配。没有报warning不证明所有输入正确，不能把生产压掉日志当修复。 Nuxt用useAsyncData/useFetch把服务端结果放payload供初始接管，useState按应用提供可序列化初始状态；不能用Node模块级可变对象掩盖问题。浏览器专属功能在mounted初始化、清理时注销；稳定占位在两端首次一致，必要时采用ClientOnly并给合理fallback。",
+      "example": "读取flow.spec/http.spec与最终JSON5expected0fail；两个视口初始无重复workspace API，零pageerror/hydration mismatch，URLfilter/history/详情reload与标题通过。副本新增视口/随机故障未运行，不冒充实测。",
+      "exercise": "故障：server占位但客户端setup立即按innerWidth切另一DOM。定位首次render输入差异，恢复mounted更新或CSS；不用全局suppress警告代替一致性。",
+      "practice": "在副本新增mounted后显示视口宽度、SSR先显示“未测量”；再故意把window读取放setup，记录服务器失败与修复；另外用随机初值比较payload保真。",
+      "source": [
+        "https://nuxt.com/docs/4.x/guide/best-practices/hydration",
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.3.5",
+    "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.5.item-8-3-5.md",
+    "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.5.item-8-3-5-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.5.item-8-3-5.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "可在server/browser导入不等于代码在两个环境有相同能力。DOM、Node文件系统、数据库连接、进程环境和请求凭据有各自位置；动态import也可能在错误环境初始化。服务端每请求身份/可变状态不能放进进程级单例，公开不可变常量则可安全共享。 useState/useAsyncData数据会进入客户端payload，应只保存所需可序列化公开DTO，不保存数据库客户端、函数、真实凭据或所有原始上游字段。key要描述数据身份和查询维度，但key不能代替服务端授权。退出/切身份需清理可见数据与对应缓存，代理/CDN/Nitro缓存也必须检查。",
+      "example": "四并发SSR alice/bob各只含本scope课程、no-store、无STAGE8_INTERNAL_ONLY/STAGE8_SERVER_CANARY；非法scope API/页400、缺详情404。作用域是公开fixture非真实认证；source key含scope+failmode，DTO白名单和perNuxt useState已核读。",
+      "exercise": "故障：SSR handler把全量上游对象返回且缓存key固定workspace。先查HTML/payload和最终响应，再裁剪DTO、区分key和服务端缓存策略；单改前端类型不足以修复。",
+      "practice": "在隔离副本加入模块级lastScope并让无输入请求复用它，先用合成数据暴露串用，再恢复每请求解析和明确默认/错误规则。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/state-management",
+        "https://nuxt.com/docs/4.x/guide/going-further/runtime-config"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.3.6",
+    "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.6.edge-ssr.md",
+    "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.6.edge-ssr-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.6.edge-ssr.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Edge把计算放到靠近用户的节点，Origin把应用放在集中区域；真实延迟由用户到计算、计算到身份/数据、缓存命中、冷启动等共同决定。用户附近渲染再跨洋查数据库可能更慢，不能只比较地理距离或厂商宣传。 Edge运行时对Node API、原生依赖、连接与CPU/内存/执行时限、持久化有具体约束，不能假设所有Nuxt node-server包可原样运行。跨区域数据一致性、写后读、失效传播、隐私驻留与成本需要业务约定；私有响应不应因Edge缓存而跨用户共享。",
+      "example": "类型：部署架构观察。主项目只在本机Node SSR运行，写一份Edge适配评估表：runtime API、数据区、身份、缓存key/失效、成本和失败fallback。未部署Edge，不给伪造地区延迟或速度提升百分比。",
+      "exercise": "故障：在Edge函数里无条件导入依赖本地文件系统/原生二进制的库。先核对平台能力与依赖入口，再选适配器或保留Origin职责，不以浏览器guard包住静态import掩盖。",
+      "practice": "假设用户分布亚洲而数据库只在欧洲，比较边缘SSR、欧洲Origin、公共SSG+独立账户API；再加入数据驻留要求。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/deployment",
+        "https://developers.cloudflare.com/workers/runtime-apis/nodejs/"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.3.7",
+    "theory": "learning/1-notes/08-architecture/8.3-rendering/8.3.7.item-8-3-7.md",
+    "example": "learning/2-examples/08-architecture/8.3-rendering/8.3.7.item-8-3-7-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.3-rendering/8.3.7.item-8-3-7.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-3-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "决策树是讨论约束的工具，不是自动证明架构正确。先问内容是否公开且可在构建时获取、最大可接受陈旧时间、是否需每请求身份/数据，再问路由能否枚举、托管运行时与预算；最后比较交互量、无JS/搜索要求和维护成本。 公共文档可SSG，个性化请求可SSR或静态壳+受保护API，封闭交互工具可CSR；混合模式需逐路由记录缓存、身份与更新机制。为候选写被否决原因、未知项、最小验证和重新评估触发，避免只给一个永远不变的框架答案。",
+      "example": "核读主RFC/ADR/NFR/ARCHITECTURE：模块化Node SSR、独立前端+BFF、微前端三备选，明确选择/代价/重新评估触发；真实Node SSR运行支持当前决定，未把决策表当所有模式性能实验。",
+      "exercise": "故障：决定书以“SSR更先进”作为唯一理由。用内容时效/身份/部署能力重写，并注明未测预算；不编造性能数字填表。",
+      "practice": "为课程目录新增“公开周更、无Node运维预算”和“每用户即时余额”两组互相不同需求，分别沿决策树走到结论并给替代方案。",
+      "source": [
+        "https://nuxt.com/docs/4.x/guide/concepts/rendering",
+        "https://docs.astro.build/en/concepts/islands/"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.5.1",
+    "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.1.bff-backend-for-frontend.md",
+    "example": "learning/2-examples/08-architecture/8.5-bff/8.5.1.bff-backend-for-frontend-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.1.bff-backend-for-frontend.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "BFF面向特定用户界面聚合、适配后端数据，减少客户端瀑布/契约泄露；它不是通用反向代理，也不是把全部业务逻辑复制一遍。身份入口可在BFF统一处理，但后端仍需在其信任边界检查调用者和资源权限。聚合必须区分必要依赖与可选依赖，给总deadline、取消、并发上限和降级语义。 若必要课程失败，应明确失败而非空列表成功；可选进度失败可返回degraded和null/警示，不能假装进度0。保留可观察错误类别，日志不带凭据与隐私查询。重试只对幂等/安全边界下可重试故障做预算，写请求还需幂等与冲突处理。",
+      "example": "真实bff-lab固定loopback上游：正常200、可选超时200 degraded+progress:null、必要超时504、坏必要DTO502；deadline会取消待完成fetch。主Nuxt聚合进程内fixture adapter，不虚称跨服务HTTP；两者分别阅读。",
+      "exercise": "故障：Promise.all令一个可选失败清空全页。按依赖重要性改变聚合策略，仍对必要输入失败快速退出；不能无条件allSettled后吞掉全部错误。",
+      "practice": "在lab副本把可选进度返回伪造0，先证明UI无法区分“未完成”和“未知”，再恢复null与警示；为必要依赖增加失败案例。",
+      "source": [
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.5.2",
+    "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.2.bff-vs-api-bff.md",
+    "example": "learning/2-examples/08-architecture/8.5-bff/8.5.2.bff-vs-api-bff-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.2.bff-vs-api-bff.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "直连稳定后端契约可减少一个部署/跳转/故障层；当多个上游、客户端裁剪、保密服务凭据或不同终端适配带来真实重复时，再评估BFF。是否同一个域名、是否反代和是否BFF是不同维度；同源代理也不能自动修复后端权限或任意URL SSRF。 引入后需要责任人、版本契约、超时/限额、监控、缓存和回滚。BFF仅接受业务参数并映射到固定目标，不让请求参数决定协议/主机/端口；禁跳转并配网络出口规则，不能只用startswith校验URL。多端可共享核心业务服务，是否各建BFF看差异而非照抄PC/H5两个UI仓库。",
+      "example": "真实lab给/api/v1/workspace增加url=https://example.com输入，返回400且上游请求计数不变；所有真实请求只到本实验固定127.0.0.1端口。没有向外部或内网地址做攻击。主项目进程内adapter不是独立微服务。",
+      "exercise": "故障：写/api/proxy?url=任意输入并自动跟随重定向。改固定服务映射、参数白名单和redirect:error，生产再核对DNS/网络出口；不要在真实私网演示。",
+      "practice": "给单后端两页面和三上游多端聚合各写BFF/直连两备选；在lab副本列允许业务参数并拒绝未知target字段。",
+      "source": [
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends",
+        "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.5.3",
+    "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.3.graphql-bff.md",
+    "example": "learning/2-examples/08-architecture/8.5-bff/8.5.3.graphql-bff-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.3.graphql-bff.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "REST用资源与HTTP方法表达接口，GraphQL用schema与查询描述所需字段；GraphQL减少过取并不保证减少总计算或自动消除N+1。GraphQL可返回data加errors，HTTP200不等于完整业务成功；REST聚合也能明确部分失败。选择应考虑团队工具、缓存、查询复杂度和后端形态。 两种都需输入校验、身份/逐资源字段权限、成本/深度/并发限制、超时与可观察性。GraphQL DataLoader/客户端缓存不得跨用户无限共享；GraphQL endpoint不因只有一个URL就免CSRF。选择REST不等于已经解决DTO和版本兼容。",
+      "example": "类型：GraphQL官方观察+REST lab对照。读GraphQL response data/errors与授权指南，把lab的degraded/null语义写成GraphQL样例，说明HTTP/字段错误/认证分别怎么处理。本轮未装Apollo/urql或GraphQL server。",
+      "exercise": "故障：客户端只检查response.ok就把data.progress:null当0。检查data/errors与业务字段语义，展示部分失败并保留课程；不要把所有errors一律全屏崩溃。",
+      "practice": "为课程+可选进度定义REST DTO和GraphQL query/partial response；说明权限、缓存key、N+1与查询预算。",
+      "source": [
+        "https://graphql.org/learn/response/",
+        "https://graphql.org/learn/authorization/",
+        "https://graphql.org/learn/security/"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.5.4",
+    "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.4.api.md",
+    "example": "learning/2-examples/08-architecture/8.5-bff/8.5.4.api-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.4.api.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "兼容取决于消费者实际契约，不只看URL是否/v2。删除字段、变类型、改变null/排序/权限/错误语义通常破坏消费者；加字段也可能破坏严格解码器。先确认客户端版本、契约测试和迁移窗口，再决定URL/header/媒体类型版本策略；不为每个内部重构新建版本。 Deprecation按RFC9745使用Structured Field Date，如@unix-seconds，说明被弃用/生效日期；不是布尔true或HTTP-date。Sunset按其规范用HTTP-date说明预计停止服务日期，二者不自动执行下线，也不代替迁移说明。并行服务旧版直到约定窗口，记录兼容和回滚；不能让旧hash页面突然调用已删API。",
+      "example": "真实lab /api/v1/workspace保留原DTO并返回Deprecation、Sunset、successor-version链接；/api/v2/workspace保留旧字段并增加meta.schemaVersion。检查旧调用仍工作，不把教学日期当真实服务停用计划。",
+      "exercise": "故障：返回Deprecation:true并次日直接删除v1。依据RFC修正格式，补真实消费者迁移/观察窗口；不能只改header掩盖破坏性下线。",
+      "practice": "将v1字段title改为label制造旧客户端失败，再选择保留v1映射/v2并行或兼容字段迁移；写窗口和停止条件。",
+      "source": [
+        "https://www.rfc-editor.org/rfc/rfc9745.html",
+        "https://www.rfc-editor.org/rfc/rfc8594.html"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.5.5",
+    "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.5.dto.md",
+    "example": "learning/2-examples/08-architecture/8.5-bff/8.5.5.dto-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.5.dto.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "TypeScript接口不能验证网络字节。把上游unknown先校验结构/范围，再显式映射到内部/公开模型；驼峰转换不是权限过滤，也不能把原对象展开后只改几个key。区分字段缺失、null和0/空串，明确日期是瞬间、日历日期还是本地时间，货币金额不能仅靠显示格式解决精度。 只把UI需要的字段送出；内部备注、上游凭据与审计字段留在server。日期转换采用明确格式/时区，非法/溢出日期拒绝；需要完整多格式协议时用适合的校验器。本lab仅接受UTC秒精度ISO或null，不宣称支持全部ISO8601、时区或真实世界schema。",
+      "example": "真实lab mapCatalog去除internal_note，保留null；数字标题、错类型id、非法日期与2026-02-30拒绝。必要上游DTO坏时BFF502，不伪造空成功。主Nuxt自己的契约与映射另读源码，不假设与本lab字段完全相同。",
+      "exercise": "故障：return {...raw,courseId:raw.course_id}把internal_note带出。改显式白名单映射并断言序列化结果不含该字段，类型删字段不等于运行对象已删除。",
+      "practice": "扩展副本DTO加入可空priceCents，严格区分null、0、缺失及字符串金额；写失败样本并防止内部字段进入响应。",
+      "source": [
+        "https://www.typescriptlang.org/docs/handbook/2/narrowing.html",
+        "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  },
+  {
+    "id": "8.5.6",
+    "theory": "learning/1-notes/08-architecture/8.5-bff/8.5.6.bff-gateway-api-adapter.md",
+    "example": "learning/2-examples/08-architecture/8.5-bff/8.5.6.bff-gateway-api-adapter-demo.md",
+    "exercise": "learning/3-exercises/08-architecture/8.5-bff/8.5.6.bff-gateway-api-adapter.md",
+    "practice": "learning/4-practice/08-architecture/tasks.md#p-8-5-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "移动端API Adapter与Web客户端composable可统一请求/模型，运行在用户设备，不能保密服务端凭据。Gateway常管入口路由、TLS、认证/配额等公共能力；BFF面向特定UI组织聚合与展示契约，三者职责可以协作但不是同义词。 PC/H5 UI独立不必自动产生两个BFF；同一业务服务可共享授权/领域规则，不同终端聚合需求若真实分化再拆。BFF无法消除上游权限、网络失败和版本成本，拆分要有所有者、契约、监测及恢复边界。教学scope只能选公开fixture，不代表已建立生产租户隔离或身份认证。",
+      "example": "核读实际主拓扑图和源码：browser→同源Node API，server进程内fixture adapter；真实HTTP上游只在独立bff-lab。浏览器/服务端/领域授权职责和fixture非认证清楚，main5E2E+9unit支持其状态/DTO事实。",
+      "exercise": "故障：把Android拦截器中的服务secret搬入Nuxt public配置，认为BFF相同架构。追踪浏览器payload，改在server持有受限凭据并最小化返回，真实泄露需轮换。",
+      "practice": "为PC表格与手机摘要复用同一课程后端设计共享契约；列一个值得拆BFF的真实差异与一个不拆的理由。",
+      "source": [
+        "https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends",
+        "https://nuxt.com/docs/4.x/guide/going-further/runtime-config"
+      ],
+      "boundary": "Actual local fixture/official observation/history/shared main execution distinguished; no production authentication, Edge, ISR/streaming or uninstalled framework claim."
+    },
+    "issues": []
+  }
+]

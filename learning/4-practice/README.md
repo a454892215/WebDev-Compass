@@ -20,3 +20,5 @@
 - [阶段6：性能、安全、无障碍、国际化与SEO](./06-performance-security/README.md)：43项四部分资料与真实本地实验。
 
 - [阶段7：Nuxt渲染、构建部署与发布回滚](./07-deployment/README.md)：29点四部分资料、三种profile及本地发布演练。
+
+- [阶段8：Vue/Nuxt模块、状态与渲染选型](./08-architecture/README.md)：39点四部分资料、模块化工作台及隔离实验。
