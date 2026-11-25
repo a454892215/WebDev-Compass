@@ -19,7 +19,7 @@ import re
 import sys
 from urllib.parse import unquote, urlsplit
 
-SKIP_DIRS = {'.git', 'node_modules', '.pnpm-store', 'coverage', 'test-results', 'playwright-report', '.nyc_output', '.vite', '.nuxt', '.output', '__pycache__', '.cache', 'artifacts'}
+SKIP_DIRS = {'.git', 'node_modules', '.pnpm-store', 'coverage', 'test-results', 'playwright-report', '.nyc_output', '.vite', '.turbo', '.nuxt', '.output', '__pycache__', '.cache', 'artifacts'}
 INLINE_CODE = re.compile(r'(`+)(?!`)(.*?)\1(?!`)', re.DOTALL)
 LINK = re.compile(r'!?\[(?:\\.|[^\]\\])*\]\(\s*(<[^>]*>|(?:\\.|[^()\s]|\([^()]*\))+)(?:\s+[\"\'][^\"\']*[\"\'])?\s*\)')
 CHECKBOX = re.compile(r'^\s*-\s+\[([ xX])\]\s+')

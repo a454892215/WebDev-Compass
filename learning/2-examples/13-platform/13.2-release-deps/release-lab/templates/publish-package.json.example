@@ -1,0 +1,10 @@
+{
+  "name": "@your-org/ui",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

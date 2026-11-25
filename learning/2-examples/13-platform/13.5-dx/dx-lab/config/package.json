@@ -1,0 +1,14 @@
+{
+  "name": "@compass/eslint-config-dx-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./index.mjs",
+  "files": [
+    "index.mjs",
+    "rules"
+  ],
+  "peerDependencies": {
+    "eslint": "^10.0.0"
+  }
+}

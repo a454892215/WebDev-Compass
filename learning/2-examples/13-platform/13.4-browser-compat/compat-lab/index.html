@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>兼容能力实验</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="screen-only"><a href="../README.md">返回兼容示例</a></header>
+    <main>
+      <h1>兼容能力实验</h1>
+      <p>
+        无JavaScript也能读取正文并展开原生说明。选择回退只模拟分支，不代表运行了旧浏览器。
+      </p>
+      <details id="baseline">
+        <summary>基础功能说明</summary>
+        <p id="baseline-copy">基础内容始终存在，不依赖增强加载。</p>
+      </details>
+      <section class="layout" aria-label="说明列表">
+        <article>契约</article>
+        <article>能力</article>
+        <article>回退</article>
+      </section>
+      <p id="feature-status" role="status">增强尚未启动</p>
+      <button class="screen-only" id="format" type="button">
+        生成列表摘要
+      </button>
+      <p id="result">契约、能力、回退</p>
+      <noscript><p>增强未启用，基础内容仍可使用。</p></noscript>
+      <p class="print-only">打印副本：基础内容始终存在，不依赖增强加载。</p>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

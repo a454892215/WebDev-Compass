@@ -30,7 +30,7 @@ class AcceptanceTests(unittest.TestCase):
   self.record();self.write('learning/2-examples/01/assets/shared.mjs','export const changed=true');self.assertTrue(any('source changed' in e for e in audit(self.root,1)['errors']))
  def test_generated_pnpm_cache_does_not_stale_review(self):
   self.record()
-  for folder in ['.pnpm-store','coverage','test-results','playwright-report','.nyc_output','.vite']:
+  for folder in ['.pnpm-store','coverage','test-results','playwright-report','.nyc_output','.vite','.turbo']:
    self.write(f'learning/2-examples/01/{folder}/generated.json','generated output')
    self.assertEqual(audit(self.root,1)['errors'],[])
  def test_rule_change_invalidates_review(self):

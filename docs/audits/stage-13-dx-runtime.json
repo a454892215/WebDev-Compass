@@ -1,0 +1,56 @@
+{
+  "stage": 13,
+  "group": "13.5-dx",
+  "startedAt": "2026-11-25T12:18:07+00:00",
+  "recordedAt": "2026-11-25T12:25:15.393366+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "eslint": "10.15.0",
+    "jscodeshift": "17.4.0",
+    "prettier": "3.10.1"
+  },
+  "registry": {
+    "eslint": {
+      "version": "10.15.0",
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      }
+    },
+    "jscodeshift": {
+      "version": "17.4.0",
+      "engines": {
+        "node": ">=16"
+      }
+    }
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "format": "passed",
+    "nodeTests": {
+      "passed": 7,
+      "failed": 0
+    }
+  },
+  "cases": [
+    "RuleTester3valid4invalid import/reexport/dynamicliteral/similarname",
+    "real ESLint finalconfig/lintText positive+negative/scoped",
+    "real jscodeshift AST valueimport renamed while locals/aliases/shadows/object/othermodule/type-only preserved; idempotent and parseerror",
+    "real jscodeshift CLI tempfixture twice stable and --fail-on-error invalidgrammar rejects",
+    "generator normal/tempCLI; sentinel overwrite, traversal/absolute/separators/symlink rejected",
+    "VSCode JSON/path/snippet static only",
+    "real pnpm pack config/rules -> temp tarball import -> ESLint refusal"
+  ],
+  "findingsClosed": [
+    "Recast shorthand originalrange required wholeImportSpecifier replacement to retain localalias",
+    "formatter JSONC trailingcomma vs strictJSONtemplate resolved via explicit noTrailingComma policy"
+  ],
+  "limitations": [
+    "rule specific JS module literal policy only, no full alias/computed/CJS/TS/SFC resolver",
+    "codemod compatible API import migration only, no namespace/default/reexport/Vue template migration",
+    "trusted local root; not adversarial concurrent filesystem race sandbox",
+    "no editor UI/extensions installation or actual snippet expansion",
+    "no registry publication/remote transform/real project scaffolding/reallearnertrial"
+  ],
+  "cleanup": "temp dirs removed in finally; no browser/server/globaleditor/Git mutations"
+}

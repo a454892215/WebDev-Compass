@@ -1,0 +1,139 @@
+[
+  {
+    "id": "13.5.1",
+    "theory": "learning/1-notes/13-platform/13.5-dx/13.5.1.eslint-config.md",
+    "example": "learning/2-examples/13-platform/13.5-dx/13.5.1.eslint-config-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.1.eslint-config.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "共享配置是普通模块/包，导出flat config对象或数组。统一必要规则能降低各宿主漂移，但应保留明确的files范围、parser、插件版本及项目覆盖位置。ESLint配置是执行的JavaScript，不是无害纯数据；依赖来源、升级审查和兼容范围要像其他开发工具一样管理。",
+      "example": "dx-lab/config是真实ESM私有教学包，导出名为compass/domain-policy的数组，只作用domain/**/*.js。测试先用ESLint.calculateConfigForFile确认规则生效，再lintText验证合法/违规。另真实pnpm pack，临时解包后加载配置并再次确认违规拒绝，避免源码能跑而包漏rule文件。",
+      "exercise": "把files改错为domains/**/*.js，目标domain源码不再触发；先查最终配置而非只看eslint退出码。或从files发布清单漏掉rules目录，真实包消费者加载失败；恢复发布内容后复验。",
+      "practice": "为主多包工程写共享配置职责与宿主覆盖位置，在隔离副本引入本lab配置/相应TS解析方案；主已有边界gate与本labESLint规则分开，不假称自动接入。",
+      "sources": [
+        "https://eslint.org/docs/latest/extend/shareable-configs",
+        "https://eslint.org/docs/latest/use/configure/configuration-files"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "共享ESLint Flat Config：规则包、作用域与升级契约",
+      "task": "为主多包工程写共享配置职责与宿主覆盖位置，在隔离副本引入本lab配置/相应TS解析方案；主已有边界gate与本labESLint规则分开，不假称自动接入。",
+      "criteria": [
+        "实际calculateConfigForFile和lintText均证明目标目录生效，其他目录不被误套同一约束。",
+        "真实tarball包含配置及rule文件，可解包消费；记录声明peer与仅当前版本实测、未发布。"
+      ]
+    }
+  },
+  {
+    "id": "13.5.2",
+    "theory": "learning/1-notes/13-platform/13.5-dx/13.5.2.eslint.md",
+    "example": "learning/2-examples/13-platform/13.5-dx/13.5.2.eslint-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.2.eslint.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "规则把可静态表达的约束转为AST访问与定位反馈。meta定义类型/schema/messages，create返回visitor，context.report给出违规位置与原因。无安全自动修复方案的架构问题不要声明fixable或盲自动改import。RuleTester校验正例、反例、消息和边界，而不只确认一条坏代码被拒。",
+      "example": "no-app-import访问静态ImportDeclaration、re-export和字面量ImportExpression，禁止@demo/app及已声明的../apps路径形状，允许@demo/application。RuleTester实际跑3个合法/4个违规；真实ESLint配置另验证domain目录作用域。",
+      "exercise": "将前缀判断改成source.includes(\"app\")会误杀@demo/application；或只访问ImportDeclaration导致export*绕过。新增具体负例/合法例，再恢复完整声明范围。不是只删一个测试让绿灯。",
+      "practice": "将主core→app禁止方向与本lab规则支持的语法列成对照表；新增主工程需要的解析/别名能力前，先为绕过和误报写可复现测试。",
+      "sources": [
+        "https://eslint.org/docs/latest/extend/custom-rules",
+        "https://eslint.org/docs/latest/integrate/nodejs-api#ruletester"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "自定义ESLint规则：从AST节点到可验证架构边界",
+      "task": "将主core→app禁止方向与本lab规则支持的语法列成对照表；新增主工程需要的解析/别名能力前，先为绕过和误报写可复现测试。",
+      "criteria": [
+        "至少覆盖静态导入、re-export、字面量动态导入与相似合法名字，断言messageId。",
+        "报告明确禁止方向且不提供危险fix；对计算导入/别名等无法证明处写限制。"
+      ]
+    }
+  },
+  {
+    "id": "13.5.3",
+    "theory": "learning/1-notes/13-platform/13.5-dx/13.5.3.codemod.md",
+    "example": "learning/2-examples/13-platform/13.5-dx/13.5.3.codemod-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.3.codemod.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Codemod先解析AST，限定来源与节点，再生成代码和审查差异；它不是正则替换标识符。迁移必须说明前提、跳过情况、原语义/新API语义、可回退提交与重跑幂等。解析成功不等于行为正确，仍需类型/组件/宿主回归。",
+      "example": "真实jscodeshift17.4将@demo/core的value import oldTitle改为newTitle，但保留本地名：newTitle as oldTitle。调用、别名、同名局部参数、对象属性与其他模块不动，type-only import跳过。测试真实AST及CLI，二次结果相同；非法语法通过--fail-on-error得到非零。",
+      "exercise": "只改ImportSpecifier.imported会与Recast原shorthand范围共用，可能输出import {newTitle}却调用oldTitle，导致断绑定。本轮实际遇到并用整体替换specifier保留local修复；另用全局字符串replace会误改对象键/局部参数。",
+      "practice": "为主core一个假设公开API更名编写小范围迁移计划，以本lab的binding/alias/type/幂等fixture为最小门槛；不直接批量改主源码或旧阶段。",
+      "sources": [
+        "https://jscodeshift.com/overview/introduction/",
+        "https://jscodeshift.com/build/api-reference/",
+        "https://jscodeshift.com/run/cli/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "jscodeshift AST迁移：保留绑定、别名与幂等",
+      "task": "为主core一个假设公开API更名编写小范围迁移计划，以本lab的binding/alias/type/幂等fixture为最小门槛；不直接批量改主源码或旧阶段。",
+      "criteria": [
+        "其他模块、局部shadow、对象键与type-only import保持；value import正确变为newTitle as原local。",
+        "真实CLI转换和第二次结果稳定，非法语法使门禁非零；不把解析失败算成功迁移。"
+      ]
+    }
+  },
+  {
+    "id": "13.5.4",
+    "theory": "learning/1-notes/13-platform/13.5-dx/13.5.4.cli.md",
+    "example": "learning/2-examples/13-platform/13.5-dx/13.5.4.cli-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.4.cli.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "脚手架把已审约定写成确定模板，但不能靠生成数量代表架构成熟。先验证输入、路径/文件已存在策略、模板版本与输出清单，再写文件；禁止把项目名拼进shell执行。安装依赖、初始化Git、执行生成后的脚本是另外的动作，应明确发生条件。",
+      "example": "generate.mjs只接受小写字母起始、最多40字符的a-z/数字/连字符名字，在调用者已有目录realpath下创建新子目录；mkdir非recursive原子拒绝已存在文件/目录/符号链接，文件wx写入。package.json用JSON序列化，没有自动安装或Git。测试临时目录正常、sentinel不覆盖、遍历/绝对路径/分隔符拒绝、symlink目标拒绝及实际CLI。",
+      "exercise": "把mkdir改成recursive:true并去掉wx，重复运行会覆盖已有文件；先用临时sentinel复现，恢复拒绝覆盖。不要把路径contains(\"..\")当完整安全边界，更不要对真实用户目录做破坏性练习。",
+      "practice": "为主多包样例新增app模板提出安全生成方案和待验清单，先只在temp演练；本lab不替用户建立新的生产宿主仓库。",
+      "sources": [
+        "https://nodejs.org/api/fs.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "安全项目生成器：明确输入、拒绝覆盖与可重复模板",
+      "task": "为主多包样例新增app模板提出安全生成方案和待验清单，先只在temp演练；本lab不替用户建立新的生产宿主仓库。",
+      "criteria": [
+        "已有目录/symlink与所有非法名称拒绝，sentinel仍在；正常输出可解析且没有隐式install/Git。",
+        "说明可信根目录/并发攻击未覆盖，失败只回收本次拥有的目录；输入不进入shell。"
+      ]
+    }
+  },
+  {
+    "id": "13.5.5",
+    "theory": "learning/1-notes/13-platform/13.5-dx/13.5.5.vs-code.md",
+    "example": "learning/2-examples/13-platform/13.5-dx/13.5.5.vs-code-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.5.vs-code.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "code-workspace聚合同一窗口中的文件夹、工作区设置和扩展推荐，不会把独立Git仓库合并，也不等于pnpm workspace依赖图。相对路径利于共享；文件夹配置与全局workspace配置的适用范围要清楚。推荐扩展不是强制安装或CLI质量门禁。",
+      "example": "templates/compass.code-workspace列主阶段工程和dx-lab两个根，设置行尾与明确不自动格式化，推荐Vue.volar与ESLint；course.code-snippets用vue/html scope和原生button type=button。测试真实JSON结构、相对路径解析与snippet placeholder，未启动VS Code或安装扩展。",
+      "exercise": "把相对路径当相对终端cwd，会在workspace换位置后指错；从workspace文件目录解析修正。将snippet仍放templates却期待自动补全出现，定位加载位置而非反复重装全部扩展。",
+      "practice": "为主Nuxt/Vite与共享包准备一份多根工作区评审说明及必要推荐扩展，保留CLI门禁；本组仅配置模板，不修改用户全局编辑器配置。",
+      "sources": [
+        "https://code.visualstudio.com/docs/editing/workspaces/multi-root-workspaces",
+        "https://code.visualstudio.com/docs/editing/userdefinedsnippets",
+        "https://code.visualstudio.com/docs/editing/workspaces/workspace-trust"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "VS Code多根工作区：推荐扩展、设置与Snippet边界",
+      "task": "为主Nuxt/Vite与共享包准备一份多根工作区评审说明及必要推荐扩展，保留CLI门禁；本组仅配置模板，不修改用户全局编辑器配置。",
+      "criteria": [
+        "两个根路径按文件所在位置解析正确，清楚区分窗口聚合与Git/pnpm管理。",
+        "snippet scope/type/placeholder正确，知道需放.vscode；扩展推荐/编辑器展开尚未实测。"
+      ]
+    }
+  }
+]

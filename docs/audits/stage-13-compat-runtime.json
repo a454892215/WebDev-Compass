@@ -1,0 +1,83 @@
+{
+  "stage": 13,
+  "group": "13.4-browser-compat",
+  "executedBy": "stage13_compat",
+  "recordedAt": "2026-11-25T12:25:47.910780+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "browserslist": "4.29.6",
+    "vite": "8.3.8",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed after missing official dependency cache fetched once",
+    "node": 3,
+    "productionViteBuild": "passed",
+    "browser": {
+      "browser": "158.0.8127.37",
+      "results": [
+        {
+          "width": 390,
+          "nativeNoFallbackRequest": true,
+          "injectedMissingLoadsLocal": true,
+          "cssSupports": {
+            "grid": true,
+            "invalid": false,
+            "display": "grid"
+          },
+          "printMedia": true,
+          "overflow": false,
+          "externalRequests": 0
+        },
+        {
+          "width": 1440,
+          "nativeNoFallbackRequest": true,
+          "injectedMissingLoadsLocal": true,
+          "cssSupports": {
+            "grid": true,
+            "invalid": false,
+            "display": "grid"
+          },
+          "printMedia": true,
+          "overflow": false,
+          "externalRequests": 0
+        }
+      ],
+      "cssConditionFalseBaselineAndWidthFault": true,
+      "noJavaScriptBaseline": true,
+      "spoofedUserAgentSameCapability": true,
+      "fallbackNetworkFailureKeepsBaseline": true,
+      "pdfHeaderAndSize": {
+        "header": "%PDF-",
+        "bytes": 159897
+      },
+      "limits": [
+        "single Chrome engine, not old-browser execution",
+        "injected capability absence not a real missing-Intl browser",
+        "print media/headless PDF not physical printer/OS print dialog"
+      ]
+    },
+    "htmlResourcesAtGroupFinish": {
+      "pages": 191,
+      "localReferences": 699,
+      "errors": 0,
+      "scope": "concurrent repository snapshot, final count by root"
+    }
+  },
+  "sourceScope": "browser verifies source modules via Node loopback; production Vite build is separate artifact evidence, not legacy plugin execution",
+  "visualReview": "print-390.png viewed after print-only required text correction; no clipping observed in this fixture",
+  "findingsClosed": [
+    "static file read before writing status avoids false successful header on missing files",
+    "print closed details content not assumed printable; explicit required print copy used",
+    "CSS injection originally depended on exact whitespace; semantic pattern now covers formatted source and expected computed block is asserted"
+  ],
+  "limitations": [
+    "single installed Chrome, 390/1440 simulated viewport only",
+    "UA spoof and injected capabilities not old browser or device execution",
+    "local string-list fallback not complete Intl polyfill",
+    "plugin-legacy only official config observation; no installation/build",
+    "headless print media/PDF not OS dialog, physical printer, long-page or confidential-export certification",
+    "no production support policy, real users or learner trial"
+  ]
+}

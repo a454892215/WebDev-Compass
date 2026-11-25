@@ -1,0 +1,15 @@
+{
+  "name": "@compass/stage13-dx-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "verify": "node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "eslint": "10.15.0",
+    "jscodeshift": "17.4.0",
+    "prettier": "3.10.1"
+  }
+}

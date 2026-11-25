@@ -29,7 +29,7 @@ class KnowledgeAuditTests(unittest.TestCase):
 
     def test_pnpm_cache_documents_are_not_course_content(self):
         self.write('README.md', '# Root')
-        for folder in ['.pnpm-store', 'coverage', 'test-results', 'playwright-report', '.nyc_output', '.vite']:
+        for folder in ['.pnpm-store', 'coverage', 'test-results', 'playwright-report', '.nyc_output', '.vite', '.turbo']:
             self.write(f'{folder}/vendor/README.md', '[generated link](missing.md)')
         self.assertEqual(module.audit(self.root)['errors'], [])
 

@@ -1,0 +1,22 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  esbuild: false
+minimumReleaseAgeExclude:
+  - '@nuxt/kit@4.7.0'
+  - '@nuxt/nitro-server@4.7.0'
+  - '@nuxt/nitro-v3-server@4.7.0'
+  - '@nuxt/schema@4.7.0'
+  - '@nuxt/vite-builder@4.7.0'
+  - '@nuxt/vite-server@4.7.0'
+  - nitropack@2.14.0
+  - nuxt@4.7.0
+  - '@axe-core/playwright@4.14.1'
+storeDir: .pnpm-store
+
+# Keep verification strict; install explicitly instead of implicit network retries.
+verifyDepsBeforeRun: error
+catalog:
+  vue: 3.5.46
+  typescript: 6.0.3

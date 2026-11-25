@@ -1,0 +1,16 @@
+# Review only: put in your actual JS project, not the knowledge repo root.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      vue-runtime:
+        patterns: ["vue", "@vue/*"]
+        update-types: ["minor", "patch"]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+# Major updates remain separate; this does not turn on auto-merge.

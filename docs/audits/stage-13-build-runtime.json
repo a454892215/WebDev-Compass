@@ -1,0 +1,112 @@
+{
+  "versions": {
+    "node": "v26.0.0",
+    "vite": "8.3.8",
+    "typescript": "6.0.3",
+    "playwright": "1.65.1"
+  },
+  "cache": {
+    "cold": {
+      "key": "8a33f61c769b89029f4394e2ab801a362064bc351ce901747c3ec7af2126ed1c",
+      "hit": false,
+      "durationMs": 30.656541999999973,
+      "files": 5
+    },
+    "warm": {
+      "key": "8a33f61c769b89029f4394e2ab801a362064bc351ce901747c3ec7af2126ed1c",
+      "hit": true,
+      "durationMs": 1.1539170000000354,
+      "files": 5
+    },
+    "config": {
+      "key": "e347c6393796800375c0215fc0f312edbbe0212fc8476abf4f972f9e8d52ea2f",
+      "hit": false,
+      "durationMs": 8.125667000000021,
+      "files": 5
+    },
+    "sourceChange": {
+      "key": "b74ea29a52d97b548d0a8f9a2209b84c7ffc48cfa5dd16af9dc3c0c7a342dd7d",
+      "hit": false,
+      "durationMs": 7.150041000000044,
+      "files": 5
+    },
+    "corruption": {
+      "key": "b74ea29a52d97b548d0a8f9a2209b84c7ffc48cfa5dd16af9dc3c0c7a342dd7d",
+      "hit": false,
+      "durationMs": 7.798125000000027,
+      "files": 5
+    },
+    "omittedLabelFault": {
+      "hit": true,
+      "staleLabel": "broken-v1",
+      "requestedLabel": "broken-v2"
+    }
+  },
+  "library": {
+    "esm": true,
+    "cjs": true,
+    "esmTypes": true,
+    "cjsTypes": true,
+    "negativeTypeExpectedError": true
+  },
+  "transformVsTypecheck": {
+    "viteEmittedInvalidTypedSource": true,
+    "tscRejectedTS2322": true
+  },
+  "browser": [
+    {
+      "width": 390,
+      "virtualModule": true,
+      "pluginAudit": true,
+      "builtinManifest": true,
+      "keyboard": true,
+      "noOverflow": true,
+      "externalRequests": 0
+    },
+    {
+      "width": 1440,
+      "virtualModule": true,
+      "pluginAudit": true,
+      "builtinManifest": true,
+      "keyboard": true,
+      "noOverflow": true,
+      "externalRequests": 0
+    }
+  ],
+  "limitations": [
+    "cache is explicit local artifact wrapper, not Vite optimizer/Rolldown persistence/remote cache",
+    "no Module Federation runtime or esbuild/SWC API executed",
+    "no realdevice/multi-engine/remoteCI/production profiling"
+  ],
+  "stage": 13,
+  "group": "13.3-build-advanced",
+  "executedBy": "stage13_build",
+  "startedAt": "2026-11-25T12:17:44Z",
+  "recordedAt": "2026-11-25T12:26:22.472452+00:00",
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "build": "passed",
+    "nodeTests": 3,
+    "browserViewports": [
+      390,
+      1440
+    ]
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm build",
+    "pnpm test",
+    "node verify.mjs"
+  ],
+  "cleanup": "temporary consumers/cache/type fixtures removed; Chrome/server closed; no 4553 listener",
+  "sources": [
+    "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+    "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance",
+    "https://vite.dev/blog/announcing-vite8",
+    "https://vite.dev/guide/api-plugin",
+    "https://module-federation.io/guide/runtime/runtime-api",
+    "https://module-federation.io/guide/troubleshooting/runtime.html",
+    "https://esbuild.github.io/api/#transform",
+    "https://swc.rs/docs/usage/core"
+  ]
+}

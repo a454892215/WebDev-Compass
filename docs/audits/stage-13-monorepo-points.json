@@ -1,0 +1,170 @@
+[
+  {
+    "id": "13.1.1",
+    "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.1.turborepo-nx.md",
+    "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.1.turborepo-nx-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.1.turborepo-nx.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "pnpm workspace负责本地包解析、安装与脚本入口，Turborepo负责基于包/任务依赖调度与缓存，Nx还提供项目图、插件/生成器等治理能力；不能只用仓库大小或工具热度选择。先验证有真实复用与原子变更需求，再比较独立仓库+版本包是否已经够用。",
+      "example": "主工程有core包、Nuxt web与Vite preview。Turbo2.11.13真实dry graph给出两个应用build依赖core build，实际三任务成功；不是把三个shell命令并排运行就称有任务图。Nx仅读官方选型，不称已安装。现有web-common与两个宿主独立仓库不迁移，本例只为教材演示多应用。",
+      "exercise": "删掉web manifest对core的workspace依赖，任务图可能不再知道core前置，构建也可能依赖残留node_modules或旧dist。先在干净隔离副本看manifest与graph，再恢复显式依赖/冻结安装，不用手动先build掩盖缺边。",
+      "practice": "运行主pnpm build与verify:graph，将包关系和任务依赖画成两张图；给当前两个教学应用说明为何共享core，并写不采用Nx的本轮理由。",
+      "sources": [
+        "https://pnpm.io/workspaces",
+        "https://turborepo.dev/docs/crafting-your-repository/configuring-tasks",
+        "https://nx.dev/docs/concepts/decisions/why-monorepos"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "pnpm、Turborepo与Nx：按任务和团队规模选择",
+      "task": "运行主pnpm build与verify:graph，将包关系和任务依赖画成两张图；给当前两个教学应用说明为何共享core，并写不采用Nx的本轮理由。",
+      "criteria": [
+        "能区分包管理、任务编排与团队治理，主图含core前置且三实际任务通过。",
+        "Nx/remoteCI未运行明确；不把教学workspace解释为必须迁现有三个独立生产仓库。"
+      ]
+    }
+  },
+  {
+    "id": "13.1.2",
+    "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.2.item-13-1-2.md",
+    "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.2.item-13-1-2-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.2.item-13-1-2.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "源码import图、package依赖图、task图是不同层：源码使用包应在manifest声明，build还需依赖上游产物；受影响分析从变更文件/基线得到包集合，再传播到依赖消费者。若任务隐式读仓库外配置、未声明依赖或使用缺失Git历史，分析会漏掉真实受影响任务。",
+      "example": "主verify:graph实际Turbo dry JSON确认web/preview均依赖core；pnpm --filter ...@compass/platform-core list --depth -1 --json实际选择core、两个应用及依赖core的根测试工具。这里是反向依赖selector，不冒称已经跑SCM --affected。真正--affected需合适base/head与CI拉取历史，文档给操作前提。",
+      "exercise": "只按修改目录build core，不回归消费者；core公开返回结构改变后两个应用可能失败。用反向依赖选择与实际宿主回归定位；不把缓存命中当受影响分析正确的证据。",
+      "practice": "用主graph与依赖selector生成一次影响说明，核对根测试工具也声明core；新增SCM自动选择作为独立扩展并记录baseline条件。",
+      "sources": [
+        "https://turborepo.dev/docs/reference/run",
+        "https://pnpm.io/filtering",
+        "https://nx.dev/docs/features/ci-features/affected"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "依赖图与受影响构建：变更范围、前置与反向依赖",
+      "task": "用主graph与依赖selector生成一次影响说明，核对根测试工具也声明core；新增SCM自动选择作为独立扩展并记录baseline条件。",
+      "criteria": [
+        "列清依赖图、任务图、SCM变更集合；selector实际输出与声明范围一致。",
+        "CI缺基线/历史或共享配置变化时有保守全量策略，未运行SCM时明确标注。"
+      ]
+    }
+  },
+  {
+    "id": "13.1.3",
+    "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.3.remote-cache.md",
+    "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.3.remote-cache-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.3.remote-cache.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "远程缓存把确定性任务的输出/日志按输入hash共享，不是远程执行，也不是CI依赖下载缓存。输入需包含源码、依赖/锁、配置、影响输出的环境和平台条件；输出必须声明，否则命中后可能只有日志而无dist。secret若影响产物，不能仅pass-through却让不同secret值共享错误结果。",
+      "example": "主只启用--cache=local:rw，真实cold miss、warm hit、删除dist后恢复、COMPASS_LABEL变化与源码变化miss。恢复后的index.js逐字一致，build-info的label另检查新值；未宣称逐字快照整个dist。这个实验验证本地cache机制，不代表已接任何remote服务；remote须另外账号/权限/网络与签名校验。",
+      "exercise": "从Turbo build.env删COMPASS_LABEL后改label，可能错误命中旧build-info；在隔离cache命名空间对比真实输出，再恢复必要输入。不直接清缓存当永久修复；缓存命中但dist缺失要检查outputs而非重复发布。",
+      "practice": "运行主verify:graph并保存localCache五项证据，再给未来远程缓存写接入/访问/签名/撤销与日志清理清单；未接远程不标通过。",
+      "sources": [
+        "https://turborepo.dev/docs/crafting-your-repository/caching",
+        "https://turborepo.dev/docs/crafting-your-repository/using-environment-variables",
+        "https://turborepo.dev/docs/core-concepts/remote-caching"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "远程缓存：输入完整性、权限与产物信任",
+      "task": "运行主verify:graph并保存localCache五项证据，再给未来远程缓存写接入/访问/签名/撤销与日志清理清单；未接远程不标通过。",
+      "criteria": [
+        "warm hit时确有产物恢复，环境/源变化必须miss，不只看“cached”字样。",
+        "remote权限/secret/日志与签名职责分开，远程未接入和同机证据边界明确。"
+      ]
+    }
+  },
+  {
+    "id": "13.1.4",
+    "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.4.workspace.md",
+    "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.4.workspace-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.4.workspace.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "workspace:*明确要求当前工作区存在匹配包，避免普通semver意外从registry装一个同名包。它不是绕过exports的src别名，仍须定义公开JS/types入口并先产生产物；发布前协议会按打包器规则改写成实际版本范围。一个lockfile和统一安装不等于所有包共用任意传递依赖。",
+      "example": "主web/preview和根测试工具都显式依赖@compass/platform-core workspace:*，core用tsc产出ESM+DTS，两应用从exports导入。实际缺少根测试声明时解析失败，修manifest与锁后通过，没有手动node_modules软链。13.2独立release-lab验证真正pack协议改写；主没有发布。",
+      "exercise": "在web通过按当前文件位置计算的相对路径直读core/src，而不声明workspace依赖；本机可能能编译，task图/发布隔离会失真。恢复公开包入口与manifest，并用clean依赖/graph验证，不新增私有src路径出口。",
+      "practice": "检查主三个消费者的workspace声明、core公开导出与构建前置；用13.2实际tgz记录说明协议改写，而不是给workspace包直接上线。",
+      "sources": [
+        "https://pnpm.io/workspaces",
+        "https://nodejs.org/api/packages.html#package-entry-points",
+        "https://pnpm.io/catalogs"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "workspace协议：本地包、公开入口与打包版本",
+      "task": "检查主三个消费者的workspace声明、core公开导出与构建前置；用13.2实际tgz记录说明协议改写，而不是给workspace包直接上线。",
+      "criteria": [
+        "依赖声明、本地解析与exports/dist三者对齐，干净安装不依赖偶然提升包。",
+        "将声明范围/打包版本/registry发布区分，未发布不伪造下载或安装记录。"
+      ]
+    }
+  },
+  {
+    "id": "13.1.5",
+    "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.5.enforcement.md",
+    "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.5.enforcement-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.5.enforcement.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先定义允许的方向，再选工具。共享浏览器core不应回读某个宿主实现或偷用未声明runtime依赖；workspace/task图并不会自动保证架构。静态AST规则比扫描字符串更能区分注释和真正import，但仍有别名/生成代码/动态加载等边界，需要明确支持范围。",
+      "example": "主boundaries.mjs真实读取core TS的import/export、字面量dynamicimport/require，拒绝跨包relative、未声明bare依赖及动态计算模块名；注释不误报。单测含正反例，check:boundaries实际检查core/src。13.5另有真实ESLint/RuleTester和ASTcodemod，不能把主最小gate称完整ESLint插件或安全沙箱。",
+      "exercise": "把简单文本搜索当唯一规则：注释误报、export-from漏报。改用对应AST节点与明确允许方向，保留正反例；若新增别名导致漏检，应扩展解析并验，而非写“所有层已强制”。",
+      "practice": "执行主boundary与单测，给core新增越界负例并恢复；再比较13.5真实ESLint规则，说明两者范围与接入成本。",
+      "sources": [
+        "https://eslint.org/docs/latest/extend/custom-rules",
+        "https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API",
+        "https://turborepo.dev/docs/reference/boundaries"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "跨层依赖门禁：从约定到可失败的检查",
+      "task": "执行主boundary与单测，给core新增越界负例并恢复；再比较13.5真实ESLint规则，说明两者范围与接入成本。",
+      "criteria": [
+        "实际违规返回非零，注释中的假import不触发；相对逃逸/未声明/动态specifier分别验证。",
+        "说明当前gate范围与未覆盖别名/完整SFC，不把最小检查说成全面架构或安全证明。"
+      ]
+    }
+  },
+  {
+    "id": "13.1.6",
+    "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.6.monorepo-android-gradle-module-melos.md",
+    "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.6.monorepo-android-gradle-module-melos-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.6.monorepo-android-gradle-module-melos.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "可以用Gradle多Module/Melos理解依赖图、任务前置、共享配置和原子变更，但Web workspace同时涉及npm协议、ESM/类型/CSS、浏览器支持与SSR运行期。包目录、构建产物、发布单元和部署应用是四个不同边界，不能把Flutter进程状态或Android运行时关系直接映射Nuxt。",
+      "example": "构建前置顺序是core#build→Nuxt/Vite#build，包依赖方向则是宿主/根工具→core；三个包输出各自独立产物，共用TS业务函数不等于同一个页面/UI或同一次部署。pnpm/Turbo实际编排验证，本文不运行Gradle/Melos，不迁已有Flutter项目或三个Web独立仓库。",
+      "exercise": "把两个应用读同一个全局currentUser当共享core能力，或把所有包锁同一部署节奏。指出请求/权限与发布边界的问题，改为无用户状态纯函数/明确版本契约；不在真实生产系统注入反例。",
+      "practice": "为主workspace写移动端对照表与“不选Monorepo”的备选方案，引用真实graph和实际输出路径，不用类比替代Web验证。",
+      "sources": [
+        "https://pnpm.io/workspaces",
+        "https://turborepo.dev/docs/crafting-your-repository/structuring-a-repository",
+        "https://vuejs.org/guide/scaling-up/ssr.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Android多Module与Melos对照：共用概念与Web差异",
+      "task": "为主workspace写移动端对照表与“不选Monorepo”的备选方案，引用真实graph和实际输出路径，不用类比替代Web验证。",
+      "criteria": [
+        "图能分清源包、输出和部署应用，依赖箭头与真实graph一致。",
+        "有明确不适用条件，不能以学习示例为由合并用户原有独立Git项目。"
+      ]
+    }
+  }
+]

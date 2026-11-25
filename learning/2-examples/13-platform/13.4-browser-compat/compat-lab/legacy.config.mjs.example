@@ -1,0 +1,8 @@
+// Observation template, plugin not installed or executed in this lab.
+import legacy from '@vitejs/plugin-legacy'
+export default {
+ plugins:[legacy({targets:['defaults','not IE 11']})],
+}
+// Verify installed plugin/Vite peer range and output before real use.
+// Vite8.1.4+ does not require Terser unless build.minify explicitly uses it.
+// Legacy ES polyfills do not automatically implement every DOM API.

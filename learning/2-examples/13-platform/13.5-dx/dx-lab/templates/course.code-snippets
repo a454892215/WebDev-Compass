@@ -1,0 +1,8 @@
+{
+  "Native button": {
+    "scope": "vue,html",
+    "prefix": "native-button",
+    "body": ["<button type=\"button\">${1:操作}</button>"],
+    "description": "显式button类型，按实际状态补充禁用或提交语义"
+  }
+}

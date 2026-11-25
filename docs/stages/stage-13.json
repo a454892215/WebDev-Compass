@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "stage": 13,
+  "project": "learning/4-practice/13-platform/apps/web/nuxt.config.ts",
+  "points": [
+    {
+      "id": "13.1.1",
+      "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.1.turborepo-nx.md",
+      "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.1.turborepo-nx-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.1.turborepo-nx.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-1"
+    },
+    {
+      "id": "13.1.2",
+      "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.2.item-13-1-2.md",
+      "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.2.item-13-1-2-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.2.item-13-1-2.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-2"
+    },
+    {
+      "id": "13.1.3",
+      "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.3.remote-cache.md",
+      "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.3.remote-cache-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.3.remote-cache.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-3"
+    },
+    {
+      "id": "13.1.4",
+      "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.4.workspace.md",
+      "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.4.workspace-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.4.workspace.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-4"
+    },
+    {
+      "id": "13.1.5",
+      "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.5.enforcement.md",
+      "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.5.enforcement-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.5.enforcement.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-5"
+    },
+    {
+      "id": "13.1.6",
+      "theory": "learning/1-notes/13-platform/13.1-monorepo/13.1.6.monorepo-android-gradle-module-melos.md",
+      "example": "learning/2-examples/13-platform/13.1-monorepo/13.1.6.monorepo-android-gradle-module-melos-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.1-monorepo/13.1.6.monorepo-android-gradle-module-melos.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-1-6"
+    },
+    {
+      "id": "13.2.1",
+      "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.1.changesets.md",
+      "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.1.changesets-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.1.changesets.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-1"
+    },
+    {
+      "id": "13.2.2",
+      "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.2.npm.md",
+      "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.2.npm-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.2.npm.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-2"
+    },
+    {
+      "id": "13.2.3",
+      "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.3.renovate-dependabot.md",
+      "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.3.renovate-dependabot-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.3.renovate-dependabot.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-3"
+    },
+    {
+      "id": "13.2.4",
+      "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.4.lockfile.md",
+      "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.4.lockfile-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.4.lockfile.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-4"
+    },
+    {
+      "id": "13.2.5",
+      "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.5.catalog-override.md",
+      "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.5.catalog-override-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.5.catalog-override.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-5"
+    },
+    {
+      "id": "13.3.1",
+      "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.1.module-federation.md",
+      "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.1.module-federation-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.1.module-federation.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-1"
+    },
+    {
+      "id": "13.3.2",
+      "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.2.custom-webpack-vite-plugin.md",
+      "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.2.custom-webpack-vite-plugin-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.2.custom-webpack-vite-plugin.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-2"
+    },
+    {
+      "id": "13.3.3",
+      "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.3.esbuild-swc.md",
+      "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.3.esbuild-swc-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.3.esbuild-swc.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-3"
+    },
+    {
+      "id": "13.3.4",
+      "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.4.persistent-cache.md",
+      "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.4.persistent-cache-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.4.persistent-cache.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-4"
+    },
+    {
+      "id": "13.3.5",
+      "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.5.library-mode.md",
+      "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.5.library-mode-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.5.library-mode.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-5"
+    },
+    {
+      "id": "13.4.1",
+      "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.1.browserslist.md",
+      "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.1.browserslist-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.1.browserslist.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-1"
+    },
+    {
+      "id": "13.4.2",
+      "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.2.polyfill.md",
+      "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.2.polyfill-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.2.polyfill.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-2"
+    },
+    {
+      "id": "13.4.3",
+      "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.3.progressive-enhancement.md",
+      "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.3.progressive-enhancement-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.3.progressive-enhancement.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-3"
+    },
+    {
+      "id": "13.4.4",
+      "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.4.support-matrix.md",
+      "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.4.support-matrix-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.4.support-matrix.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-4"
+    },
+    {
+      "id": "13.4.5",
+      "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.5.feature-detection.md",
+      "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.5.feature-detection-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.5.feature-detection.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-5"
+    },
+    {
+      "id": "13.4.6",
+      "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.6.supports.md",
+      "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.6.supports-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.6.supports.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-6"
+    },
+    {
+      "id": "13.4.7",
+      "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.7.print-css.md",
+      "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.7.print-css-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.7.print-css.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-7"
+    },
+    {
+      "id": "13.5.1",
+      "theory": "learning/1-notes/13-platform/13.5-dx/13.5.1.eslint-config.md",
+      "example": "learning/2-examples/13-platform/13.5-dx/13.5.1.eslint-config-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.1.eslint-config.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-1"
+    },
+    {
+      "id": "13.5.2",
+      "theory": "learning/1-notes/13-platform/13.5-dx/13.5.2.eslint.md",
+      "example": "learning/2-examples/13-platform/13.5-dx/13.5.2.eslint-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.2.eslint.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-2"
+    },
+    {
+      "id": "13.5.3",
+      "theory": "learning/1-notes/13-platform/13.5-dx/13.5.3.codemod.md",
+      "example": "learning/2-examples/13-platform/13.5-dx/13.5.3.codemod-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.3.codemod.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-3"
+    },
+    {
+      "id": "13.5.4",
+      "theory": "learning/1-notes/13-platform/13.5-dx/13.5.4.cli.md",
+      "example": "learning/2-examples/13-platform/13.5-dx/13.5.4.cli-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.4.cli.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-4"
+    },
+    {
+      "id": "13.5.5",
+      "theory": "learning/1-notes/13-platform/13.5-dx/13.5.5.vs-code.md",
+      "example": "learning/2-examples/13-platform/13.5-dx/13.5.5.vs-code-demo.md",
+      "exercise": "learning/3-exercises/13-platform/13.5-dx/13.5.5.vs-code.md",
+      "practice": "learning/4-practice/13-platform/tasks.md#p-13-5-5"
+    }
+  ]
+}

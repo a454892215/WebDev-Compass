@@ -1,0 +1,12 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "stream",
+  "cacheDir": ".cache/turbo",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "env": ["COMPASS_LABEL"],
+      "outputs": ["dist/**", ".output/**"]
+    }
+  }
+}

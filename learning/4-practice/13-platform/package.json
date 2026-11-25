@@ -1,0 +1,45 @@
+{
+  "name": "@compass/stage13-platform",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "postinstall": "nuxt prepare apps/web",
+    "dev": "nuxt dev apps/web --host 127.0.0.1 --port 4551",
+    "build": "TURBO_TELEMETRY_DISABLED=1 turbo run build --cache=local:rw",
+    "build:core": "pnpm --filter @compass/platform-core build",
+    "typecheck": "nuxt typecheck apps/web && pnpm --filter @compass/platform-preview typecheck",
+    "lint": "pnpm --filter @compass/platform-web lint",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "verify:graph": "node scripts/verify-workspace.mjs",
+    "check:boundaries": "node scripts/boundaries.mjs",
+    "check": "pnpm build:core && pnpm check:boundaries && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm build",
+    "check:ci": "pnpm check && pnpm test:e2e"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.1",
+    "@nuxt/eslint": "1.17.0",
+    "@nuxt/kit": "4.7.0",
+    "@playwright/test": "1.65.1",
+    "@types/node": "26.6.6",
+    "@vitejs/plugin-vue": "6.0.11",
+    "@vue/test-utils": "2.6.0",
+    "eslint": "10.15.0",
+    "jsdom": "31.0.1",
+    "prettier": "3.10.1",
+    "typescript": "catalog:",
+    "vite": "8.3.8",
+    "vitest": "5.1.1",
+    "vue-tsc": "3.3.14",
+    "nuxt": "4.7.0",
+    "vue": "catalog:",
+    "turbo": "2.11.13",
+    "@compass/platform-core": "workspace:*"
+  }
+}

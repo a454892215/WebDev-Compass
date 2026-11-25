@@ -1,0 +1,141 @@
+[
+  {
+    "id": "13.2.1",
+    "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.1.changesets.md",
+    "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.1.changesets-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.1.changesets.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "多包版本化要同时考虑公开API和依赖边。Changeset记录包名、SemVer意图及说明；version把意图组装成版本/依赖范围/changelog，publish才向registry写入。内部包major变化时，即使调用包没有直接代码修改，旧消费者范围可能不再兼容，也需要发布新的依赖声明；这不是机械把全部包统一升major。",
+      "example": "release-lab临时workspace有core1.0.0、widget1.0.0及私有host，widget依赖core workspace:^。真实CLI3.0.3读取core major changeset，得到core2.0.0/widget1.0.1及依赖changelog；widget内部使用core但公开supportsCurrentSchema布尔契约在1/2下都真测为true。pack widget后声明为^2.0.0，源manifest仍保留workspace:^。这里只验证该依赖图/默认配置，不推导所有策略。若widget直接暴露core的破坏性变化，自动patch也可能语义错误，需为widget另写major意图；工具不能替代API审查。",
+      "exercise": "将Changeset包名写为不存在的包，或把bump写成非法值，定位工具输入错误。合法但语义不当的patch通常不会被工具自动识别，需按公开契约人工审查。CLI3 init是交互，自动脚本用确定配置后version，不在无TTY硬等。",
+      "practice": "在主workspace副本画出两个host及根工具→core的包依赖、core变更对消费者的影响与发布职责，结合独立lab的core major/widget patch记录写迁移说明。主项目没有现成发布平台，不把独立fixture版本当主包已升版。",
+      "sources": [
+        "https://changesets.dev/guide/versioning-and-publishing",
+        "https://changesets.dev/guide/getting-started",
+        "https://pnpm.io/workspaces"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Changesets多包版本：依赖联动、Changelog与发布职责",
+      "task": "在主workspace副本画出两个host及根工具→core的包依赖、core变更对消费者的影响与发布职责，结合独立lab的core major/widget patch记录写迁移说明。主项目没有现成发布平台，不把独立fixture版本当主包已升版。",
+      "criteria": [
+        "保存core/widget的实际版本、依赖范围及changelog，区分声明意图、生成版本与远程发布。",
+        "解释为何本例widget是patch而core是major；不把“内部依赖变了”一律当所有包major。"
+      ]
+    }
+  },
+  {
+    "id": "13.2.2",
+    "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.2.npm.md",
+    "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.2.npm-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.2.npm.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "registry负责包名/版本/元数据/归档分发，workspace只是本地依赖组织。Verdaccio可作私有代理缓存/发布源，Artifactory和GitHub Packages另有访问控制/认证约束；内部包未必必须自建registry。先确认组织scope、可见性、安装读权限、发布写权限及令牌用途，再配置具体工具。",
+      "example": "本地真实pnpm pack已验证widget归档内workspace:^转为^2.0.0，但没有上传服务器。templates/npmrc.example只给特定scope的GitHub Packages地址和环境变量令牌占位；publish-package.json.example指出显式publishConfig.registry。模板仅官方观察/评审，需替换组织与权限，不读取或写入真实token。",
+      "exercise": "配置推演：scope指向A源而publishConfig指向B源，或把具有发布权限的token供不可信PR安装。定位读取/写入目标和权限边界，改成一致的受控registry与最小权限；不要为演示真正泄露或试用凭据。",
+      "practice": "为主core包写交接表，将“主core打包待在隔离副本新增验证、独立widget的pack已测、registry待接”分别列出：scope、registry、读写角色、归档检查、旧版本保留与回退。选择是否需要registry并说明成本，不搭建新服务。",
+      "sources": [
+        "https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry",
+        "https://www.verdaccio.org/docs/what-is-verdaccio/",
+        "https://docs.jfrog.com/artifactory/docs/npm-repositories"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "内部npm包交付：scope、registry、权限与可回退产物",
+      "task": "为主core包写交接表，将“主core打包待在隔离副本新增验证、独立widget的pack已测、registry待接”分别列出：scope、registry、读写角色、归档检查、旧版本保留与回退。选择是否需要registry并说明成本，不搭建新服务。",
+      "criteria": [
+        "区分pack成功与发布/安装授权成功，列明实际未运行Verdaccio/Artifactory/GitHub Packages。",
+        "为回退保留已知锁文件/版本/构建产物；不建议覆盖同一已发布版本或把unpublish当普通回退。"
+      ]
+    }
+  },
+  {
+    "id": "13.2.3",
+    "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.3.renovate-dependabot.md",
+    "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.3.renovate-dependabot-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.3.renovate-dependabot.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Bot负责发现/提交更新候选，不负责保证兼容。先区分安全修复、日常patch/minor、major迁移、peer/引擎变化和0.x约定，再按风险分组。框架runtime与编译器/插件常需联动；把所有依赖放一个大PR会放大定位与回退难度，把每个包都单独更新又可能破坏配套矩阵。",
+      "example": "templates中Dependabot使用package-ecosystem:npm管理实际npm/pnpm项目，vue/@vue范围的patch/minor分组，security另组；major保持独立。Renovate给同类packageRules并默认automerge:false。policy.mjs和3个Node测试演示“检查失败/分支未保护则hold、major/peer变化需人工迁移、安全更新加速评审而非绕过检查”。这不是Bot平台真实PR。",
+      "exercise": "把policy中的checks条件删除，失败的patch会被误认为可进入合并候选；用现有Node测试定位，再恢复保护。另“groups”内update-types用patch/minor，不能混用ignore规则的version-update:semver-*写法；依官方配置层级核对。",
+      "practice": "为主Nuxt/Vite/core写升级分组与major playbook，列最小类型/构建/双host/SSR验证及回退锁文件/产物。Bot接入另行授权，当前只用模板和本地策略实验。",
+      "sources": [
+        "https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference",
+        "https://docs.renovatebot.com/configuration-options/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "依赖更新Bot：分组、兼容评审与可验证回退",
+      "task": "为主Nuxt/Vite/core写升级分组与major playbook，列最小类型/构建/双host/SSR验证及回退锁文件/产物。Bot接入另行授权，当前只用模板和本地策略实验。",
+      "criteria": [
+        "至少一例minor因peer或行为变化仍需人工迁移，至少一例安全修复保留关键验证。",
+        "回退同时说明锁文件、运行产物、数据兼容与forward fix，不仅“git checkout旧package.json”。"
+      ]
+    }
+  },
+  {
+    "id": "13.2.4",
+    "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.4.lockfile.md",
+    "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.4.lockfile-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.4.lockfile.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "manifest给版本意图，lockfile记录解析图/完整性及配置结果。固定packageManager/运行时并提交对应锁文件；CI使用冻结命令，拒绝不一致而不偷偷重解析。npm ci、pnpm install --frozen-lockfile与Yarn immutable是各自工具约定，不应混用锁文件或给所有包管理器写同一命令。",
+      "example": "release-lab临时纯workspace先安装/冻结通过，再把host对widget从workspace:*改为workspace:^而不改锁；真正冻结安装给OUTDATED_LOCKFILE负例。恢复原manifest后冻结通过，锁文件字节不变。负例选纯本地依赖，避免拿网络失败当锁校验；catalog/override更新则显式--no-frozen-lockfile生成临时新锁，再冻结复验。",
+      "exercise": "只改package.json后在CI使用普通可更新安装，会生成新的解析结果并掩盖未审锁变化。改为冻结失败，回开发环境审阅manifest/lock后重试；不能删lockfile后称“修复CI”。pnpm CI=true时已有锁默认冻结，实验需要更新时显式声明。",
+      "practice": "核对主packageManager、pnpm-workspace.yaml、锁文件与CI入口，说明哪些命令允许开发更新、哪些必须冻结；在独立lab复现明确锁错误，别破坏主锁。",
+      "sources": [
+        "https://pnpm.io/cli/install",
+        "https://docs.npmjs.com/cli/v11/commands/npm-ci",
+        "https://yarnpkg.com/cli/install"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "锁文件政策：固定工具、冻结安装与供应链检查边界",
+      "task": "核对主packageManager、pnpm-workspace.yaml、锁文件与CI入口，说明哪些命令允许开发更新、哪些必须冻结；在独立lab复现明确锁错误，别破坏主锁。",
+      "criteria": [
+        "冻结负例必须是明确锁配置/manifest错误，而非DNS、超时或下载失败。",
+        "恢复后冻结成功且锁不被暗改；区分开发重解析、CI拒绝、缓存与安全策略。"
+      ]
+    }
+  },
+  {
+    "id": "13.2.5",
+    "theory": "learning/1-notes/13-platform/13.2-release-deps/13.2.5.catalog-override.md",
+    "example": "learning/2-examples/13-platform/13.2-release-deps/13.2.5.catalog-override-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.2-release-deps/13.2.5.catalog-override.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Catalog把多包重复版本范围集中成常量，依赖用catalog:引用；它不是自动升级或全图唯一版本保证。Override是根策略对解析的强制替换，可影响直接/传递依赖，可能超出上游支持范围。不要把它当通用兼容补丁；需要来源、问题、验证、移除条件和负责人。",
+      "example": "独立lab真实catalog把semver解析到6.3.2；随后将该依赖改为普通6.3.2声明，再在临时根override为7.8.6，显式更新锁后实际require版本为7.8.6并冻结通过。这里故意跨major证明解析会被改变，不证明兼容。两机制隔离，不假设当前旧pnpm对catalog+override组合优先级。",
+      "exercise": "改了catalog/override却继续用旧锁，在CI可能出现配置不一致；明确在开发侧重解析审差异后冻结复验。若被override的库不支持新API，应迁移/更换依赖或移除override，而非不断扩大强制范围让安装安静。",
+      "practice": "读取主workspace的实际catalog和依赖引用，画“声明范围→锁解析→运行验证”链；如果提出override，附问题/测试/到期移除记录，无需求不新增生产override。",
+      "sources": [
+        "https://pnpm.io/catalogs",
+        "https://pnpm.io/settings",
+        "https://pnpm.io/blog/releases/11.28.12"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Catalog与Override：统一意图、实际解析与兼容责任",
+      "task": "读取主workspace的实际catalog和依赖引用，画“声明范围→锁解析→运行验证”链；如果提出override，附问题/测试/到期移除记录，无需求不新增生产override。",
+      "criteria": [
+        "分别展示catalog解析与普通依赖override结果，主声明/锁/实际解析三者不混淆。",
+        "每条override有退出条件和兼容验证；不能以安装成功、去重或版本号相同替代SSR/功能回归。"
+      ]
+    }
+  }
+]

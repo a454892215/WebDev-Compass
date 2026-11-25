@@ -1,0 +1,86 @@
+{
+  "stage": 13,
+  "executedBy": "root",
+  "recordedAt": "2026-11-25T12:36:04.474962+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "turbo": "2.11.13",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "vite": "8.3.8",
+    "vitest": "5.1.1",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "typecheck": "core tsc + Nuxt + preview tsc passed",
+    "lint": "Nuxt only; core has separate AST gate",
+    "format": "passed",
+    "unit": 3,
+    "productionBuild": "3 Turbo build tasks successful",
+    "localCheckCI": "passed",
+    "playwright": {
+      "startTime": "2026-11-25T12:34:29.999Z",
+      "duration": 4433.231,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "workspace": {
+    "tasks": [
+      {
+        "id": "@compass/platform-core#build",
+        "dependencies": []
+      },
+      {
+        "id": "@compass/platform-preview#build",
+        "dependencies": [
+          "@compass/platform-core#build"
+        ]
+      },
+      {
+        "id": "@compass/platform-web#build",
+        "dependencies": [
+          "@compass/platform-core#build"
+        ]
+      }
+    ],
+    "dependencySelector": [
+      "@compass/platform-core",
+      "@compass/stage13-platform",
+      "@compass/platform-preview",
+      "@compass/platform-web"
+    ],
+    "localCache": {
+      "coldMiss": true,
+      "warmHit": true,
+      "deletedOutputsRestored": true,
+      "environmentMiss": true,
+      "sourceInputMiss": true
+    },
+    "scope": "real local Turbo; dependency selector not SCM --affected or remote cache"
+  },
+  "cases": [
+    "two viewports real Nuxt/Vite same coredist,SSR payload no browsercatalog,keyboard/axe/details/nativehash/navigation",
+    "two viewports missingfunctioninjection fallback + JSdisabled SSR/details/anchor,not oldbrowser",
+    "HTTP limit1/10,invalid/array400,nostore/meaningfulSSR/404",
+    "coreDTOindependence/runtimebounds + AST allowed/invalid/export/dynamic/comments"
+  ],
+  "findingsClosed": [
+    "Nuxtapp tsconfig at correct root; root tooling explicit workspacecore dependency",
+    "Vite preview independent semantic typecheck,not transformonly",
+    "sourceprobe restore guarded and cachecleanup independent,normal flow rerun",
+    "cached output proof narrowed to index.js and label separately",
+    "Turbo generatedlogs excluded from teaching/fingerprint with 42checker regressioncases"
+  ],
+  "limitations": [
+    "selector is not realSCMaffected;localcache notremote or crossplatformproof",
+    "probe requiresisolatednonconcurrenteditor environment;guard not filesystemlock",
+    "no registry/Bot/remoteCI/MF/Nx/fulltoolplatform",
+    "no otherengines/realdevices/screenreader/physicalprint/humanlearnertrial"
+  ]
+}

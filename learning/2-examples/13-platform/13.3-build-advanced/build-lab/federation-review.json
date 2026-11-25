@@ -1,0 +1,20 @@
+{
+  "kind": "review-only-not-executed-runtime",
+  "host": {
+    "alias": "catalog",
+    "request": "catalog/Panel",
+    "requiredVue": "^3.5.0",
+    "singleton": true
+  },
+  "oldRemote": {
+    "release": "fixture-r1",
+    "exposes": ["./Legacy"]
+  },
+  "reviewTasks": [
+    "compare actual manifest/exposes release before assuming UI bug",
+    "entry200 may still be invalid manifest/container",
+    "shared provider/version/scope must be checked",
+    "keep old hashed chunks and test compatible fallback",
+    "remote code is trusted execution, not an iframe security boundary"
+  ]
+}

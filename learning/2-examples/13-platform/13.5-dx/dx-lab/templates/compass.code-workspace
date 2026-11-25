@@ -1,0 +1,8 @@
+{
+  "folders": [
+    { "name": "阶段13主工程", "path": "../../../../../4-practice/13-platform" },
+    { "name": "开发工具实验", "path": ".." }
+  ],
+  "settings": { "editor.formatOnSave": false, "files.eol": "\n" },
+  "extensions": { "recommendations": ["Vue.volar", "dbaeumer.vscode-eslint"] }
+}

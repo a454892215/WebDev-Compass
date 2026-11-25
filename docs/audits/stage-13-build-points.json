@@ -1,0 +1,143 @@
+[
+  {
+    "id": "13.3.1",
+    "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.1.module-federation.md",
+    "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.1.module-federation-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.1.module-federation.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Module Federation把远程模块加载、container初始化和共享依赖协商交给构建插件/runtime，不等于普通dynamic import，也不要求所有代码在同一仓库。代码在host执行上下文中运行，微前端名称不会自动建立安全沙箱、认证或数据隔离。先明确为什么需要独立部署，再决定是否值得承担运行期版本/网络复杂度。",
+      "example": "本点是官方观察与配置审查，不运行MF SDK。阅读build-lab/federation-review.json：host要求catalog/Panel，而旧remote只暴露./Legacy，先比较请求alias、exposes与发布manifest，不凭404猜组件Bug。按官方runtime表区分入口获取、manifest形状、expose不存在、container init/shared不兼容；错误码是官方说明，不是本lab产生的日志。",
+      "exercise": "给定host请求catalog/Panel、remote exposes只有./Legacy，定位旧manifest/名称错；先核实际发布版本与官方RUNTIME-014适用前提，再恢复准确expose。若远程未真正启动，只记录配置推演，不伪造runtime控制台错误。",
+      "practice": "给主多包项目写一份“继续workspace包还是新增MF”的取舍，列独立部署收益、远程信任和失败回退成本。主没有MF；如选择新增，在隔离副本按官方插件建立真正remote/host，再取自己的证据。",
+      "sources": [
+        "https://module-federation.io/guide/runtime/runtime-api",
+        "https://module-federation.io/guide/troubleshooting/runtime.html",
+        "https://module-federation.io/guide/runtime/runtime-hooks"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Module Federation故障定位：远程入口、共享版本与发布缓存",
+      "task": "给主多包项目写一份“继续workspace包还是新增MF”的取舍，列独立部署收益、远程信任和失败回退成本。主没有MF；如选择新增，在隔离副本按官方插件建立真正remote/host，再取自己的证据。",
+      "criteria": [
+        "正确区分静态包、普通dynamic import与MF container/share协商，不把本地JSON审查说成运行MF。",
+        "诊断至少覆盖入口/manifest/expose/shared/cache五类，列出fallback负责人和不放宽安全策略的处理。"
+      ]
+    }
+  },
+  {
+    "id": "13.3.2",
+    "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.2.custom-webpack-vite-plugin.md",
+    "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.2.custom-webpack-vite-plugin-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.2.custom-webpack-vite-plugin.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "插件先定义输入/输出和适用阶段，再选择hook。resolveId把公开virtual:id映射到内部空字符前缀ID，load返回模块代码；transform处理已有源码时还要考虑过滤、source map和环境。generateBundle属于产物生成阶段，不能假设开发服务器每次请求都执行。",
+      "example": "真实build-lab/plugin.mjs精确处理virtual:build-info，只把允许格式的公开label用JSON.stringify变成模块；generateBundle emitFile写build-audit.json。Vite另输出.vite/manifest.json，两个manifest职责不同。390/1440浏览器读到build-lab-v1、实际请求audit/内建manifest200，键盘计数可用。",
+      "exercise": "删去resolveId对virtual id的返回值，再构建会发生解析失败；只改load而不完成解析不能修复。另一故障是把generateBundle产物当dev服务器已有路径，请求404时先核阶段。",
+      "practice": "给主Vite preview在隔离副本新增一个公开版本虚拟模块；使用本lab验证精确id/公开字段/产物清单，再核SSR或开发需要哪些额外钩子。主是否已有插件先查源码，不假设已接入本插件。",
+      "sources": [
+        "https://vite.dev/guide/api-plugin",
+        "https://vite.dev/guide/ssr.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Vite插件最小闭环：虚拟模块、构建钩子与公开Manifest",
+      "task": "给主Vite preview在隔离副本新增一个公开版本虚拟模块；使用本lab验证精确id/公开字段/产物清单，再核SSR或开发需要哪些额外钩子。主是否已有插件先查源码，不假设已接入本插件。",
+      "criteria": [
+        "真实build和页面显示相同公开label，audit包含JS产物，未知virtual id不被插件接管。",
+        "不透传环境秘密；说明generateBundle并非dev每请求hook，源码变换的map要求另列。"
+      ]
+    }
+  },
+  {
+    "id": "13.3.3",
+    "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.3.esbuild-swc.md",
+    "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.3.esbuild-swc-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.3.esbuild-swc.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "转换把TS/JSX/新语法变成目标JS；打包还处理模块图、解析、chunk和副作用；类型检查验证静态类型，三者不能互推。Vite8官方默认统一到Rolldown bundler与Oxc编译工具链，不应继续写成所有Vite都默认esbuild开发+Rollup生产。旧配置兼容层和依赖树里的包名不证明某API本轮执行。",
+      "example": "真实verify创建const total:number=\"not-a-number\"的隔离TS。Vite library转换成功生成JS，单独tsc --noEmit产生TS2322。这说明转换成功不等于类型正确。项目正常构建也从app.ts擦除类型并在浏览器执行；本轮没有安装/调用esbuild或SWC API。",
+      "exercise": "把pnpm build当唯一质量门禁，故意错误类型仍成功出JS；增加独立类型检查，确认诊断码/位置，再恢复正确值。不要把执行时偶然没崩溃当类型正确。",
+      "practice": "为主Nuxt/Vite与core包画“源码→框架编译/转换→打包→声明/类型→运行”工具链图，按实际版本标角色；列一条类型错误不能被build绿色掩盖的门禁。",
+      "sources": [
+        "https://vite.dev/blog/announcing-vite8",
+        "https://esbuild.github.io/api/#transform",
+        "https://swc.rs/docs/usage/core",
+        "https://vite.dev/guide/features.html#typescript"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "转换器、打包器与类型检查：Vite8/Rolldown/Oxc及esbuild/SWC",
+      "task": "为主Nuxt/Vite与core包画“源码→框架编译/转换→打包→声明/类型→运行”工具链图，按实际版本标角色；列一条类型错误不能被build绿色掩盖的门禁。",
+      "criteria": [
+        "复现Vite发出JS而tsc拒绝TS2322，明确这是隔离负例，不把坏源码放主应用。",
+        "工具图使用当前Vite8/Rolldown/Oxc事实，esbuild/SWC仅读官方未执行如实标注。"
+      ]
+    }
+  },
+  {
+    "id": "13.3.4",
+    "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.4.persistent-cache.md",
+    "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.4.persistent-cache-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.4.persistent-cache.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先区分pnpm下载store、Vite开发依赖优化缓存、构建器内部缓存、任务级产物缓存和浏览器/CDN缓存。缓存正确性取决于完整输入/环境与输出声明；命中必须能恢复被删除的输出，不只是打印一个hit。profile要先定位解析/插件/类型/打包或I/O，不用一次总耗时给所有工程排序。",
+      "example": "cache.mjs是显式本地产物缓存wrapper，固定清单哈希app/CSS/HTML/plugin/config/cache代码/package/lock，并纳入Node/Vite/platform/arch与公开label。verify实际cold未命中构建，删除输出后warm命中恢复；改label、改源均失效；篡改缓存audit后校验失败并重建。输出记录每次durationMs，但不承诺warm一定更快。",
+      "exercise": "缓存里已有同key文件时改写build-audit.json，verify应检测digest不符并重建；若只检查目录存在就返回hit会复用坏产物。不要删除整个用户cache当作根因修复。",
+      "practice": "给主多包pipeline检查inputs/outputs/env：真实删除core输出后再命中恢复，改其源应影响消费者；对照本lab的局部cache结果，不能假称已验证Vite内部或远程缓存。",
+      "sources": [
+        "https://vite.dev/guide/performance",
+        "https://vite.dev/config/shared-options#cachedir",
+        "https://vite.dev/config/dep-optimization-options"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "持久产物缓存与构建测量：键、输出恢复和失效证据",
+      "task": "给主多包pipeline检查inputs/outputs/env：真实删除core输出后再命中恢复，改其源应影响消费者；对照本lab的局部cache结果，不能假称已验证Vite内部或远程缓存。",
+      "criteria": [
+        "记录冷/暖定义、环境和实际hit/输出恢复，源/配置变更与损坏都不会错误复用。",
+        "注明固定输入清单与信任范围，计时仅本地样本，不作普适倍数加速承诺。"
+      ]
+    }
+  },
+  {
+    "id": "13.3.5",
+    "theory": "learning/1-notes/13-platform/13.3-build-advanced/13.3.5.library-mode.md",
+    "example": "learning/2-examples/13-platform/13.3-build-advanced/13.3.5.library-mode-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.3-build-advanced/13.3.5.library-mode.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "库的格式、扩展名、package type、exports和types是一组消费契约。ESM/CJS不是简单把同一个.js文件换名字；条件导出需让Node与TypeScript分别选对入口。Vite library mode负责JS，tsc/vue-tsc或合适工具负责声明，产物必须由仓库外形态消费者验证。",
+      "example": "build-lab/library用Vite实际输出index.mjs/index.cjs，tsc输出index.d.ts，再为当前无相对import的纯函数声明生成同内容index.d.cts。package.json将import/require各自映射default/types。临时node_modules包链接的ESM/CJS进程均通过公开入口得到5，.mts/.cts真实tsc正例与@ts-expect-error错误参数检查通过。",
+      "exercise": "package type=module时把CJS内容放index.js并让require引用，会与加载语义冲突；使用明确.cjs与正确条件导出，再通过消费者。若types缺失导致any，@ts-expect-error会失去预期约束，应恢复真实声明而非关闭noImplicitAny。",
+      "practice": "核主core当前真实导出格式及类型，记录只ESM还是双格式；用本lab单独完成ESM/CJS消费者演练。若业务只需要ESM，解释不额外维护CJS的收益。",
+      "sources": [
+        "https://vite.dev/guide/build.html#library-mode",
+        "https://nodejs.org/api/packages.html#conditional-exports",
+        "https://www.typescriptlang.org/docs/handbook/modules/reference.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "库模式双格式与声明：真实import、require和类型消费者",
+      "task": "核主core当前真实导出格式及类型，记录只ESM还是双格式；用本lab单独完成ESM/CJS消费者演练。若业务只需要ESM，解释不额外维护CJS的收益。",
+      "criteria": [
+        "Node import与require分别消费实际.mjs/.cjs公开入口，.mts/.cts类型检查均有真实证据。",
+        "声明生成与JS输出分开，写清当前无相对声明图限制；不把链接消费说成npm发布。"
+      ]
+    }
+  }
+]

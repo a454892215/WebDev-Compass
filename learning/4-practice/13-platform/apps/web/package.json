@@ -1,0 +1,15 @@
+{
+  "name": "@compass/platform-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "lint": "eslint .",
+    "dev": "nuxt dev --host 127.0.0.1 --port 4551"
+  },
+  "dependencies": {
+    "@compass/platform-core": "workspace:*",
+    "nuxt": "4.7.0",
+    "vue": "catalog:"
+  }
+}

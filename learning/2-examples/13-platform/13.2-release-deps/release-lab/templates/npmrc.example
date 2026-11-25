@@ -1,0 +1,3 @@
+# Review template: choose your actual scope/registry; do not change global config.
+@your-org:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}

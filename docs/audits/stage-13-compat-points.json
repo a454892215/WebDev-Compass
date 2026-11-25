@@ -1,0 +1,194 @@
+[
+  {
+    "id": "13.4.1",
+    "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.1.browserslist.md",
+    "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.1.browserslist-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.1.browserslist.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先把产品支持对象写成策略，再让实际会读取策略的工具消费。Browserslist是查询/配置约定与兼容数据库，不是一个浏览器或转译器；不同query可能是并集、交集或排除，默认值也依工具入口而变。固定日期/数据库版本并审查结果，不能把“last 2”当永远相同的用户群。",
+      "example": "compat-lab真实Browserslist4.29.6查询chrome >=111、safari >=16.4，断言含指定边界并拒绝非法query。这是教学查询，不是承诺这些浏览器均已运行。Vite8配置显式build.target=es2022并真实构建，不自动读取.browserslistrc来完成同样转换。legacy.config.mjs.example只是官方用法观察，未装或运行plugin-legacy。",
+      "exercise": "只改.browserslistrc而保留vite.config中的es2022，然后误以为Vite自动降到更旧目标。查看实际配置和构建代码，恢复显式工具接入；不要用浏览器名称伪造target行为。",
+      "practice": "为主多包工程列支持策略→各工具配置→实际证据链，核对主Vite/Nuxt配置；若接legacy需作为新增集成并补生产产物和浏览器回归。",
+      "sources": [
+        "https://github.com/browserslist/browserslist#queries",
+        "https://vite.dev/guide/build.html#browser-compatibility",
+        "https://raw.githubusercontent.com/vitejs/vite/main/packages/plugin-legacy/README.md"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Browserslist与Vite目标：查询策略、转译和legacy分开",
+      "task": "为主多包工程列支持策略→各工具配置→实际证据链，核对主Vite/Nuxt配置；若接legacy需作为新增集成并补生产产物和浏览器回归。",
+      "criteria": [
+        "保存真实查询及数据库/工具版本，非法query失败；不将解析结果标成多浏览器通过。",
+        "能指出Vite普通build不会仅因.browserslistrc自动实现相同语法/API兼容；未跑legacy保持未执行。"
+      ]
+    }
+  },
+  {
+    "id": "13.4.2",
+    "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.2.polyfill.md",
+    "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.2.polyfill-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.2.polyfill.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Polyfill是在缺能力的环境提供预期API实现；语法转译解决解析层问题，不自动补齐所有运行时能力。先判断是否必须维持同一API，还是可以用简单业务回退；选可信、审计并锁定版本的依赖，按条件加载，核语义、体积、CSP与更新责任。不要默认插入未经审计的远程脚本。",
+      "example": "lab用Intl.ListFormat原生能力，不缺失时不请求list-fallback.mjs；注入能力缺失时动态import本地小回退模块，真实网络只多一次该请求。fallback仅把字符串列表以顿号连接，明确不是完整Intl.ListFormat polyfill，不修改全局prototype。原生与简化回退输出可不同，业务基础说明仍可读。",
+      "exercise": "把动态import无条件放到初始化，原生环境也多一个请求；恢复按能力加载。再用浏览器route.abort阻断fallback，验证错误状态及原生details仍能展开，而非空白页。",
+      "practice": "检查主宿主增强是否需要完整API兼容，先用最低复杂度的业务回退；任何新polyfill写清依据/锁版本/失败状态，不让示例远程注入成为默认架构。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Glossary/Polyfill",
+        "https://developer.chrome.com/docs/modern-web-guidance/get-started"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "按需Polyfill与本地回退：先判能力和可信来源",
+      "task": "检查主宿主增强是否需要完整API兼容，先用最低复杂度的业务回退；任何新polyfill写清依据/锁版本/失败状态，不让示例远程注入成为默认架构。",
+      "criteria": [
+        "原生不加载模块，缺失分支仅加载本地模块，失败保留基础内容。",
+        "清楚区分这个业务fallback与完整规范polyfill，未接远程脚本也不声称已审所有第三方。"
+      ]
+    }
+  },
+  {
+    "id": "13.4.3",
+    "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.3.progressive-enhancement.md",
+    "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.3.progressive-enhancement-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.3.progressive-enhancement.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "渐进增强从可用的基础内容/原生语义开始，再按能力添加体验；优雅降级从完整体验出发，为能力不足环境保留可接受行为。二者是设计起点和组织策略，不是互斥口号。先定义用户必须完成什么、缺少增强还能做什么，再选择实现与验证。",
+      "example": "lab正文和原生details直接在HTML，javaScriptEnabled:false真实上下文仍可阅读/展开；增强只是生成本地列表摘要。原生/注入缺失/增强模块加载失败分别有状态。完整应用若基线任务是登录支付，不能只因正文可读就称整个业务已实现渐进增强。",
+      "exercise": "把基础说明改为只有DOMContentLoaded后append的节点，禁JS时将缺失。恢复声明式HTML并把增强放独立模块；不靠给测试打开JS回避。",
+      "practice": "在主Nuxt的无JS路径核对实际SSR正文/原生details，定义当前被验证的基线任务；业务交互需要JS的部分另列，不能把SSR有HTML当整应用无JS可用。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement",
+        "https://developer.mozilla.org/en-US/docs/Glossary/Graceful_degradation",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "渐进增强与优雅降级：先明确基线任务",
+      "task": "在主Nuxt的无JS路径核对实际SSR正文/原生details，定义当前被验证的基线任务；业务交互需要JS的部分另列，不能把SSR有HTML当整应用无JS可用。",
+      "criteria": [
+        "使用真实禁JS上下文保留正文及可操作details，记录具体功能而非只截屏。",
+        "给出增强失败的可观察状态与基线任务边界，不宣称未实现的后端流程。"
+      ]
+    }
+  },
+  {
+    "id": "13.4.4",
+    "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.4.support-matrix.md",
+    "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.4.support-matrix-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.4.support-matrix.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "支持矩阵应包含浏览器/引擎版本、OS/设备、关键功能、基线/增强/不支持策略、测试类型、最近日期和负责人。用户占比、合同、辅助技术与风险共同影响支持范围；既不能仅按市占率排除必要用户，也不在无证据时承诺所有平台。",
+      "example": "本lab运行Chrome158的390/1440模拟视口、禁JS及注入缺失分支，矩阵明确只一个引擎；UA伪装仍是同一Chrome。Browserslist查询含Safari只是策略解析，不是Safari实测。参考matrix.md模板将目标、待验、模拟与实测分开。",
+      "exercise": "把390视口一行写“iPhone Safari通过”，对照browser.version和启动参数定位证据不匹配；改为桌面Chrome模拟视口并保留Safari待验任务，而不是改日志名称。",
+      "practice": "为主Nuxt+预览宿主分别建立目标/已测/待测表，并给兼容问题标基线、增强或不支持的实际决策。",
+      "sources": [
+        "https://web.dev/baseline",
+        "https://playwright.dev/docs/emulation",
+        "https://developer.chrome.com/docs/modern-web-guidance/get-started"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Support Matrix：支持承诺、计划与实测证据分栏",
+      "task": "为主Nuxt+预览宿主分别建立目标/已测/待测表，并给兼容问题标基线、增强或不支持的实际决策。",
+      "criteria": [
+        "版本/OS/视口/引擎/日期与证据路径可核，模拟和实际设备明确区分。",
+        "未测目标保持待验，不以Browserslist、project名称或UA字符串替代真实运行。"
+      ]
+    }
+  },
+  {
+    "id": "13.4.5",
+    "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.5.feature-detection.md",
+    "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.5.feature-detection-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.5.feature-detection.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "能力检测应尽量接近要执行的API/行为，并与安全上下文、权限、输入和错误处理组合。属性存在不保证调用一定成功；缺权限或实现bug也要处理。UA字符串可改变、被压缩或嵌入，适合诊断时的有限线索，不应作为是否有功能或用户有权限的根依据。",
+      "example": "selectCapabilities只检查传入ListFormat是否为function，createFormatter原生/回退分支；真实浏览器把UA改成NotARealLegacyBrowser，仍有该函数并走native。注入缺失另有本地fallback请求，明确只是分支测试。无设备指纹或高熵UA识别。",
+      "exercise": "将native分支条件替换为navigator.userAgent.includes(\"Chrome\")，伪装UA后错误退到非原生路径；恢复检测具体API，再核网络与状态。不能用伪装UA测试Safari真实兼容。",
+      "practice": "检查主宿主的增强能力判断是否根据实际API及安全上下文，并为缺失/调用失败补任务；任何UA例外需有具体bug依据、范围与移除日期。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Browser_detection_using_the_user_agent",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-behaviors/persistent-top-layer-ui"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Feature Detection：检测具体能力，别把UA当授权",
+      "task": "检查主宿主的增强能力判断是否根据实际API及安全上下文，并为缺失/调用失败补任务；任何UA例外需有具体bug依据、范围与移除日期。",
+      "criteria": [
+        "UA伪装不影响相同宿主能力决策，缺失注入触发明确回退而非假旧浏览器结论。",
+        "至少指出一种存在但调用仍失败的场景，并给出错误恢复而非授权绕过。"
+      ]
+    }
+  },
+  {
+    "id": "13.4.6",
+    "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.6.supports.md",
+    "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.6.supports-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.6.supports.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "@supports检查浏览器是否接受给定CSS条件，CSS.supports提供相似的JS布尔查询；它们不等于视觉、布局或无障碍验收。先写可读块布局，再在支持display:grid时加网格。CSS语法能力也不能证明某个JS API存在，二者按不同责任检测。",
+      "example": "lab默认.layout display:block，在@supports(display:grid)下改grid；当前Chrome真实CSS.supports为true且computed display=grid，非法值为false。print媒体覆盖回block；另把supports条件替成非法值的隔离CSS配置，真实观察默认block仍无溢出。说明条件/级联都参与最终样式，不能只读一个supports结果推断实际效果。",
+      "exercise": "在基础规则加入inline-size:900px，却只在增强条件里修正尺寸；条件不成立时390视口横向溢出。将流式尺寸放回基础规则，再核computed与scrollWidth；不要加UA特判遮住。",
+      "practice": "在主宿主选择一个装饰/布局增强，写默认样式与@supports覆盖，记录实际computed/窄屏结果；JS能力门禁单列。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/CSS/supports_static",
+        "https://developer.mozilla.org/en-US/docs/Web/CSS/@supports"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "CSS @supports与JS能力检查：各管各层，保留默认样式",
+      "task": "在主宿主选择一个装饰/布局增强，写默认样式与@supports覆盖，记录实际computed/窄屏结果；JS能力门禁单列。",
+      "criteria": [
+        "合法/非法CSS.supports与最终computed分别记录；增强不生效时有基础display规则。",
+        "390视口无溢出，打印另有可解释布局；不以supports true替代视觉或键盘证据。"
+      ]
+    }
+  },
+  {
+    "id": "13.4.7",
+    "theory": "learning/1-notes/13-platform/13.4-browser-compat/13.4.7.print-css.md",
+    "example": "learning/2-examples/13-platform/13.4-browser-compat/13.4.7.print-css-demo.md",
+    "exercise": "learning/3-exercises/13-platform/13.4-browser-compat/13.4.7.print-css.md",
+    "practice": "learning/4-practice/13-platform/tasks.md#p-13-4-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "打印是独立媒体和分页环境：隐藏导航/操作、保留正文和必要标识，考虑颜色、链接、表格断页、页边距与私有数据。@media print和@page不等于屏幕截图导出；浏览器PDF也不保证所有打印机、OS对话框或页眉页脚设置一致。",
+      "example": "lab真实emulateMedia(print)断言header/按钮隐藏、print-only正文副本出现、布局变block，并生成headless A4 PDF检查头和字节。已查看390打印媒体截图，正文完整无截断。闭合details内容不依赖一个display:block就保证打印，因此用明确print-only文字保留必要说明。",
+      "exercise": "删@media print后导航/按钮进入打印、grid仍保留屏幕布局；恢复专用媒体覆盖再验。若闭合details重要正文没打印，补共享数据打印视图而非假称display已展开。",
+      "practice": "为主宿主中适合导出的内容补打印任务与数据范围；基础设施/构建报告的真实导出作为新增，不假设主已具备PDF接口。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Printing",
+        "https://playwright.dev/docs/api/class-page#page-pdf"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Print CSS：打印媒体、折叠内容与PDF边界",
+      "task": "为主宿主中适合导出的内容补打印任务与数据范围；基础设施/构建报告的真实导出作为新增，不假设主已具备PDF接口。",
+      "criteria": [
+        "真实print媒体computed与PDF生成分别有证据，保留正文且不含无关操作区域。",
+        "指出长表/分页/真实打印与隐私未验范围，不把一个PDF头当完全排版通过。"
+      ]
+    }
+  }
+]

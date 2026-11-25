@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 13,
+  "status": "passed",
+  "reviewedAt": "2026-11-25T12:38:45.424583+00:00",
+  "sourceFingerprint": "16c3fd12dba587b250b0a18102463cef2417141f8ac9acf7965cb1070b799173",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "28稳定编号四部分与manifest任务锚点齐全，6+5+5+7+5无遗漏。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "复用需求→包/任务/锁→版本/构建→兼容/DX，前置和独立扩展明确。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "MWG及一手现行工具/源码核实；pnpm11/文档v12、Vite8/Oxc、Changesets和能力边界正确。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "真实workspace/Turbo/cache、版本/锁/插件/双格式/兼容/AST/generator，平台观察不冒称实装。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "每点独立变体、至少两标准、具体故障与参考，观察/推演标类型。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "28任务对应主实现/独立lab/官方观察/新增，pack等证据归属准确。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "依赖/影响/任务箭头、dry/执行、selector/SCM、local/remote、解析/兼容等术语一致。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "必达发现修复并最小充分复验，.turbo生成物排除有回归且旧记录复核。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "527/590正文89.3%，待63，索引下一阶段14同步，学习勾选未改。",
+      "evidence": [
+        "docs/audits/STAGE_13_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-13-monorepo-points.json",
+    "docs/audits/stage-13-release-points.json",
+    "docs/audits/stage-13-build-points.json",
+    "docs/audits/stage-13-compat-points.json",
+    "docs/audits/stage-13-dx-points.json"
+  ],
+  "findings": [
+    {
+      "id": "explicit-workspace-and-types",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "子应用tsconfig/根测试workspace依赖/preview语义类型补齐，真实CI通过。"
+    },
+    {
+      "id": "cache-evidence-scope",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "恢复证据限定index.js与label，不宣称全dist快照；selector不冒称SCMaffected。"
+    },
+    {
+      "id": "source-restore-and-cleanup",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "已知probe比对保护/未知内容保留、独立finally清cache，正常流程复验，仍需隔离。"
+    },
+    {
+      "id": "turbo-generated-logs",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "SKIP_DIRS加.turbo，扩两条既有缓存回归，42测试通过。"
+    },
+    {
+      "id": "dependency-version-meaning",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "联动patch fixture公共契约前后实测，暴露breaking需另写major/人审。"
+    },
+    {
+      "id": "frozen-lock-proof",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "改纯本地负例明确OUTDATED_LOCKFILE，不把offline元数据网络失败当通过。"
+    },
+    {
+      "id": "toolchain-and-cache-negative",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Vite转换/TS错误、漏键/损坏/双格式真实验证，观察工具未冒称执行。"
+    },
+    {
+      "id": "ast-binding-and-template",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "替换ImportSpecifier保留alias/绑定，JSON子集模板修复，真实CLI复验。"
+    },
+    {
+      "id": "graph-and-pack-attribution",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "包依赖/变更影响分开，widget pack不算主core已测，任务已收紧。"
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-13-practice-runtime.json",
+    "docs/audits/stage-13-release-runtime.json",
+    "docs/audits/stage-13-build-runtime.json",
+    "docs/audits/stage-13-compat-runtime.json",
+    "docs/audits/stage-13-dx-runtime.json"
+  ],
+  "limitations": [
+    "主ESM/合成只读计划，无身份/持久化/生产平台；最小TS gate不全解析alias/SFC/符号链接。",
+    "只同机固定Node本地缓存、反向selector，未运行SCMaffected/Nx/remoteCache及签名/云CI。",
+    "未registry发布/Bot/semantic-release/MF runtime/esbuild-SWC API或完整legacy-polyfill。",
+    "源probe仍要求隔离无并发编辑，不是文件锁；主core未额外pack验证，不借widget证据。",
+    "无多引擎/真机/读屏/物理打印/编辑器UI或扩展安装/真实项目生成/学习者试学。"
+  ]
+}

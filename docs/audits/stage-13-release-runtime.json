@@ -1,0 +1,63 @@
+{
+  "stage": 13,
+  "group": "13.2-release-deps",
+  "executedBy": "stage13_release",
+  "recordedAt": "2026-11-25T12:27:24.639832+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "changesetsCLI": "3.0.3",
+    "semverFixtureVersions": [
+      "6.3.2",
+      "7.8.6"
+    ]
+  },
+  "checks": {
+    "frozenOfflineLabInstall": "passed",
+    "nodePolicyTests": 3,
+    "realTemporaryWorkspaceVerification": {
+      "changesets": {
+        "core": "1.0.0 -> 2.0.0",
+        "dependentWidget": "1.0.0 -> 1.0.1",
+        "changelog": true,
+        "dependentPublicContractStable": true
+      },
+      "pack": {
+        "source": "workspace:^",
+        "archive": "^2.0.0"
+      },
+      "lock": {
+        "frozen": true,
+        "staleManifestRejected": true,
+        "restoredLockUnchanged": true
+      },
+      "catalogOverride": {
+        "catalogResolved": "6.3.2",
+        "overrideResolved": "7.8.6",
+        "note": "catalog and ordinary dependency override isolated; deliberately incompatible major, no compatibility claim"
+      },
+      "published": false,
+      "remoteBot": false,
+      "temporaryCleaned": true
+    }
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm test",
+    "node verify.mjs (official metadata network permitted; package artifacts offline)"
+  ],
+  "findingsClosed": [
+    "External dependency stale manifest made pnpm supply-chain metadata request before frozen rejection; stopped DNS wait, moved negative to pure local workspace and verified specific OUTDATED_LOCKFILE",
+    "CI true freezes existing lock by default; catalog/override development re-resolution now explicit --no-frozen-lockfile then frozen validation",
+    "Catalog and ordinary override verified separately, no unproven combination precedence claim",
+    "core schema1->2 uses real source change; widget public boolean contract independently executed before and after, automatic patch not generic API safety",
+    "Old JFrog URL unavailable; replaced by read official docs.jfrog.com npm repositories"
+  ],
+  "limits": [
+    "No registry creation, authentication, npm publish, tag, push or remoteCI",
+    "No Verdaccio/Artifactory/GitHub Packages runtime, no real Renovate/Dependabot PR",
+    "Only one default catalog and ordinary override scenario; not all peer/alias/selectors or compatibility promise",
+    "Override deliberately major incompatible version, only resolution proof",
+    "No browser/realdevice needed for this CLI/file scope; no humanlearnertrial"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@compass/platform-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4555 --strictPort",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@compass/platform-core": "workspace:*",
+    "vue": "catalog:"
+  }
+}
