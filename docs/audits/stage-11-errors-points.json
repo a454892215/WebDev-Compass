@@ -1,0 +1,127 @@
+[
+  {
+    "id": "11.1.1",
+    "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.1.sentry-bugsnag.md",
+    "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.1.sentry-bugsnag-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.1.sentry-bugsnag.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "线上错误只有压缩文件行号时，很难定位到源码。监控SDK负责捕获异常并生成事件，传输层负责发出，平台负责分组、存储、映射和通知；不能把安装依赖当成闭环。浏览器与Nuxt服务端是不同运行环境，应选择各自集成并在服务端按请求管理上下文，不能共享“当前用户”全局scope。\n\nSentry使用release/environment等属性区分代码版本和环境；当前官方构建插件默认可注入Debug ID关联产物与map，不能只凭文件名相同假设可还原。无Debug ID的集成需按相应官方release/artifact规则配置。上传与部署应使用同一次构建，先产物/map核验并私密上传，再发布；重建后继续使用旧map可能得到“看似正常、实际错误”的行号。认证上传token属于CI服务端秘密，公开DSN不是上传token，也不是授权或配额防滥用手段。\n\nBugSnag也有appVersion/releaseStage、onError、source map等对应机制，但配置名称和服务端协议不能混用。本节实际运行Sentry Browser 11.17.0，不同时安装多个SDK来重复上报。Nuxt生产接入应按Sentry Nuxt官方集成分开客户端/服务端及构建步骤，不把本lab的browser手动捕获当作Nuxt SSR自动监控。",
+      "example": "重建产物后触发合成错误，核对真实信封的release/environment，再看verify输出mappedSource和mappedLine。生产上传部分按官方观察清单：项目/环境、构建ID/Debug ID、上传凭据作用域、上传成功检查、旧版本保留、发布后一次测试事件；本轮不执行需要凭据的步骤。",
+      "exercise": "保留旧dist的.map却替换新JS，或者按浏览器colno直接传给0起列的Source Map API。若映射位置漂移，核对文件哈希/同次构建、列号基准及真正帧来源；恢复匹配产物后重新验证。",
+      "practice": "为主Nuxt综合项目设计一次版本化Sentry接入变更：分别标注客户端、Nitro服务端及CI上传职责。先在独立error-lab证明同次产物还原，真实平台接入作为需要专用项目凭据的后续扩展。",
+      "source": "https://docs.sentry.io/platforms/javascript/sourcemaps/",
+      "boundary": "True local SDK custom-memory transport;no SaaS,remote map upload,platform alert or SSR SDK integration claimed."
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Sentry/BugSnag集成：事件、Release与Source Map必须匹配",
+      "task": "为主Nuxt综合项目设计一次版本化Sentry接入变更：分别标注客户端、Nitro服务端及CI上传职责。先在独立error-lab证明同次产物还原，真实平台接入作为需要专用项目凭据的后续扩展。",
+      "criteria": [
+        "架构图标出浏览器/SSR/CI三个上下文和秘密边界，不把browser lab当主Nuxt已接入Sentry。",
+        "发布清单含map配对、测试事件、回滚旧map保留与环境过滤；未上传/未远端告警明确记录。"
+      ]
+    }
+  },
+  {
+    "id": "11.1.2",
+    "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.2.item-11-1-2.md",
+    "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.2.item-11-1-2-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.2.item-11-1-2.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "异常的技术类型或日志level不能直接决定事故优先级。一次TypeError可能只影响可重试的非关键图表，也可能阻断所有支付；反过来业务请求持续返回成功HTTP但没有完成业务，同样可能是高影响故障。先定义关键旅程、失败分母、影响窗口、覆盖比例、数据/安全后果和是否有恢复方法，再决定升级。\n\nP0–P3没有跨组织统一含义。本课提供教学约定：P0是关键旅程大面积且无恢复；P1是关键旅程部分不可用；P2为非关键但不可恢复故障；P3为可恢复局部问题。生产应补充数据泄漏/破坏等优先升级条件，不能让简化比率函数替代事件指挥判断。错误事件数不是受影响用户数，重复重试会放大事件量，采样和拦截会缩小已观测量。\n\n自动指派基于受维护的模块/服务owner映射并有未知owner兜底、值班交接和超时升级。告警应绑定行动：谁接、在多久内确认、先检查什么、何时kill switch或回滚。按环境/版本过滤、窗口/最少样本、抑制重复与恢复通知能减少噪声；调低错误采样却不改阈值会使告警失真。",
+      "example": "在policy.mjs读取priority及第三组测试，对四种输入写“影响、恢复、优先级、owner、首个行动”五列。再按官方告警页面观察环境过滤、触发器、动作和节流；不用真实邮箱/聊天webhook。",
+      "exercise": "同一个异常被前端catch和全局hook重复上报100次，直接宣布100名用户受影响。沿eventId/会话内去重、采样、窗口检查，改为已定义的旅程/用户统计，不用隐藏错误修复告警。",
+      "practice": "为Nuxt综合项目的局部卡片失败、服务端API503及灰度关键流程失败分别写分级/owner路由卡，并与Runbook关联；实际聊天告警仅保留配置草案。",
+      "source": "https://docs.sentry.io/product/monitors-and-alerts/alerts/",
+      "boundary": "True local SDK custom-memory transport;no SaaS,remote map upload,platform alert or SSR SDK integration claimed."
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "错误分级与告警路由：以用户影响决定响应",
+      "task": "为Nuxt综合项目的局部卡片失败、服务端API503及灰度关键流程失败分别写分级/owner路由卡，并与Runbook关联；实际聊天告警仅保留配置草案。",
+      "criteria": [
+        "三种场景给出不同影响、恢复策略和首个排查动作，局部错误不自动等于全站P0。",
+        "owner未知/未确认有兜底升级，证据区分本地故障、平台规则草案和实际通知未执行。"
+      ]
+    }
+  },
+  {
+    "id": "11.1.3",
+    "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.3.error-boundary.md",
+    "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.3.error-boundary-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.3.error-boundary.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "错误边界限制故障影响面，不能代替处理所有异步返回值。在Vue中onErrorCaptured捕获后代组件传播的错误；NuxtErrorBoundary基于它为默认slot渲染提供局部fallback。Nuxt4.7当前文档提供实验ssrErrorBoundary，未来兼容版本5会启用；本课程主项目不启用该实验，因此不能声称局部边界默认捕获SSR错误。\n\nNuxt4.7局部slot使用clearBoundaryError，clearError只是废弃别名；不要误调用自动导入的全局clearError。局部重试必须先移除故障前提（例如关掉合成故障开关），再重渲染；若每次render都会抛同样错误，重试只会循环失败。保留页面其他内容、可访问的错误提示和重试按钮，适当恢复焦点。\n\n全局error.vue处理替换整页的错误，clearError({ redirect: '/' })清全局错误并导航安全页；createError在服务端抛出可触发错误页，客户端非fatal错误则需调用者处理，fatal:true用于需要全局错误的情况。useFetch/useAsyncData把失败交给error值，边界不自动拦截；事件回调、任意Promise、middleware或showError也不能一概由局部slot兜住。HTTP API失败要同时处理状态码/DTO与界面状态，不能只渲染漂亮fallback却把500改写成200。",
+      "example": "实际阅读主项目FaultyPanel.vue/index.vue/error.vue/nuxt.config.ts，与Nuxt4.7当前官方边界文档核对：默认broken=false，点击后render计算抛错；recover先关broken再clearBoundaryError；全局clearError另处。主项目运行证据由主作者补充，不冒充本组浏览器运行。",
+      "exercise": "重试调用自动导入clearError但slot一直留在fallback；检查slot解构名字和broken条件。改用clearBoundaryError并先改条件，再验证一次失败→恢复而不是刷新整页掩盖。",
+      "practice": "对主Nuxt已有局部卡片/客户端全局错误/服务端API503路径写故障矩阵，在隔离副本增加一个useAsyncData失败，明确由error分支处理而非局部边界自动捕获。",
+      "source": "https://nuxt.com/docs/4.x/api/components/nuxt-error-boundary",
+      "boundary": "True local SDK custom-memory transport;no SaaS,remote map upload,platform alert or SSR SDK integration claimed."
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Vue/Nuxt错误边界：模块恢复、全局错误与服务端失败分开",
+      "task": "对主Nuxt已有局部卡片/客户端全局错误/服务端API503路径写故障矩阵，在隔离副本增加一个useAsyncData失败，明确由error分支处理而非局部边界自动捕获。",
+      "criteria": [
+        "矩阵逐项写触发上下文、捕获范围、HTTP状态、恢复动作及实际测试来源。",
+        "新增异步失败保留重试/加载状态并无无限循环；不启用SSR实验项来满足错误的默认前提。"
+      ]
+    }
+  },
+  {
+    "id": "11.1.4",
+    "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.4.item-11-1-4.md",
+    "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.4.item-11-1-4-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.4.item-11-1-4.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "错误事件、Tracing、Replay通常有独立采样参数与配额，不能把tracesSampleRate当错误事件率。Sentry sampleRate控制错误事件随机保留比例，beforeSend可在scope数据应用后修改或返回null；ignoreErrors/来源过滤等可先去明确噪声。不要只凭“Network Error”一类泛词全删，它也可能是真实核心故障。\n\n先定义采集目的与字段允许列表，再在客户端/服务端各自可信边界脱敏，不依赖后台接收后才删除。Error.message、栈文件URL的query、user、request、extra、context和breadcrumbs都可能夹带秘密；删掉user.email并不足够。示例把原始异常消息替换固定代码，保留同次构建栈位置/版本，禁用默认自动集成，避免实验意外收集其他数据。生产需针对实际诊断需求与风险设计，而非盲删所有上下文。\n\n采样降成本但不等于限流。每页本地最多2条不能阻止攻击者刷新或伪造直接请求，网络缓冲、接收端字节/速率限制、平台配额和预算告警仍需独立控制。样本丢弃、离线、广告拦截和传输失败都会产生观测盲区；sampleRate=0时零事件不表示零故障。不能不加假设地按1/rate还原影响用户数，概率抽样误差、相关重复和偏差要保留。",
+      "example": "真实lab只在当前页内存transport接收SDK信封。按次序提交取消、正常、正常、第三次正常，查看afterAbort=0与最终2；另页?sample=0得到0。检查信封字符串不存在合成邮箱、token canary和secret-user，仍有release/环境/源码栈。",
+      "exercise": "只设置tracesSampleRate:0就声称关闭错误采集，或只删user.email但error.message仍含token。检查真实信封各字段；改正确错误采样参数与允许列表，再用合成canary复验。",
+      "practice": "在error-lab变体中设计按固定错误代码的过滤和本地预算，给主Nuxt遥测collector另写接收端限额验证，不假称主项目已接入Sentry平台配额。",
+      "source": "https://docs.sentry.io/platforms/javascript/configuration/options/",
+      "boundary": "True local SDK custom-memory transport;no SaaS,remote map upload,platform alert or SSR SDK integration claimed."
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "错误采样与配额：先过滤和脱敏，再控制成本",
+      "task": "在error-lab变体中设计按固定错误代码的过滤和本地预算，给主Nuxt遥测collector另写接收端限额验证，不假称主项目已接入Sentry平台配额。",
+      "criteria": [
+        "同一测试明确标注错误率、trace率和Replay率独立，0事件不写成无故障。",
+        "当前内存transport与真实网络接收端策略分开，保留故障可见性及必要字段且不发送敏感文本。"
+      ]
+    }
+  },
+  {
+    "id": "11.1.5",
+    "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.5.breadcrumbs.md",
+    "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.5.breadcrumbs-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.5.breadcrumbs.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "错误栈告诉你失败位置，breadcrumbs帮助解释失败之前做过哪些操作。它是有界时间顺序记录，不是录屏、全量日志或完整业务审计。适合记录“打开面板、选过滤、提交、重试”这种语义动作与少量受控结果码；输入文本、完整URL、请求体、Cookie和身份token不应随手放进去。\n\nSDK默认集成可能自动记录console、navigation、XHR/fetch和DOM点击，选择开关时应实看当前SDK文档与网络数据。本lab故意defaultIntegrations:false，只手动添加ui.action，beforeBreadcrumb检查动作allowlist后重建字段，maxBreadcrumbs:3保留最近3条。beforeSend再次过滤作为本例防线，不能据此声称任意未来自动集成都安全。给用户可见的错误ID也不要暴露带秘密的原始stack。\n\n上下文生命周期尤其重要：浏览器单页可跨路由/换用户，服务端一个进程同时处理多个请求；跨会话共享breadcrumbs会泄露他人旅程，必须使用SDK支持的隔离scope并在登录切换/退出时清理适用上下文。事件记录可以有时间偏差、丢弃和重载中断，不能单凭两个breadcrumb断言业务操作已成功。应与后端trace/request与可信业务结果核对。",
+      "example": "在lab的页面控制台调用window.lab.crumb加入四个允许动作及不允许的自由文本，再调用capture。查看真实Sentry event的breadcrumbs顺序、3条上限和无data；verify已自动断言。控制台只能使用合成值，本页不是生产调试入口。",
+      "exercise": "beforeBreadcrumb修改crumb却没有return，或把用户输入当message。前者逐个检查hook结果；后者改成固定语义码并把输入留在业务状态，不把完整表单放遥测。",
+      "practice": "为主Nuxt局部故障→重试→恢复设计一个有界语义操作列表，并在独立Sentry lab验证allowlist与清理。若后续接入SSR SDK，先增加两个并发请求不同scope不串动作的测试。",
+      "source": "https://docs.sentry.io/platforms/javascript/configuration/options/",
+      "boundary": "True local SDK custom-memory transport;no SaaS,remote map upload,platform alert or SSR SDK integration claimed."
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Breadcrumbs：用有限语义事件还原操作顺序",
+      "task": "为主Nuxt局部故障→重试→恢复设计一个有界语义操作列表，并在独立Sentry lab验证allowlist与清理。若后续接入SSR SDK，先增加两个并发请求不同scope不串动作的测试。",
+      "criteria": [
+        "操作列表不含文本输入、query、Cookie/token，顺序与实际UI动作对应且有明确上限。",
+        "主项目本地遥测与Sentry breadcrumbs分开描述；未实现的SSR SDK隔离测试写成后续扩展。"
+      ]
+    }
+  }
+]

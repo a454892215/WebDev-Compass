@@ -1,0 +1,155 @@
+lockfileVersion: "9.0"
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+  .:
+    dependencies:
+      "@opentelemetry/api":
+        specifier: 1.10.0
+        version: 1.10.0
+      "@opentelemetry/context-async-hooks":
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      "@opentelemetry/core":
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      "@opentelemetry/sdk-metrics":
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      "@opentelemetry/sdk-trace":
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+    devDependencies:
+      "@playwright/test":
+        specifier: 1.65.1
+        version: 1.65.1
+
+packages:
+  "@opentelemetry/api@1.10.0":
+    resolution:
+      {
+        integrity: sha512-lMkyes8iHrG+mk6WH7X70MdCLI2RS0FwNBY1PyQ8UemaijE2m5mv5A0Niy3HtbYTFrgkUEQjFMXmSAk2hQDuPQ==,
+      }
+    engines: { node: ">=8.0.0" }
+
+  "@opentelemetry/context-async-hooks@3.1.1":
+    resolution:
+      {
+        integrity: sha512-xOosgbes1+6bHPhVnYCd3EihFN8MpafEQwzmxeZ2zKXwWwV4F4780Pb097E326RZjCHTvUkwOYnXOALTfRfHVg==,
+      }
+    engines: { node: ">=22.15.0" }
+    peerDependencies:
+      "@opentelemetry/api": ">=1.0.0 <1.11.0"
+
+  "@opentelemetry/core@3.1.1":
+    resolution:
+      {
+        integrity: sha512-6wc9r0zrTsAVOd/5UrZBsrHhXWNfwisolgWxd8o3Eu1HKIz8cAxQjOdGrrJB406ceFiGV+ckTcLdXzB+y/QVTA==,
+      }
+    engines: { node: ">=22.15.0" }
+    peerDependencies:
+      "@opentelemetry/api": ">=1.10.0 <1.11.0"
+
+  "@opentelemetry/resources@3.1.1":
+    resolution:
+      {
+        integrity: sha512-dSd0FI1rfl+WHeaZxCTCEvwv6vcmUqkOHHTGWMkmyHg+PyL/wLbCqgsGKgI0wOwT0KGy9IMPAvY85hT8IPwApA==,
+      }
+    engines: { node: ">=22.15.0" }
+    peerDependencies:
+      "@opentelemetry/api": ">=1.10.0 <1.11.0"
+
+  "@opentelemetry/sdk-metrics@3.1.1":
+    resolution:
+      {
+        integrity: sha512-QBDkERTMERMxwtH7hHbE6esoo+5Tdb79MtF9lMh1EIFlij39prkSEWlfSD2flUGGv15b0GQ1X2jj/JqG9gQBTw==,
+      }
+    engines: { node: ">=22.15.0" }
+    peerDependencies:
+      "@opentelemetry/api": ">=1.10.0 <1.11.0"
+
+  "@opentelemetry/sdk-trace@3.1.1":
+    resolution:
+      {
+        integrity: sha512-DJZXZJu1H3kek9Kh9SqJ46yN3faiNiabnqkEtl9eVnBvs4KuK+ynmk9jOyB0NfWAXWGZlTivCf46uwiXyr2PGA==,
+      }
+    engines: { node: ">=22.15.0" }
+    peerDependencies:
+      "@opentelemetry/api": ">=1.10.0 <1.11.0"
+
+  "@opentelemetry/semantic-conventions@1.45.0":
+    resolution:
+      {
+        integrity: sha512-aOP45mbcOKbQVvFWfQmgoOPT8R2iwbbbgl83k4CujGV9BrJhFr3qG55MFpwFs4YLabpuW3HhzUY9eQxPlDqaZw==,
+      }
+    engines: { node: ">=14" }
+
+  "@playwright/test@1.65.1":
+    resolution:
+      {
+        integrity: sha512-y+NCIRm2LvY4slUVWvGh1nujJ8RF/hEisIsq2mtUPgdQC4L701bq5hZGMhrpeXjACvwvO9tj5dJqhvM6TP9lbw==,
+      }
+    engines: { node: ">=20" }
+    hasBin: true
+
+  playwright-core@1.65.1:
+    resolution:
+      {
+        integrity: sha512-hqPpz7blSMPxWVdoeE1yiBSzXsKiVOd2k+kjCvmUywD2GPO2Dd9HfcWnq9NN0GHbNZDFgZ9JfBFr+X5/BLo0qw==,
+      }
+    engines: { node: ">=20" }
+    hasBin: true
+
+  playwright@1.65.1:
+    resolution:
+      {
+        integrity: sha512-vJ1FuoOrNwOKHUIVEvSt3jT1L+wjjDpwhwIstKtfvTh8XIG4FG4bIFuvNdMxi81LGfAhUgUZleVFaOLY4RIUUw==,
+      }
+    engines: { node: ">=20" }
+    hasBin: true
+
+snapshots:
+  "@opentelemetry/api@1.10.0": {}
+
+  "@opentelemetry/context-async-hooks@3.1.1(@opentelemetry/api@1.10.0)":
+    dependencies:
+      "@opentelemetry/api": 1.10.0
+
+  "@opentelemetry/core@3.1.1(@opentelemetry/api@1.10.0)":
+    dependencies:
+      "@opentelemetry/api": 1.10.0
+      "@opentelemetry/semantic-conventions": 1.45.0
+
+  "@opentelemetry/resources@3.1.1(@opentelemetry/api@1.10.0)":
+    dependencies:
+      "@opentelemetry/api": 1.10.0
+      "@opentelemetry/core": 3.1.1(@opentelemetry/api@1.10.0)
+      "@opentelemetry/semantic-conventions": 1.45.0
+
+  "@opentelemetry/sdk-metrics@3.1.1(@opentelemetry/api@1.10.0)":
+    dependencies:
+      "@opentelemetry/api": 1.10.0
+      "@opentelemetry/core": 3.1.1(@opentelemetry/api@1.10.0)
+      "@opentelemetry/resources": 3.1.1(@opentelemetry/api@1.10.0)
+
+  "@opentelemetry/sdk-trace@3.1.1(@opentelemetry/api@1.10.0)":
+    dependencies:
+      "@opentelemetry/api": 1.10.0
+      "@opentelemetry/core": 3.1.1(@opentelemetry/api@1.10.0)
+      "@opentelemetry/resources": 3.1.1(@opentelemetry/api@1.10.0)
+      "@opentelemetry/semantic-conventions": 1.45.0
+
+  "@opentelemetry/semantic-conventions@1.45.0": {}
+
+  "@playwright/test@1.65.1":
+    dependencies:
+      playwright: 1.65.1
+
+  playwright-core@1.65.1: {}
+
+  playwright@1.65.1:
+    dependencies:
+      playwright-core: 1.65.1

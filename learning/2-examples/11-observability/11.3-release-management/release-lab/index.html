@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>发布与曝光实验</title>
+    <style>
+      body {
+        font: 18px/1.7 system-ui;
+        max-width: 50rem;
+        padding: 1rem;
+        margin: auto;
+      }
+      button,
+      select {
+        font: inherit;
+        max-width: 100%;
+        padding: 0.5rem;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #245bc0;
+      }
+      section {
+        border: 1px solid;
+        padding: 1rem;
+        margin-block: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>稳定分桶与实际曝光</h1>
+      <p>
+        只有三个公开合成fixture，无真实用户、生产开关平台或实验统计推断。分配不是曝光；显示卡片并进入视口后才记录一次。
+      </p>
+      <label for="subject">固定演示主体</label
+      ><select id="subject">
+        <option>fixture-001</option>
+        <option>fixture-002</option>
+        <option>fixture-003</option>
+      </select>
+      <button id="assign">读取分配</button>
+      <pre id="assignment" aria-live="polite"></pre>
+      <button id="show" disabled>显示实验卡片</button>
+      <section id="card" hidden>
+        <h2 id="variant"></h2>
+        <button id="convert" disabled>记录合成转化</button>
+      </section>
+      <p id="status" role="status"></p>
+      <pre id="stats"></pre>
+      <p><a href="./README.md">返回发布实验说明</a></p>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

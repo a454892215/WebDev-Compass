@@ -1,0 +1,45 @@
+{
+  "nginxVersion": "nginx version: nginx/1.31.8",
+  "syntax": true,
+  "cache": {
+    "miss": "MISS",
+    "hit": "HIT",
+    "credentials": "BYPASS",
+    "afterCredentials": "HIT/nonprivate",
+    "revision": "MISS"
+  },
+  "loadBalance": [
+    "origin-b",
+    "origin-a"
+  ],
+  "rateStatuses": [
+    200,
+    200,
+    429,
+    429,
+    429,
+    429,
+    429,
+    429
+  ],
+  "limits": [
+    "local proxy is not real CDN/Purge/Geo/WAF",
+    "not Docker/Kubernetes/GitHub Actions execution"
+  ],
+  "faults": {
+    "cache": {
+      "expectedFailure": true,
+      "returncode": 1,
+      "mechanism": "cache HIT instead of BYPASS"
+    },
+    "rate": {
+      "expectedFailure": true,
+      "returncode": 1,
+      "mechanism": "return bypassed limiter; all 200"
+    }
+  },
+  "executedBy": "root",
+  "recordedAt": "2026-11-25T10:54:54.788159+00:00",
+  "customBinaryWithoutHomebrewPATH": "passed",
+  "dockerDaemon": "not available unixsocket; no container build/run or Colima restoration"
+}

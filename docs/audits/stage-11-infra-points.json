@@ -1,0 +1,141 @@
+[
+  {
+    "id": "11.4.1",
+    "theory": "learning/1-notes/11-observability/11.4-infra/11.4.1.cdn.md",
+    "example": "learning/2-examples/11-observability/11.4-infra/11.4.1.cdn-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.1.cdn.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先按数据分类约定缓存：内容hash静态资源可长缓存，HTML要考虑发布与revalidation，个性化SSR/API不能进共享缓存。缓存key是响应选择的一部分，query、语言、设备或地域若改变响应就必须核对key/变体策略。CDN不等于源站，浏览器缓存、边缘缓存和源站是三个观察面。",
+      "example": "infra-lab真实Nginx模拟一层共享缓存：/public?revision=r1第一次MISS第二次HIT；Cookie/Authorization绕过已有公共缓存且不写入；去凭据后仍HIT公共内容；r2得到MISS。这里只验证缓存隔离与key变化，不把本地代理称真实CDN、hash文件或Purge。",
+      "exercise": "在隔离副本删除proxy_cache_bypass，仅留下proxy_no_cache。先用无凭据填r1缓存，再带Cookie请求同key，会先命中旧公共缓存而不是执行预期私有回源；恢复读取绕过与禁止写入两侧规则。不要去强制忽略上游private/Set-Cookie。",
+      "practice": "为工作台发布写一份CDN交接表，说明fixture个性化SSR为何不共享缓存，并以lab中凭据BYPASS与r2 MISS作为局部证据；真实Geo/Purge仍待平台验证。",
+      "sources": [
+        "https://developers.cloudflare.com/cache/concepts/cache-control/",
+        "https://developers.cloudflare.com/cache/how-to/purge-cache/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "CDN缓存契约：公共资源、失效与地域路由协作",
+      "task": "为工作台发布写一份CDN交接表，说明fixture个性化SSR为何不共享缓存，并以lab中凭据BYPASS与r2 MISS作为局部证据；真实Geo/Purge仍待平台验证。",
+      "criteria": [
+        "凭据请求返回private内容且BYPASS，不能把已缓存公共响应当该请求的个性化结果。",
+        "区分本地revision MISS与真实CDN purge；列旧hash保留窗口和一次回读验证。"
+      ]
+    }
+  },
+  {
+    "id": "11.4.2",
+    "theory": "learning/1-notes/11-observability/11.4-infra/11.4.2.nginx.md",
+    "example": "learning/2-examples/11-observability/11.4-infra/11.4.2.nginx-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.2.nginx.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "反向代理将外部入口与上游实例分开。upstream默认轮询不是业务事务一致性保证；无共享session/存储时简单扩容仍会丢状态。limit_req按key用leaky bucket限制请求处理速率，burst/nodelay改变突发排队策略，必须约定被拒状态与客户端退避。",
+      "example": "verify.mjs自建两个Node上游，/balance连续请求实际观察origin-a/origin-b；/rate代理到真实上游而非return捷径，8个并发请求得到200与429。nginx -t只验证本地语法/可访问配置，不代替HTTP行为。",
+      "exercise": "把/rate改为rewrite阶段return 200后再次跑验证，将不再观察原来的限流路径；恢复proxy_pass使请求经过limit_req阶段，拒绝状态恢复。测试仅是本地小突发，不推导生产QPS容量。",
+      "practice": "为工作台标出公共资源、个性化API、遥测收集器三类代理路径，列超时/重试/限额/缓存要求；以独立lab真实轮询与429记录补充交接证据。",
+      "sources": [
+        "https://nginx.org/en/docs/http/ngx_http_proxy_module.html",
+        "https://nginx.org/en/docs/http/ngx_http_limit_req_module.html",
+        "https://nginx.org/en/docs/http/ngx_http_upstream_module.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Nginx上游、限流、缓存与WAF边界",
+      "task": "为工作台标出公共资源、个性化API、遥测收集器三类代理路径，列超时/重试/限额/缓存要求；以独立lab真实轮询与429记录补充交接证据。",
+      "criteria": [
+        "保留nginx -t及HTTP证据，解释为什么仅return 200可能绕开预期代理阶段限流。",
+        "至少观察两个上游与429，能解释按IP限流对NAT共享用户的代价及替代key需求。"
+      ]
+    }
+  },
+  {
+    "id": "11.4.3",
+    "theory": "learning/1-notes/11-observability/11.4-infra/11.4.3.docker.md",
+    "example": "learning/2-examples/11-observability/11.4-infra/11.4.3.docker-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.3.docker.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "多阶段构建把安装/编译工具留在builder，runtime只复制匹配Node平台的.output。Node-server产物从.output/server/index.mjs启动，运行期HOST/PORT与Nuxt私有配置由部署环境设置。镜像tag可变，发布应核验digest与平台；锁文件固定JS树，不固定系统镜像。",
+      "example": "templates/Dockerfile.example先冻结安装/构建，再复制.output并用非root node用户运行；EXPOSE只是说明，实际端口映射与HOST=0.0.0.0另配置。HEALTHCHECK通过本机Node fetch检查/api/health，不要求额外curl；本轮只审查模板，主Nuxt原生构建与HTTP健康另实测。",
+      "exercise": "配置评审故障：把HOST设127.0.0.1却期待容器端口映射能访问；指出container自身回环与宿主入口不同，修复为适当监听并由防火墙/端口绑定限制访问。未跑daemon时只作可预测故障，不伪造curl结果。",
+      "practice": "为工作台补一份容器交接清单：基础镜像digest、非root、只读/可写目录、Origin、健康检查与回退镜像；使用模板并逐项标注已审/待平台运行。",
+      "sources": [
+        "https://docs.docker.com/build/building/multi-stage/",
+        "https://docs.docker.com/reference/dockerfile/",
+        "https://nuxt.com/docs/4.x/getting-started/deployment"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Nuxt SSR多阶段容器：产物、用户与健康检查",
+      "task": "为工作台补一份容器交接清单：基础镜像digest、非root、只读/可写目录、Origin、健康检查与回退镜像；使用模板并逐项标注已审/待平台运行。",
+      "criteria": [
+        "能逐行解释builder/runtime边界及为什么只复制.output；标明镜像digest、架构和运行配置仍需选择。",
+        "不给静态审查写“镜像运行通过”；若运行，保留image ID、健康状态与清理命令结果。"
+      ]
+    }
+  },
+  {
+    "id": "11.4.4",
+    "theory": "learning/1-notes/11-observability/11.4-infra/11.4.4.kubernetes.md",
+    "example": "learning/2-examples/11-observability/11.4-infra/11.4.4.kubernetes-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.4.kubernetes.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "仅采用Kubernetes时学习。Deployment管理Pod副本/滚动更新，Service提供服务发现，Ingress依赖已安装controller和路由/TLS配置，不是写资源即自动有公网入口。startup避免慢启动被误杀，readiness决定是否收流量，liveness用于不可恢复故障后的重启。",
+      "example": "templates/kubernetes.yaml.example含apps/v1 Deployment、Service、networking.k8s.io/v1 Ingress、autoscaling/v2 HPA；镜像digest/IngressClass留明确占位。HPA资源利用率需要CPU requests、指标API和合适负载，不是replicas本身自动扩容。readiness当前只是本例无强依赖的进程健康。",
+      "exercise": "配置推演：把下游数据库短暂503直接接liveness，预测多Pod重启如何放大故障；修改为依赖就绪/超时策略，将liveness限定进程不可恢复故障。静态推演不称真实重启实验。",
+      "practice": "给工作台写“何时不需要K8s”的取舍及采用时的最小变更清单，尤其多实例内存数据、探针、Ingress/TLS与回退责任。",
+      "sources": [
+        "https://kubernetes.io/docs/concepts/workloads/pods/probes/",
+        "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/",
+        "https://kubernetes.io/docs/concepts/services-networking/ingress/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Kubernetes选修：Deployment、探针、HPA与Ingress",
+      "task": "给工作台写“何时不需要K8s”的取舍及采用时的最小变更清单，尤其多实例内存数据、探针、Ingress/TLS与回退责任。",
+      "criteria": [
+        "正确说明三种探针失败的不同后果，以及readiness失败不等于容器一定重启。",
+        "列出HPA指标/request、Service selector和IngressClass前提；无集群时明确全部运行证据缺失。"
+      ]
+    }
+  },
+  {
+    "id": "11.4.5",
+    "theory": "learning/1-notes/11-observability/11.4-infra/11.4.5.github-actions.md",
+    "example": "learning/2-examples/11-observability/11.4-infra/11.4.5.github-actions-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.5.github-actions.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "矩阵把同一质量任务展开为多组环境；明确所需组合与成本，不把矩阵重复构建当发布多份不同产物。缓存是加速手段，命中后仍冻结安装与检查；key应包括OS/架构/运行时/锁文件。产物与依赖缓存是不同职责。",
+      "example": "quality.yml.example定义2个OS×2个Node共4格质量，main push且needs质量成功才进入production environment。部署job仅打印说明，没有云动作；需在仓库设置required reviewers/分支规则，YAML中写environment不会自动创建审批制度。三个action SHA仍需核验替换。",
+      "exercise": "静态故障：把deploy触发改成pull_request_target并运行PR传入shell片段，标出不可信代码与高权限环境相交；恢复低权限PR质量与受保护main发布，输入以参数传递而非拼shell。不得真实执行恶意片段。",
+      "practice": "为工作台写质量→不可变产物→受保护发布→健康与回退的流水线说明，复用本地check结果，并把远程矩阵/审批/OIDC列待平台验收。",
+      "sources": [
+        "https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations",
+        "https://docs.github.com/en/actions/reference/security/secure-use",
+        "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "GitHub Actions矩阵、缓存与受保护部署",
+      "task": "为工作台写质量→不可变产物→受保护发布→健康与回退的流水线说明，复用本地check结果，并把远程矩阵/审批/OIDC列待平台验收。",
+      "criteria": [
+        "逐项区分矩阵质量/依赖缓存/发布产物/环境审批，并指出该deploy骨架当前不会部署。",
+        "明确SHA与平台设置/云授信还缺什么；不向workflow注入真实secret进行教学。"
+      ]
+    }
+  }
+]

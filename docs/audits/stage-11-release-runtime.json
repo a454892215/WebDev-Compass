@@ -1,0 +1,71 @@
+{
+  "stage": 11,
+  "group": "11.3-release-management",
+  "recordedAt": "2026-11-25T10:45:27.483071+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "playwright": "1.65.1"
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm test",
+    "pnpm verify",
+    "pnpm rollback"
+  ],
+  "checks": {
+    "frozenInstall": "passed",
+    "nodeTests": {
+      "passed": 4,
+      "failed": 0
+    },
+    "browserAndHTTP": {
+      "http": {
+        "beforeExposure409": true,
+        "origin403": true,
+        "extraField400": true,
+        "oversize413": true,
+        "unknownSubject400": true,
+        "readme200": true
+      },
+      "results": [
+        {
+          "width": 390,
+          "stableAssignment": true,
+          "assignmentNotExposure": true,
+          "visibleExposure": 1,
+          "conversion": 1,
+          "overflow": false,
+          "pageErrors": [],
+          "externalRequests": 0
+        },
+        {
+          "width": 1440,
+          "stableAssignment": true,
+          "assignmentNotExposure": true,
+          "visibleExposure": 1,
+          "conversion": 1,
+          "overflow": false,
+          "pageErrors": [],
+          "externalRequests": 0
+        }
+      ]
+    },
+    "rollback": {
+      "initial": "stable",
+      "candidate": "candidate",
+      "restored": "stable",
+      "oldAssetRetained": true,
+      "newAssetRetained": true,
+      "restoredAssetReadable": true,
+      "temporaryDirectoryRemoved": true
+    }
+  },
+  "limits": [
+    "SHA256 teaching buckets not platform SDK/MurmurHash compatibility or production canary.",
+    "Fixed synthetic subjects;browser events can be forged;viewport exposure not verified attention/occlusion;no statistical significance or real order attribution.",
+    "Preview/SaaS/cloud/real SSR switch/CDN/database migration/on-call notification not executed.",
+    "Incident relative timeline is a tabletop exercise,not an actual incident.",
+    "No native mobile,multibrowser,screenreader or human learner trial."
+  ]
+}

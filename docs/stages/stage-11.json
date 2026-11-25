@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "stage": 11,
+  "project": "learning/4-practice/11-observability/nuxt.config.ts",
+  "points": [
+    {
+      "id": "11.1.1",
+      "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.1.sentry-bugsnag.md",
+      "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.1.sentry-bugsnag-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.1.sentry-bugsnag.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-1"
+    },
+    {
+      "id": "11.1.2",
+      "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.2.item-11-1-2.md",
+      "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.2.item-11-1-2-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.2.item-11-1-2.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-2"
+    },
+    {
+      "id": "11.1.3",
+      "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.3.error-boundary.md",
+      "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.3.error-boundary-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.3.error-boundary.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-3"
+    },
+    {
+      "id": "11.1.4",
+      "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.4.item-11-1-4.md",
+      "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.4.item-11-1-4-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.4.item-11-1-4.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-4"
+    },
+    {
+      "id": "11.1.5",
+      "theory": "learning/1-notes/11-observability/11.1-error-monitoring/11.1.5.breadcrumbs.md",
+      "example": "learning/2-examples/11-observability/11.1-error-monitoring/11.1.5.breadcrumbs-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.1-error-monitoring/11.1.5.breadcrumbs.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-1-5"
+    },
+    {
+      "id": "11.2.1",
+      "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.1.item-11-2-1.md",
+      "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.1.item-11-2-1-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.1.item-11-2-1.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-1"
+    },
+    {
+      "id": "11.2.2",
+      "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.2.distributed-tracing.md",
+      "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.2.distributed-tracing-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.2.distributed-tracing.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-2"
+    },
+    {
+      "id": "11.2.3",
+      "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.3.metrics.md",
+      "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.3.metrics-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.3.metrics.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-3"
+    },
+    {
+      "id": "11.2.4",
+      "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.4.session-replay.md",
+      "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.4.session-replay-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.4.session-replay.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-4"
+    },
+    {
+      "id": "11.2.5",
+      "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.5.real-user-monitoring-rum.md",
+      "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.5.real-user-monitoring-rum-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.5.real-user-monitoring-rum.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-5"
+    },
+    {
+      "id": "11.3.1",
+      "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.1.feature-flag.md",
+      "example": "learning/2-examples/11-observability/11.3-release-management/11.3.1.feature-flag-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.1.feature-flag.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-1"
+    },
+    {
+      "id": "11.3.2",
+      "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.2.canary.md",
+      "example": "learning/2-examples/11-observability/11.3-release-management/11.3.2.canary-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.2.canary.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-2"
+    },
+    {
+      "id": "11.3.3",
+      "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.3.a-b.md",
+      "example": "learning/2-examples/11-observability/11.3-release-management/11.3.3.a-b-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.3.a-b.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-3"
+    },
+    {
+      "id": "11.3.4",
+      "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.4.preview-deployment.md",
+      "example": "learning/2-examples/11-observability/11.3-release-management/11.3.4.preview-deployment-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.4.preview-deployment.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-4"
+    },
+    {
+      "id": "11.3.5",
+      "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.5.item-11-3-5.md",
+      "example": "learning/2-examples/11-observability/11.3-release-management/11.3.5.item-11-3-5-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.5.item-11-3-5.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-5"
+    },
+    {
+      "id": "11.3.6",
+      "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.6.incident-response.md",
+      "example": "learning/2-examples/11-observability/11.3-release-management/11.3.6.incident-response-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.6.incident-response.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-6"
+    },
+    {
+      "id": "11.4.1",
+      "theory": "learning/1-notes/11-observability/11.4-infra/11.4.1.cdn.md",
+      "example": "learning/2-examples/11-observability/11.4-infra/11.4.1.cdn-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.1.cdn.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-1"
+    },
+    {
+      "id": "11.4.2",
+      "theory": "learning/1-notes/11-observability/11.4-infra/11.4.2.nginx.md",
+      "example": "learning/2-examples/11-observability/11.4-infra/11.4.2.nginx-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.2.nginx.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-2"
+    },
+    {
+      "id": "11.4.3",
+      "theory": "learning/1-notes/11-observability/11.4-infra/11.4.3.docker.md",
+      "example": "learning/2-examples/11-observability/11.4-infra/11.4.3.docker-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.3.docker.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-3"
+    },
+    {
+      "id": "11.4.4",
+      "theory": "learning/1-notes/11-observability/11.4-infra/11.4.4.kubernetes.md",
+      "example": "learning/2-examples/11-observability/11.4-infra/11.4.4.kubernetes-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.4.kubernetes.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-4"
+    },
+    {
+      "id": "11.4.5",
+      "theory": "learning/1-notes/11-observability/11.4-infra/11.4.5.github-actions.md",
+      "example": "learning/2-examples/11-observability/11.4-infra/11.4.5.github-actions-demo.md",
+      "exercise": "learning/3-exercises/11-observability/11.4-infra/11.4.5.github-actions.md",
+      "practice": "learning/4-practice/11-observability/tasks.md#p-11-4-5"
+    }
+  ]
+}

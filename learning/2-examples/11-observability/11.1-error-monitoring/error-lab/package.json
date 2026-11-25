@@ -1,0 +1,20 @@
+{
+  "name": "@compass/stage11-error-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "build": "vite build",
+    "test": "node --test tests/unit.test.mjs",
+    "verify": "node verify.mjs",
+    "dev": "vite --host 127.0.0.1 --port 4532"
+  },
+  "dependencies": {
+    "@sentry/browser": "11.17.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.8",
+    "@playwright/test": "1.65.1",
+    "@jridgewell/trace-mapping": "0.3.31"
+  }
+}

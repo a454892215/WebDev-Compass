@@ -1,0 +1,146 @@
+[
+  {
+    "id": "11.3.1",
+    "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.1.feature-flag.md",
+    "example": "learning/2-examples/11-observability/11.3-release-management/11.3.1.feature-flag-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.1.feature-flag.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "发布代码和开放功能是两个决定。Feature Flag让同一已部署版本按配置选择行为；Kill Switch是在故障时优先关闭高风险路径的控制，不负责恢复被破坏的数据，也不等于应用授权。LaunchDarkly、Unleash等提供配置、SDK缓存和审计，自研只适合边界清楚的小需求；本例是独立教学评估器，不冒充任一平台SDK。\n\n先定义名称/所有者/用途/过期清理时间/默认值，再定义配置来源和不可用策略。对可选新功能通常保守回旧路径；对支付等关键控制要由业务决定安全失败方式，不能一概认为“关闭”总安全。远程配置应有版本、刷新、最大陈旧时间和审计，客户端初始化前也必须有稳定默认。本lab没有远程连接或TTL，null/无效配置只返回关闭；不能据此宣称已验证配置断网缓存。\n\n服务端拥有配置。evaluate依次检查kill/总开关、配置合法性、主体与区域资格、白名单、百分比，kill高于白名单。开关分流不是访问控制：即使UI隐藏，API仍需验证真实身份和资源权限。浏览器SDK可用的client key/已计算结果不等于可公开服务端密钥、完整用户规则或管理员权限。开关移除要包含旧代码清理与监控，否则组合数量和技术债随开关增加。\n\n最小可运行上下文：在release-lab内运行下面模块，或查看tests/core.test.mjs同一实现。",
+      "example": "运行pnpm test第一、二组；读core.mjs evaluate的优先级。把percent设100、allow加入fixture-001，再kill=true，结果仍关闭；传null、percent=101或缺上下文也关闭。没有连接远程平台。",
+      "exercise": "故意把allow检查移到kill前，已在白名单的fixture会绕过紧急关闭；第一组断言应失败。恢复kill最高优先级，复跑并解释为何这不是权限系统。",
+      "practice": "在综合项目副本为新可选模块写开关决策表，核对SSR与payload接管结果；远程平台连接作为新增扩展，先列缓存/陈旧/降级契约，不直接把本lab当生产SDK。",
+      "source": "https://docs.getunleash.io/concepts/activation-strategies"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Feature Flag与Kill Switch：配置开关、失效默认值与服务端边界",
+      "task": "在综合项目副本为新可选模块写开关决策表，核对SSR与payload接管结果；远程平台连接作为新增扩展，先列缓存/陈旧/降级契约，不直接把本lab当生产SDK。",
+      "criteria": [
+        "kill=true即使白名单且100%也关闭；恢复kill后按规则返回。",
+        "配置缺失/非法保持安全默认，记录原因但不记录subject原值或平台密钥。"
+      ]
+    }
+  },
+  {
+    "id": "11.3.2",
+    "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.2.canary.md",
+    "example": "learning/2-examples/11-observability/11.3-release-management/11.3.2.canary-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.2.canary.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "灰度是把变更先交给部分合格流量并在限定观察窗口内评估，再决定扩量、暂停或回退。Feature Flag可以在同一部署中灰度某条路径；按实例/地域路由不同产物则是部署灰度，两者可组合但不是同一层。总错误率可能稀释小群组的新缺陷，至少按release/变体比较同口径分母、错误率和延迟，同时看业务与资源保护指标。\n\n稳定分桶由“稳定主体+分组/版本”决定。在lab使用SHA-256后取0–9999，百分比p对应bucket < p*100，0%必关闭、100%全开。固定group和subject时扩量保留已进入群组，回退相同比例返回同一集合。Unleash官方使用MurmurHash/其规范化规则，本算法只说明机制，不兼容其平台分桶。不能每渲染Math.random；否则同一用户跨刷新、SSR与客户端会抖动。缺稳定主体时应选择明确默认或建立合适匿名会话，不偷偷做指纹。\n\n白名单与区域在评估前需界定可信来源。lab的CN/DE是固定合成上下文，不采集位置，也不把URL自报国家用于真实资格判断；地域规则不一定产生代表性样本。region不合格时即使allow也拒绝；这是本例优先级，应写清而不是当作所有平台的唯一语义。\n\n先规定最小样本/观察时长、控制组、停止和回退负责人，再放量。零样本和一个成功请求不能证明安全；短窗口新旧群组流量结构不同也会误导。开关关闭不回滚已写数据，后端契约和数据库兼容仍需单独设计。",
+      "example": "运行pnpm test第一组，逐个fixture扫0–100百分比，确认false只会变true、不逆转；0/100、区域、白名单、kill分别测试。三个fixture仅验证算法性质，不证明真实人口恰有25%或流量代表性。",
+      "exercise": "每次调用生成Math.random后再比较百分比；重复读取同一fixture会抖动。改回稳定hash并同时验证SSR与客户端复用结果，不能给测试固定随机数掩盖真实设计。",
+      "practice": "在主Nuxt副本记录服务端flag结果和页面接管状态，检查刷新/并发fixture隔离；补一份按版本分组的放量决策记录，不把本地合成结果叫生产canary。",
+      "source": "https://sre.google/workbook/canarying-releases/"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Canary灰度：稳定群组、分版本指标与停止条件",
+      "task": "在主Nuxt副本记录服务端flag结果和页面接管状态，检查刷新/并发fixture隔离；补一份按版本分组的放量决策记录，不把本地合成结果叫生产canary。",
+      "criteria": [
+        "group不变时增大比例不移除旧成员；改变group明确视为重新分配。",
+        "监控比较按release拆分，零/少样本显示不足，不当作绿色放行。"
+      ]
+    }
+  },
+  {
+    "id": "11.3.3",
+    "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.3.a-b.md",
+    "example": "learning/2-examples/11-observability/11.3-release-management/11.3.3.a-b-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.3.a-b.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "A/B以预先定义的假设、分配单位、主要指标和分析方法比较体验；Canary主要控制发布风险。稳定分组是二者的共用能力，但把50%功能开关打开并不自动构成可信实验。先写清实验版本、单位是用户/会话还是设备、主指标与保护指标、观察期和停止策略；反复偷看直到显著、同时改多变量、跨实验干扰都会损害结论。\n\n分配不等于曝光：服务端求得A/B值时用户可能没看到卡片。SDK的impression事件有时表示一次isEnabled/getVariant评估，也未必是人眼看到。要根据实验定义选择“已渲染/进入视口/点击后”等可实现标准并如实命名。lab点击显示后，以IntersectionObserver的50%交叉记录近似可见；未验证遮挡、后台注意力，也不保证人确实阅读。\n\n归因需要把experiment+version+variant与定义好的单位关联，转化应能追溯到该单位合法曝光。lab只允许三个公开合成主体，服务端重新计算分配，错误variant拒绝；先曝光后转化，Set按单位/版本/变体去重。重复刷新或重试不会重复unique计数，但整个内存进程重启清空，无跨实例事务。事件可伪造，因此真实订单应以业务后端事件归因，不能靠浏览器按钮证明成交。\n\n稳定ID也有隐私成本：最小化、目的限定、保留期限与适用的用户选择仍需评估；“哈希后就匿名”不成立。不采集邮箱/完整URL/令牌作分组或指标标签。匿名到登录的单位合并、跨设备和迟到转化要有规则，不能偷偷换组再把数据混合。",
+      "example": "运行node server.mjs，读分配后查看exposed仍0；显示卡片进入视口后为1，重复显示仍1，转化为1。pnpm verify自动用390/1440视口复验，并用HTTP验证无曝光转化409/额外字段400。",
+      "exercise": "把event(exposure)移入assignment接口或组件setup，刷新/预取会计数。复现“未显示卡片但exposed增长”，恢复到实际展示触发并保留服务端幂等。",
+      "practice": "以独立lab为现有实现，给综合项目副本新增一项曝光/转化契约和本地实验；先声明统计单位与隐私选择，再实现，不声称主项目已经有完整实验平台。",
+      "source": "https://docs.getunleash.io/concepts/impression-data"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "A/B实验：分配、可见曝光、转化与污染控制",
+      "task": "以独立lab为现有实现，给综合项目副本新增一项曝光/转化契约和本地实验；先声明统计单位与隐私选择，再实现，不声称主项目已经有完整实验平台。",
+      "criteria": [
+        "只读分配不增加曝光；满足新定义才发送，重复请求不增加unique计数。",
+        "无匹配曝光、错误variant和额外PII字段拒绝；不依据小fixture报告统计显著性。"
+      ]
+    }
+  },
+  {
+    "id": "11.3.4",
+    "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.4.preview-deployment.md",
+    "example": "learning/2-examples/11-observability/11.3-release-management/11.3.4.preview-deployment-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.4.preview-deployment.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Preview为某个提交或PR生成独立可访问版本，让评审看到具体变更。它与生产灰度不同：预览通常给评审/测试，不应接生产用户数据或复用高权限生产凭据。先确定命名/URL/认证/索引策略、数据来源、生命周期和配额，再选Vercel/Netlify/自建容器等宿主。平台能力、套餐和审批规则随时间变化，按官方文档与实际仓库核实。\n\n每个预览必须能追溯commit/release，明确构建产物、运行模式（静态还是SSR）和配置。Nuxt Node服务器使用完整.output，不是把服务器目录当静态文件上传。公开的NUXT_PUBLIC_*等配置不能保密；预览用隔离的合成数据库/受限账号或mock。noindex不是访问控制，私有预览需要真实鉴权，URL难猜不是保护。\n\nGitHub环境可以关联deployment URL、环境secret和审批/分支规则，但“YAML写environment名字”不代表所有保护已配置。PR来自不可信代码，不能用pull_request_target加高权限秘密去checkout并执行外来提交；生产令牌不得交给可改构建脚本的未审核PR。审查后部署也要最小权限，prefer短期身份而非随意长期令牌。\n\n保留按PR/提交独立的环境，避免后一次部署覆盖正在评审的地址；关闭PR时销毁服务/临时数据并保留必要审计。并发取消旧构建、失败状态和过期URL要清楚。本节为官方文档/契约观察，未创建远程环境、发布网站、配置GitHub审批或使用任何secret。",
+      "example": "类型：官方部署契约观察。打开上述GitHub环境与Nuxt部署说明，在纸面填写PR123/commit/release/产物模式/环境URL/鉴权/合成数据/关闭清理/负责人；本lab不发远程请求，不声称生成了可访问预览。",
+      "exercise": "把pull_request_target触发与checkout未审核PR组合，并给构建任务生产环境secret。沿“谁可修改脚本→脚本可读什么→向何处发送”画攻击路径，移除该信任跨越，不实际投放或泄露令牌。",
+      "practice": "给综合项目增加预览环境接入清单，区分已在本地构建的产物与尚未创建的远程资源；先完成只读权限/合成数据设计，再到真实宿主项目授权配置。",
+      "source": "https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/deploy-to-environment"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "PR预览环境：环境隔离、秘密边界与销毁",
+      "task": "给综合项目增加预览环境接入清单，区分已在本地构建的产物与尚未创建的远程资源；先完成只读权限/合成数据设计，再到真实宿主项目授权配置。",
+      "criteria": [
+        "预览与生产身份/秘密/数据库隔离；未审核PR代码无法获取部署生产权限。",
+        "能追溯commit及运行模式，列出鉴权、关闭清理、失败恢复和真实待验证项。"
+      ]
+    }
+  },
+  {
+    "id": "11.3.5",
+    "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.5.item-11-3-5.md",
+    "example": "learning/2-examples/11-observability/11.3-release-management/11.3.5.item-11-3-5-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.5.item-11-3-5.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "回滚是恢复可用服务，不一定是Git revert重新构建。应保留可识别的已验证产物/配置和切换方式；事故中重建旧源码可能拉到新依赖或花费不可控时间。前端HTML、hash资源、SSR程序、运行配置、API/数据库是不同层，需要分别考虑兼容和恢复证据。\n\nhash资源应与内容绑定并可长期缓存；HTML/manifest选择当前版本。切回旧HTML时对应旧hash必须仍存在，已打开的新页面可能继续请求新hash，因此不能回退时立刻删除新资源。CDN purge、服务工作线程缓存和页面会话会形成多个版本并存，不能把单个文件rename说成全网瞬间原子切换。\n\nSSR要切完整输出和对应配置/依赖运行环境，健康检查、代表性业务检查、流量切换与连接排空配合；不是只拷贝.output/server某个JS。lab创建两套真实hash脚本和manifest，在同一临时目录rename current.next→current.json，切candidate后恢复stable，验证两个资源保留和旧脚本可读取。该实验是本机文件指针模型，未启动两套SSR进程、CDN或真实数据库。\n\n数据库不可机械反向迁移。先新增兼容字段/双读写或适配，部署新旧都能工作的程序，待旧版本不再访问再收缩；删除列、重写数据后应用回退可能不再安全。事件和后台任务已产生的副作用也需补偿/修复方案。回退之前确认数据契约、配置开关、队列、密钥版本与回滚目标，不把“页面恢复200”当所有业务已恢复。",
+      "example": "运行pnpm rollback或第四组pnpm test；查看initial/candidate/restored和两hash保留/readable。临时目录finally清理。未进行CDN purge、真实SSR服务切换、数据库迁移或灾备恢复。",
+      "exercise": "把两版本脚本都写到同一个app.js，candidate覆盖stable后manifest切回也仍执行新代码。改内容hash命名并保留独立产物，验证restore读取stable内容。",
+      "practice": "为综合项目产物制定版本/配置/健康/业务检查和回退表；运行本lab文件演练，再标明真实SSR切换与数据库协作仍是宿主环境待验证项。",
+      "source": "https://sre.google/workbook/canarying-releases/"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "回滚：不可变产物、旧资源保留与数据库兼容",
+      "task": "为综合项目产物制定版本/配置/健康/业务检查和回退表；运行本lab文件演练，再标明真实SSR切换与数据库协作仍是宿主环境待验证项。",
+      "criteria": [
+        "回退后manifest引用的旧hash真实存在，仍打开的新版本所需资源也保留。",
+        "明确应用/配置/数据库三层恢复条件；有破坏性迁移时不能宣布无条件回滚。"
+      ]
+    }
+  },
+  {
+    "id": "11.3.6",
+    "theory": "learning/1-notes/11-observability/11.3-release-management/11.3.6.incident-response.md",
+    "example": "learning/2-examples/11-observability/11.3-release-management/11.3.6.incident-response-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.3-release-management/11.3.6.incident-response.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-3-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "告警是线索，不等于已定位根因。响应先确认用户影响、范围、开始时间和当前变更，建立事件记录与负责人；优先选择低风险止损（关闭新功能、暂停扩量、切回已验证产物），同时保留诊断信息。不能看到一个异常就无差别重启或让多人同时改配置。\n\n小团队也应明确指挥/操作/沟通角色，可由少数人兼任，但每次操作要有owner和时间线。Runbook给触发条件、所需权限、检查命令、判据、止损/回退、升级条件和恢复验证，不只是“查看日志”。记录使用脱敏traceId/release/指标窗口，避免复制Cookie、token、完整用户文本。跨团队状态更新按真实影响/已知/未知/下次更新时间表达，不编造恢复ETA。\n\n本组提供可重复的桌面推演：candidate推荐模块故障→停止扩量→kill优先关闭→本地manifest恢复stable→检查业务与资源→关闭事件。脚本只实测开关和文件回退机制；“谁值班/谁对外沟通/5分钟收到告警”是练习角色和虚构时间线，不是真实生产事故或真实通知发送。\n\nPostmortem应无责地解释触发、促成条件、发现与缓解过程、用户影响、哪些措施有效/无效，以及可跟踪改进。不是把“工程师粗心”当根因，也不是把无证据猜测写成事实。行动项要owner、期限、验收证据和优先级；并非所有事件都需要巨型报告。复盘后更新监测、测试或流程，再演练验证，才形成闭环。",
+      "example": "先读incident-drill.md，分别扮演指挥/操作/沟通，按检查点运行pnpm test和pnpm rollback，填自己实际开始/结束和输出。模板时间是相对推演节点，禁止填成真实事故已发生。",
+      "exercise": "团队只把告警静音就宣布恢复，或先清空日志导致无法关联release。恢复业务检查/用户影响指标并保留最小必要证据，标注仍未知的原因，不能用猜测补齐。",
+      "practice": "在综合项目副本执行一次模块失败→局部兜底→开关止损的桌面推演，附自己的实际输出和复盘；真实On-call平台通知与生产回滚单列为未执行。",
+      "source": "https://sre.google/sre-book/managing-incidents/"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "事件响应：先恢复、再定位，形成可执行Runbook与复盘",
+      "task": "在综合项目副本执行一次模块失败→局部兜底→开关止损的桌面推演，附自己的实际输出和复盘；真实On-call平台通知与生产回滚单列为未执行。",
+      "criteria": [
+        "每次动作有触发、owner、预期、失败分支和复验；恢复以真实业务/版本指标而非告警静默判定。",
+        "复盘区分事实/推断/未确认，有不含敏感数据的证据以及可验收改进项。"
+      ]
+    }
+  }
+]

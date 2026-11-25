@@ -1,0 +1,70 @@
+# Review-only: replace registry/image digest and map readiness to real dependencies.
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: compass-web }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: compass-web }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxSurge: 1, maxUnavailable: 0 }
+  template:
+    metadata:
+      labels: { app: compass-web }
+    spec:
+      containers:
+        - name: web
+          image: registry.example.invalid/web@sha256:REPLACE_WITH_VERIFIED_DIGEST
+          ports: [{ containerPort: 3000 }]
+          env:
+            - { name: HOST, value: "0.0.0.0" }
+            - { name: PORT, value: "3000" }
+            - { name: NUXT_SITE_ORIGIN, value: "https://preview.example.invalid" }
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits: { memory: 512Mi }
+          startupProbe:
+            httpGet: { path: /api/health, port: 3000 }
+            periodSeconds: 2
+            failureThreshold: 30
+          livenessProbe:
+            httpGet: { path: /api/health, port: 3000 }
+            periodSeconds: 10
+          readinessProbe:
+            httpGet: { path: /api/health, port: 3000 }
+            periodSeconds: 5
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: { name: compass-web }
+spec:
+  scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: compass-web }
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 70 }
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: { name: compass-web }
+spec:
+  ingressClassName: REPLACE_WITH_INSTALLED_CLASS
+  rules:
+    - host: preview.example.invalid
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: { name: compass-web, port: { number: 80 } }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: compass-web }
+spec:
+  selector: { app: compass-web }
+  ports: [{ port: 80, targetPort: 3000 }]

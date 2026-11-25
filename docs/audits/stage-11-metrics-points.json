@@ -1,0 +1,151 @@
+[
+  {
+    "id": "11.2.1",
+    "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.1.item-11-2-1.md",
+    "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.1.item-11-2-1-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.1.item-11-2-1.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "日志描述一个离散事实，trace连接一次操作的因果关系，metric描述聚合分布；三者不能互相替代。先规定字段与枚举，再做JSON编码：本例只输出level、固定route、outcome、合法traceId。不要把任意Error对象、req.headers、原始URL/query或表单body直接展开到日志。即使服务端也要在进入存储前减量，而非等看板显示时再遮挡。JSON编码能避免换行破坏结构，但不能自动判断秘密、SQL或用户内容。\n\n业务确需跨事件关联用户时，使用有作用域/保留窗口的服务端假名。实验safeLog用HMAC将合成userId变成短假名，密钥留在服务器；这只是示意，不是匿名化、访问授权或充分的密码学ID设计。稳定假名和traceId仍可关联行为，也可能属于个人数据。优先不收集userId，按目的、访问权限、保留期和删除要求配置。不可把可公开的固定教学key当生产密钥。\n\nlevel表达诊断严重性，不自动决定P0–P3事故优先级；业务影响和告警策略另定。route用catalog等有限类别，而非/users/123?token=...。开发控制台不等于生产日志系统，服务商访问日志也可能独立记录IP/URL，需要一起审查。",
+      "example": "运行telemetry-lab的structured allowlist单测：注入合成Authorization、query token及邮箱，输出没有这些原值；非法route拒绝。浏览器输入合成秘密后请求/work，/stats只出现route/outcome/traceId；业务GET仍产生最小服务端日志，可选前端耗时默认不发。",
+      "exercise": "故障：将safeLog返回值改成{...input}，合成Authorization与URL进入JSON。用单测和/stats定位泄漏，再恢复显式字段构造；不能只在UI隐藏。",
+      "practice": "为主Nuxt的模拟5xx制定一条服务端日志schema，并沿返回traceId找到同次请求；若扩展身份字段，先论证必要性，不把客户端userId当可信身份。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/privacy/privacy",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ],
+      "boundary": "本地合成数据；无真实RUM/Replay/外部通知/Collector。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "id": "11.2.1",
+      "title": "结构化日志：用允许列表和关联ID诊断，减少身份暴露",
+      "task": "为主Nuxt的模拟5xx制定一条服务端日志schema，并沿返回traceId找到同次请求；若扩展身份字段，先论证必要性，不把客户端userId当可信身份。",
+      "criteria": [
+        "核对实际代码只记录固定route/code/release/traceId等已声明字段，不假称整套OTel日志流水线。",
+        "用合成敏感输入验证收集前减量，记录访问控制/保留期是现有实现还是待建设。"
+      ]
+    }
+  },
+  {
+    "id": "11.2.2",
+    "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.2.distributed-tracing.md",
+    "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.2.distributed-tracing-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.2.distributed-tracing.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "一个trace可含多个span，每个span有开始/结束、名称和上下文。trace-id标识链路，span-id标识操作，父子关系表达因果。W3C traceparent的00格式为version-traceId-parentId-flags：32位小写十六进制traceId、16位parentId，全零无效。接收请求时提取远端上下文，新建服务器span后创建子span；后续跨服务调用必须注入当前span上下文，而非原封不动复制最初parentId。\n\n输入header是不可信关联元数据，不是认证、租户权限或用户ID。无效值应忽略并建立新上下文；不把任意baggage、原始URL、用户资料传播给第三方。sampled标记是建议，不强制下游耗费无限配额。公网边界是否继续外部traceId、是否重新采样由信任和容量策略决定。本例为了观察继续合法合成header，不是生产边界策略。\n\nNode并发请求通过上下文管理器隔离活跃span；不能把currentTraceId放进模块变量。本轮按2026-11官方3.0迁移说明使用api1.10.0、sdk-trace/core/context-async-hooks/sdk-metrics3.1.1，Node>=22.15。旧NodeTracerProvider/register片段不直接套当前包。实验使用真实TracerProvider、W3CTraceContextPropagator、AsyncLocalStorageContextManager与InMemorySpanExporter；显式手工埋点，不宣称已自动插桩所有fetch或接入Collector。",
+      "example": "telemetry-lab的OTel单测并发输入a/b两条合法traceparent，服务器span延迟顺序相反，仍各自保持traceId及父span；子catalog.read父ID为本请求服务器span。全零traceId被忽略产生新值。/work通过真实HTTP提取header，/stats查看真实SDK导出span，未发OTLP网络。",
+      "exercise": "故障：用模块级lastTraceId拼日志，两个带延迟请求串线。定位跨请求写读，再恢复context.with/startActiveSpan；只把ID改随机无法恢复因果。",
+      "practice": "对照主Nuxt返回的请求traceId与独立lab真实OTel父子span，标注主项目只有最小请求关联，提出下一步跨服务接入边界。",
+      "sources": [
+        "https://www.w3.org/TR/trace-context/",
+        "https://opentelemetry.io/blog/2026/otel-js-sdk-3-0/",
+        "https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/sdk-trace"
+      ],
+      "boundary": "本地合成数据；无真实RUM/Replay/外部通知/Collector。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "id": "11.2.2",
+      "title": "W3C traceparent与OpenTelemetry：传播上下文，而非共享当前请求",
+      "task": "对照主Nuxt返回的请求traceId与独立lab真实OTel父子span，标注主项目只有最小请求关联，提出下一步跨服务接入边界。",
+      "criteria": [
+        "不把主项目的关联header/日志称为完整OTel分布式追踪；能指出真实SDK所在独立lab。",
+        "至少展示合法远端父、无效输入重建和并发隔离证据，新增下游传播明确标为扩展。"
+      ]
+    }
+  },
+  {
+    "id": "11.2.3",
+    "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.3.metrics.md",
+    "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.3.metrics-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.3.metrics.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Counter记录累计发生量，读取时需考虑进程重启和聚合窗口；Gauge表示当前状态；Histogram保留观测值分布而非只留平均数。先定义单位、对象和允许标签：请求duration单位ms，Web Vitals的LCP/INP是毫秒、CLS无单位。把秒值按毫秒阈值比较会掩盖问题。\n\n本例手写教学histogram的le=100/300/1000为累积桶：80会进入三个桶，+Inf等于总count。真实OTel SDK中的显式直方图内部桶是互斥分段，不可把其数组直接当Prometheus累积bucket；转换/导出语义须按工具核对。样本[80,180,600,1200]的count=4、sum=2060，最近秩p75=600。不能平均多个实例/页面各自p75得到总p75，应合并同口径分布或用可聚合桶估算。边界不同的桶也不能硬加。\n\n标签值组合决定时序数量。route模板、环境、有限版本/结果可用，traceId、userId、完整URL不应成为metric标签；这些可在有权限的日志/trace关联。真实SDK实验仅route=catalog/outcome=ok，避免无限基数。主项目最小counter和独立lab都不是Prometheus服务器。Web Vitals采集机制复用阶段9真实web-vitals实验，本章学习看板维度、去重、样本和聚合，不复制一套伪Vitals。",
+      "example": "先跑telemetry-lab的histogram单测观察累积桶，再跑OTel单测检查真实MeterProvider counter=3、histogram count=2/sum=680/unit=ms。浏览器主动开启后，真实performance.now请求耗时进入固定kind的本地指标；不是LCP/INP测量。阶段9 metrics-lab提供真实web-vitals读数。",
+      "exercise": "故障：只递增第一个满足桶，导致累积le桶递增关系错误；或把秒输入ms图。用已知样本逐桶核算，定位语义而非调大阈值。",
+      "practice": "为主项目监控面板补一个指标字典，明确事件总数、错误率分母和耗时单位，借独立lab演算直方图，不假称主项目已采集完整Vitals。",
+      "sources": [
+        "https://prometheus.io/docs/practices/histograms/",
+        "https://opentelemetry.io/docs/languages/js/instrumentation/",
+        "https://github.com/GoogleChrome/web-vitals"
+      ],
+      "boundary": "本地合成数据；无真实RUM/Replay/外部通知/Collector。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "id": "11.2.3",
+      "title": "Counter、Histogram与Web Vitals：单位、分母和标签基数",
+      "task": "为主项目监控面板补一个指标字典，明确事件总数、错误率分母和耗时单位，借独立lab演算直方图，不假称主项目已采集完整Vitals。",
+      "criteria": [
+        "指标表含名称/单位/采样/标签/分母/保留期，模拟样本与真实用户指标分开。",
+        "提交两组已知样本的桶/count/sum/p75验证，不平均各页p75；注明阶段9真实Vitals入口。"
+      ]
+    }
+  },
+  {
+    "id": "11.2.4",
+    "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.4.session-replay.md",
+    "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.4.session-replay-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.4.session-replay.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Session Replay通常记录DOM快照/变化和交互后重建视图，并不总是屏幕视频；同时可能采集网络、console、状态和URL。遮住回放界面不等于数据未离开设备。要在采集前排除敏感页面/节点/网络体/header，并以合成诱饵验证实际发出的payload。输入掩码不自动覆盖接口响应、路径query、图片、data-*属性或页面文字。\n\n本轮读取LogRocket privacy和Fullstory Private by Default官方文档。Fullstory的Exclude/Mask/Unmask含义不同，其Private by Default须确认账户已启用，不假设所有账户同配置；mask仍可能保留结构或交互。LogRocket的data-private用于排除内容，但文档也要求网络数据另行处理。供应商规则会更新，实际选型应核对当前版本/账户、数据区域、保留期、访问审计、删除和撤回。\n\n本lab只实现默认拒绝的决策函数replayDecision：consent明确true、允许页面catalog、vendorReady true、非敏感才可继续。这是测试决策，不加载Replay SDK、不录制/重放，不证明任何供应商脱敏成功。浏览器demo的“开启耗时演示”只发固定耗时，不授权全量Replay。停止未来采集和删除既有服务端数据是不同动作；SDK shutdown是否真正停网络、缓冲、录制，要按供应商实测。",
+      "example": "运行replay gate单测：缺少任何条件、checkout敏感页面或consent=false均false；只证明自有门控。再按本章官方观察清单检查DOM/网络/日志/URL及第三方账号配置。verify确认本地demo没有第三方请求，但这不是Replay SDK脱敏验收。",
+      "exercise": "故障：只给input加data-private，却将fetch响应体邮箱录入Replay网络记录。用官方network配置检查和合成payload定位；修复网络允许列表后才可在授权测试账户复验。",
+      "practice": "为主Nuxt写一份“本阶段不启用Replay”的决策记录，并定义未来接入前的合成诱饵验收，不把现有耗时开关扩成录屏同意。",
+      "sources": [
+        "https://docs.logrocket.com/docs/privacy",
+        "https://help.fullstory.com/hc/en-us/articles/360044349073-Fullstory-Private-by-Default",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/privacy/privacy"
+      ],
+      "boundary": "本地合成数据；无真实RUM/Replay/外部通知/Collector。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "id": "11.2.4",
+      "title": "Session Replay：先定义不采集什么，再验证SDK边界",
+      "task": "为主Nuxt写一份“本阶段不启用Replay”的决策记录，并定义未来接入前的合成诱饵验收，不把现有耗时开关扩成录屏同意。",
+      "criteria": [
+        "决策包含排除页/字段/第三方与保留边界，当前状态准确为未接入、无真实录制。",
+        "通过本地门控正反例，同时明确Replay SDK初始化/关闭/脱敏/删除均待授权供应商环境验证。"
+      ]
+    }
+  },
+  {
+    "id": "11.2.5",
+    "theory": "learning/1-notes/11-observability/11.2-logging-metrics/11.2.5.real-user-monitoring-rum.md",
+    "example": "learning/2-examples/11-observability/11.2-logging-metrics/11.2.5.real-user-monitoring-rum-demo.md",
+    "exercise": "learning/3-exercises/11-observability/11.2-logging-metrics/11.2.5.real-user-monitoring-rum.md",
+    "practice": "learning/4-practice/11-observability/tasks.md#p-11-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "RUM观察真实用户体验，实验室和合成HTTP用来复现/回归，两者互补。看板先定义页面/访问/关键操作的口径，区分release、环境、设备/连接的有限分组，展示样本量、失败比例及分位数。采集被拦截、抽样、权限撤回和页面关闭会造成缺失；没有事件不代表零错误。机器人/内部流量/重试要说明是否计入，采样改变后不能直接比较原始计数。\n\n对可用性，可定义SLI=成功合格请求/全部合格请求，SLO是约定窗口目标，error budget=允许失败比例×合格事件数。以99.9%为教学目标，预算比例0.001，错误率2%时burn rate=0.02/0.001=20。目标不是本项目保证值。告警可用长短两个窗口都超过阈值抑制旧事故拖尾；本例1h/5m、14.4只借SRE的30天99.9%示例演算，不是所有业务通用默认。最少样本量100是本lab选择，不是SRE固定规则；零样本返回insufficient-data，不当健康或无限报错。\n\nWeb Vitals通常按适当窗口p75评估，但错误预算SLI未必是分位数；不能将LCP>某阈值的每页事件与接口5xx无区别相加。告警应有负责人、用户影响、去重/抑制、Runbook和恢复条件，指标看板的“红色”不是自动P0。会话末尾遥测按MWG优先考虑fetchLater并特性检测、AbortController替换快照/处理配额和兼容；不在unload做同步请求。任何网络机制均不能承诺进程被杀或断网必达，SDK/服务端需去重与量测丢失。本lab用点击后立即有响应的fetch来验证采集边界，不是完整会话末尾传输实现。",
+      "example": "跑SLO单测：0和1样本为insufficient-data，10000请求9800成功算20倍燃烧；双窗口都高才page，短窗恢复则quiet。histogram单测演算p75。浏览器只有两视口的合成诊断结果，不能画成真实线上RUM或证明99.9%SLO达成。",
+      "exercise": "故障：以good/total在total=0时NaN自动落入“绿灯”，或平均各页p75。先展示样本和口径，用insufficient-data分支及可合并分布修复，不补虚构成功事件。",
+      "practice": "把主项目固定教学错误码和发布版本映射为一份告警/Runbook草案，用lab输入验证双窗及无数据状态，不将本地面板叫生产RUM。",
+      "sources": [
+        "https://sre.google/workbook/alerting-on-slos/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/full-session-analytics",
+        "https://web.dev/articles/vitals"
+      ],
+      "boundary": "本地合成数据；无真实RUM/Replay/外部通知/Collector。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "id": "11.2.5",
+      "title": "RUM与SLO告警：正确样本、分母、窗口和错误预算",
+      "task": "把主项目固定教学错误码和发布版本映射为一份告警/Runbook草案，用lab输入验证双窗及无数据状态，不将本地面板叫生产RUM。",
+      "criteria": [
+        "有样本量、release/环境、用户影响、阈值依据、负责人和恢复动作；数据缺失另有状态。",
+        "保留合成演算证据及真实线上采集/阈值校准待办，未发真实通知、未承诺线上SLO。"
+      ]
+    }
+  }
+]

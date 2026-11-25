@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sentry本地信封实验</title>
+    <style>
+      body {
+        font-family: system-ui;
+        max-width: 58rem;
+        padding: 1rem;
+        margin: auto;
+      }
+      button {
+        min-height: 44px;
+        margin: 0.4rem;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        background: #eee;
+        padding: 1rem;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 3px solid #1768b6;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sentry SDK本地信封实验</h1>
+    <p>
+      仅捕获手动触发的合成错误。自定义transport只写当前页内存，不向Sentry或其他外站发送数据；本页重载清空。最多保留2条允许事件、3条允许操作，不录输入。
+    </p>
+    <p>示例样本率1，另打开本地址加 ?sample=0 对照。并非生产告警平台。</p>
+    <button id="capture">捕获合成错误</button
+    ><button id="abort">捕获预期取消（丢弃）</button>
+    <h2>当前内存信封</h2>
+    <pre id="result" aria-live="polite"></pre>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

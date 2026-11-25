@@ -1,0 +1,14 @@
+{
+  "name": "@compass/stage11-release-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "test": "node --test tests/core.test.mjs",
+    "verify": "node verify.mjs",
+    "rollback": "node rollback.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

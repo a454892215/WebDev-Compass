@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>11.2 遥测边界实验</title>
+    <style>
+      body {
+        font: 1rem/1.65 system-ui;
+        margin: 1rem auto;
+        padding: 0 1rem;
+        max-width: 48rem;
+      }
+      button,
+      input {
+        font: inherit;
+        margin: 0.3rem;
+        padding: 0.5rem;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        background: #eee;
+        padding: 1rem;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #245cbd;
+      }
+      label {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>日志、Trace 与指标实验</h1>
+      <p>
+        仅本地合成数据。默认不采集可选前端耗时，不加载Session Replay
+        SDK，不读取下方输入；请求业务接口仍会产生最小服务端日志。
+      </p>
+      <label for="sensitive">合成敏感字段（仅留在输入框）</label
+      ><input id="sensitive" type="text" autocomplete="off" />
+      <button id="enable">开启本次耗时演示</button
+      ><button id="disable">停止后续采集</button>
+      <p id="state" role="status">可选采集关闭</p>
+      <button id="work">执行本地请求</button
+      ><button id="stats">查看内存快照</button>
+      <pre id="output" aria-live="polite">尚未请求</pre>
+      <p>
+        快照不是生产RUM；分位数、SLO窗口用Node合成数据练习。停止采集不能撤回已经抵达服务器的数据。
+      </p>
+      <a href="./README.md">返回实验说明（仓库阅读入口）</a>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

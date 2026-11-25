@@ -24,3 +24,5 @@
 - [阶段9：Web Vitals、加载与交互性能优化](./09-performance/README.md)：30点四部分资料、真实归因/预算/heap与Nuxt实践。
 
 - [阶段10：XSS/CSRF、认证安全与隐私](./10-security/README.md)：29点四部分资料、匿名安全笔记及隔离实验。
+
+- [阶段11：错误监控、日志指标与灰度发布](./11-observability/README.md)：21点四部分、Nuxt工作台及独立SDK/发布/代理实验。

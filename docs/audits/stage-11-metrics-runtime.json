@@ -1,0 +1,72 @@
+{
+  "recordedAt": "2026-11-25T10:47:18.342558+00:00",
+  "browser": [
+    {
+      "width": 390,
+      "defaultOptionalUnsent": true,
+      "optIn204": true,
+      "optOutStops": true,
+      "secretAbsent": true,
+      "traceCorrelated": true,
+      "pageErrors": [],
+      "externalRequests": 0
+    },
+    {
+      "width": 1440,
+      "defaultOptionalUnsent": true,
+      "optIn204": true,
+      "optOutStops": true,
+      "secretAbsent": true,
+      "traceCorrelated": true,
+      "pageErrors": [],
+      "externalRequests": 0
+    }
+  ],
+  "http": {
+    "unknownPII400": true,
+    "crossOrigin403": true,
+    "actualBody1600B413": true,
+    "parallelTraceIsolation": true
+  },
+  "stage": 11,
+  "group": "11.2-logging-metrics",
+  "executedBy": "stage11_metrics",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "otelApi": "1.10.0",
+    "otelSdk": "3.1.1",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "nodeTests": {
+      "passed": 5,
+      "failed": 0
+    },
+    "format": "Prettier matched",
+    "actualSdk": [
+      "TracerProvider/InMemorySpanExporter",
+      "W3CTraceContextPropagator",
+      "AsyncLocalStorageContextManager",
+      "MeterProvider/InMemoryMetricExporter/explicit histogram"
+    ]
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm test",
+    "pnpm verify"
+  ],
+  "findingsClosed": [
+    "最新trace-node/base2.12已弃用，按官方迁移采用兼容SDK3.1.1/API1.10，不混用API1.10与SDK2 peer",
+    "实验说明导航补本地text/plain返回，修正相对阶段9链接并重跑5Node/HTTP/两视口"
+  ],
+  "limitations": [
+    "全部合成流量，不是生产RUM/p75/SLO达成证据",
+    "Replay只有门控函数与官方观察，不加载供应商SDK、不录制/重放",
+    "无Collector/OTLP/跨服务生产自动插桩、实际看板/告警通知",
+    "即时诊断fetch不是完整会话fetchLater交付；断网/进程终止必达未保证",
+    "API/SDK内存后端只限loopback，未知超大慢流/容量非本轮验证",
+    "无真机、多浏览器、屏幕阅读器或真实学习者试学"
+  ]
+}

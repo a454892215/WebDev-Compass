@@ -1,0 +1,46 @@
+{
+  "stage": 11,
+  "executedBy": "root",
+  "recordedAt": "2026-11-25T10:54:54.785433+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed after reusing existing stage9 store",
+    "typecheck": "passed",
+    "eslint": "passed",
+    "unit": 4,
+    "productionSSRBuild": "passed",
+    "playwright": {
+      "startTime": "2026-11-25T10:49:19.707Z",
+      "duration": 4172.244000000001,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "cases": [
+    "1440/390 skip link, default no optional events, explicit204, real local render boundary+recover, field privacy, SSRfixture stable, axe, nooverflow/pageerror/hydration",
+    "1440/390 handledAPI503 vs global error.vue/clearError recovery",
+    "HTTP concurrenttrace,zeroheaderrebuild,SSR propagation and actualpanelgate,503errorlog,Origin403,PII400,actualchunked3000B413,runtimekill independent4539+SSR no node"
+  ],
+  "findingsClosed": [
+    "AppFrame mounted and status locator scoped away from Nuxt announcer",
+    "Nitro error hook records error path, recorded guards duplication",
+    "real v-if feature gate and explicit SSR inheritedtrace",
+    "H3 serialized trace DTO explicitString; exercise headings normalized"
+  ],
+  "limitations": [
+    "local fixture/HTTP/in-memory/diagnostics publicly readable, no production identity or collector",
+    "strictversion00 subset not fullOTel SDK or fulltracecontext; no remote sampling",
+    "kill requiresconfigurationandprocessrestart, not realtimecontrolplane",
+    "error duration at capture vs successafterresponse not uniformclientRUM latency",
+    "no realSaaS/mapsupload/alerts/Replay/productionRUM/Docker/K8s/remoteCI/realdevices"
+  ]
+}
