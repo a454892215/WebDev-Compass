@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "stage": 12,
+  "project": "learning/4-practice/12-testing-design-system/nuxt.config.ts",
+  "points": [
+    {
+      "id": "12.1.1",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-1"
+    },
+    {
+      "id": "12.1.2",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-2"
+    },
+    {
+      "id": "12.1.3",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.3.contract-testing.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.3.contract-testing-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.3.contract-testing.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-3"
+    },
+    {
+      "id": "12.1.4",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.4.visual-regression.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.4.visual-regression-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.4.visual-regression.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-4"
+    },
+    {
+      "id": "12.1.5",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.5.mutation-testing.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.5.mutation-testing-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.5.mutation-testing.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-5"
+    },
+    {
+      "id": "12.1.6",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.6.e2e.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.6.e2e-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.6.e2e.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-6"
+    },
+    {
+      "id": "12.1.7",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.7.flaky-test.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.7.flaky-test-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.7.flaky-test.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-7"
+    },
+    {
+      "id": "12.1.8",
+      "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration.md",
+      "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-8"
+    },
+    {
+      "id": "12.2.1",
+      "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.1.a11y.md",
+      "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.1.a11y-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.1.a11y.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-1"
+    },
+    {
+      "id": "12.2.2",
+      "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.2.item-12-2-2.md",
+      "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.2.item-12-2-2-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.2.item-12-2-2.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-2"
+    },
+    {
+      "id": "12.2.3",
+      "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.3.item-12-2-3.md",
+      "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.3.item-12-2-3-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.3.item-12-2-3.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-3"
+    },
+    {
+      "id": "12.2.4",
+      "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.4.item-12-2-4.md",
+      "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.4.item-12-2-4-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.4.item-12-2-4.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-4"
+    },
+    {
+      "id": "12.3.1",
+      "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.1.design-token.md",
+      "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.1.design-token-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.1.design-token.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-1"
+    },
+    {
+      "id": "12.3.2",
+      "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.2.style-dictionary-tokens-studio.md",
+      "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.2.style-dictionary-tokens-studio-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.2.style-dictionary-tokens-studio.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-2"
+    },
+    {
+      "id": "12.3.3",
+      "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.3.storybook.md",
+      "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.3.storybook-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.3.storybook.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-3"
+    },
+    {
+      "id": "12.3.4",
+      "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.4.api.md",
+      "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.4.api-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.4.api.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-4"
+    },
+    {
+      "id": "12.3.5",
+      "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.5.item-12-3-5.md",
+      "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.5.item-12-3-5-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.5.item-12-3-5.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-5"
+    },
+    {
+      "id": "12.3.6",
+      "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.6.item-12-3-6.md",
+      "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.6.item-12-3-6-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.6.item-12-3-6.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-6"
+    },
+    {
+      "id": "12.3.7",
+      "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.7.item-12-3-7.md",
+      "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.7.item-12-3-7-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.7.item-12-3-7.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-7"
+    },
+    {
+      "id": "12.4.1",
+      "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking.md",
+      "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-1"
+    },
+    {
+      "id": "12.4.2",
+      "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies.md",
+      "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-2"
+    },
+    {
+      "id": "12.4.3",
+      "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.3.item-12-4-3.md",
+      "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.3.item-12-4-3-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.3.item-12-4-3.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-3"
+    },
+    {
+      "id": "12.4.4",
+      "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.4.changelog.md",
+      "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.4.changelog-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.4.changelog.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-4"
+    },
+    {
+      "id": "12.4.5",
+      "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.5.item-12-4-5.md",
+      "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.5.item-12-4-5-demo.md",
+      "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.5.item-12-4-5.md",
+      "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-5"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+:root {
+  --c-accent: #174b79;
+  --c-on-accent: #fff;
+  --c-bg: #fff;
+  --c-text: #17212b;
+  --c-error: #a51b14;
+  --c-space: 1rem;
+  --c-radius: 0.45rem;
+}
+:root[data-theme='night'] {
+  --c-accent: #a8d4ff;
+  --c-on-accent: #102234;
+  --c-bg: #17212b;
+  --c-text: #f4f7fa;
+  --c-error: #ffb4ab;
+}
+.c-button {
+  font: inherit;
+  min-block-size: 44px;
+  border: 2px solid var(--c-accent);
+  border-radius: var(--c-radius);
+  padding: 0.55rem 1rem;
+  background: var(--c-accent);
+  color: var(--c-on-accent);
+  cursor: pointer;
+}
+.c-button--secondary {
+  background: var(--c-bg);
+  color: var(--c-accent);
+}
+.c-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.c-button:focus-visible,
+.c-field input:focus-visible {
+  outline: 3px solid var(--c-accent);
+  outline-offset: 3px;
+}
+.c-field {
+  margin-block: var(--c-space);
+  text-align: start;
+}
+.c-field label {
+  display: block;
+  font-weight: 700;
+}
+.c-field input {
+  font: inherit;
+  inline-size: 100%;
+  min-block-size: 44px;
+  color: var(--c-text);
+  background: var(--c-bg);
+  border: 1px solid currentColor;
+  border-radius: var(--c-radius);
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+.c-field p {
+  margin-block: 0.4rem;
+  overflow-wrap: anywhere;
+}
+.c-error {
+  color: var(--c-error);
+}

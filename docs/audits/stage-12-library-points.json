@@ -1,0 +1,138 @@
+[
+  {
+    "id": "12.4.1",
+    "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking.md",
+    "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.1.tree-shaking.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Tree-shaking依赖静态ESM导入/导出、可分析的副作用和消费者构建，不是库打包文件小就自动成立。保留具名导出和显式组件边界；顶层注册/修改全局/自动装全部组件会让未使用代码仍有执行理由。包的exports规定公开入口，消费者不应深挖src或构建器私有路径。",
+      "example": "主lib/src/index.ts导出UiButton/UiField/UnusedWidget，Vite library mode生成ESM与提取CSS，vue-tsc生成声明。verify:package真实pnpm pack后解到临时消费者，只导入UiButton再Vite构建，未用组件标记STAGE12_UNUSED_WIDGET_MARKER不在消费JS。库dist本身含未用导出是正常的，要看消费者产物。",
+      "exercise": "把消费者从具名导入改成枚举所有组件并注册到app，再构建；未用导出可能因可观察注册被保留。定位实际import链和产物，不只改sideEffects:false让构建看似更小。另一个确定故障是移除package exports里的公开入口，应在消费构建失败而非悄悄走src。",
+      "practice": "运行主verify:package，把真实tgz条目、单组件消费JS中未用marker缺席和类型入口检查合为包体证据；新增其他格式作为扩展而非已有能力。",
+      "sources": [
+        "https://vite.dev/guide/build.html#library-mode",
+        "https://nodejs.org/api/packages.html#package-entry-points"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "ESM导出与Tree-shaking：从真实消费产物验证",
+      "task": "运行主verify:package，把真实tgz条目、单组件消费JS中未用marker缺席和类型入口检查合为包体证据；新增其他格式作为扩展而非已有能力。",
+      "criteria": [
+        "消费者从tgz公开入口构建，UnusedWidget标记缺席；库本身不被误当消费包体。",
+        "列出导出/类型/CSS路径，说明当前仅ESM和本轮工具链通过，不虚报CJS。"
+      ]
+    }
+  },
+  {
+    "id": "12.4.2",
+    "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies.md",
+    "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.2.peer-dependencies.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "peerDependencies表达宿主需要提供的兼容运行时，external决定库构建不把它打进去，二者作用不同。只声明peer却仍内联Vue，或只external却不声明兼容范围，都不完整。安装器会依据版本/peer解析图决定是否能共享，不能以目录只有一个package.json保证单例。",
+      "example": "本库peer vue ^3.5.0，Vite external vue，主宿主固定3.5.46；verify:package检查实际库JS仍import vue、主和lib的node_modules/vue真实路径相同，隔离tgz消费者也使用宿主Vue。Nuxt宿主只是该Vue库的一次真实集成，不是Nuxt专属模块，故没有机械把整个Nuxt声明为peer。",
+      "exercise": "将vue从external移除后重建库，检查dist体积和宿主是否又包含独立运行时；恢复peer+external并复验。不要只看npm/pnpm安装警告消失。若替换版本，先做隔离副本而非动旧阶段锁文件。",
+      "practice": "为主组件库记录peer范围、外部化和真实路径检查，补一张“已测Vue3.5.46/Nuxt4.7，其余待测”的兼容表。",
+      "sources": [
+        "https://docs.npmjs.com/cli/v11/configuring-npm/package-json/",
+        "https://vite.dev/guide/build.html#library-mode"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Vue Peer Dependencies：版本契约与单运行时",
+      "task": "为主组件库记录peer范围、外部化和真实路径检查，补一张“已测Vue3.5.46/Nuxt4.7，其余待测”的兼容表。",
+      "criteria": [
+        "区分peer声明、external产物和安装解析三份证据，本轮真实路径确认相同。",
+        "明确声明范围和实际测试版本；不把“peer自动安装”解释成保证所有依赖图单例。"
+      ]
+    }
+  },
+  {
+    "id": "12.4.3",
+    "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.3.item-12-4-3.md",
+    "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.3.item-12-4-3-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.3.item-12-4-3.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "按需导入既有代码图也有样式图。sideEffects是对模块副作用的声明，不是让CSS自动加载的开关。CSS有页面效果，不能在没审查的包上全局false；按发布结构保留CSS等必要副作用。动态import解决什么时候请求代码，与构建时删除未用导出是不同问题。",
+      "example": "lib/package.json只对**/*.css声明副作用，公开./style.css；Vite库提取CSS后主Nuxt在css配置显式导入包样式。verify:package真实消费者同时引用组件和样式，检查输出.c-button和token；然后删样式import再真实构建，没有CSS产物的负例成立。ESM导出存在不代表样式会自己进入宿主。",
+      "exercise": "只在Storybook引入样式，却在真实消费者遗漏；故事看起来正常，宿主控件仍无正确样式。以tgz消费者和主宿主为准定位，恢复包公开CSS导入；不要在host复制一份私有CSS掩盖缺失。",
+      "practice": "核对主Nuxt从@compass/stage12-ui/style.css消费生成样式，并运行漏CSS负例；为未来CSS分入口列新增方案，不声称现已按组件拆CSS。",
+      "sources": [
+        "https://vite.dev/guide/build.html#css-support",
+        "https://webpack.js.org/guides/tree-shaking/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "按需导入、CSS与sideEffects：避免样式被漏交付",
+      "task": "核对主Nuxt从@compass/stage12-ui/style.css消费生成样式，并运行漏CSS负例；为未来CSS分入口列新增方案，不声称现已按组件拆CSS。",
+      "criteria": [
+        "有样式/漏样式两次真实构建结果不同，恢复后CSS规则与设计token存在。",
+        "能解释sideEffects匹配模式、动态加载与摇树职责，不把包声明当兼容证明。"
+      ]
+    }
+  },
+  {
+    "id": "12.4.4",
+    "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.4.changelog.md",
+    "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.4.changelog-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.4.changelog.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Changeset记录包名、SemVer bump和说明；version将累积意图变成版本与changelog，publish才是远程发布。自动化不会判断API是否兼容、文案是否可执行；组件props/events/slot/CSS变量/行为和无障碍变化都可能影响消费者。0.x兼容规则也应明确团队约定。",
+      "example": "主verify:changesets使用真实CLI3.0.3，在临时workspace写一个1.0.0合成包和patch changeset，执行version并断言1.0.1/CHANGELOG包含说明。v3 init本身交互，脚本从已安装工具默认配置生成临时config，显式commit:false，不在无TTY调用init等待。没有对主库0.1.0升版，也没有publish/tag/push。",
+      "exercise": "在Changeset frontmatter写不存在的包名或非法bump值，应定位工具错误并恢复准确包名/合法值；合法但语义不当的patch通常不会被工具自动识别，必须人工审查公开契约。不要直接手改最终CHANGELOG绕过意图源。另将v3 init当无TTY非交互脚本会挂在提问，先查CLI行为再写确定配置。",
+      "practice": "运行主verify:changesets并记录临时1.0.0→1.0.1，给UiField一次假设breaking修改写发布说明；主库当前版本不变，真实发布留独立授权。",
+      "sources": [
+        "https://changesets.dev/guide/getting-started",
+        "https://changesets.dev/guide/versioning-and-publishing"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Changesets：声明版本意图并审阅实际Changelog",
+      "task": "运行主verify:changesets并记录临时1.0.0→1.0.1，给UiField一次假设breaking修改写发布说明；主库当前版本不变，真实发布留独立授权。",
+      "criteria": [
+        "真实version能生成预期patch与changelog，明确没有远程publish/标签/推送。",
+        "说明至少含行为改变、影响与迁移方式，不只写“update components”；bump取舍有人审阅。"
+      ]
+    }
+  },
+  {
+    "id": "12.4.5",
+    "theory": "learning/1-notes/12-testing-design-system/12.4-component-library/12.4.5.item-12-4-5.md",
+    "example": "learning/2-examples/12-testing-design-system/12.4-component-library/12.4.5.item-12-4-5-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.4-component-library/12.4.5.item-12-4-5.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "把组件的名称/角色/值、标签关联、错误说明、禁用和焦点行为变成可核查契约，而不是发布后跑一次分数。自动axe只检查当前DOM自动规则；组件单测适合props/events/属性映射，浏览器适合真实焦点/原生dialog/布局，读屏及真实用户需要单独证据。",
+      "example": "主4单元验证dist组件type、attrs/click/disabled、字段label/hint/error/v-model与SSR安全文本；5E2E验证两视口真实表单、错误焦点、dialog Esc/关闭返回触发点、日间/RTL夜间axe和布局。check:ci串接本地check与E2E；远程CI未执行，读屏未执行，不能称完整WCAG符合。",
+      "exercise": "把关闭dialog按钮保留默认button类型，点击后form method=dialog不会提交关闭；显式submit恢复。移除字段label关联或省略invalid/describedby会破坏契约，按对应断言定位。屏幕阅读器验收无法用截图代替。",
+      "practice": "执行主check:ci，把Unit、E2E、axe、键盘、SSR、人工待验分栏记录；关联独立specialized-lab的真实label/溢出负例，远程流水线另待接入。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility",
+        "https://playwright.dev/docs/accessibility-testing",
+        "https://vuejs.org/guide/scaling-up/testing.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "组件库无障碍门禁：状态契约、键盘与人工验收",
+      "task": "执行主check:ci，把Unit、E2E、axe、键盘、SSR、人工待验分栏记录；关联独立specialized-lab的真实label/溢出负例，远程流水线另待接入。",
+      "criteria": [
+        "check:ci明确失败即阻断；状态矩阵能对应真实测试源，不把所有状态都声称经过axe。",
+        "包含键盘、错误关联与焦点恢复；读屏/真机/多引擎未做项如实保留，不以0违规等同完整合规。"
+      ]
+    }
+  }
+]

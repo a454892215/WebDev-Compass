@@ -1,0 +1,40 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.c-button {
+  font: inherit;
+  border: 2px solid var(--color-action);
+  border-radius: var(--radius-control);
+  padding: var(--spacing-control);
+  background: var(--color-action);
+  color: var(--color-on-action);
+  min-height: 44px;
+}
+.c-button--secondary {
+  background: transparent;
+  color: var(--color-action);
+}
+.c-button:focus-visible {
+  outline: 3px solid #111;
+  outline-offset: 3px;
+}
+.c-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.theme-panel {
+  padding: 1.5rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+[data-theme="dark"] {
+  --color-surface: #16202e;
+  --color-text: #f9fafb;
+  --color-action: #93c5fd;
+  --color-on-action: #111827;
+}
+[data-brand="plum"] {
+  --color-action: #e9b6ff;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@compass/stage12-strategy-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "test": "node --test tests/core.test.mjs",
+    "baseline": "node visual.mjs --update-baseline",
+    "verify": "node visual.mjs",
+    "shard:1": "playwright test --shard=1/2",
+    "shard:2": "playwright test --shard=2/2"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

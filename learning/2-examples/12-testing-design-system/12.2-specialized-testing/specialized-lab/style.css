@@ -1,0 +1,81 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font:
+    1rem/1.6 system-ui,
+    sans-serif;
+  color: #17283c;
+  background: #fff;
+  margin: 0;
+}
+header,
+main,
+footer {
+  max-inline-size: 52rem;
+  margin-inline: auto;
+  padding: 1rem;
+}
+header {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+a {
+  color: #064b8c;
+}
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+form {
+  display: grid;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+button,
+input,
+select {
+  font: inherit;
+  min-block-size: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  max-inline-size: 100%;
+}
+button {
+  color: #fff;
+  background: #174b73;
+  border: 2px solid #174b73;
+  border-radius: 0.25rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+input,
+select {
+  color: #17283c;
+  background: #fff;
+  border: 2px solid #52677e;
+}
+:focus-visible {
+  outline: 3px solid #9c4200;
+  outline-offset: 3px;
+}
+.card {
+  border: 2px solid #52677e;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-wrap: anywhere;
+}
+.card.fixed {
+  inline-size: 900px;
+  max-inline-size: none;
+}
+dialog {
+  max-inline-size: min(90vw, 30rem);
+  border: 2px solid #52677e;
+  padding: 1.25rem;
+}
+dialog::backdrop {
+  background: #0007;
+}

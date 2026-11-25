@@ -1,0 +1,21 @@
+{
+  "name": "@compass/stage12-specialized-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "test": "node --test tests/unit.test.mjs",
+    "verify": "node verify.mjs",
+    "dev": "vite --host 127.0.0.1 --port 4543",
+    "test:matrix": "playwright test -c playwright.matrix.config.mjs"
+  },
+  "devDependencies": {
+    "vite": "8.3.8",
+    "@playwright/test": "1.65.1",
+    "@axe-core/playwright": "4.14.1"
+  }
+}

@@ -1,0 +1,118 @@
+[
+  {
+    "id": "12.2.1",
+    "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.1.a11y.md",
+    "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.1.a11y-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.1.a11y.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "无障碍测试要验证人在具体状态下能否完成任务，而不是拿一个分数替代可用性。axe对当前DOM执行可自动判定的规则，适合在组件初始/错误/展开/模态状态检查；它无法判断文案是否真正易懂、焦点顺序是否符合任务、读屏实际宣读是否合理。自动结果应分violations、需要判断的incomplete与通过项，不通过不等于所有需求都不合格，零违规也不代表WCAG完整符合。",
+      "example": "specialized-lab先扫正常页面，取消label的for后只跑label规则，必须出现label违规；恢复关联再次零违规。键盘单独验证跳到正文、原生dialog打开后焦点、Esc关闭与回到触发按钮。这些是实际浏览器行为，不能用jsdom里手工赋focus假装跨浏览器行为。",
+      "exercise": "点击“切换标签缺失故障”，输入仍可用鼠标填写，但axe label规则报错。定位label-for/input-id而非只看视觉位置；恢复关联后再验可访问名称与键盘，不能用placeholder当永久标签。",
+      "practice": "为主Nuxt组件的默认/禁用/表单错误/原生dialog状态补一份无障碍验收矩阵，先核已有组件和测试；未包含的状态在隔离副本新增。把自动/键盘/读屏证据分别记录，不以axe零违规宣布全面符合。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility",
+        "https://playwright.dev/docs/accessibility-testing",
+        "https://www.w3.org/WAI/test-evaluate/tools/selecting/"
+      ],
+      "boundary": "本轮只有后台Chrome与模拟宽窄视口，没有屏幕阅读器或残障用户试学；不能写VoiceOver/JAWS/NVDA通过。读屏清单应具体到浏览器/AT版本、导航方式、名称/角色/状态、错误宣读和恢复位置。不要为消除axe红灯给无行为div机械加role。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "无障碍验收：自动规则、键盘行为与辅助技术分层",
+      "task": "为主Nuxt组件的默认/禁用/表单错误/原生dialog状态补一份无障碍验收矩阵，先核已有组件和测试；未包含的状态在隔离副本新增。把自动/键盘/读屏证据分别记录，不以axe零违规宣布全面符合。",
+      "criteria": [
+        "标签缺失负例必须检出并恢复；正常与错误状态都检查，说明自动化不能覆盖的至少两项。",
+        "只用键盘打开/关闭模态并重试，焦点不落到inert外部；读屏结果明确已测或未测及版本前提。"
+      ]
+    }
+  },
+  {
+    "id": "12.2.2",
+    "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.2.item-12-2-2.md",
+    "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.2.item-12-2-2-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.2.item-12-2-2.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "性能回归要先定义对象、环境与允许变化。页面加载实验用相同构建、硬件/浏览器、网络/CPU、缓存和服务状态重复测量，再比较同口径分布；不要把本机一次Lighthouse分数波动直接判产品变慢。Lighthouse是实验室信号，和真实用户INP/p75及线上SLO不同。",
+      "example": "lab读取真实Vite dist/assets下JS/CSS的原始字节与逐文件gzip合计，正常产物在20KB/10KB教学预算内。随后临时源副本把随机合成大字符串写入实际DOM dataset以阻止优化删除，再真实构建一次，计算增量并要求预算拒绝。该负例证明门禁确实看产物，不只是验证阈值函数。",
+      "exercise": "删除dist再直接运行verify，bundleStats必须失败而非按0通过；重建后恢复。再用临时大payload重建证明超预算拒绝，不能靠把预算调大或只改测试中的数字变绿。",
+      "practice": "为主Nuxt/组件库产物制定一份性能回归门禁草案，列包字节与运行时指标分别负责什么；运行独立lab的真实产物差异，并明确主构建目录要适配而不能原样把Vite assets假定为Nuxt _nuxt。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance",
+        "https://developer.chrome.com/docs/lighthouse/performance/performance-scoring",
+        "https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md"
+      ],
+      "boundary": "本轮实际执行产物预算/第二次合成膨胀构建，未运行LHCI。lighthouserc.cjs是官方观察模板，三次/median仅示例；接入后需自己的LHCI版本、浏览器与基线证据。没有把gzip合计当真实CDN传输，也没有把随机膨胀对比称生产版本回归。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "性能回归：固定环境、多次实验与真实产物预算",
+      "task": "为主Nuxt/组件库产物制定一份性能回归门禁草案，列包字节与运行时指标分别负责什么；运行独立lab的真实产物差异，并明确主构建目录要适配而不能原样把Vite assets假定为Nuxt _nuxt。",
+      "criteria": [
+        "证据来自实际构建目录，空/缺产物不能当0字节通过；正常与超过阈值两路径都可复现。",
+        "明确本轮是字节预算还是LHCI运行，配置若未执行不得填分数；报告指标单位、比较环境与预算依据。"
+      ]
+    }
+  },
+  {
+    "id": "12.2.3",
+    "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.3.item-12-2-3.md",
+    "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.3.item-12-2-3-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.3.item-12-2-3.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "国际化测试不仅检查字符串是否翻译。伪本地化用扩展/重音/边界标记暴露硬编码、截断与空间假设；它不是语言学质量或真实阿拉伯语排版证明。RTL从文档方向和CSS逻辑属性入手，不是全页transform水平翻转；标识/邮箱/代码等有自己的方向语义。",
+      "example": "lab切换中文、en-XA伪本地化与阿拉伯文fixture。html lang/dir随选择改变，description与按钮扩展后必须无横溢出；RTL下ORDER-123通过bdi dir=ltr保持标识方向，布局用inline/block逻辑属性。保存pseudo/RTL截图供人工观察，但不把当前截图当已审批视觉基线。",
+      "exercise": "在390视口点击固定宽度故障，将card inline-size设900px后横溢出，恢复逻辑布局后消失。只隐藏overflow会掩盖被截内容；应改布局约束和换行，不能靠截图裁切通过。",
+      "practice": "为主Nuxt的locale/dir与表单错误/按钮文本建立长文本/RTL案例，先核实际文案与行为；若增加日期货币应在隔离副本实现并明确固定参数，不把lab截图称主应用所有语言验收。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility",
+        "https://www.w3.org/International/questions/qa-html-dir",
+        "https://www.w3.org/International/articles/inline-bidi-markup/"
+      ],
+      "boundary": "本lab只验证小型布局/方向与长文本，没有完整翻译、日期/复数库或真实母语审校。中文导航仍是教学支架，不是全站阿拉伯语本地化。截图属于当前运行观察；自动语言切换成功不等于翻译准确或读屏语言正确。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "国际化测试：文本扩展、RTL与混合方向标识",
+      "task": "为主Nuxt的locale/dir与表单错误/按钮文本建立长文本/RTL案例，先核实际文案与行为；若增加日期货币应在隔离副本实现并明确固定参数，不把lab截图称主应用所有语言验收。",
+      "criteria": [
+        "伪本地化和RTL分别检查，不将“字符串换了”当排版通过；长文本和按钮可换行且无横溢出。",
+        "混合方向标识可正确选择/读取，金额/日期断言明确locale/timezone；母语审校与视觉基线未做则单列。"
+      ]
+    }
+  },
+  {
+    "id": "12.2.4",
+    "theory": "learning/1-notes/12-testing-design-system/12.2-specialized-testing/12.2.4.item-12-2-4.md",
+    "example": "learning/2-examples/12-testing-design-system/12.2-specialized-testing/12.2.4.item-12-2-4-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.2-specialized-testing/12.2.4.item-12-2-4.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "支持矩阵来自用户/产品需求与特性风险，不是任意跑三个项目就覆盖全球浏览器。Playwright project把同一行为用例放到不同配置：Chromium、Firefox、WebKit是引擎工具版本；Chrome/Edge渠道与Safari系统浏览器仍有差别。桌面390px只是视口，不能证明Android触摸/键盘或iOS浏览器行为。",
+      "example": "lab实际verify只启动本机Chrome，跑390/1440。playwright.matrix.config.mjs与matrix-tests给出相同表单/dialog行为跨引擎的可执行入口；准备匹配的Playwright browser后执行test:matrix。--list只验证发现三个项目/测试，不是运行通过。本轮不下载新浏览器、不接BrowserStack。",
+      "exercise": "把Chrome的390px结果填到iOS Safari真实设备一行，这是证据归类错误。回查browser.version/UA/运行配置，将其改回Chrome模拟视口，并保留iOS待验；不能只改project名称假装换引擎。",
+      "practice": "为主Nuxt/组件库提交支持矩阵与原生dialog/焦点/RTL关键旅程清单，标记本轮Chrome实测与Firefox/WebKit/真机未测，明确后续运行条件和fallback。",
+      "sources": [
+        "https://playwright.dev/docs/test-projects",
+        "https://playwright.dev/docs/browsers",
+        "https://www.browserstack.com/docs/automate/playwright"
+      ],
+      "boundary": "本轮未运行Firefox、WebKit、BrowserStack、真机或完整触摸/输入法；只有Chrome模拟视口可记通过。Playwright配套WebKit不等于所有Safari版本；设备描述符改变参数不创造真实硬件。正式验收还需运行对应目标与失败回退，不支持能力应有可操作替代。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "跨浏览器矩阵：引擎、版本、设备和服务分别记录",
+      "task": "为主Nuxt/组件库提交支持矩阵与原生dialog/焦点/RTL关键旅程清单，标记本轮Chrome实测与Firefox/WebKit/真机未测，明确后续运行条件和fallback。",
+      "criteria": [
+        "每行写明实际引擎/品牌/版本与OS/设备，明确哪些是视口模拟、桌面引擎或真实设备。",
+        "配置可以发现同一行为用例，未装引擎/云服务不计运行通过；失败保留版本、最小复现与回退验收。"
+      ]
+    }
+  }
+]

@@ -1,0 +1,11 @@
+packages:
+  - .
+storeDir: .pnpm-store
+verifyDepsBeforeRun: error
+allowBuilds:
+  esbuild: false
+minimumReleaseAgeExclude:
+  - "@storybook/builder-vite@10.6.9"
+  - "@storybook/vue3-vite@10.6.9"
+  - "@storybook/vue3@10.6.9"
+  - storybook@10.6.9

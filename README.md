@@ -29,9 +29,10 @@
 | 阶段 9 | 测量7、预算5、加载6、运行时7、SSR5，共30项四部分资料 |
 | 阶段 10 | 基线4、漏洞8、认证7、供应链5、隐私5，共29项四部分资料 |
 | 阶段 11 | 错误5、日志指标5、发布6、基础设施5，共21项四部分资料 |
+| 阶段 12 | 测试策略8、专项4、设计系统7、组件库5，共24项四部分资料 |
 | 工程专题 | Nuxt 基座、桌面及手机宿主的规划与独立仓库交接 |
 
-正文覆盖 475/590（约 80.5%），阶段 12–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 11 验收](./docs/audits/STAGE_11_ACCEPTANCE.md)、[阶段 10 验收](./docs/audits/STAGE_10_ACCEPTANCE.md)、[阶段 9 验收](./docs/audits/STAGE_9_ACCEPTANCE.md)、[阶段 8 验收](./docs/audits/STAGE_8_ACCEPTANCE.md)、[阶段 7 验收](./docs/audits/STAGE_7_ACCEPTANCE.md)、[阶段 6 验收](./docs/audits/STAGE_6_ACCEPTANCE.md)、[阶段 5 验收](./docs/audits/STAGE_5_ACCEPTANCE.md)、[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
+正文覆盖 499/590（约 84.6%），阶段 13–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 12 验收](./docs/audits/STAGE_12_ACCEPTANCE.md)、[阶段 11 验收](./docs/audits/STAGE_11_ACCEPTANCE.md)、[阶段 10 验收](./docs/audits/STAGE_10_ACCEPTANCE.md)、[阶段 9 验收](./docs/audits/STAGE_9_ACCEPTANCE.md)、[阶段 8 验收](./docs/audits/STAGE_8_ACCEPTANCE.md)、[阶段 7 验收](./docs/audits/STAGE_7_ACCEPTANCE.md)、[阶段 6 验收](./docs/audits/STAGE_6_ACCEPTANCE.md)、[阶段 5 验收](./docs/audits/STAGE_5_ACCEPTANCE.md)、[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
 
 ## 运行与检查
 
@@ -60,7 +61,7 @@ web-common、web-pc-workframe、web-h5-workframe 已另建为三个独立仓库�
 
 Web 技术方案先检索 Modern Web Guidance，再按目标浏览器选择可用能力。本项目支持逐步形成复杂 Web 工程的开发与治理能力，不把目录齐全表述为已达到高级工程师水平。
 
-阶段6：[质量学习入口](./learning/1-notes/06-performance-security/README.md)、[Nuxt三语目录](./learning/4-practice/06-performance-security/README.md)。阶段7已完成，阶段8已完成，阶段9已完成，阶段10已完成，阶段11已完成，下一阶段12：自动化测试、Storybook与Vue组件库。
+阶段6：[质量学习入口](./learning/1-notes/06-performance-security/README.md)、[Nuxt三语目录](./learning/4-practice/06-performance-security/README.md)。阶段7已完成，阶段8已完成，阶段9已完成，阶段10已完成，阶段11已完成，阶段12已完成，下一阶段13：pnpm多包管理、版本发布与CI流水线。
 
 阶段7：[部署学习入口](./learning/1-notes/07-deployment/README.md)、[Nuxt三种profile与发布恢复](./learning/4-practice/07-deployment/README.md)。
 
@@ -71,3 +72,5 @@ Web 技术方案先检索 Modern Web Guidance，再按目标浏览器选择可�
 阶段10：[安全学习入口](./learning/1-notes/10-security/README.md)、[Nuxt匿名安全笔记](./learning/4-practice/10-security/README.md)。
 
 阶段11：[可观测学习入口](./learning/1-notes/11-observability/README.md)、[Nuxt诊断与稳定开关工作台](./learning/4-practice/11-observability/README.md)。
+
+阶段12：[测试与设计系统入口](./learning/1-notes/12-testing-design-system/README.md)、[Vue组件包与Nuxt验收工作台](./learning/4-practice/12-testing-design-system/README.md)。

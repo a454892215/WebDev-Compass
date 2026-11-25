@@ -1,0 +1,85 @@
+{
+  "stage": 12,
+  "group": "12.3-design-system",
+  "recordedAt": "2026-11-25T11:33:48.846186+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "storybook": "10.6.9",
+    "@storybook/vue3-vite": "10.6.9",
+    "style-dictionary": "5.8.0",
+    "vite": "8.3.8",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "playwright": "1.65.1"
+  },
+  "registrySource": "https://registry.npmjs.org/{package}/latest (queried2026-11-25, exact versions locked)",
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm tokens",
+    "pnpm typecheck",
+    "pnpm test",
+    "pnpm build",
+    "pnpm verify"
+  ],
+  "checks": {
+    "frozenOffline": "passed",
+    "styleDictionaryBuild": "real CSS/JS/d.ts with resolved alias and allfivecategories",
+    "typecheck": "real generated JS+d.ts consumer, expected wrong numeric assignment rejected",
+    "nodeTests": 3,
+    "storybookProductionBuild": "passed",
+    "browser": {
+      "results": [
+        {
+          "width": 390,
+          "realStorybookPlay": [
+            "sharedButtonClick",
+            "disabledNoClick",
+            "vueCustomElementEvent"
+          ],
+          "themeComputed": "rgb(233, 182, 255)",
+          "externalRequests": 0,
+          "pageErrors": 0
+        },
+        {
+          "width": 1440,
+          "realStorybookPlay": [
+            "sharedButtonClick",
+            "disabledNoClick",
+            "vueCustomElementEvent"
+          ],
+          "themeComputed": "rgb(233, 182, 255)",
+          "externalRequests": 0,
+          "pageErrors": 0
+        }
+      ],
+      "limits": [
+        "no SaaS/Chromatic/Figma/TokensStudio cloud sync",
+        "Storybook imports shared SFC source, not packed distribution",
+        "only Chrome simulated viewports, no realmobile/multiengine/screenreader"
+      ]
+    },
+    "customElementDelegatesFocus": "bothviewports native shadow activeElement correct",
+    "outputDirectories": {
+      "tokens": "dist/tokens",
+      "storybook": "dist/storybook",
+      "ignoredByExistingGates": true,
+      "legacyOutputDirectoriesRemoved": true
+    }
+  },
+  "findingsClosed": [
+    "ViteVueplugin required for emptyStorybookVueworkspace; added explicit vite.config and rebuilt",
+    "defineCustomElement open shadowRoot delegatesFocus configured and native host focus verified",
+    "LegacySDformat separated from DTCG/TokensStudio actualexport",
+    "Shared UiButton source vs packed dist consumption explicitly separated",
+    "Regenerable tokens/storybook outputs migrated under alreadyexcluded dist, all paths/docs updated; no checker relaxation. Real full group pipeline rerun passed."
+  ],
+  "limitations": [
+    "No real Figma/TokensStudio plugin or Git/cloudsync",
+    "No Chromatic/Percy/other SaaS upload or approved visualbaseline",
+    "Storybook source SFC not mainpacked dist test; main integration separately executed by root",
+    "SemVer classification/value migration not full ASTcodemod or real release",
+    "WebComponent CSR nativehost only, no SSR/form-associated/fullcrossframework proof",
+    "Chrome390/1440 simulated, no realdevice/multibrowser/screenreader/humantrial"
+  ]
+}

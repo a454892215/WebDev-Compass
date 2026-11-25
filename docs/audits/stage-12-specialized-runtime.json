@@ -1,0 +1,99 @@
+{
+  "browserVersion": "158.0.8127.37",
+  "before": {
+    "files": 2,
+    "raw": 3184,
+    "gzip": 1592
+  },
+  "after": {
+    "files": 2,
+    "raw": 43222,
+    "gzip": 32304
+  },
+  "delta": {
+    "raw": 40038,
+    "gzip": 30712
+  },
+  "budget": {
+    "raw": 20000,
+    "gzip": 10000
+  },
+  "overBudgetRejected": true,
+  "syntheticChange": "random fixture payload kept in DOM dataset, actual second Vite build",
+  "browser": [
+    {
+      "width": 390,
+      "axeViolations": 0,
+      "labelFaultDetected": true,
+      "keyboardSkip": true,
+      "dialogFocusEscapeRestore": true,
+      "pseudoNoOverflow": true,
+      "rtlDirectionAndLTRIdentifier": true,
+      "fixedWidthFault": "detected and restored",
+      "outsideRequests": 0
+    },
+    {
+      "width": 1440,
+      "axeViolations": 0,
+      "labelFaultDetected": true,
+      "keyboardSkip": true,
+      "dialogFocusEscapeRestore": true,
+      "pseudoNoOverflow": true,
+      "rtlDirectionAndLTRIdentifier": true,
+      "fixedWidthFault": "not needed",
+      "outsideRequests": 0
+    }
+  ],
+  "unrun": [
+    "LighthouseCI",
+    "screen reader",
+    "Firefox",
+    "WebKit",
+    "BrowserStack",
+    "real mobile",
+    "remoteCI"
+  ],
+  "stage": 12,
+  "group": "12.2-specialized-testing",
+  "executedBy": "stage12_specialized",
+  "recordedAt": "2026-11-25T11:25:38.173944+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "vite": "8.3.8",
+    "playwright": "1.65.1",
+    "axe-core/playwright": "4.14.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "nodeTests": 3,
+    "viteProductionBuild": "passed",
+    "chromeViewports": [
+      390,
+      1440
+    ],
+    "matrixListOnly": "3 tests discovered; no matrix engines executed",
+    "htmlResources": "190 pages/702 local references/0 errors at group review time",
+    "manualVisualInspection": "rtl-390 actual artifact viewed; no cropped or horizontal-overflow content"
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm test",
+    "pnpm build",
+    "pnpm verify",
+    "pnpm exec playwright test -c playwright.matrix.config.mjs --list",
+    "python3 scripts/check_learning_resources.py"
+  ],
+  "findingsClosed": [
+    "static dist root normalized before path boundary check",
+    "axe requires explicit browser.newContext instead of browser.newPage convenience context",
+    "matrix has actual smoke test and discovery, not an empty config"
+  ],
+  "limits": [
+    "current RTL screenshots not approved golden visual baselines",
+    "random expanded source actual rebuild is a synthetic regression, not production version comparison",
+    "raw/gzip sums not network transfer or RUM/INP",
+    "no LighthouseCI/screenreader/Firefox/WebKit/BrowserStack/realmobile/remoteCI",
+    "no productionNuxt or maincomponent tests executed by this group"
+  ]
+}

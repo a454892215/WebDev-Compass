@@ -30,3 +30,5 @@
 阶段10：[安全理论](./1-notes/10-security/README.md)、[实验入口](./2-examples/10-security/README.md)、[独立练习](./3-exercises/10-security/README.md)、[Nuxt安全笔记与29任务](./4-practice/10-security/README.md)。下一阶段11。
 
 阶段11：[错误/日志/灰度理论](./1-notes/11-observability/README.md)、[实验](./2-examples/11-observability/README.md)、[练习](./3-exercises/11-observability/README.md)、[Nuxt工作台](./4-practice/11-observability/README.md)，共21点。下一阶段12。
+
+阶段12：[测试/组件理论](./1-notes/12-testing-design-system/README.md)、[实验](./2-examples/12-testing-design-system/README.md)、[独立练习](./3-exercises/12-testing-design-system/README.md)、[Vue包与Nuxt宿主](./4-practice/12-testing-design-system/README.md)，共24点。下一阶段13。

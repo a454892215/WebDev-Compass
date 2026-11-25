@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>专项测试样本</title>
+  </head>
+  <body>
+    <header>
+      <a href="#content">跳到正文</a>
+      <nav aria-label="主导航"><a href="../README.md">实验说明</a></nav>
+    </header>
+    <main id="content" tabindex="-1">
+      <h1>专项测试样本</h1>
+      <p>先观察正常状态，再注入标签缺失与长文本故障。</p>
+      <div class="controls">
+        <label for="language">语言</label
+        ><select id="language">
+          <option value="zh">中文</option>
+          <option value="pseudo">伪本地化</option>
+          <option value="ar">العربية</option></select
+        ><button id="fault" type="button">切换标签缺失故障</button
+        ><button id="wide" type="button">切换固定宽度故障</button>
+      </div>
+      <form>
+        <label id="name-label" for="name">合成名称</label
+        ><input id="name" name="name" autocomplete="off" required /><button
+          id="save"
+          type="submit"
+        >
+          保存样本
+        </button>
+      </form>
+      <p id="status" role="status">尚未保存</p>
+      <section class="card" aria-labelledby="card-title">
+        <h2 id="card-title">布局与文本</h2>
+        <p id="long">长度可变的说明，内容应换行而非截断。</p>
+        <p>
+          <span id="account-label">编号</span>：<bdi dir="ltr">ORDER-123</bdi>
+        </p>
+        <button id="open" type="button">打开说明</button>
+      </section>
+      <dialog id="details" aria-labelledby="dialog-title">
+        <h2 id="dialog-title">测试说明</h2>
+        <p>原生模态框：应能Esc关闭、回到触发按钮。</p>
+        <form method="dialog">
+          <button id="close" autofocus>关闭说明</button>
+        </form>
+      </dialog>
+    </main>
+    <footer>只有本地合成内容，无遥测或第三方资源。</footer>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

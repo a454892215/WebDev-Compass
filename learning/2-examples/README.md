@@ -71,3 +71,5 @@ learning/2-examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 - [阶段10：XSS/CSRF、认证安全与隐私](./10-security/README.md)：29点四部分资料、匿名安全笔记及隔离实验。
 
 - [阶段11：错误监控、日志指标与灰度发布](./11-observability/README.md)：21点四部分、Nuxt工作台及独立SDK/发布/代理实验。
+
+- [阶段12：自动化测试、Storybook与Vue组件库](./12-testing-design-system/README.md)：24点四部分、组件包/Nuxt宿主及真实策略/专项/故事实验。

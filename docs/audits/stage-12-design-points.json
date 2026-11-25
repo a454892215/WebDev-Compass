@@ -1,0 +1,197 @@
+[
+  {
+    "id": "12.3.1",
+    "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.1.design-token.md",
+    "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.1.design-token-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.1.design-token.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Token是对可复用设计决策命名，不只是给每个十六进制颜色起别名。先区分primitive（如navy）、semantic（如action/text/surface）和组件级（如button-background）职责；semantic引用primitive，使换品牌不必改所有调用处。Color、Spacing、Typography、Radius、Shadow需要类型、单位、用途、负责人及弃用策略，不能只维护一张色表。",
+      "example": "本地tokens/source.json采用Style Dictionary原生legacy type/value格式：color.action.value引用{color.base.navy}，spacing/radius有rem单位，typography有fontFamily，shadow有结构化值。pnpm tokens由真实Style Dictionary生成CSS、JS与.d.ts；测试确认alias颜色、间距与声明，不把有type字段等于完成DTCG最新规范认证。 生成JS+d.ts后真实TypeScript消费者正例/错误类型@ts-expect-error检查通过，不仅正则看声明文件。",
+      "exercise": "把color.action的引用改为{missing.alias}，运行pnpm test中的未解析引用负例或独立构建；真实构建应拒绝。修正源引用再生成，不在产物补一个常量绕过。",
+      "practice": "为主组件库的按钮/字段列primitive→semantic→组件状态映射，并用独立token实验验证新增focus别名。主宿主没有自动接Figma源，若接入生成CSS应明确作为新增扩展。",
+      "sources": [
+        "https://styledictionary.com/info/tokens/",
+        "https://www.designtokens.org/tr/drafts/format/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Design Token分层：从视觉值到语义与组件契约",
+      "task": "为主组件库的按钮/字段列primitive→semantic→组件状态映射，并用独立token实验验证新增focus别名。主宿主没有自动接Figma源，若接入生成CSS应明确作为新增扩展。",
+      "criteria": [
+        "生成CSS/JS/.d.ts均包含新增语义，alias解析后值匹配预期，不能手改dist/tokens掩盖源缺失。",
+        "在明暗主题及键盘焦点分别核对可见性，说明token类型不能代替视觉/无障碍验收。"
+      ]
+    }
+  },
+  {
+    "id": "12.3.2",
+    "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.2.style-dictionary-tokens-studio.md",
+    "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.2.style-dictionary-tokens-studio-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.2.style-dictionary-tokens-studio.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "设计到代码需要明确唯一事实来源、导出格式、变换规则、可重复生成和审批。Tokens Studio管理设计侧token/主题并可同步Git，但导出JSON不天然等于目标CSS。Style Dictionary负责解析引用、平台变换和格式输出；Figma同步、生成和发布是不同步骤，各自有版本和失败条件。",
+      "example": "storybook-lab/tokens/build.mjs用真实Style Dictionary5.8.0，source→css/variables与javascript/es6、typescript/es6-declarations。输入坚持同一种legacy格式，不混$value/$type。运行pnpm tokens后pnpm test，核dist/tokens/tokens.css/tokens.js/tokens.d.ts；引用错时测试实际assert.rejects构建。",
+      "exercise": "只改dist/tokens/tokens.css后再次pnpm tokens，手改会被源覆盖。定位事实来源与构建顺序，改source再生成；不要将此现象误判为缓存失效。",
+      "practice": "为主组件库补一条设计源→转换→CSS/types→stories/宿主验收→版本记录的交付说明，先使用本地合成JSON，不声称已有Figma自动同步。",
+      "sources": [
+        "https://styledictionary.com/info/tokens/",
+        "https://styledictionary.com/reference/hooks/formats/predefined/",
+        "https://docs.tokens.studio/manage-tokens/token-types/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Style Dictionary流水线：设计导出、转换、生成与审查",
+      "task": "为主组件库补一条设计源→转换→CSS/types→stories/宿主验收→版本记录的交付说明，先使用本地合成JSON，不声称已有Figma自动同步。",
+      "criteria": [
+        "保留源版本、变换版本与生成差异；缺失/冲突引用必须阻断，不能随意降级为undefined。",
+        "明确本地JSON生成已实测，Figma导出/插件/远程同步未测，列需要设计与前端共同核对的字段。"
+      ]
+    }
+  },
+  {
+    "id": "12.3.3",
+    "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.3.storybook.md",
+    "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.3.storybook-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.3.storybook.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Story是一个明确的组件状态，不是整站截图列表。CSF的meta/component、args、render与play分别描述组件、输入、上下文和用户行为；同一个公开API应覆盖默认、禁用、边界内容和关键状态。Storybook隔离环境便于讨论与复现，但不能替代真实Nuxt SSR/路由/服务端授权测试。",
+      "example": "真实Storybook10.6.9/vue3-vite展示主lib/src/UiButton.vue源SFC，Primary的play用storybook/test点击并断言onClick一次/type=button，Disabled验证不激活，DarkBrand展示作用域主题。pnpm build产生dist/storybook，pnpm verify在两视口直接加载真实iframe并等待play完成；不是自制页面冒充Storybook。",
+      "exercise": "在隔离副本给Primary传type=submit并保留其type=button期望，play应失败；确认测试揭示的是契约变化，决定修输入还是正式改API，不能只删除断言。",
+      "practice": "运行实际Storybook的共享UiButton故事，将Primary/Disabled与主Nuxt消费同一组件的行为对照；新增状态时同步故事与宿主最小回归，不把构建通过等于所有play通过。",
+      "sources": [
+        "https://storybook.js.org/docs/get-started/frameworks/vue3-vite",
+        "https://storybook.js.org/docs/writing-stories/play-function",
+        "https://storybook.js.org/docs/configure/telemetry"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Storybook Vue3：真实组件状态、交互play与文档基线",
+      "task": "运行实际Storybook的共享UiButton故事，将Primary/Disabled与主Nuxt消费同一组件的行为对照；新增状态时同步故事与宿主最小回归，不把构建通过等于所有play通过。",
+      "criteria": [
+        "Story引用真实UiButton API，play使用角色/名称和可观察行为，不以query内部Vue实现为主。",
+        "保存一项独立失败→修复记录；注明截图本地/源码展示与主dist消费、平台视觉回归的区别。"
+      ]
+    }
+  },
+  {
+    "id": "12.3.4",
+    "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.4.api.md",
+    "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.4.api-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.4.api.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先写调用方需要完成的任务，再设计最小稳定API。prop承载有限状态与数据，event表达意图，slot容纳内容组合；不要用几十个布尔值组合出无法定义的状态。封装button应保留type、disabled、可访问名称和键盘语义；默认type=button避免放入表单时意外提交。",
+      "example": "共享UiButton的variant是primary/secondary，disabled/type有默认值，default slot提供可见名称，单原生button根节点承接class/aria属性及原生click。故事Primary验证type=button与点击，Disabled验证不能激活。slot不是任意HTML字符串；本例不使用v-html。",
+      "exercise": "把根节点换为div并保留click，鼠标可能还能触发而Space/Enter/type/disabled契约失效。用真实键盘和角色断言定位，再恢复原生button；不要用补role而不补完整行为应付。",
+      "practice": "阅读主UiButton与字段组件实际API，给一个新需求写prop/event/slot/键盘/错误行为契约，区分已经实现和建议新增，不改调用方假设。",
+      "sources": [
+        "https://vuejs.org/guide/components/props.html",
+        "https://vuejs.org/guide/components/slots.html",
+        "https://vuejs.org/guide/components/attrs.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Vue组件API：原生语义、属性事件和slot组合",
+      "task": "阅读主UiButton与字段组件实际API，给一个新需求写prop/event/slot/键盘/错误行为契约，区分已经实现和建议新增，不改调用方假设。",
+      "criteria": [
+        "调用方式能解释状态优先级、原生type/disabled与可访问名称，不能只有视觉spinner。",
+        "保留原variant与slot调用；若必须改变行为，记录兼容/迁移而不是隐式改默认。"
+      ]
+    }
+  },
+  {
+    "id": "12.3.5",
+    "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.5.item-12-3-5.md",
+    "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.5.item-12-3-5-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.5.item-12-3-5.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SemVer针对已定义公开API：不兼容改动升major，向后兼容功能升minor，兼容修复升patch。组件API不只是TS prop名，也包括默认行为、DOM语义、事件、slot、导出路径及公开样式/token契约；是否破坏需要看已承诺的使用方式，不能“只改CSS”就默认patch。",
+      "example": "本地policy.mjs用明确教学分类决定bump；migrateVariant把旧配置值solid/outline转换为primary/secondary并返回审查提示，3项Node组包含确定性断言。这只是配置值迁移演示，不是解析任意Vue SFC的AST codemod，也没有真实发布包或升级用户项目。",
+      "exercise": "把unknown动态值也强改成primary会掩盖调用方意图；用custom输入反例确认保留未知并标人工检查，再补真实AST工具前的dry-run策略。",
+      "practice": "为主组件库选择一个真实公开契约变更写迁移/兼容/回退文档；独立lab仅验证配置值转换，真正Changelog/包版本操作按12.4实际工具。",
+      "sources": [
+        "https://semver.org/",
+        "https://vuejs.org/guide/components/props.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "组件SemVer：公开契约、破坏性变化与迁移证据",
+      "task": "为主组件库选择一个真实公开契约变更写迁移/兼容/回退文档；独立lab仅验证配置值转换，真正Changelog/包版本操作按12.4实际工具。",
+      "criteria": [
+        "明确至少一个编译可通过但仍破坏行为/样式契约的例子，以及相应版本决定。",
+        "静态迁移有前后差异/幂等/保留未知值；不把正则替换称全语法安全codemod。"
+      ]
+    }
+  },
+  {
+    "id": "12.3.6",
+    "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.6.item-12-3-6.md",
+    "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.6.item-12-3-6-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.6.item-12-3-6.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "主题分离语义token和组件结构。CSS custom properties按DOM继承，class/data属性选择语义变量；把theme和brand两个维度明确命名，决定冲突优先级。组件尽量消费semantic变量，不在每个组件里复制一套dark分支。",
+      "example": "Storybook预览先加载生成tokens.css，再加载故事theme.css；DarkBrand的局部data-theme=dark覆盖surface/text，data-brand=plum覆盖action，内部secondary按钮真实computed color为rgb(233,182,255)，页面根不被局部主题改写。verify在390/1440观察，不用光看class名推断主题已生效。",
+      "exercise": "把品牌覆盖误写为:root导致全部故事/宿主区域变色；从computed style查变量来源，改为局部属性选择器并对照外层。不要用!important遮住层级问题。",
+      "practice": "比较主Nuxt的theme/locale初始状态与Storybook局部主题，给跨区域浮层或多品牌接入写约束；新增需求不冒称已由主库自动处理。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties",
+        "https://vuejs.org/guide/scaling-up/ssr.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/accessibility/accessibility"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "CSS变量主题：作用域、品牌与SSR一致",
+      "task": "比较主Nuxt的theme/locale初始状态与Storybook局部主题，给跨区域浮层或多品牌接入写约束；新增需求不冒称已由主库自动处理。",
+      "criteria": [
+        "局部品牌改变按钮语义色而不污染外层，并核对默认/hover/focus/disabled各状态对比。",
+        "SSR/客户端初始theme来源一致，未实装系统偏好或浮层策略需明确列为扩展。"
+      ]
+    }
+  },
+  {
+    "id": "12.3.7",
+    "theory": "learning/1-notes/12-testing-design-system/12.3-design-system/12.3.7.item-12-3-7.md",
+    "example": "learning/2-examples/12-testing-design-system/12.3-design-system/12.3.7.item-12-3-7-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.3-design-system/12.3.7.item-12-3-7.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-3-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "跨框架复用可以使用Custom Elements，但不等于“一个组件在所有框架零成本”。Vue defineCustomElement把组件定义转成HTMLElement构造器，由customElements.define注册；attribute适合字符串，复杂数据通常走property，事件是DOM CustomEvent，Vue emits的参数在detail数组。注册/命名、加载与样式边界是额外契约。",
+      "example": "真实WebElement故事以Vue defineCustomElement+h创建compass-counter，内部原生button位于open ShadowRoot并用delegatesFocus委派焦点；点击更新计数并emit changed，原生宿主监听detail[0]显示1。浏览器再setAttribute(label)确认prop响应。实验无React/Angular依赖，验证的是标准宿主交互，不是假称多框架集成。",
+      "exercise": "在注册前重复customElements.define同名会抛NotSupportedError；用get守卫并说明HMR不能自动替换已注册类。不要捕获所有异常让注册失败静默。",
+      "practice": "运行独立WebElement原生宿主故事，写是否值得为主Vue库增加CustomElement分发的取舍；主库当前不是Web Components包，SSR/跨框架接入是新增工作。",
+      "sources": [
+        "https://vuejs.org/guide/extras/web-components.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/html/web-components",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/html/accessible-web-components"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Web Components选修：原生宿主、Shadow DOM与事件契约",
+      "task": "运行独立WebElement原生宿主故事，写是否值得为主Vue库增加CustomElement分发的取舍；主库当前不是Web Components包，SSR/跨框架接入是新增工作。",
+      "criteria": [
+        "能解释并验证DOM CustomEvent detail、命名冲突和attribute/property差别，保留原生button语义。",
+        "列Shadow样式/ARIA与SSR/表单边界，未跑其他框架与浏览器时不写“跨框架全兼容”。"
+      ]
+    }
+  }
+]

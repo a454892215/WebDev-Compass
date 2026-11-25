@@ -1,0 +1,222 @@
+[
+  {
+    "id": "12.1.1",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.1.item-12-1-1.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "测试策略是对风险、层级、数据/环境和责任的约定，不是测试工具采购清单。先列关键旅程及失败后果，再为每种风险选择最便宜但足够的证据：纯计算用单元，输入/事件/状态契约用组件，HTTP双方约定用契约，跨页面真实构建旅程用E2E。约定未测范围、阻断发布条件、失败诊断资料和负责人，比写“覆盖率达到80%”更可执行。\n\n覆盖率只说明某些语句/分支执行过，不证明断言有效、用户流程正确或所有浏览器可用。对关键决策分支可以提高覆盖预期，但需逐条解释为什么；生成代码/适配壳的覆盖取舍也要明示。不要把截图、一次绿色重试、AI审查或测试数量当质量结论。测试数据只用合成fixture，端口/存储/账号生命周期独立，生产凭据和真实用户信息不进入测试报告。",
+      "example": "读strategy-lab/STRATEGY.md的风险表，沿R-contract找到core.test.mjs里的实际provider HTTP与decoder正反例；R-visual对应固定环境PNG基线与padding变化；R-async对应真正延迟状态的auto-retry断言。每条同时有边界，R-SSR明确转到主Nuxt专项而不是声称静态卡片已经验证SSR。",
+      "exercise": "删除策略中的失败退出条件，只保留“测试全部通过”。再给出一个重试后通过但原始失败仍有迹象的案例，说明当前文档无法决定放行；补owner、原始失败保留、恢复验证及限期处置。",
+      "practice": "为主Nuxt组件消费表单列策略与证据表：包产物、控件契约、SSR隔离、输入失败与关键旅程；先核实际tests/README，未实现的检查作为扩展，不改旧阶段的质量结论。",
+      "sources": [
+        "https://vuejs.org/guide/scaling-up/testing.html",
+        "https://playwright.dev/docs/best-practices"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "测试策略文档：从产品风险确定证据与退出条件",
+      "task": "为主Nuxt组件消费表单列策略与证据表：包产物、控件契约、SSR隔离、输入失败与关键旅程；先核实际tests/README，未实现的检查作为扩展，不改旧阶段的质量结论。",
+      "criteria": [
+        "每个最高风险至少关联一个能失败的断言和发布阻断条件，说明选择该层级的理由。",
+        "把coverage预期、实际执行、源码审查、未测平台分别记录；无真实后端时不写生产预约成功。"
+      ]
+    }
+  },
+  {
+    "id": "12.1.2",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.2.item-12-1-2.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "测试层级是不同反馈范围，不是固定百分比金字塔。纯业务函数测试快且易定位，但不能证明真实DOM焦点；组件测试验证props/slot/事件与状态，但jsdom没有真实排版/浏览器行为；契约测试检查系统边界约定但不证明整条业务成功；E2E连接真实构建、路由、网络和用户操作，成本更高、故障面更宽。\n\n同一风险可用互补证据，避免在每层逐行复制同一断言。例：按钮disabled不触发事件由组件验证，浏览器键盘/焦点由少量真实旅程验证；API返回字段类型先由消费者decoder拒绝，再在真实provider路径验证。stub应局限在测试目标外的依赖；若把目标机制本身mock掉，绿灯只能证明mock。断言用户可观察结果优先，避免依赖内部ref名字、深层class或实现顺序。",
+      "example": "运行strategy-lab的4Node与verify：canReserve边界用纯函数、真实HTTP契约用provider、PNG检查浏览器可见布局、延迟状态靠浏览器断言。两shard只验证请求上下文隔离，不把API-only Playwright测试称完整浏览器E2E。Vue组件契约与Nuxt旅程由主项目/Storybook真实代码另提供。",
+      "exercise": "把消费者decoder替换成固定fixture返回值，保持provider返回错误字段类型。原来的测试会假绿；恢复真实解码/请求并观察失败，再把mock限定为真正外部依赖。",
+      "practice": "给主Nuxt的UiButton、UiField、API DTO、SSR接管和一个提交旅程画证据组合；组件与E2E各保留自己的职责，不机械复制每一条内部断言。",
+      "sources": [
+        "https://vuejs.org/guide/scaling-up/testing.html",
+        "https://playwright.dev/docs/best-practices"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "测试组合：按风险选单元、组件、契约与旅程",
+      "task": "给主Nuxt的UiButton、UiField、API DTO、SSR接管和一个提交旅程画证据组合；组件与E2E各保留自己的职责，不机械复制每一条内部断言。",
+      "criteria": [
+        "至少识别一个jsdom无法证明的行为和一个不值得放到整套E2E的纯逻辑。",
+        "任何mock都有边界说明，不把主HTTP、SSR或控件目标替换成全stub后宣称端到端通过。"
+      ]
+    }
+  },
+  {
+    "id": "12.1.3",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.3.contract-testing.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.3.contract-testing-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.3.contract-testing.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "契约描述消费者实际依赖的请求、状态、字段类型与语义。HTTP消费者发请求，提供者回响应；mock消费者测试只能说明“若响应如约，消费者能处理”，还需提供者针对同一契约在定义好的provider state下验证。Pact把consumer测试生成的交互文件交给provider验证，部署兼容关系/Broker属于完整协作流程，不是写一个JSON fixture就完成了Pact。\n\n本例选更轻量的真实HTTP+运行时decoder契约演示：id/title必须非空字符串，remaining为非负整数；额外additive字段允许但不透传。返回remaining字符串、缺字段、负数都拒绝。TS类型不会校验网络JSON；schema/decoder也不保证库存锁、鉴权和业务事务。变更策略应区分增加非必需字段与删除/改型消费者依赖字段，不把严格拒绝所有未知字段当所有契约的唯一正确形式。",
+      "example": "pnpm test第二组启动真实本地provider，fetch /summary后检查HTTP200并调用decodeSummary；第一组用remaining:\"3\"/缺字段/负数负例确认破坏被发现。core.mjs和server.mjs都是本lab真实代码。未安装Pact SDK/Broker，官方观察追踪consumer mock→pact file→provider verification→发布兼容判断。",
+      "exercise": "仅更新mock/fixture为新字段类型却不运行实际provider验证，会掩盖部署不兼容。把旧消费者与改型provider组合运行，恢复兼容类型或发布受控迁移契约；不能靠any断言吞掉错误。",
+      "practice": "核对主Nuxt实际API DTO与前端依赖，新增一个字段改型负例。若团队采用Pact，再按官方步骤接consumer/provider验证；本课程独立lab证据不得改名为Pact通过。",
+      "sources": [
+        "https://docs.pact.io/getting_started/how_pact_works",
+        "https://docs.pact.io/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "前后端契约：消费者需求、提供者验证与Pact边界",
+      "task": "核对主Nuxt实际API DTO与前端依赖，新增一个字段改型负例。若团队采用Pact，再按官方步骤接consumer/provider验证；本课程独立lab证据不得改名为Pact通过。",
+      "criteria": [
+        "additive变更保持投影结果，字段改型导致实际decoder测试失败；记录失败字段/HTTP状态。",
+        "说明本地decoder契约与Pact consumer/provider/Broker各自缺什么，不把未运行Pact写成已集成。"
+      ]
+    }
+  },
+  {
+    "id": "12.1.4",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.4.visual-regression.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.4.visual-regression-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.4.visual-regression.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "视觉回归把同一场景的当前截图与已审基线比较，发现布局、样式、字体或图形差异；它不能证明业务逻辑、可访问语义或真实可用性。基线应按组件状态、viewport、主题、语言/RTL及运行环境选择，不需要为所有组合无限堆截图。固定浏览器/OS/字体、locale、DPR和动画，等字体/数据稳定后取目标区域；不要用大阈值把重要文本变化抹掉。\n\n本例保留两个已查看的PNG基线，verify只读取、不自动更新。相同环境的未变化卡片必须匹配，显式padding变体必须不匹配；采用PNG字节相等作为受控小样例，比生产pixel diff更严格且容易受编码/平台变化影响。正式项目可用Playwright toHaveScreenshot或Chromatic/Percy/Lost Pixel建立差异、审批与追溯；SaaS并未在本轮接入。",
+      "example": "在strategy-lab执行pnpm verify：390/1440各自读取baselines/card-*-macos-chrome.png，正常卡片匹配，再访问?variant=changed确认padding变体被检测。artifacts保存actual/changed，作者本轮已看基线与变化图。pnpm baseline是显式重新建立候选基线的操作，不属于verify，不应在CI每轮自动执行。",
+      "exercise": "在verify开头自动调用baseline更新，任何回归都变成新“正确图”。移除隐式更新，恢复只读比较；核对旧基线确实能拒绝padding变体，再由审查决定是否更新。",
+      "practice": "为主组件的default/disabled/error与宽窄状态选择最少视觉场景；用独立lab演示基线流程，若接入Chromatic等平台明确新增配置与实际上传尚未完成。",
+      "sources": [
+        "https://playwright.dev/docs/test-snapshots",
+        "https://www.chromatic.com/docs/visual/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "视觉回归：固定环境、审查基线与真实变化检测",
+      "task": "为主组件的default/disabled/error与宽窄状态选择最少视觉场景；用独立lab演示基线流程，若接入Chromatic等平台明确新增配置与实际上传尚未完成。",
+      "criteria": [
+        "未批准的可见样式变化导致原基线检查失败；正常场景与故意变化检测分别记录。",
+        "不能通过每次自动重建基线/放大阈值让红灯消失；写出OS/浏览器/字体/DPR与审批说明。"
+      ]
+    }
+  },
+  {
+    "id": "12.1.5",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.5.mutation-testing.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.5.mutation-testing-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.5.mutation-testing.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "mutation testing对被测程序注入小变更，再运行测试：若原本通过的测试因变体而失败，变体被杀死；若通过则存活，可能缺少有效断言，也可能是等价变体，需要分析。编译/运行错误和超时的分类依工具定义，不能把所有非零退出都当测试杀死，也不能把“手工改一行”声称已运行Stryker。\n\n本例用canReserve的>0改为>=0：仅验证1的弱测试会放过变体；加入0边界后原实现通过，变体产生明确AssertionError。这证明这一条边界断言有效，不能由一个变体推导整个项目mutation score或无缺陷。Stryker正式工具会生成/调度多个变体并报告状态，代价通常高于普通测试，应针对风险高且稳定的小范围选择。",
+      "example": "pnpm test第三组同时运行weak与strong测试函数，weak原/变体都过，strong原实现过，strong变体必须抛AssertionError。实际没有修改原项目源码或安装Stryker；官方资料解释killed/survived/no coverage/timeout/invalid/equivalent的差别。",
+      "exercise": "把mutant写成语法错误，看到退出1就宣布已杀死；先检查失败类别，修成可运行的>=边界变体，再证明测试在合法运行中真正断言失败。",
+      "practice": "挑主项目一条具有真实后果的输入/disabled判定做受控变体，保留原通过→变体断言失败→恢复通过。Stryker接入仅作为按需扩展，不默认拉全仓昂贵任务。",
+      "sources": [
+        "https://stryker-mutator.io/docs/mutation-testing-elements/mutant-states-and-metrics/",
+        "https://stryker-mutator.io/docs/mutation-testing-elements/equivalent-mutants/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Mutation Testing：用受控缺陷检查断言有效性",
+      "task": "挑主项目一条具有真实后果的输入/disabled判定做受控变体，保留原通过→变体断言失败→恢复通过。Stryker接入仅作为按需扩展，不默认拉全仓昂贵任务。",
+      "criteria": [
+        "明确记录原实现先通过，以及变体失败的具体AssertionError，不接受SyntaxError代替。",
+        "说明单个变体结果与mutation score/覆盖率不同，存活时给出行为分析而非机械添加镜像测试。"
+      ]
+    }
+  },
+  {
+    "id": "12.1.6",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.6.e2e.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.6.e2e-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.6.e2e.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "worker是在单次执行中并行工作，shard将可并行测试分配到不同任务；两者不是同一个旋钮。默认分文件，fullyParallel允许按测试粒度分片；需保证每项独立，不依赖前一项留下的浏览器状态、端口或数据库记录。更多worker受CPU/内存/外部限额约束，不保证线性加速。\n\n配置每test独立context/数据命名，跨worker的资源需唯一ID和清理责任；共享read-only fixture与写入fixture分开。报告要能关联shard/project/retry及原始失败，blob报告合并是CI职责，不能把只运行一个shard称完整套件。Testcontainers可为隔离服务提供生命周期，但依赖容器运行时与就绪判定，本机没有daemon时不为教学重装Colima。",
+      "example": "strategy-lab配置fullyParallel、workers2、retries0。pnpm shard:1与shard:2各运行2项request fixture测试，实际同机顺序执行两片；每片内2workers，合并看4个独立标题恰好覆盖，A/B Cookie上下文互不影响。它们是API-only Playwright测试，无浏览器进程；视觉runner另外启动Chrome。",
+      "exercise": "把两个test改用一个模块级共享可变user/context，执行并行时可能串扰。定位共享状态后恢复每test fixture与独立数据；不能只设workers1掩盖本应隔离的缺陷。",
+      "practice": "给主Nuxt关键旅程列可独立分片的集合与独立上下文，先确保完整单机检查；需要CI时再配置分片/报告合并，主教学项目不默认启动容器。",
+      "sources": [
+        "https://playwright.dev/docs/test-sharding",
+        "https://playwright.dev/docs/test-parallel",
+        "https://testcontainers.com/"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Playwright扩展：并行、Sharding与测试数据隔离",
+      "task": "给主Nuxt关键旅程列可独立分片的集合与独立上下文，先确保完整单机检查；需要CI时再配置分片/报告合并，主教学项目不默认启动容器。",
+      "criteria": [
+        "两片并集等于完整测试集合，标题/数据不重叠误依赖，保留实际workers/shard日志。",
+        "区分API-only、浏览器E2E、远程多机和容器服务；无daemon不写Testcontainers已通过。"
+      ]
+    }
+  },
+  {
+    "id": "12.1.7",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.7.flaky-test.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.7.flaky-test-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.7.flaky-test.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "flaky表示相同代码/环境下出现不稳定结果。原因可能是等待策略、共享数据、时间/随机数、资源竞争、网络或产品竞态；不能一律归咎工具。首次失败的trace、console、network、输入与环境应保留，重试结果单列。重试可降低暂态噪声，但不修根因；quarantine需owner、理由、期限与仍可见的报告，不能永久跳过关键风险。",
+      "example": "visual runner点击Reserve后，页面在80ms后更新role=status；用Playwright expect自动重试到Reserved fixture，不加固定sleep。Node第四组仅演示已知TimeoutError与AssertionError的分类，不自动重试业务断言。配置retries0，因此本轮结果没有“重试后通过”掩盖；没有伪造flaky历史发生率。",
+      "exercise": "对任何AssertionError循环重跑直到绿，再只保留最后一次结果，会掩盖真实竞态。去掉无界重试，记录首错并修目标条件；只有明确暂态重试且预算有限时才能采用重试策略。",
+      "practice": "检查主Nuxt测试是否等待业务状态而非固定时间，给一个假设迟到请求/共享fixture问题写根因记录；未发生真实flaky时以明确推演而非历史事故口吻写。",
+      "sources": [
+        "https://playwright.dev/docs/test-retries",
+        "https://playwright.dev/docs/test-assertions",
+        "https://playwright.dev/docs/best-practices"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Flaky治理：保留首次失败，修等待与共享状态",
+      "task": "检查主Nuxt测试是否等待业务状态而非固定时间，给一个假设迟到请求/共享fixture问题写根因记录；未发生真实flaky时以明确推演而非历史事故口吻写。",
+      "criteria": [
+        "失败定位到可解释的等待/状态原因，恢复后无需固定sleep或无限重试。",
+        "原始失败、重试与暂时隔离分别记录，quarantine有owner/到期与关键风险替代覆盖。"
+      ]
+    }
+  },
+  {
+    "id": "12.1.8",
+    "theory": "learning/1-notes/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration.md",
+    "example": "learning/2-examples/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration-demo.md",
+    "exercise": "learning/3-exercises/12-testing-design-system/12.1-testing-strategy/12.1.8.ssr-hydration.md",
+    "practice": "learning/4-practice/12-testing-design-system/tasks.md#p-12-1-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SSR不是只检查页面HTTP200。首先检查HTML中已经有有意义的内容，再观察浏览器hydrate后内容一致、可操作、没有mismatch。useFetch/useAsyncData可把SSR数据放payload避免同一初始数据客户端重复请求；直接在setup调用$fetch可能在server/client各请求一次。重复请求要区分预期导航/refresh与初始接管，不按全部网络次数简单判错。\n\n并发用户测试至少使用两个独立Cookie/context，在同一URL同时请求个性化HTML/API，核对A只见A、B只见B、无另一方数据或原始凭据，且响应缓存策略适合个性化。SSR模块全局currentUser、误用共享key/cache或把cookie/token直接序列化都有风险。共享后端store不等于共享当前用户；授权还必须由服务端独立判定，UI测试不能替代。",
+      "example": "该点使用主Nuxt真实SSR和浏览器专项，运行入口/路径以主README及tests为准；独立strategy-lab是纯HTTP/静态卡片，不提供SSR证据。沿主页面数据获取、server当前Cookie读取、payload和E2E断言追踪；未出现的缓存/登录功能只能隔离副本扩展，不能写“修复已有漏洞”。",
+      "exercise": "仅截图hydrate后的最终页面会漏掉SSR空壳、初始重复请求和并发全局状态；补原始HTML/网络计数/双context并发及响应缓存检查。故障在隔离副本新增，主项目未发现则不冒称已有漏洞。",
+      "practice": "阅读并运行主Nuxt已有SSR专项，核对有效HTML、payload接管与两fixture并发；若某项不存在，明确新增并给对应失败判据，不拿strategy-lab的静态卡片替代Nuxt证据。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://vuejs.org/guide/scaling-up/ssr.html",
+        "https://playwright.dev/docs/browser-contexts"
+      ],
+      "actualReview": "只读核主tests/e2e/flow.spec.ts与http.spec.ts及root实际5passed/JSON。HTTP并发A/B原始HTML/DTO互斥、无Cookie、private/no-store；浏览器在两视口验证SSR fixture A、reads.a仅增1、初始/api/profile请求为空、hydrate表单和dialog。执行者root，本组未重复测试。"
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Nuxt SSR专项：有效HTML、接管与双请求隔离",
+      "task": "阅读并运行主Nuxt已有SSR专项，核对有效HTML、payload接管与两fixture并发；若某项不存在，明确新增并给对应失败判据，不拿strategy-lab的静态卡片替代Nuxt证据。",
+      "criteria": [
+        "证据同时覆盖有效SSR内容、接管交互和A/B双上下文隔离；原始Cookie/token不进入HTML/payload。",
+        "说明初始数据请求计数范围、明确刷新产生的合法请求；缓存测试不把同URL先后访问当全部并发证据。"
+      ]
+    }
+  }
+]

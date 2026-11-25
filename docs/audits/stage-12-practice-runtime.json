@@ -1,0 +1,79 @@
+{
+  "stage": 12,
+  "executedBy": "root",
+  "recordedAt": "2026-11-25T11:34:18.976664+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "vite": "8.3.8",
+    "vitest": "5.1.1",
+    "playwright": "1.65.1",
+    "changesetsCLI": "3.0.3"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "typecheck": "passed",
+    "eslint": "passed",
+    "format": "passed",
+    "unit": 4,
+    "productionSSRBuild": "passed",
+    "localCheckCI": "passed",
+    "playwright": {
+      "startTime": "2026-11-25T11:32:02.010Z",
+      "duration": 3751.5640000000003,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "packageConsumer": {
+    "packEntries": [
+      "package/dist/style.css",
+      "package/dist/index.js",
+      "package/package.json",
+      "package/dist/index.d.ts",
+      "package/dist/UiButton.vue.d.ts",
+      "package/dist/UiField.vue.d.ts",
+      "package/dist/unused.d.ts"
+    ],
+    "isolatedTarballConsumer": true,
+    "vueExternal": true,
+    "localVueSingleton": true,
+    "consumerUnusedExportRemoved": true,
+    "stylePresent": true,
+    "missingStyleNegative": true,
+    "exportedTypesPositive": true,
+    "invalidVariantRejected": true
+  },
+  "changesets": {
+    "realCLI": true,
+    "from": "1.0.0",
+    "to": "1.0.1",
+    "changelogGenerated": true,
+    "published": false,
+    "scope": "temporary fixture only"
+  },
+  "cases": [
+    "dist nativebutton/disabled/attrs/slot and fieldlabel/hint/error/vmodel units",
+    "SSR escaped literal and independentvalidationboundaries",
+    "1440/390 initial SSR valid data/readsa+1/browserprofile0/hydration,formerrorfocus,safesavedtext,dialogopen/Esc/submitclose/focusreturn,axe/noscroll",
+    "1440/390 RTLnightcomputedcolor/axe/pseudolongtext",
+    "parallelHTTP A/B DTOmutualexclusion/no rawCookie/private+nostore/invalidfixtureguest/404"
+  ],
+  "findingsClosed": [
+    "installation prepare awaited sequentially;dir literal type retained",
+    "dialog formclose explicit submit and nightfocus/skip tokens",
+    "real CLI3 init interactive; deterministic configfrominstalleddefaults and actualversion",
+    "source stories vs packageconsumer evidence separated; CSS omission/invalidvariant are real negative builds"
+  ],
+  "limitations": [
+    "no realidentity/persistence; publicfixedreads fixture counter not productionmonitoring",
+    "Vuepeer range declaration not wholematrixtested; onlyESM/currenttools",
+    "no Pact/Stryker/Testcontainers/SaaS/LHCI/otherengines/reader/devices",
+    "no Figma/remoteCI/registrypublication or reallearnertrial"
+  ]
+}

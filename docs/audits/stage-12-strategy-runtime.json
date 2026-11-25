@@ -1,0 +1,107 @@
+{
+  "stage": 12,
+  "group": "12.1-testing-strategy",
+  "executedBy": "stage12_strategy",
+  "recordedAt": "2026-11-25T11:25:27.755036+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "playwright": "1.65.1",
+    "chrome": "158.0.8127.37"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "nodeTests": {
+      "passed": 4,
+      "failed": 0
+    },
+    "visualAndAsync": {
+      "browser": "158.0.8127.37",
+      "platform": "darwin",
+      "update": false,
+      "results": [
+        {
+          "width": 390,
+          "unchangedMatch": true,
+          "changedDetected": true,
+          "delayedStatusAwaited": true
+        },
+        {
+          "width": 1440,
+          "unchangedMatch": true,
+          "changedDetected": true,
+          "delayedStatusAwaited": true
+        }
+      ]
+    },
+    "shards": {
+      "1/2": {
+        "passed": 2,
+        "workers": 2,
+        "cases": [
+          "isolated fixture 0 a",
+          "isolated fixture 1 b"
+        ]
+      },
+      "2/2": {
+        "passed": 2,
+        "workers": 2,
+        "cases": [
+          "isolated fixture 2 a",
+          "isolated fixture 3 b"
+        ]
+      },
+      "execution": "same host, shards sequential; within each shard 2workers",
+      "retries": 0
+    },
+    "baselineReview": "Author viewed normal and controlled padding variant PNG via image tool; not human learner/disabled user or SaaS approval"
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm test",
+    "pnpm baseline (initial candidate creation only; baseline visually inspected)",
+    "pnpm verify",
+    "pnpm shard:1",
+    "pnpm shard:2"
+  ],
+  "cases": [
+    "real local provider HTTP200 decoded and DTO projection",
+    "remaining field type/missing/negative failures",
+    "manual executable >=0 mutant survives weak but fails strong with explicit AssertionError",
+    "committed PNG read-only match and deliberate padding variation detected at390/1440",
+    "real delayed status awaited by retrying expect rather than fixed sleep",
+    "per-test request cookie fixture isolation and four unique titles across shards"
+  ],
+  "limitations": [
+    "schema/decoder local illustration not Pact SDK/Broker/CDC compatibility deployment gate",
+    "controlled manual mutation not Stryker engine or full score",
+    "PNG byte comparison restricted macOS/Chrome158/Arial/DPR1; not production pixel diff/SaaS",
+    "shard tests API-only; visual Chrome separate; no multi-machineCI/Testcontainers",
+    "SSR/hydration evidence belongs to root main Nuxt, not static lab",
+    "no realdevices,multibrowser,screenreader,humanlearnertrial"
+  ],
+  "cleanup": "All own Chrome/server closed;4542 no listener",
+  "sharedMainEvidence": {
+    "executedBy": "root",
+    "readOnlyReviewedBy": "stage12_strategy",
+    "reviewedAt": "2026-11-25T11:26:57.470969+00:00",
+    "stats": {
+      "startTime": "2026-11-25T11:26:06.327Z",
+      "duration": 3834.085,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "source": [
+      "learning/4-practice/12-testing-design-system/tests/e2e/flow.spec.ts",
+      "learning/4-practice/12-testing-design-system/tests/e2e/http.spec.ts"
+    ],
+    "cases": [
+      "parallel A/B rawSSR isolated DTO/noCookie/private-no-store",
+      "1440/390 SSRfixtureA,reads.a increment1,no initial browserprofile request,hydrated form and dialog",
+      "nightRTL/pseudo and shared dist components"
+    ],
+    "limits": "No duplicate execution by this agent; no realidentity/CDN/screenreader/multibrowser."
+  }
+}
