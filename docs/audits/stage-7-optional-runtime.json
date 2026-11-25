@@ -1,0 +1,91 @@
+{
+  "stage": 7,
+  "group": "optional",
+  "executedBy": "stage7_optional",
+  "recordedAt": "2026-11-25T08:04:58.613782+00:00",
+  "versions": {
+    "node": "v26.0.0",
+    "pnpm": "11.4.0",
+    "playwright": "1.65.1",
+    "runtimeDependencies": "native platform APIs only"
+  },
+  "installation": {
+    "initialOffline": "Missing tarball, stopped immediately; no prolonged retry",
+    "explicitNetwork": "3 locked packages installed successfully; no browser download",
+    "finalFrozenOffline": "passed, no scripts"
+  },
+  "checks": {
+    "syntax": "app/server/verify node --check passed",
+    "unit": {
+      "command": "pnpm test",
+      "passed": 3,
+      "coverage": [
+        "realWASM validate/export/negative/i32 overflow/truncated bytes",
+        "schema rejects unknown type/field/version/size and retains text strings",
+        "chart rejects nonfinite/out-of-range/string data"
+      ]
+    },
+    "browser": {
+      "executedAt": "2026-11-25T08:03:34.713Z",
+      "results": [
+        {
+          "width": 390,
+          "lifecycle": {
+            "connections": 2,
+            "disconnections": 1,
+            "delta": 1,
+            "disconnectedUnchanged": true
+          },
+          "wasm": 12,
+          "svgBars": 3,
+          "tableRows": 3,
+          "unsafeNodeRejected": true,
+          "textInjectionSafe": true,
+          "pageErrors": []
+        },
+        {
+          "width": 1440,
+          "lifecycle": {
+            "connections": 2,
+            "disconnections": 1,
+            "delta": 1,
+            "disconnectedUnchanged": true
+          },
+          "wasm": 12,
+          "svgBars": 3,
+          "tableRows": 3,
+          "unsafeNodeRejected": true,
+          "textInjectionSafe": true,
+          "pageErrors": []
+        }
+      ],
+      "limits": [
+        "Headless Chrome simulated viewports; no native wrapper, framework/editor integration, actual screen reader or full accessibility audit"
+      ]
+    },
+    "resources": {
+      "command": "python3 scripts/check_learning_resources.py",
+      "pagesAtCheck": 173,
+      "referencesAtCheck": 644,
+      "errors": 0
+    },
+    "markdownLinks": "Own material links to pending parent README/tasks only; root integrates final shared targets",
+    "formatting": "Existing stage6 Prettier applied to authored lab source after browser run; formatting only, not a new behavior claim"
+  },
+  "observationOnly": [
+    "Module Federation host/remote/shared contract and failure plan",
+    "GraphQL response/errors and Apollo error policy, identity cache design",
+    "Electron/Tauri trust boundaries/capabilities and export IPC plan",
+    "Expo/RNW platform decomposition",
+    "D3/ECharts/Chart.js comparison: actual chart uses native SVG",
+    "ProseMirror/Tiptap/Slate schema/normalization review: no editor installed"
+  ],
+  "sourceAccessNote": "ProseMirror guide returned403; used successfully retrieved Tiptap official schema explanation and Slate official normalization; did not claim failed page read.",
+  "limitations": [
+    "No microfrontend remote, GraphQL network service/client framework, desktop shell, Expo/native build or full editor integration run",
+    "No Emscripten compiler run, WASM benchmark, worker/thread/shared memory proof",
+    "No real device, actual screen reader, disabled user test or full accessibility audit",
+    "No third-party SDK/source build/download except fixed Playwright dev tool; no public deployment"
+  ],
+  "cleanup": "Server4509 and headlessChrome closed in finally; no listener after run"
+}

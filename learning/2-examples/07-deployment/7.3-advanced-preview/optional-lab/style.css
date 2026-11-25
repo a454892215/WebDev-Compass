@@ -1,0 +1,61 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #17253a;
+  background: #f4f6fa;
+  font-size: 100%;
+}
+body {
+  margin: 1rem auto;
+  max-width: 54rem;
+  padding: 0 1rem;
+}
+main {
+  min-width: 0;
+}
+section {
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #66758a;
+  background: white;
+  border-radius: 0.5rem;
+}
+h1,
+h2,
+h3,
+p {
+  overflow-wrap: anywhere;
+}
+a {
+  color: #123b70;
+}
+button {
+  font: inherit;
+  color: #123b70;
+  background: white;
+  border: 2px solid #123b70;
+  min-height: 44px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #ae3300;
+  outline-offset: 3px;
+}
+svg {
+  display: block;
+  width: min(100%, 24rem);
+  height: auto;
+}
+table {
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid #66758a;
+  padding: 0.5rem;
+  text-align: start;
+}
+course-counter {
+  display: block;
+}

@@ -1,0 +1,184 @@
+[
+  {
+    "id": "7.3.1",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "微前端是按业务边界组织前端团队和交付的架构选择；Module Federation是运行时共享/加载其他构建模块的一种机制，两者不是同义词。普通Nuxt项目的模块、路由和懒加载通常已经足够。只有团队独立交付的收益超过依赖协调、首屏、故障和可访问性成本时，才评估微前端。\n\n宿主与远端需约定模块名、输入/事件、版本兼容、共享依赖和失败UI。远端JS通常在宿主上下文执行，不因为来自另一团队就有权限沙箱。独立源iframe提供另一种隔离维度，但也带来通信、焦点、嵌入策略和身份边界。共享Vue单例可减少重复，却要求版本契约；不是把所有库都singleton就安全。",
+      "example": "类型：官方文档与交付设计观察，不运行远程联邦构建。阅读webpack Module Federation中的container/exposes/remotes/shared概念，把主目录中的“课程推荐”假设为可选远端，画出一个宿主/一个远端和失败后的本地链接。核对宿主启动是否依赖远端、两端Vue版本与独立回滚；不要把普通动态import当作已经搭建联邦。",
+      "exercise": "故障：共享Vue版本不兼容且宿主把远端作为启动硬依赖。定位共享版本契约/加载入口，改为兼容范围和可选边界或退回本地模块；验收是目录和焦点导航在远端失败时仍可用，未运行联邦需标注设计证据。",
+      "practice": "在Nuxt发布演练的副本为可选推荐模块写一页独立发布决策与失败恢复；当前主工程没有联邦。",
+      "sources": [
+        "https://webpack.js.org/concepts/module-federation/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.2",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.2.web-components.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.2.web-components-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.2.web-components.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Custom Elements提供有连字符的自定义标签和生命周期；Shadow DOM提供DOM/样式封装。已有Vue组件体系时，站内UI优先保持Vue，跨框架嵌入或独立控件才考虑自定义元素，不为了换颜色重造button。\n\n构造函数先super，再建立内部DOM；连接回调可能反复执行，必须可重入。断开时移除window监听、计时器和观察器，重连应恢复。Shadow DOM不是不可信脚本沙箱，open/closed也不构成授权；外部脚本仍处于页面的同源权限环境。属性、property、CustomEvent是明确契约，跨边界事件按需要设置bubbles/composed；跨树aria-id引用不能凭相同字符串建立关系。",
+      "example": "类型：真实原生浏览器实验。运行optional-lab后点击“课程计数”，观察父容器收到事件；点击重新连接后再计数，用DevTools查看open shadowRoot中的原生button。verify还会在断开时发stage7-tick，确认计数不变，重连后只增加一次，Enter能激活。",
+      "exercise": "故障：connectedCallback每次创建新箭头window监听但断开用另一个函数移除，重连后一次事件累计多次。将处理函数保存为稳定引用，在disconnectedCallback匹配移除；重复两次重连后单次变化仍为1。",
+      "practice": "运行独立lab生命周期与事件测试；仅当课程控件要提供给非Vue宿主时，在Nuxt副本设计嵌入接口，不声称主工程已使用自定义元素。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/html/web-components",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/html/custom-elements"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.3",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.3.graphql.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.3.graphql-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.3.graphql.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "GraphQL用schema定义可查询字段，operation和variables描述读取/变更。它不是数据库，也不会替代后端逐资源授权。HTTP成功不代表每个字段成功；响应可以同时包含data与errors，客户端必须根据业务决定保留哪些部分并呈现错误。\n\nApollo Client、urql提供查询与缓存等能力，具体API/集成包需按选定版本和Vue适配核对；不要直接照搬React hook到Nuxt。归一化缓存按实体身份复用数据，分页合并、字段参数、登录切换和SSR每请求实例均影响隔离。不要在Node全局单例里保存带用户数据的客户端。简单REST契约已足够时，不必为选修改写阶段5API。",
+      "example": "类型：官方文档/合成响应观察。阅读GraphQL response与Apollo errorPolicy，比较none/all/ignore；为片段标注HTTP错误、请求验证错误、字段错误与正常空值。画出两个用户请求的两个独立客户端及注销后缓存清理。没有建立GraphQL服务，也没有安装Apollo/urql，不把JSON分析称接口实测。",
+      "exercise": "故障：将errorPolicy:ignore用于必须成功的权限字段，界面吞掉错误。对照data/errors/path恢复明确错误分支；分别列出网络失败与字段失败的预期，未接真实服务只提交响应fixture分析。",
+      "practice": "在主目录副本为课程/推荐准备GraphQL对接设计与部分失败样本；当前主工程使用既定本地数据，不虚构已迁移GraphQL。",
+      "sources": [
+        "https://graphql.org/learn/response/",
+        "https://www.apollographql.com/docs/react/data/error-handling"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.4",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.4.webassembly-wasm.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.4.webassembly-wasm-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.4.webassembly-wasm.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "WebAssembly是可在宿主环境执行的低级二进制指令格式，适合复用计算密集代码或现有C/C++/Rust库。它不能直接取代DOM应用：DOM和资源能力由宿主导入/JS桥接提供。下载、编译、内存拷贝和调用边界都有成本，不是天然快于JS。\n\n本lab内嵌可核对的add(i32,i32)模块字节，对应WAT注释放在logic.mjs；instantiate返回module/instance，再通过exports调用。i32加法按32位语义溢出；JS输入转换规则与任意精度运算不同。主线程调用重计算仍会阻塞，实际重任务可放Worker；共享内存/线程另需平台与隔离条件，本例没有这些。",
+      "example": "类型：真实Node和Chrome运行。node --test验证模块可编译、7+5=12、负数和i32溢出、截断二进制拒绝；浏览器点计算得到12。未安装Emscripten、未编译C/C++、未跑WASM性能基准。本例直接instantiate字节；若改instantiateStreaming需服务端application/wasm和正确错误回退。",
+      "exercise": "故障：把2147483647+1期待为2147483648并认为实现错。用类型段/函数签名确认i32，改用正确预期；需要其他数值范围时选择适当类型/协议，而不是隐藏溢出。",
+      "practice": "运行WASM lab并提交数值边界说明；只有业务真实计算瓶颈时再为Nuxt副本增加Worker/WASM，不为发布流程强加工具链。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/instantiate_static",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/wasm/cpp-on-the-web"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.5",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.5.electron.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.5.electron-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.5.electron.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Electron通常携带Chromium与Node运行环境，Tauri前端使用系统WebView并经IPC调用核心能力。应用体积、渲染一致性、系统依赖、插件、签名更新和团队经验需一起权衡，不能用一个安装包体积数字判定优劣。\n\n浏览器DOM经验可复用，但桌面IPC扩大权限面。Electron应保持contextIsolation和沙箱等保护，不向renderer暴露任意文件/命令执行，只暴露小而明确的preload桥；校验来源、参数和返回数据。Tauri按capabilities/permissions限定WebView可调用能力，Rust核心/插件仍有系统权限，不能误认为配置自动约束所有核心逻辑。Nuxt SSR Node服务不能直接当静态WebView文件，需选择可打包前端和服务协议。",
+      "example": "类型：官方安全观察。阅读Electron checklist的上下文隔离/沙箱/IPC sender验证及Tauri trust boundaries/capabilities。为“导出课程摘要”画renderer→限定桥→系统保存对话框路径，加入用户取消和路径校验。没有安装、启动、签名或打包桌面壳；普通Chrome测试不覆盖桌面原生权限。",
+      "exercise": "故障：为了导出文件向页面暴露execute(command)，远程页面也可调用。删去通用执行面，改成受限导出能力，校验sender/参数；用威胁路径检查原命令已不可达，不能只增加按钮确认。",
+      "practice": "为Nuxt发布产物写桌面封装可行性与权限草案，保持主Web发布独立；当前仓库没有桌面打包验收。",
+      "sources": [
+        "https://www.electronjs.org/docs/latest/tutorial/security",
+        "https://v2.tauri.app/security/"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.6",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.6.react-native-web.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.6.react-native-web-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.6.react-native-web.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "React Native Web把一部分React Native组件映射到DOM能力，Expo提供跨平台开发/路由与Web发布工具。已有RN经验有助于复用业务逻辑，但Web仍有URL、语义、鼠标/键盘、复制选择、CSS布局与SEO等自身契约；不是把移动页面缩放就交付桌面。\n\n共享领域模型/校验/请求协议通常比强制共享所有UI更稳定。平台特定文件和适配层用于隔离原生API，避免仅靠if分支却仍在模块顶层导入原生依赖。库支持Web不等于SSR安全；浏览器全局访问仍需合适生命周期。当前主线Vue/Nuxt，不把切换RNW作为复用既有经验的必需步骤。",
+      "example": "类型：官方跨端观察。阅读Expo Web中RNW/DOM组件、Web依赖和发布模式说明，把课程目录按领域逻辑、路由、UI和系统能力分类。列出原生文件选择/浏览器下载、触摸/键盘的不同验收。未创建Expo工程或原生构建；不要把已有Flutter/RN经验当本轮已验证Web兼容。",
+      "exercise": "故障：Web条件分支不执行原生代码，但文件顶层仍导入仅原生模块，构建已失败。将导入移动到平台入口/适配层，分别检查Web与原生打包路径；未实际构建必须标观察方案。",
+      "practice": "比较Nuxt双宿主与RNW方案的团队/产品约束，输出适配清单；当前主目录保持Vue/Nuxt，不声称已实现Expo替代宿主。",
+      "sources": [
+        "https://docs.expo.dev/workflow/web/",
+        "https://necolas.github.io/react-native-web/docs/"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.7",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.7.d3.js.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.7.d3.js-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.7.d3.js.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先确定数据问题、单位、排序、尺度和文字等价，再选图形库。D3是组合数据与图形的低级工具；ECharts侧重现成系列/交互配置；Chart.js以canvas图表为主。它们不等于自动产生正确或可访问的图。\n\n少量数据可先用HTML表格和原生SVG，明确数据到宽度/位置的映射。Canvas需要额外名称、文字或表格等价；图例不能只靠颜色，缩放和实时更新也要检查可读性。框架中初始化需等容器存在，尺寸变化更新并在卸载释放实例/观察器。SSR先输出有意义的数据文字，不在Node模块顶层访问document。",
+      "example": "类型：真实原生SVG+表格，不安装三种库。启动lab查看构建30/验证50/发布20分钟，SVG三条与表格三行同源；390/1440视口不横溢出。verify核对条数、数值和非法数据拒绝。选择库是官方资料比较，没有虚报D3/ECharts/Chart.js实例实测。",
+      "exercise": "故障：直接把服务器字符串当数字绘宽，出现NaN或条形超出。先解码并检查有限值/允许范围，非法数据显示错误，不画误导图；再核对SVG viewBox与CSS实际尺寸。",
+      "practice": "在Nuxt发布演练副本展示构建/检查的合成数据，先保留HTML表格；按真实交互需要决定是否添加图库，不把合成工时当生产测量。",
+      "sources": [
+        "https://d3js.org/what-is-d3",
+        "https://www.chartjs.org/docs/latest/general/accessibility.html",
+        "https://echarts.apache.org/handbook/en/best-practices/aria/"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.8",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.8.prosemirror-slate-tiptap.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.8.prosemirror-slate-tiptap-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.8.prosemirror-slate-tiptap.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "富文本编辑不只是contenteditable。文档模型定义段落/标题/标记，transaction或operation描述编辑，selection、撤销/重做、粘贴、IME和组合输入共同决定体验。ProseMirror提供基于schema的结构与事务；Tiptap基于它组织扩展；Slate有自己的节点/操作和normalization体系，不能直接互换配置。\n\n文档schema限制结构，不自动完成所有XSS与URL安全策略。服务端仍需验证版本、大小、允许节点/属性和访问权限，展示时按上下文安全序列化；图片/链接URL、外部嵌入和导入HTML需单独处理。存JSON或HTML都要考虑迁移、并发冲突和可导出性。Vue/Nuxt接编辑器需客户端初始化与卸载清理，先有只读SSR回退。",
+      "example": "类型：官方文档/需求观察。按Tiptap schema与Slate normalization正文，对“标题+段落+加粗+链接”的需求列允许节点/属性、粘贴、IME、撤销、只读展示与保存冲突验收。ProseMirror原站本轮403，使用Tiptap官方对底层schema的解释，不声称读取失败页。未安装完整编辑器，本lab白名单文本渲染不是富文本编辑器。",
+      "exercise": "故障：接收任意HTML并直接v-html展示，认为编辑器已保证安全。沿输入→持久化→展示追踪危险URL/属性，在对应边界验证/净化并保持版本迁移；原恶意样本应不执行，正文仍可读。",
+      "practice": "为Nuxt目录副本写课程备注编辑器对接设计和威胁/验收清单；当前主工程未集成完整编辑器，若实施须另做组件与实际浏览器验证。",
+      "sources": [
+        "https://tiptap.dev/docs/editor/core-concepts/schema",
+        "https://docs.slatejs.org/concepts/11-normalizing",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.3.9",
+    "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.9.item-7-3-9.md",
+    "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.9.item-7-3-9-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.9.item-7-3-9.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-9",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "低代码通常把受约束的页面/流程表示为schema，通过组件注册表和渲染器生成界面。可视化设计器只是输入方式，核心还包括schema版本、验证、数据绑定、权限和发布。适合稳定且可枚举的结构，不保证任意需求都能零代码实现。\n\n本例只允许version:1和heading/text节点，验证完整输入后再创建DOM；文本走textContent，不使用eval、Function或任意组件名解析。拒绝未知字段/节点和过大输入是有意的范围控制。JSON Schema是通用验证标准，但本lab手写小型校验，不冒充实现整个标准。权限仍在服务端，隐藏组件不是授权；迁移/回滚需要旧渲染器能读哪个版本的契约。",
+      "example": "类型：真实白名单schema渲染。启动lab看标题/段落，点击未知script类型后显示拒绝且原内容保留；verify将恶意img字符串作为text节点渲染，确认无img节点/脚本执行。Node还拒绝未知字段、版本和超长文本。没有拖拽设计器、任意表达式或完整低代码平台。",
+      "exercise": "故障：节点kind直接传给createElement，属性遍历写入onerror，或表达式交给eval。改为显式注册白名单和数据校验/安全属性策略，恶意schema应被拒绝且没有执行；不能只把script改名黑名单。",
+      "practice": "在独立lab新增受限notice并验证迁移；给主Nuxt发布流程设计schema/渲染器兼容与回滚清单，不称现有课程页已是低代码平台。",
+      "sources": [
+        "https://json-schema.org/understanding-json-schema/reference/object",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ],
+      "runtime": "docs/audits/stage-7-optional-runtime.json"
+    },
+    "issues": []
+  }
+]

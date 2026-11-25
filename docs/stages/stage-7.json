@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "stage": 7,
+  "project": "learning/4-practice/07-deployment/nuxt.config.ts",
+  "points": [
+    {
+      "id": "7.1.1",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.1.dist.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.1.dist-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.1.dist.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-1"
+    },
+    {
+      "id": "7.1.2",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.2.vercel.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.2.vercel-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.2.vercel.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-2"
+    },
+    {
+      "id": "7.1.3",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.3.nginx.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.3.nginx-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.3.nginx.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-3"
+    },
+    {
+      "id": "7.1.4",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.4.item-7-1-4.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.4.item-7-1-4-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.4.item-7-1-4.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-4"
+    },
+    {
+      "id": "7.1.5",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.5.spa-history-fallback.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.5.spa-history-fallback-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.5.spa-history-fallback.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-5"
+    },
+    {
+      "id": "7.1.6",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.6.docker-dockerfile.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.6.docker-dockerfile-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.6.docker-dockerfile.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-6"
+    },
+    {
+      "id": "7.1.7",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.7.github-actions.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.7.github-actions-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.7.github-actions.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-7"
+    },
+    {
+      "id": "7.1.8",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.8.health-observability.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.8.health-observability-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.8.health-observability.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-8"
+    },
+    {
+      "id": "7.1.9",
+      "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.9.release-rollback.md",
+      "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.9.release-rollback-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.9.release-rollback.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-9"
+    },
+    {
+      "id": "7.2.1",
+      "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg.md",
+      "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-1"
+    },
+    {
+      "id": "7.2.2",
+      "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.2.next.js.md",
+      "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.2.next.js-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.2.next.js.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-2"
+    },
+    {
+      "id": "7.2.3",
+      "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.3.nuxt.md",
+      "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.3.nuxt-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.3.nuxt.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-3"
+    },
+    {
+      "id": "7.2.4",
+      "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.4.hydration.md",
+      "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.4.hydration-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.4.hydration.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-4"
+    },
+    {
+      "id": "7.2.5",
+      "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.5.api.md",
+      "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.5.api-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.5.api.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-5"
+    },
+    {
+      "id": "7.3.1",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.1.item-7-3-1.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-1"
+    },
+    {
+      "id": "7.3.2",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.2.web-components.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.2.web-components-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.2.web-components.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-2"
+    },
+    {
+      "id": "7.3.3",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.3.graphql.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.3.graphql-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.3.graphql.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-3"
+    },
+    {
+      "id": "7.3.4",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.4.webassembly-wasm.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.4.webassembly-wasm-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.4.webassembly-wasm.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-4"
+    },
+    {
+      "id": "7.3.5",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.5.electron.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.5.electron-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.5.electron.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-5"
+    },
+    {
+      "id": "7.3.6",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.6.react-native-web.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.6.react-native-web-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.6.react-native-web.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-6"
+    },
+    {
+      "id": "7.3.7",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.7.d3.js.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.7.d3.js-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.7.d3.js.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-7"
+    },
+    {
+      "id": "7.3.8",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.8.prosemirror-slate-tiptap.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.8.prosemirror-slate-tiptap-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.8.prosemirror-slate-tiptap.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-8"
+    },
+    {
+      "id": "7.3.9",
+      "theory": "learning/1-notes/07-deployment/7.3-advanced-preview/7.3.9.item-7-3-9.md",
+      "example": "learning/2-examples/07-deployment/7.3-advanced-preview/7.3.9.item-7-3-9-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.3-advanced-preview/7.3.9.item-7-3-9.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-3-9"
+    },
+    {
+      "id": "7.4.1",
+      "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.1.rfc.md",
+      "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.1.rfc-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.1.rfc.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-1"
+    },
+    {
+      "id": "7.4.2",
+      "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.2.item-7-4-2.md",
+      "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.2.item-7-4-2-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.2.item-7-4-2.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-2"
+    },
+    {
+      "id": "7.4.3",
+      "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.3.code-review.md",
+      "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.3.code-review-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.3.code-review.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-3"
+    },
+    {
+      "id": "7.4.4",
+      "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.4.item-7-4-4.md",
+      "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.4.item-7-4-4-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.4.item-7-4-4.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-4"
+    },
+    {
+      "id": "7.4.5",
+      "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.5.item-7-4-5.md",
+      "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.5.item-7-4-5-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.5.item-7-4-5.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-5"
+    },
+    {
+      "id": "7.4.6",
+      "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.6.readme-changelog-api.md",
+      "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.6.readme-changelog-api-demo.md",
+      "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.6.readme-changelog-api.md",
+      "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-6"
+    }
+  ]
+}

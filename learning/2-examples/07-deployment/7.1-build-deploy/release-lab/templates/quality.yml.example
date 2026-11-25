@@ -1,0 +1,33 @@
+# Observation template. Not installed, pushed or remotely executed this round.
+# Official v6 tag -> commit resolved on 2026-11-25; review updates, not blind pin reuse.
+name: Nuxt quality gates
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: learning/4-practice/07-deployment
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 26.0.0
+      - run: npm install --global pnpm@11.4.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck && pnpm lint && pnpm format:check && pnpm test
+      - run: pnpm build && pnpm build:ssg && pnpm build:csr
+      - run: pnpm test:profiles
+# Deployment deliberately absent: choose a trusted environment/identity, promote
+# this exact checked artifact and add health/rollback gates before real publishing.

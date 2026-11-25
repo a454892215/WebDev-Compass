@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>阶段7业务选修机制实验</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./app.mjs"></script>
+  </head>
+  <body>
+    <a href="./README.md">实验运行说明</a>
+    <main>
+      <h1>业务选修：四种最小机制</h1>
+      <p>原生浏览器实验；没有运行微前端、桌面壳、Expo或完整编辑器。</p>
+      <section>
+        <h2>Custom Element 生命周期</h2>
+        <div id="counter-mount"><course-counter></course-counter></div>
+        <button id="reconnect" type="button">移除后重新连接</button>
+        <p id="events" role="status">尚无计数事件</p>
+      </section>
+      <section>
+        <h2>WASM i32 加法</h2>
+        <button id="wasm" type="button">计算 7 + 5</button>
+        <p id="wasm-result" role="status">等待计算</p>
+      </section>
+      <section>
+        <h2>SVG 与等价数据</h2>
+        <svg
+          id="chart"
+          viewBox="0 0 300 110"
+          role="img"
+          aria-label="发布演练工时示例，详细数字见下表"
+        ></svg>
+        <table>
+          <caption>
+            工时示例，单位：分钟
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">环节</th>
+              <th scope="col">分钟</th>
+            </tr>
+          </thead>
+          <tbody id="data-body"></tbody>
+        </table>
+        <p>这是原生SVG基础，没有安装D3/ECharts/Chart.js。</p>
+      </section>
+      <section>
+        <h2>白名单 Schema 渲染</h2>
+        <div id="schema-result"></div>
+        <button id="invalid-schema" type="button">尝试未知 script 类型</button>
+        <p id="schema-status" role="status">仅接受 heading/text</p>
+      </section>
+    </main>
+  </body>
+</html>

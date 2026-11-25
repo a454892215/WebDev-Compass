@@ -1,0 +1,109 @@
+[
+  {
+    "id": "7.2.1",
+    "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg.md",
+    "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.1.csr-vs-ssr-vs-ssg.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "CSR主要在浏览器执行页面渲染，静态站点可交付HTML壳、JS与CSS；首次显示依赖脚本，公开内容需要另评估搜索与无JS体验。SSR在请求时产生HTML，仍会发送客户端脚本完成hydration；有缓存时也可能返回先前生成的HTML，不能把“SSR”简单等于每次重新计算全部内容。SSG在构建时生成每条已知路由的HTML/payload，内容更新需再次构建部署，或明确设计客户端独立API；静态文件托管不会因此获得Nuxt server/能力。\n\n增量生成/再验证是在请求、时间或显式失效后更新预生成内容，成功语义取决于框架、缓存层及托管适配。Nuxt routeRules中的swr在Node可缓存响应并后台再验证；isr另依平台CDN支持。不能把swr、CDN ISR、浏览器Cache-Control和useFetch数据key当同一层缓存。带身份页面通常不适合共享整页缓存。\n\n选择从业务输入出发：公开、少更新、路由可枚举的文档先考虑SSG；需要请求身份/时效聚合的页面考虑SSR或独立API；封闭交互工具可CSR。也可逐路由混合，但每新增profile都要增加相应部署验收。不存在所有指标同时最优的通用模式。",
+      "example": "主代理真实构建SSR/SSG/CSR并分别保存artifacts；本组读取三构建日志、profile脚本/结果与6项E2E JSON。SSR有server入口；SSG无server且public生成6个HTML，4个_payload.json；CSR无server且3个HTML壳。同一详情原始HTML正文仅SSR/SSG存在，3种浏览器都接管可交互，静态API404。",
+      "exercise": "将SSG输出目录当Node SSR部署，并期待/api/private可运行；先看部署目录是否包含server/index.mjs及HTTP返回，恢复正确profile或独立API后复验。",
+      "practice": "对综合项目三种真实profile建立简短选择记录；新增“课程每分钟变化”需求只在副本修改策略。",
+      "source": [
+        "https://nuxt.com/docs/4.x/guide/concepts/rendering",
+        "https://nuxt.com/docs/4.x/getting-started/deployment",
+        "https://nuxt.com/docs/4.x/getting-started/prerendering"
+      ],
+      "boundary": "SSG页仍可交互；CSR也可能由Node托管；是否有Node服务器与是否SSR不是同一维度。反向代理fallback若对所有缺失文件返回200 HTML，会把坏JS伪装成页面；错误状态需按托管模型验证。"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.2.2",
+    "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.2.next.js.md",
+    "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.2.next.js-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.2.next.js.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Next.js基于React；Pages Router与App Router是不同路由/数据模型。Pages中的getServerSideProps是请求时服务端取数并返回可序列化props；发送给页面的props会进入客户端可见数据，服务端执行不等于其返回值保密。App Router有Server/Client Components边界；'use client'标识客户端模块边界，其下导入依赖需考虑浏览器兼容与发送体积，不能把它概括为“该组件永不在服务器生成HTML”。\n\n当前官方App缓存资料将Cache Components模型与Previous Model分开。是否启用、接口与默认行为随版本变化；先记录版本、路由体系与配置，再阅读对应文档。use cache、React cache、fetch缓存、路由输出和CDN缓存不能只因名称相似就视为一种缓存。个性化读取必须明确身份来源、授权、缓存key及失效，不把未登录/另一用户的数据放入共享输出。\n\n静态export输出HTML/CSS/JS，可以交静态托管，但请求时Cookie、动态服务端处理、运行时再验证等能力不能凭文件自动存在。需按该版本官方“不支持功能”清单逐项核对；需要服务端职责时选择相应运行部署。Nuxt的useFetch/routeRules不是Next API的直接替代名。",
+      "example": "本点为官方文档观察型：分别打开Pages getServerSideProps、App Server and Client Components、App静态export、当前Caching文档。记录各页面对应路由/模型，给同一“登录后账户页”标出服务端凭据、浏览器DTO、不可公开缓存部分。不声称Next安装或构建通过。",
+      "exercise": "方案中在app页面导出getServerSideProps并承诺读取每用户Cookie后静态导出；依据对应路由文档找出两个独立冲突，选择正确体系/profile，而不是改文件名掩盖。",
+      "practice": "把现有Nuxt部署决策对照Next Pages/App官方资料，写一份最多一页的迁移边界说明；不往主Nuxt工程安装Next。",
+      "source": [
+        "https://nextjs.org/docs/pages/building-your-application/data-fetching/get-server-side-props",
+        "https://nextjs.org/docs/app/getting-started/server-and-client-components",
+        "https://nextjs.org/docs/app/getting-started/caching",
+        "https://nextjs.org/docs/app/guides/static-exports"
+      ],
+      "boundary": "不要混用Pages getServerSideProps与App组件接口；不要假设所有fetch默认缓存或默认不缓存；不要把Server Component输出当秘密；不需要把React/Next作为当前Vue/Nuxt交付前置。"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.2.3",
+    "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.3.nuxt.md",
+    "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.3.nuxt-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.3.nuxt.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Node SSR构建交付完整.output，而不仅public；Node入口是.output/server/index.mjs，生产运行显式设置NODE_ENV=production和受控HOST/PORT。Node运行时可读取匹配NUXT_环境变量覆盖声明过的runtimeConfig；public会进入浏览器payload，private只允许留在server代码，返回到DTO仍会泄露。生产Node入口不会自动读取开发.env，秘密由运行环境安全提供，不能把真实密钥写进仓库或打进前端。\n\n静态生成交付.output/public，不附带可运行server端点。构建时就捕获的公开配置/数据不能指望静态文件在启动时读取新的Node环境变量。静态托管仍须配置资源路径、MIME、缓存、深链和404；只上传目录不等于这些策略全部正确。\n\nrouteRules可以分路由配置prerender、ssr、cache/swr与headers；用精确敏感路径覆盖公开缓存规则，并真实核对最终响应。no-store约束HTTP存储，cache:false约束Nitro路由缓存，不自动完成身份认证/授权。Cookie或Authorization身份请求默认不应进入全站共享缓存，代理/CDN也应旁路；不能只在客户端清useFetch就称服务器隔离。",
+      "example": "已核读主代理真实HTTP组：Node同一构建runtime public release/siteLabel覆盖生效，server-only合成标记未进入首页响应；私有/account no-store且alice/bob/匿名/invalid并发不串；SSG/CSR无server端点，api/缺JS404。浏览器SSR显示runtime版本，静态显示构建版本。",
+      "exercise": "将/api/private加入全站swr缓存，或将server标记移动到runtimeConfig.public；先在隔离副本用合成Alice/Bob/匿名请求检查重复读取与泄露，恢复精确规则/DTO后复验，不能对真实秘密实验。",
+      "practice": "按综合项目实际Node/SSG产物建立托管清单；记录公开runtime配置与server-only标记的边界，检查现有私有路径响应。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/deployment",
+        "https://nuxt.com/docs/4.x/guide/going-further/runtime-config",
+        "https://nuxt.com/docs/4.x/guide/concepts/rendering"
+      ],
+      "boundary": "不要上传.nuxt当生产产物；不要只传.output/public却期待SSR；不要将环境变量都放public；不要给/account或/api/private套公开swr。反向代理信任头与TLS另需部署配置，不因loopback演示就称生产认证完成。"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.2.4",
+    "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.4.hydration.md",
+    "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.4.hydration-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.4.hydration.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Hydration是Vue接管服务端已生成DOM，并建立事件和响应式关系。初始数据与结构需要一致；Math.random、当前时间/时区、浏览器窗口、localStorage、无效HTML被浏览器修正等都可能导致差异。CSS能解决的响应式布局优先用CSS，而不是在setup中用window决定SSR结构。\n\nuseFetch/useAsyncData把初始SSR结果放入payload，客户端在相同key和适用配置下复用，可避免setup里裸$fetch导致的重复读取。不是所有二次请求都错误：URL/参数变化、显式refresh、缓存失效和用户动作可能合理；应按请求原因和时间线判断。仅仅“请求数量少”也不能证明没有错误缓存或旧身份数据。\n\n浏览器专属依赖需放client插件、onMounted或合适的ClientOnly边界；仅if(import.meta.client)改变首屏可见结构仍可能不一致。更稳妥是SSR稳定占位，再在mounted更新，或用可序列化useState在请求内初始化并传给浏览器。ClientOnly不是把全部应用包住的默认修复，必要内容和样式、加载失败与SEO还要保留。",
+      "example": "已核读6项E2E源码、日志与结果：SSR/SSG/CSR各390/1440，原始详情HTML、首页交互计数、键盘skip、详情导航与深链刷新、版本页有效，pageerror/hydration捕获为空、API请求为空。原项目本就shared数据而非HTTP，故零API不冒充HTTPuseFetch去重实验；SSG实际_payload.json与public-courses键已查看。副本裸$fetch故障是独立练习，未称主项目本轮运行该变体。",
+      "exercise": "Public index currently uses shared constants through useAsyncData, detail is synchronous. SSR-only copy adds existing /api/catalog fetch, compares useFetch payload and setup bare $fetch; not a claim of existing default HTTP detail fetch. For browser-width fault, first add the shown mounted-width/SSR-placeholder fragment to a copy: it is not an existing main feature.",
+      "practice": "对主工程详情完成HTTP→payload→hydration→交互的单条证据链，在副本制造一个浏览器API或裸$fetch故障再修复。",
+      "source": [
+        "https://nuxt.com/docs/4.x/guide/best-practices/hydration",
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://nuxt.com/docs/4.x/api/composables/use-state"
+      ],
+      "boundary": "不要在模块顶层使用window；不要以typeof window避免崩溃后就认为结构一致；不要把SSR useState当Node进程全局状态；生产无警告不等于绝无mismatch，需检查实际内容和交互。"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.2.5",
+    "theory": "learning/1-notes/07-deployment/7.2-ssr/7.2.5.api.md",
+    "example": "learning/2-examples/07-deployment/7.2-ssr/7.2.5.api-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.2-ssr/7.2.5.api.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Node进程会复用模块。顶层可变ref/数组/对象若保存某用户会话，可能被下一请求读取；并发请求更容易交错。公开不可变课程常量可共享，身份状态应由请求context、Nuxt应用内useState或正确作用域的store创建。相同key的useState不等于所有用户共用Node全局对象；但把对象提到模块顶层仍可泄漏。\n\n浏览器有window/DOM而Node没有；Node依赖fs、进程或原生扩展也不保证适合Edge。先检查第三方包的导出、导入时副作用、运行支持与打包结果，必要时拆client/server入口。服务端API必须单独做认证/授权，客户端路由中间件只是导航控制；SSR转发Cookie要有固定可信目标，不能转发给任意URL。\n\n认证缓存隔离要同时看应用state、Nuxt数据key、整页HTML、payload、Nitro缓存、代理/CDN。私有响应通常private/no-store、无共享整页缓存；匿名也要检查，防止读到上一用户。Vary:Cookie不是对错误授权或任意共享缓存的万能修复。静态构建不应访问带真实凭据的接口或预渲染用户页；生成产物即使未链接也可能公开可取。",
+      "example": "已核读主代理并发alice/bob/匿名/非法Cookie的account200解释契约与当前身份内容断言，匿名api/private401；routeRules no-store/cachefalse/prerenderfalse。静态目录无account/private路径及合成canary，静态请求api404；浏览器静态account显示404，未泄露Node资料。Node/浏览器真实构建与运行通过，未称Edge/真实认证通过。",
+      "exercise": "In an isolated copy compare global lastUser against event-local synthetic identity. Missing/invalid stage7-demo must not return Alice/Bob fixtures; this is not real authentication. Repair and rerun concurrent cases.",
+      "practice": "在主SSR对合成Alice/Bob/匿名并发检查身份与缓存；对SSG/CSR输出检查私有页面和server-only端点的缺失。",
+      "source": [
+        "https://nuxt.com/docs/4.x/getting-started/state-management",
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://nuxt.com/docs/4.x/getting-started/deployment",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control"
+      ],
+      "boundary": "仅跑类型或构建无法证明并发隔离；no-store本身不认证用户；公开DTO常量可以共享，不需要把所有常量都改成每请求复制；合成Cookie用于测试边界，任何人可伪造，不能当真实登录。"
+    },
+    "issues": []
+  }
+]

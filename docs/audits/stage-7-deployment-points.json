@@ -1,0 +1,197 @@
+[
+  {
+    "id": "7.1.1",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.1.dist.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.1.dist-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.1.dist.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "部署的输入是构建产物，而不是开发服务器或源码目录。Vite默认dist是静态文件；Nuxt Node SSR的.output包含server入口及public资源，只上传public会丢失请求渲染与API。Nuxt generate输出静态public目录，没有可执行的私有服务端；CSR和SSG都能静态托管，但原始HTML内容不同。",
+      "boundary": "资源hash用于内容寻址和缓存失效，不是版本号、加密或部署成功证明。发布应保存代码提交、锁文件、构建命令、Node/包管理器、profile及产物摘要。不要把打包后的JavaScript当秘密存储；Source Map控制发布可见性但不替代服务端权限。",
+      "example": "在综合目录执行pnpm build、pnpm build:ssg、pnpm build:csr（顺序执行），查看artifacts/ssr/server/index.mjs与artifacts/{ssg,csr}/public；对比SSG课程HTML与CSR壳。三个脚本真实存在，最终执行结果由主项目运行记录提供。",
+      "exercise": "把artifacts/ssr/public当静态站部署后访问/api/private失败：这是没有Nitro进程，不是修改前端API URL就能补回认证。恢复正确SSR托管或明确更换外部服务。",
+      "practice": "对主工程三个profile保存可交付目录清单，解释不能混用的入口；对照lab中合成hash而非宣称lab重新实现Nuxt构建。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/getting-started/deployment",
+        "https://vite.dev/guide/build"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.2",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.2.vercel.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.2.vercel-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.2.vercel.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先确定产物契约再选平台。GitHub Pages提供静态HTML/CSS/JS，不能直接运行Nuxt Node服务器；Vercel、Netlify可通过框架适配器部署函数/渲染，不能把平台适配产物当通用Node目录。Cloudflare Pages的静态托管与Functions/Workers运行时也不同，Node API兼容需核实。",
+      "boundary": "部署前核对根目录、构建命令、输出目录、基路径、动态路由/404规则、环境变量作用域和自定义域名。预览与生产分开，预览也不能暴露私密页面或密钥。平台UI和配额会变化，以对应官方文档与实际账户为准，不承诺永久免费或全功能等价。",
+      "example": "本点为官方观察清单，不登录或发布。用SSG public目录演练本地静态托管，再为四平台各写“静态/SSR能力、构建/输出、基路径、404、环境与回滚入口”六列。",
+      "exercise": "把项目Pages的URL /repository/当作根路径会导致/_nuxt资源404；先核对baseURL和资源绝对路径，而不是把所有404都重写200。",
+      "practice": "为主Nuxt的SSG和SSR各选择一个候选托管方案并填能力对照；本轮不部署到真实账户。",
+      "sources": [
+        "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages",
+        "https://vercel.com/docs/frameworks/full-stack/nuxt",
+        "https://docs.netlify.com/build/frameworks/framework-setup-guides/nuxt/",
+        "https://developers.cloudflare.com/pages/framework-guides/deploy-a-nuxt-site/"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.3",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.3.nginx.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.3.nginx-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.3.nginx.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Nginx可按location提供文件，也可proxy_pass到Nitro。静态根目录与代理路径规则必须分开；proxy_pass是否带URI会改变转发路径，不能仅凭字符串相似判断。gzip是HTTP内容编码，与文件扩展名、HTTPS和HTTP/2不同。",
+      "boundary": "location优先级、try_files最后参数与响应状态影响结果；API和缺失脚本不应被HTML fallback吞掉。长期immutable只适合URL随内容变化的公开资源；HTML要能更新，身份响应private/no-store并绕过共享缓存。生产代理还需超时、请求大小、可信转发头、TLS与日志隐私策略，实验配置不是生产配置全集。",
+      "example": "运行release-lab/verify.mjs，真实Nginx4508使用临时前缀，nginx -t检查后启动；请求深链、缺失assets/API、/api/status和带Accept-Encoding:gzip的真实文本资源。",
+      "exercise": "把location /api/ proxy_pass改成带/的后端地址后/api/status变为/status，后端404：先记录上游路径，再按契约恢复，不把API404 fallback到index.html。",
+      "practice": "对主Nuxt明确静态profile与Node SSR需要的两套location；独立lab实际验证代理/压缩，不冒充公网TLS已经配置。",
+      "sources": [
+        "https://nginx.org/en/docs/http/ngx_http_core_module.html#try_files",
+        "https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass",
+        "https://nginx.org/en/docs/http/ngx_http_gzip_module.html"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.4",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.4.item-7-1-4.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.4.item-7-1-4-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.4.item-7-1-4.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Vite import.meta.env在打包阶段替换，VITE_是公开前缀，不能放秘密。Nuxt runtimeConfig.public会进入客户端可见数据；private键只在服务器可用，但若在源码配置默认值中写真实秘密，构建输出仍可能含它。",
+      "boundary": "Nuxt Node进程用匹配NUXT_命名覆盖已声明runtimeConfig键；生产server入口不自动读取开发.env。静态生成时公开配置已进入产物，之后改服务器环境不会神奇改写HTML/JS。真正秘密由部署环境运行时注入服务器，不能进入payload、日志、镜像层或版本控制。",
+      "example": "主项目NUXT_PUBLIC_RELEASE_ID对应public.releaseId，NUXT_PRIVATE_CANARY对应privateCanary；Node SSR同一构建更改运行变量重启后核对公开版本，扫描HTML/payload/浏览器JS不应含合成canary。不要输出真正secret。",
+      "exercise": "把私密值放public后即使变量名叫SECRET仍会暴露：删掉public引用、迁至服务端运行时、扫描产物；真实泄露需轮换而非只删Git文件。",
+      "practice": "核对主项目runtimeConfig源码和合成canary回归，保留公开label/releaseId与privateCanary的边界；不把无命中当未知秘密绝不泄露证明。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/guide/going-further/runtime-config",
+        "https://vite.dev/guide/env-and-mode"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.5",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.5.spa-history-fallback.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.5.spa-history-fallback-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.5.spa-history-fallback.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "客户端导航不必重新取HTML，但直接打开/刷新深链会先请求服务器路径。SPA需要宿主给客户端路由返回壳，再由Vue Router匹配；它不意味着所有路径都应该返回200。SSG已生成HTML优先按文件提供，未知路径需要符合业务与SEO的404约定。",
+      "boundary": "典型Nginx try_files $uri $uri/ /index.html适用于SPA页面location；为/assets/和/api/单独配置，不把JS请求错误转成text/html。Nuxt生成200.html/404.html仅提供候选文件，状态码与匹配规则仍由托管平台决定。返回404壳和200壳有不同索引/监测语义。",
+      "example": "本地Nginx实测/courses/nuxt返回SPA shell200，/assets/missing.js与/api/missing保持404。它是路由托管机制，不虚称合成壳已经运行Vue路由；主Nuxt浏览器验证另执行。",
+      "exercise": "故意只保留全站fallback后访问missing.js，Network显示200/text-html且模块MIME失败：先恢复资产严格404，再修真实构建部署缺失，不能只改响应Content-Type。",
+      "practice": "对主项目SSR/SSG/CSR分别验证直接访问与缺失资源；独立Nginx观察只承担fallback机制，不替代框架导航证据。",
+      "sources": [
+        "https://router.vuejs.org/guide/essentials/history-mode.html",
+        "https://nuxt.com/docs/4.x/guide/concepts/rendering#what-are-200html-and-404html"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.6",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.6.docker-dockerfile.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.6.docker-dockerfile-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.6.docker-dockerfile.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "多阶段Dockerfile用构建阶段安装与编译，再将必要.output复制到运行阶段。运行镜像无需完整源码/开发依赖，但Nuxt server构建所需运行文件必须完整保留；只COPY public不能运行SSR。静态profile通常由静态服务器镜像提供，不需Node SSR进程。",
+      "boundary": "镜像tag、平台架构、libc、Node版本及原生依赖会影响可运行性；不盲目跨平台拷node_modules。用非root运行、明确工作目录和环境、通过exec形式CMD接收信号。秘密不放ARG/ENV构建层，.dockerignore排除.env/缓存/本机输出；生产按审核过digest固定镜像并更新。",
+      "example": "阅读release-lab/templates/Dockerfile.example和.dockerignore.example，按说明以主Nuxt目录为构建上下文。此轮只核对模板，不启动Docker daemon/Colima、不下载镜像、不宣称容器构建运行通过。",
+      "exercise": "COPY本机.output到不同平台后原生模块加载失败：定位Node/架构/libc与产物来源，在目标平台构建；不通过复制更多秘密文件解决。",
+      "practice": "按主项目pnpm build和artifacts/ssr入口审查多阶段模板，真正容器执行属于可选扩展，不为入门重装本地虚拟化环境。",
+      "sources": [
+        "https://docs.docker.com/build/building/multi-stage/",
+        "https://docs.docker.com/build/building/secrets/",
+        "https://docs.docker.com/build/building/best-practices/"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.7",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.7.github-actions.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.7.github-actions-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.7.github-actions.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "CI在隔离runner重建并验证，CD将已验证产物推广到目标。先按锁文件安装、类型/规范/测试/构建，失败不发布。缓存依赖提升速度但不是可发布构建，不能用缓存命中替代校验。一次验证后的产物应有提交/摘要/profile，避免部署时悄悄重建不同内容。",
+      "boundary": "工作流遵循最小权限、受保护环境和可信分支；不要给不可信PR代码生产凭据，尤其不把pull_request_target当普通PR构建。第三方Action固定完整审核SHA，定期升级；SHA固定降低漂移但不替代审阅。发布并发控制防止旧流水线覆盖新版本，失败有明确回滚入口。",
+      "example": "查看templates/quality.yml.example：固定官方Action SHA、contents:read、pnpm11.4锁文件、主工程门禁和三profile构建；模板不在.github/workflows，未推送/运行真实GitHub任务，也没有自动发布凭据。",
+      "exercise": "工作流忽略测试退出码或使用continue-on-error后仍部署：删掉该旁路，用真实非零检查验证后续推广不执行；不可只在说明文档写“会阻止”。",
+      "practice": "对主项目检查脚本和本地已验证profile制定CI门禁，阅读固定SHA模板；真实账户CD配置为明确后续扩展。",
+      "sources": [
+        "https://docs.github.com/en/actions/reference/security/secure-use",
+        "https://docs.github.com/en/actions/using-jobs/using-concurrency",
+        "https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.8",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.8.health-observability.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.8.health-observability-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.8.health-observability.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "进程存在不代表请求可用。liveness回答进程是否应重启，readiness回答能否接流量；依赖短暂故障不一定应该触发重启风暴。单机教学用一个可控ready接口展示200/503，不能当完整编排系统。",
+      "boundary": "健康接口应便宜、有界、不含秘密/依赖细节，并避免缓存造成假健康。最低监测覆盖成功率/错误率、延迟、关键资源404、版本ID和关联请求，但采样/保留/去标识化应先确定。日志中的query、Cookie、Authorization、用户数据可能泄露，不能为了排障全量打印。",
+      "example": "lab调用setReadiness(false)后/health从200变503，恢复后200；真实HTTP记录状态/版本/耗时并断言query和Authorization的合成标记不出现。主项目另有/api/health公开最小版本信息。",
+      "exercise": "把健康响应缓存一年会在服务失败时仍显示正常：核对中间层Cache-Control与探针路径，恢复no-store并真实切换失败状态复验。",
+      "practice": "对主Nuxt /api/health记录最小公开版本；独立lab演练503/恢复和日志脱敏；生产告警采集器尚未部署，不能称已经上线监控。",
+      "sources": [
+        "https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/",
+        "https://opentelemetry.io/docs/concepts/observability-primer/"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.1.9",
+    "theory": "learning/1-notes/07-deployment/7.1-build-deploy/7.1.9.release-rollback.md",
+    "example": "learning/2-examples/07-deployment/7.1-build-deploy/7.1.9.release-rollback-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.1-build-deploy/7.1.9.release-rollback.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-1-9",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "新HTML引用新hash资源；仍打开旧页面的用户可能晚些才加载旧chunk。若发布时删除全部旧资源，即使新页面正常，老会话也会白屏。先放可用资产、检查候选、再切HTML/流量，保留足够旧版本资源；HTML不长期immutable。",
+      "boundary": "回滚是把流量指向仍可用的先前版本，同时确认配置、API协议与数据迁移兼容，不等于git reset或改版本文字。数据库前向迁移、不可逆写入和缓存可能使旧代码无法运行。单进程指针切换仅演示原子选择，不是多副本零停机或真实平台blue-green实现。",
+      "example": "lab stage A/B，activate A→B→A；HTML真实换版本，A/B内容hash不同，B时A资源仍200；不健康bad候选抛错且当前仍A。没有生产流量或数据库迁移。",
+      "exercise": "B部署后清空旧assets造成旧A页面动态import404：用旧URL重现，先恢复资产并停止覆盖发布，再检查chunk失败恢复；“清浏览器缓存”不能作为所有用户的修复方案。",
+      "practice": "运行独立发布lab的真实A→B→A与资产兼容；主Nuxt按部署profile建立恢复清单，不声称Node内存指针是云平台零停机发布。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control",
+        "https://vite.dev/guide/build#load-error-handling",
+        "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment"
+      ],
+      "runtime": "docs/audits/stage-7-deployment-runtime.json"
+    },
+    "issues": []
+  }
+]

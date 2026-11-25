@@ -7,7 +7,7 @@
 ## 阅读入口
 
 - [当前进度与后续计划](./docs/PROGRESS.md)：已编写内容、验证范围及待办。
-- [知识地图总览](./KNOWLEDGE_MAP.md)与[六个分册](./knowledge-map/README.md)：588 个知识点的学习路线。
+- [知识地图总览](./KNOWLEDGE_MAP.md)与[六个分册](./knowledge-map/README.md)：590 个知识点的学习路线。
 - [四部分学习资料](./learning/README.md)：理论、代码示例、独立练习与综合实践。
 - [学习资料结构规范](./docs/LEARNING_STRUCTURE.md)：目录、逐知识点映射与脚本门禁。
 - [Nuxt 基座与宿主指南](./framework-guide/README.md)：通用工程规划与独立项目交接。
@@ -24,9 +24,10 @@
 | 阶段 4 | 共通7、React选修26、Vue13、UI4、Nuxt9，共59项四部分资料 |
 | 阶段 5 | 请求7、认证9、CORS5、数据6、实时4，共31项四部分资料 |
 | 阶段 6 | 性能17、安全7、无障碍8、国际化4、SEO7，共43项四部分资料 |
+| 阶段 7 | 部署9、渲染5、业务选修9、协作6，共29项四部分资料 |
 | 工程专题 | Nuxt 基座、桌面及手机宿主的规划与独立仓库交接 |
 
-正文覆盖 327/588（约 55.6%），阶段 7–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 6 验收](./docs/audits/STAGE_6_ACCEPTANCE.md)、[阶段 5 验收](./docs/audits/STAGE_5_ACCEPTANCE.md)、[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
+正文覆盖 356/590（约 60.3%），阶段 8–15 仍待编写。地图复选框代表学习者进度，不因资料交付自动勾选。最新质量结论见[阶段 7 验收](./docs/audits/STAGE_7_ACCEPTANCE.md)、[阶段 6 验收](./docs/audits/STAGE_6_ACCEPTANCE.md)、[阶段 5 验收](./docs/audits/STAGE_5_ACCEPTANCE.md)、[阶段 4 验收](./docs/audits/STAGE_4_ACCEPTANCE.md)、[阶段 3 验收](./docs/audits/STAGE_3_ACCEPTANCE.md)、[阶段 2 验收](./docs/audits/STAGE_2_ACCEPTANCE.md)及[阶段 0、1 验收](./docs/audits/STAGE_0_1_ACCEPTANCE.md)，前一次运行边界见[阶段 1 验证记录](./docs/STAGE_1_VERIFICATION.md)。
 
 ## 运行与检查
 
@@ -55,4 +56,6 @@ web-common、web-pc-workframe、web-h5-workframe 已另建为三个独立仓库�
 
 Web 技术方案先检索 Modern Web Guidance，再按目标浏览器选择可用能力。本项目支持逐步形成复杂 Web 工程的开发与治理能力，不把目录齐全表述为已达到高级工程师水平。
 
-阶段6：[质量学习入口](./learning/1-notes/06-performance-security/README.md)、[Nuxt三语目录](./learning/4-practice/06-performance-security/README.md)。下一阶段7：构建、渲染与部署。
+阶段6：[质量学习入口](./learning/1-notes/06-performance-security/README.md)、[Nuxt三语目录](./learning/4-practice/06-performance-security/README.md)。阶段7已完成，下一阶段8：Vue/Nuxt模块划分、状态与渲染选型。
+
+阶段7：[部署学习入口](./learning/1-notes/07-deployment/README.md)、[Nuxt三种profile与发布恢复](./learning/4-practice/07-deployment/README.md)。

@@ -65,4 +65,4 @@ flowchart TD
 
 [学习顺序与验收](./docs/LEARNING_PATH.md) · [本次目录审查](./docs/CURRICULUM_REVIEW.md) · [正文建设进度](./docs/PROGRESS.md) · [内容规范](./docs/AUTHORING.md) · [框架专题](./framework-guide/README.md)
 
-阶段 1 已提供 106 项四部分资料，统一入口见 [learning/](./learning/README.md)。阶段2已提供33项、阶段3已提供36项、阶段4已提供59项、阶段5已提供31项四部分资料与综合实践；阶段6已提供43项四部分资料；下一批从 **阶段7：Nuxt构建、渲染与部署**开始。阶段5先核对规划补齐安全重试/幂等及SSR会话/私有缓存，当前总图588项，React/Next保留选修。独立工程开发继续在 web-common 与各宿主项目中进行。
+阶段 1 已提供 106 项四部分资料，统一入口见 [learning/](./learning/README.md)。阶段2已提供33项、阶段3已提供36项、阶段4已提供59项、阶段5已提供31项四部分资料与综合实践；阶段6已提供43项四部分资料；阶段7已提供29项四部分资料；下一批从 **阶段8：Vue/Nuxt模块划分、状态与渲染选型**开始。阶段5先核对规划补齐安全重试/幂等及SSR会话/私有缓存，当前总图590项，React/Next保留选修。独立工程开发继续在 web-common 与各宿主项目中进行。

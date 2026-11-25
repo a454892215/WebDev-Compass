@@ -18,3 +18,5 @@
 - [阶段5：API、会话与服务端授权](./05-fullstack-auth/README.md)：Nuxt私人笔记与31项综合任务。
 
 - [阶段6：性能、安全、无障碍、国际化与SEO](./06-performance-security/README.md)：43项四部分资料与真实本地实验。
+
+- [阶段7：Nuxt渲染、构建部署与发布回滚](./07-deployment/README.md)：29点四部分资料、三种profile及本地发布演练。

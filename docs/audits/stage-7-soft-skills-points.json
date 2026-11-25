@@ -1,0 +1,110 @@
+[
+  {
+    "id": "7.4.1",
+    "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.1.rfc.md",
+    "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.1.rfc-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.1.rfc.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "同一“必须”可能来自协议规范、框架行为或团队约定，不能只看搜索摘要。先写待验证命题、版本与环境，再读规范状态、适用范围和框架具体版本，最后做最小实验。RFC9110说明HTTP语义，不定义Nuxt构建目录；Nuxt官方部署说明要和实际4.7构建交叉核对。RFC中的MUST/SHOULD含义遵循其引用的规范用词约定，博客里的must不自动成为标准。",
+      "example": "在Nuxt主项目运行pnpm build，查看artifacts/ssr/server/index.mjs和public目录；再读官方Node entry与static output。以“生产Node运行需要哪些环境变量”为问题，记录NODE_ENV=production、HOST/PORT及NUXT_*，区分官方要求和本项目loopback约束。",
+      "exercise": "故障：把Nuxt2的target:static照搬Nuxt4。线索是版本路径/docs/2.x与当前配置不一致；改读4.x并验证.output/public。",
+      "practice": "把“Nuxt项目只上传public就能运行所有server/api”作为待证伪命题，使用静态profile验证。",
+      "source": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "runtime": "Main Nuxt three real builds, HTTP profiles and6 browser tests passed; actual README/plan/API/changelog and code cross-read. No remote deployment or human team trial.",
+      "review": "docs/audits/stage-7-soft-skills-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.4.2",
+    "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.2.item-7-4-2.md",
+    "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.2.item-7-4-2-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.2.item-7-4-2.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "方案最少包含目标/非目标、用户路径、约束、备选、选择、验证和恢复。需求“课程详情能分享”应落到直接GET详情有正文和有效状态码；“能部署”还需明确静态或Node、接口在哪里、配置何时生效。不要把选SSR当作自动SEO、自动鉴权或无需运维。",
+      "example": "阅读综合项目docs/TECHNICAL_PLAN.md，对照三个profile及courses/account。把可见页面、接口与产物逐一连起来，确认静态目录不承诺私有接口。",
+      "exercise": "故障：要求纯静态托管中服务端安全保存私钥并签名。定位是缺少服务端执行环境；把签名交给明确授权的后端，不把私钥挪进public配置。",
+      "practice": "新增“产品每5分钟更新、没有Node预算、需个人账号”的约束组合，写两种方案与降级范围。",
+      "source": "https://nuxt.com/docs/4.x/getting-started/deployment",
+      "runtime": "Main Nuxt three real builds, HTTP profiles and6 browser tests passed; actual README/plan/API/changelog and code cross-read. No remote deployment or human team trial.",
+      "review": "docs/audits/stage-7-soft-skills-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.4.3",
+    "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.3.code-review.md",
+    "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.3.code-review-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.3.code-review.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先读需求与差异，再按影响面检查输入、状态、资源生命周期、公开/私有边界和恢复。能构建不代表不会返回错状态、泄漏SSR数据或破坏键盘。反馈给出具体文件/触发/影响/修正方向，区分必改缺陷与可选风格；不按个人偏好阻断。",
+      "example": "对综合项目nuxt.config.ts、server/api/private.get.ts与scripts/static-server.mjs做交叉阅读：私有cache:false/no-store/prerender:false；API和缺失JS404；CSR未知文档可200但客户端仍需显示不存在。再运行profile验证而非只读标题。",
+      "exercise": "故障：review只说“安全有问题”。用具体Cookie、URL、返回体和缓存头证据重写意见，先确认真实行为而非根据变量名猜。",
+      "practice": "在隔离副本把/account整个rule替换为{swr:60,prerender:false}，重新build并重启后比较Alice/Bob/匿名响应、Cookie转发与缓存头；记录实际缓存/旁路行为，不预言必然泄露。另把静态所有缺失资源回退index，稳定复现缺JS/API被HTML200掩盖；写具体评审并恢复原规则。",
+      "source": "https://google.github.io/eng-practices/review/reviewer/looking-for.html",
+      "runtime": "Main Nuxt three real builds, HTTP profiles and6 browser tests passed; actual README/plan/API/changelog and code cross-read. No remote deployment or human team trial.",
+      "review": "docs/audits/stage-7-soft-skills-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.4.4",
+    "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.4.item-7-4-4.md",
+    "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.4.item-7-4-4-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.4.item-7-4-4.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "债务是当前取舍导致的未来变更成本，不是所有旧代码或不喜欢的样式。用实际故障/重复成本、影响、风险、收益排序；每次重构限制边界，先留能检测原行为的验证，再改结构，避免顺手更改协议。发布回滚不能自动撤销不可逆数据迁移。",
+      "example": "读主项目共享shared/catalog.ts与SSR/SSG/CSR验证。课程slug与不存在行为是对外契约；在不改URL与数据的前提，把查找逻辑抽取或增加显示层，不要把重构和新增登录混成一个提交。",
+      "exercise": "故障：新索引查不到时返回第一条课程，页面200但内容错。保留absent测试并恢复undefined/404，不以截图像正常当通过。",
+      "practice": "把课程数据从数组换成只读索引，保持顺序/未知slug/详情语义；写一条迁移债务记录。",
+      "source": "https://google.github.io/eng-practices/review/developer/small-cls.html",
+      "runtime": "Main Nuxt three real builds, HTTP profiles and6 browser tests passed; actual README/plan/API/changelog and code cross-read. No remote deployment or human team trial.",
+      "review": "docs/audits/stage-7-soft-skills-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.4.5",
+    "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.5.item-7-4-5.md",
+    "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.5.item-7-4-5-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.5.item-7-4-5.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "协作产出是可核对契约：请求/响应、错误、身份、缓存、加载/空/错、键盘/窄屏和文本。设计图没有定义并发、401或部署时序；接口成功也不代表页面失败提示可用。确认责任人和变更版本，先合成数据联调，再在有授权的环境验证真实服务。",
+      "example": "以docs/API_CONTRACT.md中的公开health和合成private接口为样本：健康200不代表全部依赖健康；未选fixture401、私有no-store，UI有可读状态。让后端/设计/产品分别提出一个失败问题并写进同一验收清单；这里是个人角色演练，不称已与真实团队沟通。",
+      "exercise": "故障：后端把401改200空对象而前端显示空姓名。对照类型不能验证运行数据的边界；先恢复契约或明确版本，添加坏响应验证。",
+      "practice": "设计一个健康接口503时的用户文案与运维动作，补接口样例及宽窄键盘状态；不向外部团队发送消息。",
+      "source": "https://spec.openapis.org/oas/v3.2.1.html",
+      "runtime": "Main Nuxt three real builds, HTTP profiles and6 browser tests passed; actual README/plan/API/changelog and code cross-read. No remote deployment or human team trial.",
+      "review": "docs/audits/stage-7-soft-skills-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "7.4.6",
+    "theory": "learning/1-notes/07-deployment/7.4-soft-skills/7.4.6.readme-changelog-api.md",
+    "example": "learning/2-examples/07-deployment/7.4-soft-skills/7.4.6.readme-changelog-api-demo.md",
+    "exercise": "learning/3-exercises/07-deployment/7.4-soft-skills/7.4.6.readme-changelog-api.md",
+    "practice": "learning/4-practice/07-deployment/tasks.md#p-7-4-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "README帮助别人从干净环境复现；CHANGELOG解释对使用者可见的变化与兼容性；API文档明确方法、状态、类型、身份、缓存与限制。三个文档有不同职责，不机械复制。注明命令工作目录/环境/产物与恢复流程，未测部署不写已上线。",
+      "example": "按主README依次安装、三个profile构建、HTTP与浏览器验证；再核对docs/CHANGELOG.md和API_CONTRACT.md。产物不提交，命令应从项目根执行；静态public不能用Nitro server入口运行，但可用Node静态文件服务器托管；SSR不能只上传public。",
+      "exercise": "故障：README仍写node .output/server但最近运行generate覆盖了.output。改用保存的artifacts/ssr/server，并重新核对实际产物。",
+      "practice": "给没有聊天记录的同事写一页SSG交接：从安装到直接访问详情/404，再到回滚和限制。",
+      "source": "https://keepachangelog.com/en/1.1.0/",
+      "runtime": "Main Nuxt three real builds, HTTP profiles and6 browser tests passed; actual README/plan/API/changelog and code cross-read. No remote deployment or human team trial.",
+      "review": "docs/audits/stage-7-soft-skills-review.md"
+    },
+    "issues": []
+  }
+]

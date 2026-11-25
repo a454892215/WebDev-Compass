@@ -1,0 +1,94 @@
+{
+  "stage": 7,
+  "group": "7.2 rendering",
+  "date": "2026-11-25",
+  "status": "passed",
+  "executedBy": "root executed shared application; stage7_rendering read scripts, logs, artifacts and JSON without rerunning",
+  "sourcesReviewed": [
+    "MWG performance and security",
+    "Nuxt4 deployment/rendering/prerender/runtimeConfig/hydration/data/state",
+    "Next Pages SSR/App components/cache/static export"
+  ],
+  "nextObservation": {
+    "status": "passed",
+    "versionShownInDocs": "16.4.6",
+    "installedOrBuilt": false,
+    "modelsDistinguished": [
+      "Pages Router",
+      "App Router",
+      "Cache Components",
+      "Previous cache model",
+      "static export versus request-time server"
+    ]
+  },
+  "sharedApplication": {
+    "sourceReviewed": true,
+    "nodeProfiles": [
+      "ssr",
+      "ssg",
+      "csr"
+    ],
+    "nuxtBaseline": "4.7.0",
+    "vueBaseline": "3.5.46",
+    "runtimeResultsReviewed": true,
+    "nitroBaseline": "2.14.0",
+    "builds": {
+      "ssr": "passed; server/index.mjs exists",
+      "ssg": "passed; no server entry,6HTML,4_payload.json",
+      "csr": "passed; no server entry,3HTML shells"
+    },
+    "unitPassed": 2,
+    "typecheck": "passed",
+    "eslint": "passed",
+    "playwrightStats": {
+      "startTime": "2026-11-25T08:03:16.415Z",
+      "duration": 8360.154,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "profileHttpCases": [
+      "Node runtime public override and response canary exclusion",
+      "four concurrent Alice/Bob/anonymous/invalid account responses with no cross-user fixture",
+      "anonymous private API401, missing detail and JS404",
+      "SSG/CSR API and JS404, SSG unknown404 versus CSR document200",
+      "no private path/canary in public static output"
+    ],
+    "browserCases": [
+      "SSR/SSG/CSR each1440x900 and390x844",
+      "raw detail body versus CSR shell",
+      "keyboard skip and actual increment after hydration",
+      "navigation, deep-link reload, metadata and runtime/build release values",
+      "pageerror/hydration empty and zeroAPI because shared data, not remote de-dup benchmark",
+      "axe zero detected violations and no horizontal overflow",
+      "unknown course error display and static account404"
+    ],
+    "resultLogs": [
+      "/tmp/stage7-build-ssr.log",
+      "/tmp/stage7-build-ssg.log",
+      "/tmp/stage7-build-csr.log",
+      "/tmp/stage7-profiles.log",
+      "/tmp/stage7-e2e.log"
+    ],
+    "reproducibleSource": [
+      "learning/4-practice/07-deployment/scripts/verify-profiles.mjs",
+      "learning/4-practice/07-deployment/tests/e2e/delivery.spec.ts"
+    ]
+  },
+  "notVerified": [
+    "Next installation/build",
+    "Cloud CDN/ISR behavior",
+    "Production TLS and hosting",
+    "Real authentication",
+    "Other browsers/real mobile/assistive technology",
+    "Human learner trial"
+  ],
+  "reviewedAt": "2026-11-25T08:05:03.204156+00:00",
+  "limitsOfEvidence": [
+    "Private canary exclusion in actual homepage response and static scan is not proof of absence of arbitrary unknown secrets.",
+    "No API initial requests arise from shared constants; bare$fetch fault variant was authored but not run in main application.",
+    "Unknown slug watch source reviewed; E2E unknown path is direct navigation, not a distinct same-component fault injection.",
+    "HTML statuses depend on local staticServer policy; not every cloud provider has identical fallback defaults."
+  ]
+}

@@ -1,0 +1,17 @@
+# Teaching template, not built this round. Use the stage7 Nuxt directory as context.
+# Replace tags with reviewed platform-specific image digests for production.
+FROM node:26.0.0-bookworm-slim AS build
+WORKDIR /app
+RUN npm install --global pnpm@11.4.0
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# nuxt prepare needs source; install after COPY rather than copying host node_modules.
+COPY . .
+RUN pnpm install --frozen-lockfile && pnpm build
+
+FROM node:26.0.0-bookworm-slim AS runtime
+ENV NODE_ENV=production HOST=0.0.0.0 PORT=3000
+WORKDIR /app
+COPY --from=build --chown=node:node /app/artifacts/ssr ./
+USER node
+EXPOSE 3000
+CMD ["node", "server/index.mjs"]

@@ -1,0 +1,95 @@
+{
+  "stage": 7,
+  "group": "7.1-build-deploy",
+  "recordedAt": "2026-11-25T08:03:46.948909+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "nginx": "1.31.8"
+  },
+  "command": "node --test learning/2-examples/07-deployment/7.1-build-deploy/release-lab/verify.mjs",
+  "result": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "name": "A -> B -> A, hashed assets survive, HTML revalidates",
+      "evidence": [
+        "HTML A then B then health release A",
+        "A/B asset URLs distinct SHA256 prefixes",
+        "oldAasset200 during B;immutable",
+        "HTML no-cache"
+      ]
+    },
+    {
+      "name": "candidate gate and readiness failure are observable without switching",
+      "evidence": [
+        "bad candidate activation throws;A remains",
+        "health200 then503 then200;no-store"
+      ]
+    },
+    {
+      "name": "missing assets/API stay404; logs omit query and credentials",
+      "evidence": [
+        "missing.js404",
+        "api/missing404",
+        "query and Authorization synthetic marker absent in records",
+        "durationMs finite"
+      ]
+    },
+    {
+      "name": "real Nginx config: SPA fallback, strict assets/API404, proxy and gzip",
+      "evidence": [
+        "nginx -t passed temporary prefix",
+        "4508SPAdeepLink200/html",
+        "missingassets/API404",
+        "api/status upstream A",
+        "gzip encoding with decoded14000chars",
+        "access log has no query marker",
+        "Vary:Accept-Encoding present"
+      ]
+    }
+  ],
+  "syntax": [
+    "node --check server.mjs",
+    "node --check verify.mjs",
+    "Ruby Psych.parse_file quality.yml.example passed"
+  ],
+  "actionRefs": {
+    "checkout-v6": {
+      "ref": "refs/tags/v6",
+      "node_id": "MDM6UmVmMTk3ODE0NjI5OnJlZnMvdGFncy92Ng==",
+      "url": "https://api.github.com/repos/actions/checkout/git/refs/tags/v6",
+      "object": {
+        "sha": "d23441a48e516b6c34aea4fa41551a30e30af803",
+        "type": "commit",
+        "url": "https://api.github.com/repos/actions/checkout/git/commits/d23441a48e516b6c34aea4fa41551a30e30af803"
+      }
+    },
+    "setup-node-v6": {
+      "ref": "refs/tags/v6",
+      "node_id": "MDM6UmVmMTg5NDc2OTA0OnJlZnMvdGFncy92Ng==",
+      "url": "https://api.github.com/repos/actions/setup-node/git/refs/tags/v6",
+      "object": {
+        "sha": "249970729cb0ef3589644e2896645e5dc5ba9c38",
+        "type": "commit",
+        "url": "https://api.github.com/repos/actions/setup-node/git/commits/249970729cb0ef3589644e2896645e5dc5ba9c38"
+      }
+    }
+  },
+  "cleanup": {
+    "nodeServers": "closed in finally",
+    "nginx4508": "SIGQUIT and exit awaited, no listener",
+    "temporaryFiles": "removed in finally",
+    "systemServiceChanged": false
+  },
+  "limitations": [
+    "Synthetic JS/HTML fixtures, not actual Nuxt bundle builds",
+    "Nginx SPA shell does not contain a client router; main Nuxt navigation verified by root",
+    "No public TLS,CDN,HTTP2 or hosting deployment",
+    "No Docker/Colima or remote Actions/CD execution",
+    "No production monitoring, database migration or multi-instance zero downtime",
+    "Main Nuxt sources reviewed; actual shared profile run evidence owned by root"
+  ]
+}

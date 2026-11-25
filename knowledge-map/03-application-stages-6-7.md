@@ -129,6 +129,9 @@
 - [ ] [7.1.6 Docker 容器化前端应用（了解 Dockerfile 多阶段构建）](../learning/1-notes/07-deployment/7.1-build-deploy/7.1.6.docker-dockerfile.md)
 - [ ] [7.1.7 CI/CD 基础：**GitHub Actions** 自动构建与部署](../learning/1-notes/07-deployment/7.1-build-deploy/7.1.7.github-actions.md)
 
+- [ ] [7.1.8 健康检查、发布标识与最小监测：状态、错误、日志隐私](../learning/1-notes/07-deployment/7.1-build-deploy/7.1.8.health-observability.md)
+- [ ] [7.1.9 发布与回滚演练：不可变产物、旧资源兼容与数据迁移边界](../learning/1-notes/07-deployment/7.1-build-deploy/7.1.9.release-rollback.md)
+
 
 
 <a id="72-生产渲染缓存与部署"></a>

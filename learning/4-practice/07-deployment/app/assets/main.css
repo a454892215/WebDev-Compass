@@ -1,0 +1,77 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #17243d;
+  background: #f4f7fb;
+  color-scheme: light;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.shell {
+  inline-size: min(100% - 2rem, 64rem);
+  margin-inline: auto;
+}
+header,
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+header {
+  padding-block: 1rem;
+  border-block-end: 1px solid #60708c;
+}
+main {
+  padding-block: 2rem;
+  overflow-wrap: anywhere;
+}
+li {
+  margin-block: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid #60708c;
+  border-radius: 0.5rem;
+}
+a {
+  color: #124c9c;
+  text-underline-offset: 0.2em;
+}
+nav a,
+button {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding: 0.5rem;
+}
+button {
+  font: inherit;
+  border: 1px solid #60708c;
+  border-radius: 0.3rem;
+  background: white;
+  color: inherit;
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 3px solid #124c9c;
+  outline-offset: 3px;
+}
+.skip {
+  position: absolute;
+  inset-block-start: -8rem;
+}
+.skip:focus {
+  inset-block-start: 0;
+  background: white;
+  padding: 1rem;
+}
+footer {
+  padding-block: 2rem;
+  border-block-start: 1px solid #60708c;
+}
+dd {
+  margin-block-end: 1rem;
+}

@@ -1,0 +1,42 @@
+{
+  "stage": 7,
+  "executedBy": "root",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenInstall": "passed;packages:[.] restricts workspace discovery",
+    "typecheck": "passed",
+    "eslint": "passed",
+    "vitest": 2,
+    "productionBuildProfiles": [
+      "ssr",
+      "ssg",
+      "csr"
+    ],
+    "httpProfiles": "passed: runtime release/site label override; four concurrent Alice/Bob/anonymous/invalid account; anonymousAPI401; public canary exclusion; missing404; static deep-link/API+asset404/document fallback",
+    "playwright": {
+      "startTime": "2026-11-25T08:03:16.415Z",
+      "duration": 8360.154,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "testSource": [
+    "learning/4-practice/07-deployment/scripts/verify-profiles.mjs",
+    "learning/4-practice/07-deployment/tests/e2e/delivery.spec.ts"
+  ],
+  "limitations": [
+    "local loopback and headless desktop Chrome viewports, not real mobile or assistive technology",
+    "No cloud deployment, remote CI, Docker execution or production traffic",
+    "Private canary synthetic; absence of this canary does not prove no unknown secrets",
+    "No database migration or production authentication"
+  ]
+}

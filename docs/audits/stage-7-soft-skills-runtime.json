@@ -1,0 +1,16 @@
+{
+  "stage": 7,
+  "group": "7.4-soft-skills",
+  "type": "Actual source/document observation plus shared main-project execution",
+  "checks": [
+    "Six documents/variants/reference and actual project plan/API/changelog cross-read",
+    "Independent peer review found2 issues;both corrected",
+    "Main project true3profilebuild,HTTP,6browser and2unit evidence reviewed"
+  ],
+  "sharedEvidence": "docs/audits/stage-7-practice-runtime.json",
+  "limitations": [
+    "No actual human team meeting or learner trial",
+    "No remote CI/cloud deployment",
+    "Not an automated prose quality certification"
+  ]
+}
