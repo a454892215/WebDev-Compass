@@ -186,6 +186,27 @@ def audit(root: Path) -> dict:
     }
 
 
+def learning_hours(root: Path) -> dict:
+    """Read reviewed planning ranges; never infer study time from note counts."""
+    path = root / 'scripts/data/learning_hours.json'
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding='utf-8'))
+    if data.get('schemaVersion') != 1 or not isinstance(data.get('stages'), dict):
+        raise ValueError('invalid learning-hours schema')
+    ranges = {}
+    for stage, entry in data['stages'].items():
+        if not stage.isdecimal() or not isinstance(entry, dict):
+            raise ValueError('invalid learning-hours stage')
+        hours = entry.get('hours')
+        if (not isinstance(hours, list) or len(hours) != 2
+                or any(type(value) is not int or value <= 0 for value in hours)
+                or hours[0] > hours[1]):
+            raise ValueError(f'invalid learning-hours range for stage {stage}')
+        ranges[int(stage)] = hours
+    return ranges
+
+
 def completion_table(root: Path, result: dict) -> str:
     """Render editorial coverage, independently of learner checkbox state."""
     titles = {}
@@ -204,17 +225,27 @@ def completion_table(root: Path, result: dict) -> str:
             return '100%'
         return f'{authored / total:.1%}'
 
+    estimates = learning_hours(root)
+
+    def hours_text(hours):
+        return f'{hours[0]}–{hours[1]}' if hours else '待估算'
+
     rows = [
-        '| 阶段 | 主题 | 知识点 | 已编写 | 待编写 | 正文完成度 |',
-        '|---|---|---:|---:|---:|---:|',
+        '| 阶段 | 主题 | 知识点 | 已编写 | 待编写 | 正文完成度 | 学习耗时估计（小时） |',
+        '|---|---|---:|---:|---:|---:|---:|',
     ]
     stages = {int(stage): counts for stage, counts in result['stages'].items()}
     for stage in sorted(set(titles) | set(stages)):
         counts = stages.get(stage, {'points': 0, 'authored': 0})
         total, authored = counts['points'], counts['authored']
-        rows.append(f"| {stage} | {titles.get(stage, '未命名阶段')} | {total} | {authored} | {total - authored} | {percentage(authored, total)} |")
+        hours = hours_text(estimates.get(stage)) if total else '—'
+        rows.append(f"| {stage} | {titles.get(stage, '未命名阶段')} | {total} | {authored} | {total - authored} | {percentage(authored, total)} | {hours} |")
     total, authored = result['knowledge_points'], result['authored_points']
-    rows.append(f'| **合计** | | **{total}** | **{authored}** | **{total - authored}** | **{percentage(authored, total)}** |')
+    active = [stage for stage, counts in stages.items() if counts['points']]
+    hours = '—' if not active else '待补全'
+    if active and all(stage in estimates for stage in active):
+        hours = hours_text([sum(estimates[stage][index] for stage in active) for index in (0, 1)])
+    rows.append(f'| **合计** | | **{total}** | **{authored}** | **{total - authored}** | **{percentage(authored, total)}** | **{hours}** |')
     return '\n'.join(rows)
 
 
@@ -229,7 +260,12 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     result = audit(args.root)
     if args.table:
-        print(completion_table(args.root, result))
+        try:
+            table = completion_table(args.root, result)
+        except (OSError, ValueError, TypeError, AttributeError) as exc:
+            print(f'Learning-hours configuration error: {exc}', file=sys.stderr)
+            return 1
+        print(table)
         for error in result['errors']:
             print(f"{error['file']}:{error['line']}: {error['reason']}: {error['target']}", file=sys.stderr)
     elif args.json:

@@ -50,6 +50,8 @@ python3 scripts/check_stage_acceptance.py --stage 0 --stage 1 --stage 2 --stage 
 python3 -m unittest discover -s scripts/tests -v
 ```
 
+完成度表另含“学习耗时估计（小时）”，按多年移动开发经验、全图含选修的学习范围给区间；估算口径与维护方式见[学习耗时说明](./docs/LEARNING_TIME_ESTIMATES.md)。
+
 阶段2综合项目运行 `node learning/4-practice/02-javascript-browser/server.mjs`，打开 http://127.0.0.1:4190/ 。综合项目服务同时提供仓库静态资源和本地教学 API。JavaScript POST、阶段 0 REST/WebSocket 以及 CSS 构建项目按各自 README 启动。使用 HTTP 运行模块与 Fetch 示例，避免 file:// 限制。检查器验证结构、映射及本地链接；浏览器行为与真实构建另行验证。
 
 阶段3使用独立pnpm工程，先从[阶段入口](./learning/1-notes/03-engineering/README.md)按推荐顺序学习，再运行[阅读任务板](./learning/4-practice/03-engineering/README.md)。TS源码需经Vite转换，不能直接用上述静态服务运行。

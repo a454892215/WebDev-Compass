@@ -1,5 +1,6 @@
 """Regression tests for navigation parsing and planned-content boundaries."""
 import importlib.util
+import json
 from contextlib import redirect_stdout, redirect_stderr
 from io import StringIO
 from pathlib import Path
@@ -128,6 +129,49 @@ class KnowledgeAuditTests(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn('| 阶段 | 主题 |', stdout.getvalue())
         self.assertIn('missing file: missing.md', stderr.getvalue())
+
+    def test_learning_hours_use_config_and_sum_only_nonempty_stages(self):
+        self.write('knowledge-map/01-test.md', '## 阶段 1：HTML\n- [ ] [1.1.1](../learning/1-notes/01-topic/1.1.1.one.md)\n## 阶段 2：浏览器\n- [ ] [2.1.1](../learning/1-notes/02-topic/2.1.1.two.md)\n## 阶段 3：空阶段\n')
+        self.write('scripts/data/learning_hours.json', json.dumps({
+            'schemaVersion': 1, 'stages': {
+                '1': {'hours': [4, 8]}, '2': {'hours': [10, 15]},
+                '3': {'hours': [100, 200]},
+            },
+        }))
+        before = module.completion_table(self.root, module.audit(self.root))
+        self.assertIn('学习耗时估计（小时）', before)
+        self.assertIn('| 1 | HTML | 1 | 0 | 1 | 0% | 4–8 |', before)
+        self.assertIn('| 3 | 空阶段 | 0 | 0 | 0 | — | — |', before)
+        self.assertIn('| **14–23** |', before)
+        # Authoring and learner progress change; the full-stage study budget does not.
+        self.write('learning/1-notes/01-topic/1.1.1.one.md', '# One\n')
+        source = self.root / 'knowledge-map/01-test.md'
+        source.write_text(source.read_text().replace('[ ] [1.1.1]', '[x] [1.1.1]'))
+        after = module.completion_table(self.root, module.audit(self.root))
+        self.assertIn('| 1 | HTML | 1 | 1 | 0 | 100% | 4–8 |', after)
+        self.assertIn('| **14–23** |', after)
+
+    def test_missing_learning_hours_are_not_silently_zero_in_total(self):
+        self.write('knowledge-map/01-test.md', '## 阶段 1：HTML\n- [ ] [1.1.1](../learning/1-notes/01-topic/1.1.1.one.md)\n## 阶段 2：浏览器\n- [ ] [2.1.1](../learning/1-notes/02-topic/2.1.1.two.md)\n')
+        self.write('scripts/data/learning_hours.json', json.dumps({
+            'schemaVersion': 1, 'stages': {'1': {'hours': [4, 8]}},
+        }))
+        table = module.completion_table(self.root, module.audit(self.root))
+        self.assertIn('| 2 | 浏览器 | 1 | 0 | 1 | 0% | 待估算 |', table)
+        self.assertIn('| **待补全** |', table)
+
+    def test_invalid_learning_hours_fail_table_cli_without_success_table(self):
+        for hours in ([8, 4], [0, 8], [True, 8], [4], ['4', 8]):
+            with self.subTest(hours=hours):
+                self.write('scripts/data/learning_hours.json', json.dumps({
+                    'schemaVersion': 1, 'stages': {'1': {'hours': hours}},
+                }))
+                stdout, stderr = StringIO(), StringIO()
+                with redirect_stdout(stdout), redirect_stderr(stderr):
+                    code = module.main(['--root', str(self.root), '--table'])
+                self.assertEqual(code, 1)
+                self.assertEqual(stdout.getvalue(), '')
+                self.assertIn('invalid learning-hours range', stderr.getvalue())
 
 
 if __name__ == '__main__':
