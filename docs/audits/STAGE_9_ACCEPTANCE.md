@@ -52,3 +52,5 @@ runtime-lab：最终3Node、390/1440两机制组和1440单独Heap组；90ms阻�
 本轮没有运行Lighthouse/LHCI/WebPageTest、图形bundle分析器、Vue/React Profiler UI、Partytown、真实Edge/CDN/H3/代理流式部署、生产RUM/p75/容量、真机/多浏览器/真实读屏或学习者试学。CDP heap是真实DevTools协议证据，不称已操作整个Memory UI。图像是合成fixture、字体子集由Google提供而非本轮生成，不夸大业务压缩收益。手动collector不等于可靠full-session fetchLater投递。
 
 结论：30点四部分在声明范围按R01–R09达标；下一阶段10，正文完成与学习掌握分开。
+
+提交后文本复核：Roboto许可证仅去除一处行尾空白，版权/许可条款及字体二进制未改；不影响任何运行行为，复用上述本轮证据，复核来源指纹与差异。

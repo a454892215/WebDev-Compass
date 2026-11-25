@@ -3,8 +3,8 @@
   "ruleVersion": 1,
   "stage": 9,
   "status": "passed",
-  "reviewedAt": "2026-11-25T09:53:29.193874+00:00",
-  "sourceFingerprint": "179bb857d7cea3bebd0bdb8e265b9711af51f2feb5f3f0c29dbae19752abfe85",
+  "reviewedAt": "2026-11-25T09:55:04.041842+00:00",
+  "sourceFingerprint": "c28e61a3f1f61cd7ace82e94be3b0c85ff100c34aa17d41d33e2542108551d48",
   "criteria": [
     {
       "id": "R01",
@@ -121,6 +121,12 @@
       "blocking": true,
       "status": "closed",
       "resolution": "Shared tool reads actual Nuxt output;build precedes budget;empty/missing/invalid/overbudget negatives passed inlab."
+    },
+    {
+      "id": "vendor-license-whitespace",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Only trailing whitespace normalized;copyright/license words and font binary unchanged;source review/fingerprint refreshed without claiming runtime rerun."
     }
   ],
   "verification": [
