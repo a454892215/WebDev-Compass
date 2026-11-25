@@ -63,7 +63,7 @@
 - [ ] [6.2.4 敏感信息泄露：不在前端存密钥、Source Map 生产环境处理](../learning/1-notes/06-performance-security/6.2-web-security/6.2.4.source-map.md)
 - [ ] [6.2.5 依赖安全：`npm audit`、供应链安全基本意识](../learning/1-notes/06-performance-security/6.2-web-security/6.2.5.npm-audit.md)
 - [ ] [6.2.6 CORS 配置错误导致的安全问题](../learning/1-notes/06-performance-security/6.2-web-security/6.2.6.cors.md)
-- [ ] [6.2.7 📱 移动端对照：Web XSS ≈ 恶意脚本注入；RN 中较少但 WebView 场景需注意](../learning/1-notes/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview.md)
+- [ ] [6.2.7 📱 移动端对照：Web、React Native 与 WebView 的脚本/原生边界和注入风险差异](../learning/1-notes/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview.md)
 
 
 
@@ -78,6 +78,7 @@
 - [ ] [6.3.5 颜色对比度与不只依赖颜色传达信息](../learning/1-notes/06-performance-security/6.3-a11y/6.3.5.item-6-3-5.md)
 - [ ] [6.3.6 表单：`label` 关联、错误提示与 `aria-describedby`](../learning/1-notes/06-performance-security/6.3-a11y/6.3.6.label.md)
 - [ ] [6.3.7 使用 axe DevTools / Lighthouse a11y 检测](../learning/1-notes/06-performance-security/6.3-a11y/6.3.7.axe-devtools-lighthouse-a11y.md)
+- [ ] [6.3.8 缩放与重排、触控目标和用户偏好：按 WCAG 2.2 适用准则验收](../learning/1-notes/06-performance-security/6.3-a11y/6.3.8.reflow-target-preferences.md)
 
 
 

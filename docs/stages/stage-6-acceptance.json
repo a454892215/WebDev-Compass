@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 6,
+  "status": "passed",
+  "reviewedAt": "2026-11-25T07:51:15.191797+00:00",
+  "sourceFingerprint": "7694d5dabac1972682464ea2ff0d68d567da434f06f05f68b9bc3167ab357b2d",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "43 unique points and four-part mappings, one justified addition.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "Browser/measurement before optimization; Vue/Nuxt prerequisites and task order explicit.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "Primary guides, versions and current specific standards checked; cache and WCAG differences corrected.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "Actual local mechanisms, build, SSR and browser evidence; observation and deployment boundaries explicit.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "Concrete independent variants, reproducible faults, two criteria and reference per point.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "43 tasks mapped to existing Nuxt, separate labs or clearly marked extensions.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "Cross-chapter public/private boundaries, locale isolation, metadata and real source facts aligned.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "Required findings fixed and affected behavior verified; automated resource regression meaningful.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "327/588 authored; indexes, limits and next stage synchronized; learner checks unchanged.",
+      "evidence": [
+        "docs/audits/STAGE_6_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-6-performance-points.json",
+    "docs/audits/stage-6-security-i18n-points.json",
+    "docs/audits/stage-6-a11y-seo-points.json"
+  ],
+  "findings": [
+    {
+      "id": "scope-gap",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Added6.3.8 with exact WCAG levels and evidence limits."
+    },
+    {
+      "id": "control-boundary",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Final light border changed; build/browser and source contrast reviewed."
+    },
+    {
+      "id": "safe-metadata",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Actual LF robots, script-safe JSON-LD, PNG share asset and real404 verified."
+    },
+    {
+      "id": "vite-resource-check",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Narrow default publicDir fallback with3 regressions;172pages641refs0errors."
+    },
+    {
+      "id": "pnpm-verification",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "Strict verifyDepsBeforeRun:error, explicit frozen install passed without disabling release-age policy."
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-6-performance-runtime.json",
+    "docs/audits/stage-6-security-i18n-runtime.json",
+    "docs/audits/stage-6-a11y-seo-runtime.json",
+    "docs/audits/stage-6-a11y-lab-runtime.json",
+    "docs/audits/stage-6-practice-runtime.json"
+  ],
+  "limitations": [
+    "Local headless Chrome simulated viewports, not real mobile, true screen reader or learner trial.",
+    "CSS text scaling not browser zoom; axe not complete WCAG conformance.",
+    "No production deployment, field CWV, actual search indexing or public share-platform test."
+  ]
+}

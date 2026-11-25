@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>窄范围SW实验</title>
+  <main>
+    <h1>公开缓存范围实验</h1>
+    <p>仅/sw-lab/公开fixture；不会拦截私人API。</p>
+    <button id="register" type="button">注册本范围Service Worker</button>
+    <p id="status" role="status">未注册</p>
+    <a href="../">返回性能实验</a>
+  </main>
+  <script type="module">
+    document.querySelector("#register").onclick = async () => {
+      await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+      await navigator.serviceWorker.ready;
+      document.querySelector("#status").textContent = "已安装";
+    };
+  </script>
+</html>

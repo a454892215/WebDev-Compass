@@ -1,0 +1,411 @@
+[
+  {
+    "id": "6.1.1.1",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.1.core-web-vitals.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.1.core-web-vitals-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.1.core-web-vitals.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "当前核心指标为LCP、INP、CLS。良好阈值分别为LCP≤2.5秒、INP≤200毫秒、CLS≤0.1；场数据通常按页面访问分布的第75百分位判断，并区分移动/桌面。没有足够真实会话，不能从单次自动化数据算出生产p75。",
+        "LCP描述主要内容呈现；INP覆盖访问中的交互响应，受输入延迟、处理和呈现影响；CLS关注非预期视觉位移并按会话窗口聚合。不能把原始entry简单求和/取最大就等同正式指标算法。",
+        "本lab用PerformanceObserver读取原生候选/长任务/位移条目，Lighthouse给一次lab LCP/CLS/TBT；TBT不是INP。真实线上测量可用官方web-vitals并按隐私/采样/清理要求设计，这里不上传遥测。"
+      ],
+      "example": "进入lab先不交互，再读取观测；点击可控阻塞后看longtask。Lighthouse JSON的TBT/LCP只代表本次本地环境，没有用户访问分布。",
+      "exercise": "把一次90ms longtask直接记作“INP=90ms、已达标”，指出其没有完整交互/访问算法与field样本；改记录为诊断条目并注明缺证据。",
+      "practice": "在Nuxt资料目录副本写测量计划并读取现有资源/交互观测；不把主工程一次运行或本lab审计当生产CWV。",
+      "sources": [
+        "https://web.dev/articles/vitals",
+        "https://web.dev/articles/lab-and-field-data-differences"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.1.2",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.2.gzip-brotli-http.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.2.gzip-brotli-http-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.2.gzip-brotli-http.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Gzip/Brotli对文本资源编码；Content-Encoding说明编码，Content-Type仍描述原始媒体。协商通常基于Accept-Encoding并正确设置Vary；已压缩图片或很小资源不一定值得再压缩。",
+        "HTTP/2在连接上多路复用多个流，改善HTTP/1.1某些连接限制，不意味着没有优先级、拥塞或TCP层队头阻塞。不能用本地HTTP/1.1压缩实验冒称HTTP/2部署已验收。",
+        "请求合并、分包、缓存命中和关键资源优先级要一起权衡。更多小chunk可能增加开销，单一大包又可能延迟首屏；应看实际瀑布和内容复用。"
+      ],
+      "example": "pnpm check通过Node http读取原始字节并解码核对，报告固定125000字节文本的编码大小；极重复fixture不代表业务压缩比。",
+      "exercise": "把gzip字节返回却漏Content-Encoding，或把已经解码的response.text长度写成压缩传输量；用原始http客户端与头定位并修正。",
+      "practice": "对Nuxt产物/托管计划选择文本压缩和缓存变体；真实编码实验在独立lab，主工程未部署HTTP/2/CDN。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Compression",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.1.3",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.3.webp-avif.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.3.webp-avif-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.3.webp-avif.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "WebP/AVIF可降低某些图像的传输成本，但质量、解码、透明/动图和浏览器支持都需按图像评估。picture可提供格式回退，srcset/sizes让浏览器按布局、像素密度与策略选择候选，不强制某个设备必选某个文件。",
+        "width/height或稳定宽高比在下载前预留空间；CSS缩放不等于减少资源字节。首屏LCP图片通常不要lazy，可按实际候选设置fetchpriority。",
+        "原生loading=lazy适合明显离屏图片，加载距离由浏览器决定，不能承诺“滚到可见才请求”。资源和无障碍也要一起检查，替代文本表达内容而非文件名。"
+      ],
+      "example": "lab使用自制真实AVIF/WebP/PNG候选；Chrome记录currentSrc/naturalWidth与预留比例，离屏SVG另观测lazy请求。素材是几何fixture，不声称所有照片AVIF都更优。",
+      "exercise": "把首屏图lazy，或sizes写100vw但桌面实际上只有640px；对照Network候选和布局，修正后同条件复验，不只改扩展名。",
+      "practice": "核对主Nuxt目录现有图片的尺寸/候选/优先级，按业务素材做副本对照，不拿lab几何图压缩比当业务收益。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/optimize-image-priority",
+        "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/picture"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.1.4",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.4.css-css.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.4.css-css-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.4.css-css.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "样式表通常参与渲染阻塞；关键CSS提取要覆盖真实首屏，不只是把所有CSS塞进HTML。内联会增加HTML并降低跨页缓存复用，过量内联不是通用优化。",
+        "非关键样式可按媒体/路由/组件拆分；print媒体不应阻塞屏幕首屏，但仍可能被浏览器低优先级下载。异步preload/onload切换需考虑JS失败、CSP和FOUC，不盲抄内联onload。",
+        "SSR框架可能已有CSS提取和组件拆分，应先查看真实生成HTML和资源。延迟样式不能让重要信息、焦点或布局在交互时突然变化。"
+      ],
+      "example": "在lab产物index.html检查Vite提取的CSS与加载顺序，操作卡提供首屏/print清单；本例没有声称自动关键CSS提取器已运行。",
+      "exercise": "把全部样式设media=print后靠JS改回all，关闭JS观察未恢复；按实际需要改为正常关键表和可选媒体表，不能用更长固定等待补救。",
+      "practice": "分析Nuxt真实HTML/样式产物并在副本拆一处非关键样式；主工程没有宣称额外关键CSS自动提取。",
+      "sources": [
+        "https://web.dev/articles/extract-critical-css",
+        "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.1.5",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.5.js-import-tree-shaking-bundle.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.5.js-import-tree-shaking-bundle-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.5.js-import-tree-shaking-bundle.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "动态import建立可按需加载的模块边界；它返回Promise，需要处理加载失败。切分并不保证任何场景更快，过多chunk可能产生额外请求与依赖瀑布。",
+        "Tree Shaking依赖模块可分析性和副作用信息；未使用纯导出可以消除，模块初始化副作用不能为缩包随意删除。package sideEffects:false错误声明会破坏行为。",
+        "压缩/摇树/分包是不同步骤。看实际产物和真实网络消费，不凭源码用了import()就宣布首包或交互改善。"
+      ],
+      "example": "Vite真实构建包含statistics和third-party独立dynamic entry；check-artifacts检查纯unused唯一标记不在运行JS。Chrome点击前无模块请求，点击后显示真实返回值。",
+      "exercise": "给导入模块增加必须执行的初始化，却盲目标sideEffects:false；说明产物变化和失效原因，修复声明/入口并重验。",
+      "practice": "追踪主Nuxt按需统计与Worker产物；在副本新增一个合理边界并验证失败，不为了练习把每个函数都切块。",
+      "sources": [
+        "https://vite.dev/guide/build",
+        "https://vuejs.org/guide/best-practices/performance.html"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.1.6",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.6.item-6-1-1-6.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.6.item-6-1-1-6-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.6.item-6-1-1-6.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "先盘点来源、业务必要性、数据访问和用户同意，再决定是否加载。async适合独立脚本，defer/module对解析时序不同；延迟并不会让不可信脚本自动安全。",
+        "按用户动作加载可以避免未使用能力首屏执行，但要处理失败、重复点击与撤销/清理。不可用应让核心内容继续工作，不把关键业务藏在不透明第三方执行里。",
+        "本地替身用于观察时序，无真实analytics、上报或第三方Cookie。生产还需CSP/来源、供应链、隐私和预算专项。"
+      ],
+      "example": "Chrome确认允许动作前未加载替身chunk/global标记，动作后模块执行；它不代表真实服务的同意/隐私流程已经实现。",
+      "exercise": "页面渲染时自动import替身却把按钮标为“允许加载”；以Network和global标记重现提前执行，再把请求移到实际动作并重测。",
+      "practice": "主目录不接外网脚本；副本对一个可选能力设计动作加载与失败降级，实际时序在lab本地替身观察。",
+      "sources": [
+        "https://web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.1.7",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.7.item-6-1-1-7.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.7.item-6-1-1-7-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.7.item-6-1-1-7.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "preload用于当前导航早期确定的关键资源，必须匹配实际URL、as、type和必要的crossorigin，否则可能重复请求或浪费。图片还要让imagesrcset/imagesizes与实际候选相符。",
+        "preconnect提前建立必要目标连接，适合关键跨源但不能无限开；同源已有连接通常不需再提示。prefetch更多面向潜在未来导航，可能被浏览器忽略，也涉及用户流量与隐私。",
+        "提示是建议而非执行顺序承诺。先看关键路径与实际使用率，避免把所有图片/模块都preload。"
+      ],
+      "example": "lab预加载与picture使用同一AVIF候选/sizes，检查actual currentSrc和请求；没有外网preconnect或宣称prefetch一定执行。",
+      "exercise": "preload图片写成另一个URL或不同crossorigin，观察未消费/重复请求；统一属性与真实资源，再看Network，不以删除警告当唯一目标。",
+      "practice": "核对主Nuxt真实head提示和消费资源，不额外重复框架已有preload；公网连接取舍作为设计观察。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/preload",
+        "https://web.dev/articles/preconnect-and-dns-prefetch"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.1.8",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.8.cdn.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.8.cdn-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.8.cdn.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "CDN收益取决于用户距离、命中、回源和网络，不是换个域名就保证快。哈希资源可长缓存，入口文档与个性化响应需不同策略。",
+        "缓存键要考虑路径、查询、编码与明确允许的变体；带身份数据不能因“静态站”标签被公共缓存。清理/版本切换需与HTML引用和保留旧资产协调。",
+        "本课程不部署外部CDN、不压测第三方；用具体官方检查清单评估目标profile。源站正确头不等于所有中间层配置已被验证。"
+      ],
+      "example": "阅读本地公开cache与mockPrivate no-store响应，对照官方CDN检查清单；没有真实边缘节点/命中率/跨地域时延数据。",
+      "exercise": "把所有HTML设一年immutable，改版本后仍旧入口；在副本用缓存响应重现，再给HTML/哈希资源分别制定策略并核验引用。",
+      "practice": "为公开Nuxt目录输出CDN部署profile与缓存键/回滚设计；本轮未部署CDN，不能报告加速比例。",
+      "sources": [
+        "https://web.dev/articles/http-cache",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.2.1",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.1.item-6-1-2-1.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.1.item-6-1-2-1-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.1.item-6-1-2-1.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "DOM/style写入可能使布局变脏，随后读取offsetWidth/getBoundingClientRect等几何值可能迫使浏览器同步计算。每个读取都昂贵并非绝对，关键是时序与影响范围。",
+        "把必要读取集中，再批量写入通常可减少交错失效；CSScontain/content-visibility可限制范围但有布局与访问边界，不能盲目全局will-change。",
+        "比较必须保持相同元素、操作和结果，测量可能受机器/热身/浏览器影响。一个duration更小不构成稳健收益，不能用控制台数字替代trace定位。"
+      ],
+      "example": "点击交错/批处理按钮，实际measure记录各耗时并检查相同输出宽度；不硬断言单次batch一定更快，trace可继续手工定位。",
+      "exercise": "循环里给width赋值后立即读offsetWidth，读/写交错制造同步布局；分离必要读取与写入，重新检查结果及记录。",
+      "practice": "为Nuxt副本一个实际DOM/测量操作做同条件对照，勿为没有证据的组件批量加will-change。",
+      "sources": [
+        "https://web.dev/articles/avoid-large-complex-layouts-and-layout-thrashing",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.2.2",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.2.item-6-1-2-2.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.2.item-6-1-2-2-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.2.item-6-1-2-2.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "虚拟列表维护总高度、可见范围和overscan，将数据索引映射到渲染窗口；它减少DOM数量，不减少所有数据/网络成本。可变行高、动态内容、缩放和焦点需要更复杂估计。",
+        "窗口外节点不存在，浏览器查找、屏幕阅读、打印、锚点及键盘焦点都受影响。不能只看滚动顺滑就称无障碍完成；可提供分页或完整模式。",
+        "lab用固定36px/1000条fixture，窗口12条，明确不适合任意多行动态业务。稳定业务key/身份在框架版仍重要，不用滚动位置代替数据ID。"
+      ],
+      "example": "真实Chrome检查初始12/1000，scrollTop18000后首项498；切完整模式1000条，再切回12。没有把完整无障碍/动态行高宣称已实现。",
+      "exercise": "把行高改成可换行却仍按36px计算，观察覆盖/空白；恢复固定约束或实现测量策略，并重新测缩放和定位。",
+      "practice": "虚拟列表只在独立lab；评估Nuxt目录规模是否真的需要，若副本采用先补阅读/焦点/打印策略。",
+      "sources": [
+        "https://vuejs.org/guide/best-practices/performance.html#virtualize-large-lists",
+        "https://web.dev/articles/virtualize-long-lists-react-window"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.2.3",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.3.item-6-1-2-3.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.3.item-6-1-2-3-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.3.item-6-1-2-3.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "防抖等待一段安静时间，适合搜索提交等最后意图；节流限制最大频率，可选leading/trailing。两者不相同，参数和取消需要明确。",
+        "延迟输入处理不应阻止原生输入显示；请求仍需取消/迟到保护，减少发起次数不等于解决竞态。离开页面或依赖改变时清理计时器。",
+        "测试用可控时钟验证时间边界，避免固定真实sleep造成偶发通过。用户需要立即执行时可设计flush，而不是所有事件统一延迟。"
+      ],
+      "example": "Node控制时钟验证最后输入、trailing与cancel；Chrome快速fill两次只呈现latest，页面离开取消计时器。",
+      "exercise": "组件每次渲染重建防抖函数，旧计时器继续运行；把实例归于稳定生命周期并取消旧任务，用可控时间证明。",
+      "practice": "在Nuxt副本选择一处高频副作用，不延迟原生输入本身；用可控时钟/迟到响应分别验频率与正确性。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Glossary/Debounce",
+        "https://developer.mozilla.org/en-US/docs/Glossary/Throttle"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.2.4",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.4.web-worker.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.4.web-worker-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.4.web-worker.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Worker有独立执行上下文，不能直接操作DOM。通过消息传数据/结果，序列化与传输也有成本；小任务不一定值得创建Worker。",
+        "协议需校验输入、任务id、取消/过时结果和错误；terminate结束当前worker但不保证远程业务回滚。使用transferable可减少部分复制但会转移所有权。",
+        "lab是固定2000000项数值求和，结果确定；主线程按钮可继续操作，pagehide停止Worker。它不证明任意业务加Worker就更快，也未实现通用任务池。"
+      ],
+      "example": "Chrome验证Worker返回1999999000000，同时响应计数能点击；构建产生实际worker资产，完成后terminate。",
+      "exercise": "把document.querySelector放到Worker，重现未定义；保留计算在Worker，DOM提交留主线程，并测试error回退。",
+      "practice": "核对主Nuxt已有Worker的输入/结果/生命周期；在副本加一次失败与过时任务保护，而不虚构已有任务池。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Worker/terminate"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.2.5",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Vue基于响应式依赖和编译优化，computed缓存派生计算；Props稳定与组件边界可减少更新，但要先确认实际成本。不要为了“性能”复制第二份事实状态或过度响应化巨大不可变数据。",
+        "React的memo/useMemo/useCallback与Vuecomputed不是同义词；编译器、上下文、依赖和版本也会影响优化方式。缓存不是正确性的基础，删掉后结果仍应正确。",
+        "本lab真实测试Vuecomputed在依赖不变时只算一次、变化后重新计算；不运行Vue/React渲染性能基准，不宣称某框架总更快。主线仍Vue/Nuxt，React选修。"
+      ],
+      "example": "pnpm check用真实Vue3.5.46检查调用次数与结果。浏览器lab为原生模块，不把它冒充Vue组件重渲染计数。",
+      "exercise": "把带副作用的请求塞进computed以求“少执行”，重现重算/读取次数改变业务；派生保持纯，副作用改合适watch/事件/数据获取。",
+      "practice": "在Nuxt副本分析已有computed派生与数据依赖，选择一个真实热点再改；React只做机制对照不加到宿主。",
+      "sources": [
+        "https://vuejs.org/guide/best-practices/performance.html",
+        "https://react.dev/reference/react/useMemo"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.2.6",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.6.performance-api-lighthouse.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.6.performance-api-lighthouse-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.6.performance-api-lighthouse.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "performance.mark/measure可定位应用区间；PerformanceObserver按支持类型订阅条目，buffered能获取部分历史条目。observer与资源都要清理，不能在不支持时直接调用。",
+        "Lighthouse是特定配置/设备模拟的lab审计，受环境、节流、负载和缓存影响。性能分数采用指标权重/分布，不是业务SLA；TBT有诊断价值但不等于真实用户INP。",
+        "本实验只运行一次本地audit并保存配置/指标，交互变体另用原生条目记录。对照保持内容/视口/缓存/CPU策略一致，多次和分布评估属于后续阶段9。"
+      ],
+      "example": "pnpm verify产生artifacts/runtime.json与Lighthouse原始JSON；记录blocking/chunked/thrash/batch的真实duration，单次结果不硬断言更快。",
+      "exercise": "把performance.now跨异步等待的总时长写成CPU占用，或删慢样本只展示最好值；恢复区间定义与样本说明再分析。",
+      "practice": "在Nuxt副本做一处受控改进并保存本地测量证据，不把lab分数升级为生产指标承诺。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver",
+        "https://developer.chrome.com/docs/lighthouse/performance/performance-scoring"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.3.1",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.3.1.item-6-1-3-1.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.3.1.item-6-1-3-1-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.3.1.item-6-1-3-1.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "HTTP缓存按Cache-Control/ETag等规则管理响应，内存/磁盘是实现位置；no-cache允许存储但要求重验证，no-store要求不存HTTP缓存。304复用原有响应体，浏览器Fetch最终可能呈现200，这是合并后的结果。",
+        "bfcache保存页面执行/DOM快照，和HTTP响应缓存不同。Chrome2025起在安全条件下允许部分no-store页进入bfcache，因此不能教成no-store在所有浏览器永远阻止后退快照。敏感数据仍需no-store及会话/恢复策略。",
+        "Cache API由应用/SW明确管理，不是自动HTTP缓存；应用内Nuxt key/payload又是另一层。删除某一层不代表其他层都失效，身份变化必须考虑用户数据边界。"
+      ],
+      "example": "Node测试真实200/If-None-Match304，Chrome重复读取后server stats有revalidation；mockPrivate两次都到服务器。bfcache提供pageshow/DevTools观察，不冒称本轮有普遍命中保证。",
+      "exercise": "把no-cache当禁止存储，或清应用变量后声称HTTP/SW缓存都清空；分别观察并按对应生命周期清理。",
+      "practice": "分析主Nuxt payload/key与HTTP头，和独立SW/bfcache分开；未来加入身份数据时不得套公开缓存。",
+      "sources": [
+        "https://developer.chrome.com/docs/web-platform/bfcache-ccns",
+        "https://web.dev/articles/bfcache",
+        "https://web.dev/articles/http-cache"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.3.2",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.3.2.service-worker-cache-first-network.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.3.2.service-worker-cache-first-network-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.3.2.service-worker-cache-first-network.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Cache First适合版本化公开资产，Network First优先新响应并在网络失败回退缓存。策略还需说明状态检查、超时、缓存上限/版本和离线无命中情况，不能只给策略名字。",
+        "SW scope是URL控制范围，不是权限沙箱。应只拦截明确GET白名单和同源目标，不缓存登录/API/私有响应；Cache API可保存某些HTTP不打算缓存的响应，应用必须自行保护。",
+        "lab注册仅/sw-lab/，缓存名前缀专有；activate只删自己的旧版本，保留其他cache。更新skipWaiting/claim用于本地演示，生产需评估新worker与旧页面版本一致，不自动照搬强切换。"
+      ],
+      "example": "Chrome真注册/控制，cache-first预缓存、network-first在线版本变化/离线回退、离线导航页均验证；旧专有v0删除、foreign前缀保留，最终注销自己scope并删自己缓存。",
+      "exercise": "fetch事件无条件cache.put所有请求，把会话API也缓存；以白名单和身份边界定位，清理本实验错误缓存并重验，不删除其他项目缓存。",
+      "practice": "主工程没有SW；在独立lab完成离线/版本任务，再决定Nuxt公开目录是否需要，先排除身份与API范围。",
+      "sources": [
+        "https://developer.chrome.com/docs/workbox/caching-strategies-overview",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.1.3.3",
+    "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.3.3.react-query-http.md",
+    "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.3.3.react-query-http-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.3.3.react-query-http.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Nuxt useFetch/useAsyncData的key对应应用数据身份与共享状态，payload可避免接管时重复读取；这不是默认跨用户全局HTTP缓存。相同key的关键选项应一致，变换数据身份要换key/响应式URL或明确刷新。",
+        "HTTP缓存头控制响应层；应用内缓存清理不自动清CDN/SW/HTTP，反之亦然。写入后应按契约失效相关查询，身份变化要取消/清理私有结果并隔离新请求。",
+        "本组HTTP cache和Vuecomputed是真实实验；Nuxt运行复用阶段6主工程的既有数据key/统计按需路径，不声称本lab运行React Query或Nuxt服务端私有缓存。"
+      ],
+      "example": "观察lab HTTP重验证与private no-store，再核对主工程Nuxt key/SSR读取。React Query只随React分支选学，本组不额外引依赖。",
+      "exercise": "把不同用户/不同查询硬塞同一个全局缓存对象，观察错数据；改作用域/数据身份与失效规则，再检查SSR与客户端。",
+      "practice": "核对主工程实际useFetch/useAsyncData key与HTTP缓存头；如果副本加写入/身份，先补失效和用户隔离，不虚构原有登录功能。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control"
+      ],
+      "runtime": "docs/audits/stage-6-performance-runtime.json"
+    },
+    "issues": []
+  }
+]

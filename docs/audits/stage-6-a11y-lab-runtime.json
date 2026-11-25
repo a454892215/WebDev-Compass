@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-25",
+  "axeCore": "4.14.1",
+  "passed": 5,
+  "checks": [
+    {
+      "width": 390,
+      "passed": true,
+      "axeViolations": 0,
+      "axeIncomplete": [],
+      "observed": "semantic names, skip focus, invalid field/description/focus, valid status, dialog Escape/return focus, 44px buttons, reduced-motion, no overflow"
+    },
+    {
+      "width": 1440,
+      "passed": true,
+      "axeViolations": 0,
+      "axeIncomplete": [],
+      "observed": "semantic names, skip focus, invalid field/description/focus, valid status, dialog Escape/return focus, 44px buttons, reduced-motion, no overflow"
+    },
+    {
+      "width": 320,
+      "rootFontScale": "200%",
+      "passed": true,
+      "observed": "no horizontal overflow/content loss in controlled CSS text-size test; not actual browser zoom or complete WCAG proof"
+    },
+    {
+      "negativeFixture": true,
+      "passed": true,
+      "detected": [
+        "button-name",
+        "image-alt",
+        "label"
+      ],
+      "observed": "scanner actually detects missing button name/image alt/input label"
+    },
+    {
+      "contrast": true,
+      "passed": true,
+      "colors": {
+        "bodyOnWhite": [
+          "rgb(22, 33, 59)",
+          "rgb(255, 255, 255)"
+        ],
+        "buttonOnWhite": [
+          "rgb(255, 255, 255)",
+          "rgb(23, 67, 156)"
+        ],
+        "errorOnWhite": [
+          "rgb(176, 0, 32)",
+          "rgb(255, 255, 255)"
+        ],
+        "focusOnWhite": [
+          "rgb(7, 83, 191)",
+          "rgb(255, 255, 255)"
+        ]
+      },
+      "ratios": {
+        "bodyOnWhite": 15.971882318011382,
+        "buttonOnWhite": 9.054246798293166,
+        "errorOnWhite": 7.325040949140119,
+        "focusOnWhite": 7.003141156682053
+      },
+      "observed": "WCAG sRGB ratios for the lab actual opaque CSS colors on white; other states/backgrounds still need review"
+    }
+  ],
+  "notVerified": [
+    "real screen reader",
+    "disabled-user testing",
+    "browser zoom UI",
+    "other browsers",
+    "formal WCAG conformance",
+    "real mobile"
+  ]
+}

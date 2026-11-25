@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>课程表单与焦点实验</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到主要内容</a>
+    <header>
+      <p>无障碍实验</p>
+      <nav aria-label="页面导航"><a href="#form-title">填写课程</a></nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <h1>课程表单与焦点实验</h1>
+      <img src="./cover.svg" width="320" height="160" alt="蓝色课程卡片封面" />
+      <p>状态：<strong>可编辑</strong>，文字与形状同时说明状态。</p>
+      <section aria-labelledby="form-title">
+        <h2 id="form-title">填写课程</h2>
+        <form novalidate aria-label="课程名称表单">
+          <label for="title">课程名称</label>
+          <p id="hint">必填，至少两个字符。</p>
+          <input
+            id="title"
+            name="title"
+            required
+            minlength="2"
+            aria-describedby="hint"
+          />
+          <p id="error" class="error"></p>
+          <button type="submit">保存草稿</button>
+        </form>
+        <p id="result" role="status" aria-label="保存结果"></p>
+      </section>
+      <button id="open" type="button">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
+          <path d="M2 8h12M8 2v12" stroke="currentColor" /></svg
+        >打开帮助
+      </button>
+      <dialog id="help" aria-labelledby="dialog-title">
+        <h2 id="dialog-title" tabindex="-1">填写帮助</h2>
+        <p>这里只演示原生模态和关闭还焦。按Escape或关闭按钮退出。</p>
+        <button id="close" type="button">关闭帮助</button>
+      </dialog>
+    </main>
+    <footer><p>本地实验，不代表完整WCAG符合或真实屏幕阅读器通过。</p></footer>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

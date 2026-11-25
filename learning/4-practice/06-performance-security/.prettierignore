@@ -1,0 +1,8 @@
+node_modules
+.nuxt
+.output
+.pnpm-store
+pnpm-lock.yaml
+test-results
+playwright-report
+artifacts

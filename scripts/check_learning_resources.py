@@ -28,6 +28,20 @@ class References(HTMLParser):
                 if fields:self.references.append((self.getpos()[0],'srcset',fields[0]))
     handle_startendtag=handle_starttag
 
+def vite_public_target(source, path):
+    """Resolve an existing default publicDir asset only for a Vite root entry.
+
+    Custom publicDir/base settings still require explicit build/browser review.
+    Never use this fallback to hide parent traversal or a symlink out of project.
+    """
+    relative=Path(path)
+    if source.name!='index.html' or not path or relative.is_absolute() or '..' in relative.parts:return None
+    if not any((source.parent/f'vite.config.{suffix}').is_file() for suffix in ('js','ts','mjs','mts','cjs','cts')):return None
+    public=(source.parent/'public').resolve()
+    if not public.is_relative_to(source.parent.resolve()):return None
+    candidate=(public/relative).resolve()
+    return candidate if candidate.is_relative_to(public) and candidate.exists() else None
+
 def audit(root):
     root=Path(root).resolve();errors=[];count=0;files=0
     for source in sorted((root/'learning').rglob('*.html')):
@@ -46,6 +60,7 @@ def audit(root):
                 reason='path escapes repository'
             else:
                 reason=None
+                if not target.exists():target=vite_public_target(source,path) or target
                 if not target.exists():reason='missing target'
                 elif parsed.fragment and target.suffix in {'.md','.html','.svg'} and unquote(parsed.fragment) not in anchors_in(target):reason='missing anchor'
             if reason:errors.append({'file':str(source.relative_to(root)),'line':line,'attribute':attribute,'target':raw,'reason':reason})

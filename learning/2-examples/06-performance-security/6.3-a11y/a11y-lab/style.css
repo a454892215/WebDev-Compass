@@ -1,0 +1,113 @@
+:root {
+  font-size: 100%;
+  font-family: system-ui, sans-serif;
+  color: #16213b;
+  background: #fff;
+  line-height: 1.6;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 1rem;
+  max-width: 64rem;
+  margin-inline: auto;
+}
+header,
+footer {
+  padding-block: 1rem;
+}
+main:focus {
+  outline: 3px solid #0753bf;
+  outline-offset: 3px;
+}
+h1,
+h2,
+p {
+  overflow-wrap: anywhere;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+label {
+  display: block;
+  font-weight: 700;
+}
+input {
+  display: block;
+  width: 100%;
+  font: inherit;
+  padding: 0.5rem;
+  min-height: 2.75rem;
+  border: 2px solid #56647c;
+  border-radius: 0.3rem;
+}
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  font: inherit;
+  padding: 0.5rem 0.8rem;
+  background: #17439c;
+  color: white;
+  border: 2px solid #17439c;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+a {
+  color: #17439c;
+  text-underline-offset: 0.2em;
+  display: inline-block;
+  padding: 0.3rem;
+}
+form {
+  margin-block: 1rem;
+}
+dialog {
+  width: min(28rem, calc(100% - 2rem));
+  padding: 1rem;
+  border: 2px solid #16213b;
+}
+dialog::backdrop {
+  background: #0008;
+}
+.error {
+  color: #b00020;
+  font-weight: 700;
+}
+input[aria-invalid="true"] {
+  border-color: #b00020;
+}
+:focus-visible {
+  outline: 3px solid #0753bf;
+  outline-offset: 3px;
+}
+.skip {
+  position: absolute;
+  inset-block-start: -12rem;
+  background: white;
+  padding: 0.5rem;
+  z-index: 2;
+}
+.skip:focus {
+  inset-block-start: 0.5rem;
+}
+button {
+  transition: transform 0.1s;
+}
+button:hover {
+  transform: translateY(-1px);
+}
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
+  button:hover {
+    transform: none;
+  }
+}

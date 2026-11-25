@@ -1,0 +1,180 @@
+{
+  "date": "2026-11-25",
+  "scope": "This author executed standalone a11y lab; main author executed shared Nuxt build/unit/E2E, then this author independently read source, commands logs and JSON results.",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "axe": "4.14.1",
+    "playwright": "1.65.1",
+    "browser": "local Google Chrome headless"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --offline --frozen-lockfile (a11y-lab)",
+      "result": "passed"
+    },
+    {
+      "command": "node --check verify.mjs",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm verify",
+      "result": "passed",
+      "groups": 5,
+      "evidence": "docs/audits/stage-6-a11y-lab-runtime.json"
+    },
+    {
+      "command": "pnpm verify after reading contrast colors from actual computed styles",
+      "result": "passed",
+      "groups": 5,
+      "reason": "Fix hardcoded color fixture: CSS edits now affect contrast assertions"
+    }
+  ],
+  "a11yLab": {
+    "date": "2026-11-25",
+    "axeCore": "4.14.1",
+    "passed": 5,
+    "checks": [
+      {
+        "width": 390,
+        "passed": true,
+        "axeViolations": 0,
+        "axeIncomplete": [],
+        "observed": "semantic names, skip focus, invalid field/description/focus, valid status, dialog Escape/return focus, 44px buttons, reduced-motion, no overflow"
+      },
+      {
+        "width": 1440,
+        "passed": true,
+        "axeViolations": 0,
+        "axeIncomplete": [],
+        "observed": "semantic names, skip focus, invalid field/description/focus, valid status, dialog Escape/return focus, 44px buttons, reduced-motion, no overflow"
+      },
+      {
+        "width": 320,
+        "rootFontScale": "200%",
+        "passed": true,
+        "observed": "no horizontal overflow/content loss in controlled CSS text-size test; not actual browser zoom or complete WCAG proof"
+      },
+      {
+        "negativeFixture": true,
+        "passed": true,
+        "detected": [
+          "button-name",
+          "image-alt",
+          "label"
+        ],
+        "observed": "scanner actually detects missing button name/image alt/input label"
+      },
+      {
+        "contrast": true,
+        "passed": true,
+        "colors": {
+          "bodyOnWhite": [
+            "rgb(22, 33, 59)",
+            "rgb(255, 255, 255)"
+          ],
+          "buttonOnWhite": [
+            "rgb(255, 255, 255)",
+            "rgb(23, 67, 156)"
+          ],
+          "errorOnWhite": [
+            "rgb(176, 0, 32)",
+            "rgb(255, 255, 255)"
+          ],
+          "focusOnWhite": [
+            "rgb(7, 83, 191)",
+            "rgb(255, 255, 255)"
+          ]
+        },
+        "ratios": {
+          "bodyOnWhite": 15.971882318011382,
+          "buttonOnWhite": 9.054246798293166,
+          "errorOnWhite": 7.325040949140119,
+          "focusOnWhite": 7.003141156682053
+        },
+        "observed": "WCAG sRGB ratios for the lab actual opaque CSS colors on white; other states/backgrounds still need review"
+      }
+    ],
+    "notVerified": [
+      "real screen reader",
+      "disabled-user testing",
+      "browser zoom UI",
+      "other browsers",
+      "formal WCAG conformance",
+      "real mobile"
+    ]
+  },
+  "nuxtShared": {
+    "result": "passed within stated local scope",
+    "sourceReviewed": true,
+    "executor": "main agent; not re-executed by this group",
+    "reviewedAt": "2026-11-25 07:48 UTC",
+    "build": {
+      "result": "passed",
+      "profile": "Nuxt4.7 node-server",
+      "log": "/tmp/webdev-stage6-build.log"
+    },
+    "unit": {
+      "passed": 12,
+      "failed": 0,
+      "log": "/tmp/webdev-stage6-unit.log",
+      "readSource": "learning/4-practice/06-performance-security/tests/unit/catalog.test.ts"
+    },
+    "e2e": {
+      "expected": 6,
+      "unexpected": 0,
+      "flaky": 0,
+      "skipped": 0,
+      "startedAt": "2026-11-25T07:47:24.423Z",
+      "durationMs": 5225.041,
+      "results": "learning/4-practice/06-performance-security/test-results/e2e-results.json",
+      "log": "/tmp/webdev-stage6-e2e.log",
+      "readSources": [
+        "tests/e2e/flow.spec.ts",
+        "tests/e2e/inspection.spec.ts",
+        "tests/e2e/teardown.ts"
+      ],
+      "observed": [
+        "1440/390 Chrome viewport flow+dialog each passed",
+        "parallel SSR three languages, canonical, 4 hreflang links",
+        "HTTP404 unknown locale and slug",
+        "12 sitemap loc entries, no preview/query entries",
+        "robots actual LF; /api disallow but preview not blocked",
+        "search and preview noindex, q injection shape did not execute",
+        "OG local PNG HTTP200 and 1200x630 dimensions",
+        "Course JSONLD parse and expected name/url",
+        "320CSSpx+CSS200% text in dark RTL; reduced-motion; axe violations empty"
+      ]
+    },
+    "sourceCorrectionsClosed": [
+      "shared PNG OG on homepage and details",
+      "email hint before input retains aria-describedby",
+      "light control border changed from #a7b4cc to #60708c"
+    ],
+    "controlContrast": {
+      "method": "source CSS opaque color sRGB calculation in this review, not fresh browser-computed style measurement",
+      "lightBorderPanel": 5.007490469,
+      "lightBorderPage": 4.622688935,
+      "darkBorderPanel": 4.797524353,
+      "darkBorderPage": 5.488768568,
+      "result": "all specified control-border combinations exceed 3:1; not all possible UI states/backgrounds"
+    },
+    "limitations": [
+      "No real screen reader or disabled-user trial",
+      "CSS font-size200% is not actual browser zoom UI",
+      "No actual Google crawling, indexing or search result test",
+      "No public social-platform share preview",
+      "No SSG build/deployment or Next installation",
+      "Sitemap route list source reviewed; not every loc individually HTTP-crawled"
+    ]
+  },
+  "notVerified": [
+    "real screen reader/disabled user trial",
+    "full WCAG conformance",
+    "real browser zoom UI",
+    "other browsers or real mobile",
+    "actual Google crawling/indexing/ranking",
+    "public social share preview/rich result",
+    "production deployment"
+  ]
+}

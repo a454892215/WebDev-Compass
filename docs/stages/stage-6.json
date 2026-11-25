@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "stage": 6,
+  "project": "learning/4-practice/06-performance-security/nuxt.config.ts",
+  "points": [
+    {
+      "id": "6.1.1.1",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.1.core-web-vitals.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.1.core-web-vitals-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.1.core-web-vitals.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-1"
+    },
+    {
+      "id": "6.1.1.2",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.2.gzip-brotli-http.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.2.gzip-brotli-http-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.2.gzip-brotli-http.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-2"
+    },
+    {
+      "id": "6.1.1.3",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.3.webp-avif.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.3.webp-avif-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.3.webp-avif.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-3"
+    },
+    {
+      "id": "6.1.1.4",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.4.css-css.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.4.css-css-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.4.css-css.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-4"
+    },
+    {
+      "id": "6.1.1.5",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.5.js-import-tree-shaking-bundle.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.5.js-import-tree-shaking-bundle-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.5.js-import-tree-shaking-bundle.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-5"
+    },
+    {
+      "id": "6.1.1.6",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.6.item-6-1-1-6.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.6.item-6-1-1-6-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.6.item-6-1-1-6.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-6"
+    },
+    {
+      "id": "6.1.1.7",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.7.item-6-1-1-7.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.7.item-6-1-1-7-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.7.item-6-1-1-7.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-7"
+    },
+    {
+      "id": "6.1.1.8",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.1.8.cdn.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.1.8.cdn-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.1.8.cdn.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-1-8"
+    },
+    {
+      "id": "6.1.2.1",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.1.item-6-1-2-1.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.1.item-6-1-2-1-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.1.item-6-1-2-1.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-1"
+    },
+    {
+      "id": "6.1.2.2",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.2.item-6-1-2-2.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.2.item-6-1-2-2-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.2.item-6-1-2-2.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-2"
+    },
+    {
+      "id": "6.1.2.3",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.3.item-6-1-2-3.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.3.item-6-1-2-3-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.3.item-6-1-2-3.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-3"
+    },
+    {
+      "id": "6.1.2.4",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.4.web-worker.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.4.web-worker-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.4.web-worker.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-4"
+    },
+    {
+      "id": "6.1.2.5",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.5.react-vue-memo-key.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-5"
+    },
+    {
+      "id": "6.1.2.6",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.2.6.performance-api-lighthouse.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.2.6.performance-api-lighthouse-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.2.6.performance-api-lighthouse.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-2-6"
+    },
+    {
+      "id": "6.1.3.1",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.3.1.item-6-1-3-1.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.3.1.item-6-1-3-1-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.3.1.item-6-1-3-1.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-3-1"
+    },
+    {
+      "id": "6.1.3.2",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.3.2.service-worker-cache-first-network.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.3.2.service-worker-cache-first-network-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.3.2.service-worker-cache-first-network.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-3-2"
+    },
+    {
+      "id": "6.1.3.3",
+      "theory": "learning/1-notes/06-performance-security/6.1-performance/6.1.3.3.react-query-http.md",
+      "example": "learning/2-examples/06-performance-security/6.1-performance/6.1.3.3.react-query-http-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.1-performance/6.1.3.3.react-query-http.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-1-3-3"
+    },
+    {
+      "id": "6.2.1",
+      "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.1.xss.md",
+      "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.1.xss-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.1.xss.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-1"
+    },
+    {
+      "id": "6.2.2",
+      "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.2.csrf.md",
+      "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.2.csrf-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.2.csrf.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-2"
+    },
+    {
+      "id": "6.2.3",
+      "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.3.item-6-2-3.md",
+      "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.3.item-6-2-3-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.3.item-6-2-3.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-3"
+    },
+    {
+      "id": "6.2.4",
+      "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.4.source-map.md",
+      "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.4.source-map-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.4.source-map.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-4"
+    },
+    {
+      "id": "6.2.5",
+      "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.5.npm-audit.md",
+      "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.5.npm-audit-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.5.npm-audit.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-5"
+    },
+    {
+      "id": "6.2.6",
+      "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.6.cors.md",
+      "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.6.cors-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.6.cors.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-6"
+    },
+    {
+      "id": "6.2.7",
+      "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview.md",
+      "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-7"
+    },
+    {
+      "id": "6.3.1",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.1.wcag-a-aa.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.1.wcag-a-aa-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.1.wcag-a-aa.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-1"
+    },
+    {
+      "id": "6.3.2",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.2.html.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.2.html-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.2.html.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-2"
+    },
+    {
+      "id": "6.3.3",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.3.alt.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.3.alt-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.3.alt.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-3"
+    },
+    {
+      "id": "6.3.4",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.4.tabindex.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.4.tabindex-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.4.tabindex.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-4"
+    },
+    {
+      "id": "6.3.5",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.5.item-6-3-5.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.5.item-6-3-5-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.5.item-6-3-5.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-5"
+    },
+    {
+      "id": "6.3.6",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.6.label.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.6.label-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.6.label.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-6"
+    },
+    {
+      "id": "6.3.7",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.7.axe-devtools-lighthouse-a11y.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.7.axe-devtools-lighthouse-a11y-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.7.axe-devtools-lighthouse-a11y.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-7"
+    },
+    {
+      "id": "6.3.8",
+      "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.8.reflow-target-preferences.md",
+      "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.8.reflow-target-preferences-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.8.reflow-target-preferences.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-8"
+    },
+    {
+      "id": "6.4.1",
+      "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.1.item-6-4-1.md",
+      "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.1.item-6-4-1-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.1.item-6-4-1.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-1"
+    },
+    {
+      "id": "6.4.2",
+      "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.2.i18next.md",
+      "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.2.i18next-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.2.i18next.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-2"
+    },
+    {
+      "id": "6.4.3",
+      "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.3.intl.md",
+      "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.3.intl-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.3.intl.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-3"
+    },
+    {
+      "id": "6.4.4",
+      "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.4.rtl.md",
+      "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.4.rtl-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.4.rtl.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-4"
+    },
+    {
+      "id": "6.5.1",
+      "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.1.spa-seo.md",
+      "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.1.spa-seo-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.1.spa-seo.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-1"
+    },
+    {
+      "id": "6.5.2",
+      "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.2.html.md",
+      "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.2.html-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.2.html.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-2"
+    },
+    {
+      "id": "6.5.3",
+      "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.3.meta-title-description-canonical.md",
+      "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.3.meta-title-description-canonical-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.3.meta-title-description-canonical.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-3"
+    },
+    {
+      "id": "6.5.4",
+      "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.4.open-graph-twitter-card.md",
+      "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.4.open-graph-twitter-card-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.4.open-graph-twitter-card.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-4"
+    },
+    {
+      "id": "6.5.5",
+      "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.5.sitemap.xml.md",
+      "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.5.sitemap.xml-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.5.sitemap.xml.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-5"
+    },
+    {
+      "id": "6.5.6",
+      "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.6.schema.org-json-ld.md",
+      "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.6.schema.org-json-ld-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.6.schema.org-json-ld.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-6"
+    },
+    {
+      "id": "6.5.7",
+      "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt.md",
+      "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt-demo.md",
+      "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt.md",
+      "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-7"
+    }
+  ]
+}

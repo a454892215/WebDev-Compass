@@ -1,0 +1,330 @@
+{
+  "date": "2026-11-25",
+  "scope": "local controlled mechanisms, not field CWV or universal performance gain",
+  "checks": [
+    {
+      "viewport": 390,
+      "passed": true,
+      "observed": "real dynamic imports, local deferred replacement, longtask/chunk measure, worker result, virtual/full DOM, debounce, conditional cache, responsive image",
+      "image": {
+        "currentSrc": "http://127.0.0.1:4501/banner-640.avif",
+        "naturalWidth": 358,
+        "width": 358,
+        "height": 134.25
+      },
+      "lazyBefore": 0,
+      "metrics": {
+        "supported": [
+          "element",
+          "event",
+          "first-input",
+          "interaction-contentful-paint",
+          "largest-contentful-paint",
+          "layout-shift",
+          "long-animation-frame",
+          "longtask",
+          "mark",
+          "measure",
+          "navigation",
+          "paint",
+          "resource",
+          "soft-navigation",
+          "visibility-state"
+        ],
+        "measures": [
+          {
+            "name": "blocking",
+            "duration": 90
+          },
+          {
+            "name": "chunked",
+            "duration": 90.70000004768372
+          },
+          {
+            "name": "thrash",
+            "duration": 0.40000009536743164
+          },
+          {
+            "name": "batch",
+            "duration": 0.10000002384185791
+          }
+        ],
+        "longtasks": [
+          {
+            "name": "self",
+            "startTime": 248.59999990463257,
+            "duration": 91,
+            "value": null,
+            "hadRecentInput": null,
+            "interactionId": null
+          }
+        ],
+        "lcp": [
+          {
+            "name": "",
+            "startTime": 100,
+            "duration": 0,
+            "value": null,
+            "hadRecentInput": null,
+            "interactionId": null
+          }
+        ],
+        "shifts": [
+          {
+            "name": "",
+            "startTime": 148.5,
+            "duration": 0,
+            "value": 0.001739002849002849,
+            "hadRecentInput": true,
+            "interactionId": null
+          },
+          {
+            "name": "",
+            "startTime": 214.69999992847443,
+            "duration": 0,
+            "value": 0.009449189814814815,
+            "hadRecentInput": true,
+            "interactionId": null
+          },
+          {
+            "name": "",
+            "startTime": 551.7999999523163,
+            "duration": 0,
+            "value": 0.011766643518518518,
+            "hadRecentInput": true,
+            "interactionId": null
+          }
+        ]
+      },
+      "http": {
+        "revalidations": 1,
+        "hits": 2,
+        "privateHits": 2,
+        "network": 0
+      }
+    },
+    {
+      "viewport": 1440,
+      "passed": true,
+      "observed": "real dynamic imports, local deferred replacement, longtask/chunk measure, worker result, virtual/full DOM, debounce, conditional cache, responsive image",
+      "image": {
+        "currentSrc": "http://127.0.0.1:4501/banner-640.avif",
+        "naturalWidth": 640,
+        "width": 640,
+        "height": 240
+      },
+      "lazyBefore": 0,
+      "metrics": {
+        "supported": [
+          "element",
+          "event",
+          "first-input",
+          "interaction-contentful-paint",
+          "largest-contentful-paint",
+          "layout-shift",
+          "long-animation-frame",
+          "longtask",
+          "mark",
+          "measure",
+          "navigation",
+          "paint",
+          "resource",
+          "soft-navigation",
+          "visibility-state"
+        ],
+        "measures": [
+          {
+            "name": "blocking",
+            "duration": 90
+          },
+          {
+            "name": "chunked",
+            "duration": 90.30000007152557
+          },
+          {
+            "name": "thrash",
+            "duration": 0.19999992847442627
+          },
+          {
+            "name": "batch",
+            "duration": 0.10000002384185791
+          }
+        ],
+        "longtasks": [
+          {
+            "name": "self",
+            "startTime": 180,
+            "duration": 90,
+            "value": null,
+            "hadRecentInput": null,
+            "interactionId": null
+          }
+        ],
+        "lcp": [
+          {
+            "name": "",
+            "startTime": 32,
+            "duration": 0,
+            "value": null,
+            "hadRecentInput": null,
+            "interactionId": null
+          }
+        ],
+        "shifts": [
+          {
+            "name": "",
+            "startTime": 79.79999995231628,
+            "duration": 0,
+            "value": 0.002043928835519547,
+            "hadRecentInput": true,
+            "interactionId": null
+          },
+          {
+            "name": "",
+            "startTime": 270.7999999523163,
+            "duration": 0,
+            "value": 0.0011375519761659808,
+            "hadRecentInput": true,
+            "interactionId": null
+          }
+        ]
+      },
+      "http": {
+        "revalidations": 2,
+        "hits": 4,
+        "privateHits": 4,
+        "network": 0
+      }
+    },
+    {
+      "passed": true,
+      "scope": "/sw-lab/",
+      "observed": "cache-first, online network-first update, offline cached fallback, offline navigation, old own cache cleanup while foreign prefix retained",
+      "online": "network-response-2",
+      "offline": "network-response-2"
+    }
+  ],
+  "resumedUnaffectedViewportMeasurements": true,
+  "lighthouse": {
+    "version": "13.6.0",
+    "score": 1,
+    "environment": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 10000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "metrics": {
+      "fcp": 751.8289,
+      "lcp": 924.8289,
+      "tbt": 25.085550000000012,
+      "cls": 0
+    },
+    "boundary": "single local lab audit, no real-user INP or production p75 claim"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile",
+      "result": "passed",
+      "pnpm": "11.4.0"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "nodeTests": 4,
+      "observed": {
+        "plainBytes": 125000,
+        "gzipBytes": 364,
+        "brotliBytes": 34,
+        "conditional304": true,
+        "dynamicEntry": true,
+        "unusedPureExportRemoved": true
+      },
+      "execution": "Final sandbox run could not listen on localhost (EPERM); authorized loopback rerun passed all 4 Node tests, build and artifact assertions."
+    },
+    {
+      "command": "node verify.mjs then PERF_PHASE=cache node verify.mjs",
+      "result": "passed",
+      "browserGroups": 3,
+      "reason": "two viewport evidence saved, final cache-only run reused unaffected viewport observations after offline charset fix; Lighthouse executed once"
+    }
+  ],
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "vite": "8.3.8",
+    "vue": "3.5.46",
+    "playwright": "1.65.1",
+    "lighthouse": "13.6.0",
+    "chrome": "existing local Google Chrome headless"
+  },
+  "fixedIssues": [
+    "Browser timer wrappers avoid illegal this invocation when injected clock default calls native setTimeout/clearTimeout.",
+    "SW cache-first text comparison accounts for final line ending.",
+    "Offline fallback HTML now declares UTF-8 to avoid browser encoding guess."
+  ],
+  "notVerified": [
+    "production field CWV/p75 or real-user INP",
+    "real CDN/HTTP2/TLS deployment",
+    "cross-browser/real mobile/assistive technology",
+    "universal timing improvement or full PWA/private cache policy",
+    "automatic critical CSS extraction or React rendering benchmark"
+  ],
+  "resourceValidation": {
+    "result": "passed",
+    "html": 172,
+    "references": 641,
+    "errors": 0,
+    "method": "Constrained Vite publicDir resource resolution; browser-tested URLs unchanged."
+  },
+  "cleanup": "Lab-owned servers/browser closed; owned SW registration and cache removed; no third-party load test."
+}

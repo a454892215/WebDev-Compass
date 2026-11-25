@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Local security fixtures</title>
+  </head>
+  <body>
+    <main>
+      <h1>Security fixtures</h1>
+      <h2>Text output</h2>
+      <p id="text"></p>
+      <h2>Sanitized HTML</h2>
+      <div id="rich"></div>
+      <p id="result" role="status">Starting</p>
+    </main>
+    <script>
+      window.inlineMarker = true;
+    </script>
+    <script type="module" src="./security-entry.js"></script>
+  </body>
+</html>

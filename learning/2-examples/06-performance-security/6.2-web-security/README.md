@@ -1,0 +1,11 @@
+# 6.2 安全输出、来源与依赖边界
+
+前置阶段3–5。先读机制，再运行本地实验，最后做独立变体；实际/模拟/官方观察与未测范围分别记录。
+
+- [6.2.1 XSS：按输出上下文防护，而非依赖HttpOnly](./6.2.1.xss-demo.md)
+- [6.2.2 CSRF：凭据自动携带、Origin与会话绑定Token](./6.2.2.csrf-demo.md)
+- [6.2.3 点击劫持：frame-ancestors与嵌入需求](./6.2.3.item-6-2-3-demo.md)
+- [6.2.4 前端秘密与Source Map：构建、发布和读取边界](./6.2.4.source-map-demo.md)
+- [6.2.5 依赖安全：审计快照、锁文件与升级判断](./6.2.5.npm-audit-demo.md)
+- [6.2.6 CORS错误配置：凭据读取与来源白名单](./6.2.6.cors-demo.md)
+- [6.2.7 移动经验迁移：Web、原生UI与WebView脚本边界](./6.2.7.web-xss-rn-webview-demo.md)

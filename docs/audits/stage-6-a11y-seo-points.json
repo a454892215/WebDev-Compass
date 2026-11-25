@@ -1,0 +1,331 @@
+[
+  {
+    "id": "6.3.1",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.1.wcag-a-aa.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.1.wcag-a-aa-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.1.wcag-a-aa.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "WCAG 2.2按可感知、可操作、可理解、健壮组织，成功准则分A/AA/AAA。宣称AA需满足该范围内所有适用A与AA，不是只满足若干常见规则或axe得分。WCAG标准与Understanding/APG技术说明用途不同，后者帮助解释而非另立强制规则。",
+        "验收先列页面、流程、状态和适用准则，再选择自动/键盘/视觉/辅助技术等证据。登录失败、弹窗、动态错误、窄屏和语言切换都可能暴露初始页面扫描看不到的问题。",
+        "本地lab只给特定页面和交互的部分证据：axe、焦点、受控文字放大等。没有真实屏幕阅读器/残障用户测试，不给完整符合性认证。"
+      ],
+      "example": "独立lab正确页面axe零违规，坏样本仍报button-name/image-alt/label；比较两类结果，说明“零检测”不等于所有准则已审。",
+      "exercise": "把axe零违规改写成“本网站完全符合WCAG AA”；对照弹窗/缩放/真实读屏的未测范围，修正结论并补相应计划。",
+      "practice": "为Nuxt目录的列表、详情、dialog与错误反馈建立一张小范围验收表，记录自动、键盘、视觉与未测证据；不要求照抄所有WCAG条款。",
+      "source": "https://www.w3.org/WAI/standards-guidelines/wcag/conformance-levels/",
+      "boundary": "可迁移移动端无障碍验收意识，但WCAG网页成功准则与Android/Flutter检查工具的结果不能直接互认。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.3.2",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.2.html.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.2.html-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.2.html.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "原生header/nav/main/footer、h1–h6、ul/li、button与form提供语义。标题按内容层级组织，不能为字号跳级；多个同类导航应有可区分名称。装饰div不会因加点击事件自动成为可键盘按钮。",
+        "DOM、视觉渲染与无障碍树有关但不是同一棵树；display:none等会影响暴露，aria-hidden也有独立影响。名称/角色/值可由原生语义或ARIA提供，但错误ARIA可能覆盖正确的原生信息。",
+        "开发者工具/Playwright的role定位可辅助检查名称与角色，不等于已听过真实屏幕阅读器。应记录读屏器、浏览器、版本和实际播报/操作。"
+      ],
+      "example": "lab用main/h1/h2/nav与真实form；role定位和axe检查结构。Nuxt原始HTML/无障碍树观察与真实读屏清单分开。",
+      "exercise": "把button换成带click的div，观察Tab无法到达或Enter无效；恢复原生控件，重测交互和可访问名称。",
+      "practice": "在Nuxt副本找到一个无语义可点击容器，改成原生button或正确链接；用键盘与role/name确认，不只看样式。",
+      "source": "https://www.w3.org/WAI/tutorials/page-structure/",
+      "boundary": "类似给移动控件提供语义信息，但Web语义先来自HTML，DOM焦点与原生控件语义映射需单独理解。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.3.3",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.3.alt.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.3.alt-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.3.alt.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "信息图像的alt描述其在当前任务的意义；装饰图像可用alt=\"\"，复杂图表还需等价文字/数据说明。不能机械把文件名当alt，也不是所有图标都应加同一名称。",
+        "控件优先用可见文字/label命名。aria-label可以提供或覆盖名称，aria-labelledby引用已有可见文案；描述用aria-describedby，不要把长说明全部塞进名称。aria-hidden只隐藏辅助技术可见性，不等于视觉隐藏或禁用交互。",
+        "不要把aria-hidden=true放在可聚焦元素或其仍可聚焦祖先。原生button已有正确role通常不重复role=button；按钮中的装饰SVG隐藏而按钮保留可见文字。"
+      ],
+      "example": "lab信息图有具体alt，帮助按钮SVG装饰隐藏但可见文字命名；坏样本缺alt/按钮名称时真实axe报告失败。",
+      "exercise": "删掉纯图标按钮文字且不提供名称，运行axe看到button-name；补恰当可见文案或名称，复查不要覆盖已有正确名称。",
+      "practice": "为Nuxt课程图和图标分别判断信息/装饰用途，写最短有效替代文本并审查按钮名称；不要为避免报错给所有图片同一alt。",
+      "source": "https://www.w3.org/WAI/tutorials/images/",
+      "boundary": "移动端contentDescription/语义标签的目标相似，但HTML alt、名称计算与描述关系不是任意同义替换。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.3.4",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.4.tabindex.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.4.tabindex-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.4.tabindex.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "原生交互元素进入自然Tab顺序。tabindex=0用于确需参与顺序的非原生场景，-1允许程序聚焦但不增加常规Tab停靠；正数tabindex会制造与DOM顺序不一致的路径。焦点样式不应被无替代地移除。",
+        "跳过链接应位于重复导航前，指向可程序聚焦的主要内容。SPA页面切换需考虑页面标题、焦点与播报，不把每次状态更新都强制焦点跳走。固定头部不能完全遮住正在聚焦的组件，WCAG2.2 focus not obscured的等级/范围需按原文判断。",
+        "原生dialog.showModal提供模态背景惰性与基本键盘行为，但作者仍要命名、选择初始焦点、关闭途径和合理还焦。测试Escape、Tab与Shift+Tab；不要在普通非模态路由里无缘无故困住焦点。"
+      ],
+      "example": "lab实际Tab→skip、Enter聚焦main；帮助弹窗聚焦标题，Tab到关闭，Escape退出并还焦触发按钮；这是Chrome键盘证据，不是完整读屏证据。",
+      "exercise": "关闭dialog后把焦点丢到body或已卸载按钮，重现下一次Tab位置异常；保存触发引用并在close后还到仍存在的合理元素。",
+      "practice": "在Nuxt课程dialog验证从触发、初始焦点、正反Tab、Escape到还焦的完整路径，并检查窄屏/放大后焦点不被遮挡。",
+      "source": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "boundary": "移动端焦点/返回栈经验可借用，但浏览器Tab、DOM activeElement、原生dialog和读屏虚拟光标有各自机制。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.3.5",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.5.item-6-3-5.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.5.item-6-3-5-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.5.item-6-3-5.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "WCAG1.4.3 AA通常要求正文文字对比至少4.5:1，大字至少3:1，标志、装饰、禁用等存在适用例外；大字定义按规范而非“看起来很大”。计算应基于实际前景/背景和透明度/渐变最不利区域。",
+        "必要UI边界与图形还涉及1.4.11非文字对比等要求，不能只计算正文。错误、成功、选择等状态同时提供文字、形状/图标或程序状态，避免只用颜色。",
+        "自动工具能找到部分低对比，不保证所有悬停/焦点/图像背景状态都覆盖。应检查浅/深色、禁用边界、选中和错误状态，保留具体颜色/比值或工具结果。"
+      ],
+      "example": "lab正文深色/白背景、蓝底白字按钮；axe对当前状态未报对比错误；错误含具体文字和aria-invalid，不只红边。",
+      "exercise": "把错误提示仅改为红边并删文字，观察使用者不知道如何修复；恢复可见错误文案与描述关联，再测对比。",
+      "practice": "检查Nuxt页面正常/错误/焦点/选中状态的颜色；记录至少两组实际对比结果并补一种非颜色线索。",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "boundary": "系统主题和高对比需求类似移动端，但Web要按实际CSS层叠/背景计算，不能只看设计稿色票。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.3.6",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.6.label.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.6.label-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.6.label.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "label的for/id明确关联控件，placeholder不代替持续可见标签。提示/要求与错误通过aria-describedby等描述关系连接；aria-invalid应反映当前有效状态，不能首次输入前就全部标错。",
+        "原生required/minlength等约束可提供基础反馈；自定义验证必须保留语义与键盘行为，并在提交失败时聚焦第一个错误字段或摘要。错误清除后同步移除aria-invalid与旧描述，不残留误导状态。",
+        "状态区适合与焦点无关的成功/处理结果；过多assertive live regions会噪声。错误名称、描述、焦点与播报要协同，真实屏幕阅读器仍需另外验证。"
+      ],
+      "example": "lab空提交后错误文字出现、输入aria-invalid=true、hint error关联且获得焦点；改成Vue课程后属性/错误清除并显示具名保存结果。",
+      "exercise": "只显示错误但不关联输入，或修正后仍aria-invalid=true；检查DOM属性及描述ID引用，统一更新错误/有效状态。",
+      "practice": "在Nuxt表单完成一次无效提交→定位字段→修正→成功，保存标签、描述、焦点和结果的证据；不要只断言某段红字存在。",
+      "source": "https://www.w3.org/WAI/tutorials/forms/validation/",
+      "boundary": "移动端表单错误/焦点体验可迁移，但Web标签/描述计算、原生约束和读屏播报需要按DOM机制验证。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.3.7",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.7.axe-devtools-lighthouse-a11y.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.7.axe-devtools-lighthouse-a11y-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.7.axe-devtools-lighthouse-a11y.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "axe-core可在浏览器页面运行规则，结果含violations/incomplete/passes等；incomplete需要进一步检查，不等于通过。工具的标签/规则覆盖随版本变化，应记录版本、页面、状态与选用规则。",
+        "Lighthouse无障碍评分由部分审计组成，不能覆盖所有WCAG或真实用户任务。axe DevTools扩展、axe-core自动引擎、Lighthouse是不同工具入口，运行某一个不能声称全部已操作。",
+        "先用受控坏样本证明检查真的会失败，再修复并回归。键盘、缩放、dialog动态状态、真实辅助技术需组合证据；不要为提高分数删除业务内容或忽略真实问题。"
+      ],
+      "example": "本轮真实axe-core4.14.1：正确页两视口零违规；坏样本检测button-name/image-alt/label。未操作axe扩展UI，不以此冒称Lighthouse也已运行。",
+      "exercise": "检查脚本只扫空白页而得到零违规；先断言h1/表单存在，再注入缺名称按钮证明检测有覆盖，最终恢复真实页面。",
+      "practice": "在Nuxt当前页面/表单错误/dialog状态分别保存axe结果，保留incomplete清单并用键盘补验；可选运行Lighthouse，但单独记录版本和范围。",
+      "source": "https://github.com/dequelabs/axe-core",
+      "boundary": "类似移动自动无障碍扫描，但工具规则、可见树与Web场景不同；跨平台分数不能等价比较。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.3.8",
+    "theory": "learning/1-notes/06-performance-security/6.3-a11y/6.3.8.reflow-target-preferences.md",
+    "example": "learning/2-examples/06-performance-security/6.3-a11y/6.3.8.reflow-target-preferences-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.3-a11y/6.3.8.reflow-target-preferences.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-3-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "WCAG1.4.4 AA关注文字放大到200%不丢内容/功能；1.4.10 AA对横向文字通常以320CSSpx宽等效条件检查不需双向滚动，数据表/地图等有必要二维布局例外。模拟窄视口与改根字体只是局部证据，不等于完整浏览器400%缩放认证。",
+        "WCAG2.5.8 AA目标尺寸通常至少24×24CSSpx，也有间距、等效、行内、用户代理或必要等例外；2.5.5增强44×44是AAA。实验统一44px按钮是较宽裕设计，不说明所有AA控件一律必须44px，也不对行内链接机械套正方形。",
+        "尊重prefers-reduced-motion可避免非必要动画，交互动效禁用的2.3.3属AAA；其他闪烁/自动播放/暂停等另有适用准则。减少动效不是全站任何动画都自动AA违规，但应按用户需求提供合理策略。"
+      ],
+      "example": "lab在390/1440控制按钮实际≥44px；320CSSpx与CSS根字体200%条件不横溢、表单仍可用；模拟reduce后transition为0。没有操作真实浏览器zoom UI。",
+      "exercise": "给卡片写固定width:600px或固定height截断文字，在320/200%重现内容丢失；改max-inline-size/弹性高度/换行，再用同条件复验，不用overflow:hidden隐藏问题。",
+      "practice": "对Nuxt目录在320CSSpx、200%文字、长翻译/RTL与reduce模式逐项检查；记录必要二维滚动例外及目标间距，不只存截图。",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "boundary": "移动端dp/系统字号经验有帮助，但CSSpx、浏览器zoom、文本缩放和设备像素不是同一单位；不能用一个390px截图替代验收。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.5.1",
+    "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.1.spa-seo.md",
+    "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.1.spa-seo-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.1.spa-seo.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "抓取获取URL响应，渲染处理HTML/可能的JavaScript，索引分析与保留内容，排名又是后续判断；不是发布即收录。Google能渲染不少JS并不代表所有爬虫都执行同样脚本或能访问失败接口。",
+        "有可发现href链接、正确HTTP状态和可获取内容是基础。仅由点击触发的内容或没有可抓链接的路由可能更难发现；不要用所有路由统一200掩盖不存在页面。",
+        "SSR/SSG可使初始HTML含关键内容，但仍需检查robots/noindex/canonical、状态、数据与内部链接；不能保证排名或实时收录。"
+      ],
+      "example": "从Nuxt原始响应核对已知课程文本/href、未知locale/slug状态；再对照浏览器JS导航。没有向Google提交或验证真实抓取。",
+      "exercise": "把所有unknown页面回退到200首页，记录soft404风险；恢复真实404及可用错误导航，再检查正常课程不受影响。",
+      "practice": "为Nuxt目录列出首页→课程的可发现链接，并比较原始HTML与客户端导航；补一个未知slug与错误接口场景。",
+      "source": "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics",
+      "boundary": "移动端也要管理内容与分享，但Web还有可抓取URL、HTTP状态、HTML元信息和搜索索引生命周期，不能套用原生页面路由或商店排名机制。",
+      "runtime": "主代理Node SSR构建通过，实际并发请求/en、/ar、/zh-CN均200并含相应title/lang/dir；未知locale和课程实际HTTP404。两视口hydration无警告，客户端导航显示正确课程，初始浏览器未重复请求courses API。源码useFetch/真实NuxtLink与SSR输出相符，未调用真实Google抓取。",
+      "runtimeSource": "主代理执行，本组于2026-11-25实际核读 /tmp/webdev-stage6-{build,unit,e2e}.log、tests/e2e/{flow,inspection}.spec.ts及test-results/e2e-results.json；不是本组重复运行主工程。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.5.2",
+    "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.2.html.md",
+    "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.2.html-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.2.html.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "每页有符合主题的主要标题，子标题反映实际内容层次；main/article/nav/list等语义应与内容匹配，不为关键词堆标签。多h1的技术可解析性与清晰层级是不同问题，本课程选择一个主要h1便于维护。",
+        "链接文字描述目标，图片alt服务等价理解而非关键词填充；表格用于真实表格数据，标题与正文一致。渲染可见内容与结构化数据应一致。",
+        "语义结构同时支持无障碍与SEO，但无障碍合规或标题数量不会单独保证搜索排名；先满足真实任务与内容质量。"
+      ],
+      "example": "Nuxt首页/详情有主要标题和可描述链接，a11y lab角色/结构检查作为补充；SEO检查不替代内容质量或真实读屏验收。",
+      "exercise": "用多个h1仅为统一大字号，检查标题树与阅读顺序；用CSS调整外观、恢复内容层级，再检查原始输出。",
+      "practice": "为课程详情整理主标题/目标/前置/目录层级，把“点击这里”改成明确目标文案；从SSR和DOM两侧核对。",
+      "source": "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+      "boundary": "移动端也要管理内容与分享，但Web还有可抓取URL、HTTP状态、HTML元信息和搜索索引生命周期，不能套用原生页面路由或商店排名机制。",
+      "runtime": "核读layout main/nav、首页单主标题与课程列表、详情标题/正文及真实目标链接；两视口role/name定位导航成功、axe零违规。此为特定页面语义和交互证据，不是搜索排名或真实读屏认证。",
+      "runtimeSource": "主代理执行，本组于2026-11-25实际核读 /tmp/webdev-stage6-{build,unit,e2e}.log、tests/e2e/{flow,inspection}.spec.ts及test-results/e2e-results.json；不是本组重复运行主工程。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.5.3",
+    "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.3.meta-title-description-canonical.md",
+    "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.3.meta-title-description-canonical-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.3.meta-title-description-canonical.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "title应准确描述页面，description提供有用摘要；搜索系统可能重写展示内容，并非写了就必定原样显示。Nuxt用响应式useHead/useSeoMeta同时考虑SSR和客户端导航更新，不能只在mounted修改document.title。",
+        "canonical指示偏好URL，是信号而非访问重定向或绝对命令。应由可信配置构造绝对地址，不信任任意Host/query拼接；同一语言页面一般自指canonical，语言替代用hreflang并提供互返关系。",
+        "查询/筛选页若选择noindex需与robots抓取策略配合，避免禁止抓取导致机器人看不到noindex。canonical去q是本项目明确取舍，不代表所有网站过滤参数都可无条件删除。"
+      ],
+      "example": "Nuxt原始HTML和客户端详情切换核对title/description，canonical以https://compass.example为保留域名占位且无q，hreflang覆盖三语与x-default；不外网请求占位域名。",
+      "exercise": "客户端换到另一课程却沿用旧title/canonical，或把恶意Host反射入canonical；改响应式生成和可信siteUrl，再验证SSR/导航。",
+      "practice": "对三种locale的课程详情核对自指canonical、互返hreflang、查询页noindex，并在导航后检查无陈旧标题/描述。",
+      "source": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+      "boundary": "移动端也要管理内容与分享，但Web还有可抓取URL、HTTP状态、HTML元信息和搜索索引生命周期，不能套用原生页面路由或商店排名机制。",
+      "runtime": "三语SSR响应的title/lang/dir/canonical、详情4个alternate、查询noindex和无q canonical实际通过；语言详情导航后description实际变为阿拉伯语、Vue详情canonical正确。响应式title及互返alternate由实际useHead源码交叉核对，不把未单独断言的所有head字段都说成完整浏览器覆盖。",
+      "runtimeSource": "主代理执行，本组于2026-11-25实际核读 /tmp/webdev-stage6-{build,unit,e2e}.log、tests/e2e/{flow,inspection}.spec.ts及test-results/e2e-results.json；不是本组重复运行主工程。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.5.4",
+    "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.4.open-graph-twitter-card.md",
+    "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.4.open-graph-twitter-card-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.4.open-graph-twitter-card.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Open Graph常用og:title/type/url/description/image；Twitter Card元信息仍使用twitter:等协议字段，不因平台品牌变化随意改字段名。不同消费者的抓取/缓存/支持不同，需按目标平台文档验证。",
+        "图片应可被目标消费者访问，使用合适绝对URL、尺寸和内容；本地127.0.0.1或保留域名无法成为真实公网分享认证。元信息应在目标爬虫能获取的初始响应，且与公开可见页面一致。",
+        "分享缓存可能滞后，测试时区分响应标签、图片资源可达和平台缓存刷新。不要为了预览暴露私人页面或在URL中放凭证。"
+      ],
+      "example": "检查Nuxt初始响应中的og/twitter字段和图片本地资产；这是标签/资源验证，不代表真实社交平台已抓取。",
+      "exercise": "og:image误写本机文件路径或相对目录，消费者无法请求；改为可信站点绝对URL并核对本地映射，公网可达待部署阶段验证。",
+      "practice": "为课程详情配置一致的分享标题/摘要/图片，列出将来公网验证步骤，区分本地源码检查与真实消费者结果。",
+      "source": "https://ogp.me/",
+      "boundary": "移动端也要管理内容与分享，但Web还有可抓取URL、HTTP状态、HTML元信息和搜索索引生命周期，不能套用原生页面路由或商店排名机制。",
+      "runtime": "原始三语首页响应包含og-cover.png；两视口客户端详情og:image为可信绝对URL；本地资产HTTP200，PNG头尺寸1200×630实际断言通过。首页/详情og/type/title/desc/url/twitter字段源码齐全；真实社交消费者抓取与缓存未测。",
+      "runtimeSource": "主代理执行，本组于2026-11-25实际核读 /tmp/webdev-stage6-{build,unit,e2e}.log、tests/e2e/{flow,inspection}.spec.ts及test-results/e2e-results.json；不是本组重复运行主工程。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.5.5",
+    "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.5.sitemap.xml.md",
+    "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.5.sitemap.xml-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.5.sitemap.xml.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "sitemap列出希望发现的规范公开URL及可用元信息，不保证全部收录；不要塞登录页、无效URL、搜索组合或不真实更新时间。XML需正确编码和绝对URL，条目应与路由/canonical一致。",
+        "robots.txt适用于对应origin的抓取协定，Disallow不是访问控制，也不能保证URL不索引。公开URL即使禁止抓取仍可能通过外链被发现；要让支持的搜索系统读noindex，就不能同时禁止它获取该响应。",
+        "私有内容必须认证授权；敏感路径不应因为列在robots里而被误认为隐藏。部署预览可用noindex等策略，但不是泄露防线，且生产上线要有明确切换/回归。"
+      ],
+      "example": "Nuxt sitemap仅三语首页和3课程的12个URL，robots仅/api/抓取限制；preview/search的noindex仍可获取，实际HTTP访问不会被robots自动拒绝。",
+      "exercise": "同时Disallow预览页又指望爬虫读取它的noindex，或把robots当访问403；修正抓取/索引策略，并用真实响应而非推测验证。",
+      "practice": "对照主工程路由/canonical审查sitemap条目，并证明robots不是HTTP授权；不要向真实搜索服务提交本地站点。",
+      "source": "https://developers.google.com/search/docs/crawling-indexing/robots/intro",
+      "boundary": "移动端也要管理内容与分享，但Web还有可抓取URL、HTTP状态、HTML元信息和搜索索引生命周期，不能套用原生页面路由或商店排名机制。",
+      "runtime": "robots实际HTTP200、按真实LF切分含Disallow:/api/且不禁止preview；sitemap HTTP200并有12个loc，无preview/q条目。源码按唯一三语×已知课程生成集合并XML转义；预览noindex可读取。没有对每个sitemap URL逐一HTTP抓取或向搜索服务提交。",
+      "runtimeSource": "主代理执行，本组于2026-11-25实际核读 /tmp/webdev-stage6-{build,unit,e2e}.log、tests/e2e/{flow,inspection}.spec.ts及test-results/e2e-results.json；不是本组重复运行主工程。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.5.6",
+    "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.6.schema.org-json-ld.md",
+    "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.6.schema.org-json-ld-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.6.schema.org-json-ld.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "Schema.org提供词汇，JSON-LD是数据表达方式；能JSON.parse不等于符合某个搜索功能资格，也不保证富结果。类型/属性必须与真实可见内容一致，不能造评分、认证或课程事实。",
+        "JSON-LD嵌在script type=application/ld+json时，HTML解析器仍会识别结束script标签。把用户文本直接JSON.stringify后塞innerHTML并非完整上下文防护；可将<转义为\\u003c等，或使用框架验证过的安全序列化。",
+        "只纳入允许公开的数据，避免把会话、内部ID或诊断信息顺手输出；CSP、XSS和内容校验仍各有边界。结构验证/富结果测试与真实收录要分别说明。"
+      ],
+      "example": "Nuxt shared/utils/seo.ts提供转义，首页ItemList/详情Course与可见内容对应；单元和原始响应检查恶意形状字符串不能结束script。未向外部富结果工具上传私有内容。",
+      "exercise": "直接innerHTML=JSON.stringify包含</script>的文本，查看原始HTML边界；使用安全序列化、保留负例回归，不只对JSON合法性断言。",
+      "practice": "为课程生成最小真实JSON-LD，并加含结束script形状的输入测试；核对可见标题/描述和机器数据一致。",
+      "source": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data",
+      "boundary": "移动端也要管理内容与分享，但Web还有可抓取URL、HTTP状态、HTML元信息和搜索索引生命周期，不能套用原生页面路由或商店排名机制。",
+      "runtime": "12项Vitest通过，其中JSONLD含结束script及U+2028/U+2029输入不能结束script且JSON.parse往返还原；初始SSR存在ld+json，浏览器详情解析为Course，name/url符合实际Nuxt课程。恶意q浏览器未注入img或全局标记。Schema词汇有效性不等于Google富结果资格。",
+      "runtimeSource": "主代理执行，本组于2026-11-25实际核读 /tmp/webdev-stage6-{build,unit,e2e}.log、tests/e2e/{flow,inspection}.spec.ts及test-results/e2e-results.json；不是本组重复运行主工程。"
+    },
+    "issues": []
+  },
+  {
+    "id": "6.5.7",
+    "theory": "learning/1-notes/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt.md",
+    "example": "learning/2-examples/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.5-seo/6.5.7.ssr-ssg-seo-next.js-nuxt.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-5-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": [
+        "SSR请求时生成HTML，SSG生成已知页面，CSR主要靠客户端执行；它们影响内容获取时机、成本与部署能力，不决定内容质量或收录。私人动态内容不能为方便SEO随意公开预渲染。",
+        "Nuxt页面要同时检查原始HTML、HTTP状态、链接、元信息和客户端hydration/导航。SSG只覆盖生成集合，任意新slug/API/认证不能自动静态可用；部署回退可能把404错误变成200。",
+        "Next作为React选修可对照Server/Client边界，不要求为本阶段重复建两套框架。真实Google抓取、Search Console、CDN/TLS与部署回滚留相应外部条件验证。"
+      ],
+      "example": "主工程Node SSR原始响应与导航、HTTP404实测结果已核读；Next未安装，SSG为决策/扩展说明，未冒充已部署静态站点。",
+      "exercise": "静态托管所有未知路径回退200，误称SSR/SSG已解决SEO；对照未知slug响应，修正部署profile或回退规则，验证已知页仍可用。",
+      "practice": "按公开课程/查询页/预览/未知slug四类写渲染与索引策略，运行原始响应和导航检查；如选择SSG，另验生成集合和真实404托管行为。",
+      "source": "https://nuxt.com/docs/4.x/guide/concepts/rendering",
+      "boundary": "移动端也要管理内容与分享，但Web还有可抓取URL、HTTP状态、HTML元信息和搜索索引生命周期，不能套用原生页面路由或商店排名机制。",
+      "runtime": "Nuxt4.7生产node-server构建通过，12unit及6E2E通过；直接未知课程实际404，两视口语言/详情导航、hydration和元信息更新符合SSR源码。没有执行SSG生成/托管或安装Next，不把决策观察练习冒充静态部署成功。",
+      "runtimeSource": "主代理执行，本组于2026-11-25实际核读 /tmp/webdev-stage6-{build,unit,e2e}.log、tests/e2e/{flow,inspection}.spec.ts及test-results/e2e-results.json；不是本组重复运行主工程。"
+    },
+    "issues": []
+  }
+]

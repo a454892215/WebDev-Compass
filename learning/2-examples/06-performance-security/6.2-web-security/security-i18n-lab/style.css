@@ -1,0 +1,27 @@
+body {
+  font: 18px/1.6 system-ui;
+  margin: 0;
+  background: #f5f7fb;
+  color: #16213b;
+}
+main {
+  width: min(100% - 2rem, 50rem);
+  margin: auto;
+  padding-block: 2rem;
+  overflow-wrap: anywhere;
+}
+select {
+  font: inherit;
+  min-height: 44px;
+  max-width: 100%;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid;
+  padding-inline: 2rem;
+  padding-block: 1rem;
+}
+.start {
+  margin-inline-end: 1rem;
+}

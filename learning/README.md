@@ -18,3 +18,5 @@
 阶段4：先读[Vue/Nuxt主线入口](./1-notes/04-frameworks/README.md)，再运行[真实实验](./2-examples/04-frameworks/README.md)、完成[独立练习](./3-exercises/04-frameworks/README.md)与[Nuxt综合项目](./4-practice/04-frameworks/README.md)。共59项，React26项为选修。
 
 阶段5：从[API/会话主线](./1-notes/05-fullstack-auth/README.md)阅读，再运行[实验](./2-examples/05-fullstack-auth/README.md)、完成[独立练习](./3-exercises/05-fullstack-auth/README.md)与[Nuxt私人笔记](./4-practice/05-fullstack-auth/README.md)。共31项，已接入/模拟/观察类型分明。
+
+阶段6：[理论入口](./1-notes/06-performance-security/README.md)、[Nuxt三语目录](./4-practice/06-performance-security/README.md)，共43点四部分资料。

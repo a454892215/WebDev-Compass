@@ -1,0 +1,1 @@
+DO_NOT_BUNDLE_FAKE_SECRET is a synthetic non-credential scan canary; not imported by frontend.

@@ -1,0 +1,16 @@
+{
+  "name": "@compass/stage6-a11y-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "verify": "node verify.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.14.1",
+    "@playwright/test": "1.65.1"
+  }
+}

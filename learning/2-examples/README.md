@@ -59,3 +59,5 @@ learning/2-examples/{阶段目录}/{小节目录}/{序号}.{示例简述}.html
 - [阶段4：Vue 3 + Nuxt](./04-frameworks/README.md)：真实Vue/React/Tailwind实验、Nuxt工程与明确的观察清单。
 
 - [阶段5：API、会话与服务端授权](./05-fullstack-auth/README.md)：真实HTTP/JWT/CORS/WS/SSE实验及Nuxt综合工程。
+
+- [阶段6：性能、安全、无障碍、国际化与SEO](./06-performance-security/README.md)：43项四部分资料与真实本地实验。

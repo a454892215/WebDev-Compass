@@ -1,0 +1,5 @@
+/* Optional print fixture for the critical/media CSS observation task. */
+@media print {
+  body { background: white; color: black; }
+  button { display: none; }
+}

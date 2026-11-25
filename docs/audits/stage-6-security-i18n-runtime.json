@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-25",
+  "scope": "6.2/6.4 standalone actual lab plus main Nuxt source and runtime evidence inspected after main-agent execution",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "vue": "3.5.46",
+    "vue-i18n": "11.4.23",
+    "dompurify": "3.5.0",
+    "vite": "8.3.8",
+    "playwright": "1.65.1",
+    "browser": "existing local Google Chrome headless"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --offline --frozen-lockfile",
+      "result": "passed"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "domainGroups": 4,
+      "artifactGroups": 2,
+      "observed": "parameter/fallback/plural/category/instance separation/UTC and unsupported locale; actual Vite build; hidden map/source comment and public canary scan"
+    },
+    {
+      "command": "pnpm verify:browser",
+      "result": "passed",
+      "groups": 6,
+      "observed": [
+        {
+          "width": 390,
+          "name": "text output, DOMPurify and CSP",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "name": "frame-ancestors, CSRF and CORS misconfiguration",
+          "passed": true
+        },
+        {
+          "width": 390,
+          "name": "vue-i18n, fallback, Intl and RTL logical layout",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "name": "text output, DOMPurify and CSP",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "name": "frame-ancestors, CSRF and CORS misconfiguration",
+          "passed": true
+        },
+        {
+          "width": 1440,
+          "name": "vue-i18n, fallback, Intl and RTL logical layout",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "command": "pnpm audit --prod --json",
+      "result": "passed, 0 known advisories in this snapshot",
+      "metadata": {
+        "vulnerabilities": {
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+          "high": 0,
+          "critical": 0
+        },
+        "dependencies": 30,
+        "devDependencies": 0,
+        "optionalDependencies": 1,
+        "totalDependencies": 31
+      },
+      "boundary": "2026-11-25, own lab production dependency metadata only; not dev dependencies, not root Nuxt, not unknown-vulnerability or permanent security proof"
+    }
+  ],
+  "sourceReview": [
+    "root createI18n inside per-NuxtApp plugin, URL locale and allowed set, no navigator/storage initialization",
+    "root explicit UTC/gregory/currency; neutral Arabic counts avoid English plural assumptions",
+    "root JSON-LD escapes < and JS separators; CSP is a documented frame/base/object subset, no claim full script policy",
+    "root final shared runtime inspected: 12 unit cases and 6/6 Playwright, including concurrent locale SSR, route navigation/hydration and JSON-LD safety"
+  ],
+  "findingsClosed": [
+    "no own required runtime defects; formatted actual source and repeated domain/build/artifact checks",
+    "lab explicitly distinguishes synthetic nonce/session/counter from real stage5 identity backend"
+  ],
+  "notVerified": [
+    "real mobile, other browser engines, screen readers, native WebView bridge",
+    "production authentication/TLS/HSTS, actual secret leaks, complete supply-chain audit",
+    "native-language review and human learner trial"
+  ],
+  "sharedNuxtRuntime": {
+    "executedBy": "main agent",
+    "inspectedBy": "security/i18n author",
+    "date": "2026-11-25",
+    "playwrightStats": {
+      "startTime": "2026-11-25T07:47:24.423Z",
+      "duration": 5225.041,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "unitTests": 12,
+    "evidenceSource": "main capstone tests/e2e/flow.spec.ts, inspection.spec.ts; tests/unit/catalog.test.ts; final JSON and /tmp/webdev-stage6-e2e.log",
+    "checks": [
+      "concurrent en/ar/zh-CN raw SSR has independent correct title/lang/dir and200",
+      "English to Arabic course navigation updates translated h1/description and language/direction before rendering",
+      "both viewports no hydration mismatch/pageerror or repeated initial API fetch",
+      "explicit UTC/gregory/currency unit and per-composer isolation/English plural cases",
+      "320px CSS200% Arabic dark/reduced-motion layout no overflow, axe violation list empty",
+      "JSON-LD round-trip preserves malicious script delimiter data while preventing element closure; browser query HTML not executed"
+    ],
+    "boundary": "Local loopback raw SSR/Chrome and units, not real users or all browser engines; CSS scaling is not real browser400% zoom."
+  }
+}

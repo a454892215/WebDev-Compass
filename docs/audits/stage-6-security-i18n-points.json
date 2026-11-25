@@ -1,0 +1,193 @@
+[
+  {
+    "id": "6.2.1",
+    "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.1.xss.md",
+    "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.1.xss-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.1.xss.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "XSS按数据到可执行上下文的路径分析：反射型由请求进入响应，存储型先保存再展示，DOM型由客户端代码把不可信值送入危险sink；分类可能交叠，不能只靠URL里有没有script判定。默认把文本作为文本输出，Vue插值和textContent适合文本；HTML属性、URL、CSS和JavaScript上下文有各自规则，不能用一份通用转义包治全部。\n\n确需富文本时使用适配当前环境、持续维护的净化器并最小化允许标签/属性。本例DOMPurify只允许b/em且不允许属性，净化后不再拼接未信任HTML。不要用正则删script当净化，不把所有v-html都称安全；原生Sanitizer/Trusted Types还需目标浏览器支持和明确策略。\n\nCSP是纵深防护，不替代安全输出与净化；HttpOnly限制读取会话Cookie，不阻止脚本执行或借当前用户发请求。代码执行、数据读取和请求权限是不同风险。",
+      "example": "真实Chrome中text区域没有img节点，净化区保留b但没有img/script/a，xssMarker未出现；同页未经许可内联脚本被CSP阻止。没有向真实用户注入脚本。",
+      "exercise": "把净化后的HTML再拼接原始input，安全边界会被绕过；在隔离fixture观察后改为一次净化最终HTML或完全采用文本，重跑同一输入。",
+      "practice": "已有Nuxt标题/表单文字插值和JSON-LD序列化边界；在隔离安全lab验证净化与CSP，不把攻击fixture搬到默认课程页。",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.2.2",
+    "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.2.csrf.md",
+    "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.2.csrf-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.2.csrf.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "浏览器可能自动携带Cookie，攻击站点即使读不到响应，也可能发出简单表单写请求；CORS主要控制脚本读取，不能当作CSRF防线。SameSite围绕站点而非端口源，两个localhost端口可不同源但同站；HttpOnly也不会阻止请求携带Cookie。\n\n对需要Cookie身份的变更接口使用服务端可核对的Origin与会话绑定同步token，防止错误信任子域/任意反射来源。Token不放URL或日志，认证/资源授权仍独立检查。普通读取不应造成业务变更，登录与退出本身也要分析CSRF。非浏览器客户端、webhook、OAuth回调等应按各自协议设计，不能盲目要求所有端点完全相同。\n\n本独立lab只有匿名演示nonce Cookie与变更计数，非真实登录；阶段5已建立实际本地会话绑定CSRF。主阶段6公开课程没有登录写接口，不虚构新的CSRF认证实现。",
+      "example": "同源带正确token的POST计数加一；缺token403；4504发来的跨源简单POST不能使计数增加。另有CORS错误反射可读合成私有值，证明读/写策略不是一回事。",
+      "exercise": "只移除CORS响应头却保留无保护的写操作，攻击者可能仍改变状态；对照Network与计数，恢复服务端变更前校验后复验。",
+      "practice": "公开课程主项目没有认证写操作；本点在独立lab验证CSRF，在阶段5会话项目对照已有真实拒绝路径，新增写接口属于副本扩展。",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.2.3",
+    "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.3.item-6-2-3.md",
+    "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.3.item-6-2-3-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.3.item-6-2-3.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "点击劫持利用页面被嵌入后对UI的遮挡/诱导，不要求窃取DOM读取权限。默认不允许嵌入的页面可以发送CSP frame-ancestors none，并按目标兼容用X-Frame-Options DENY；确需伙伴嵌入时按明确祖先来源设计，不把所有站点放行。\n\nframe-ancestors控制谁能嵌入当前文档，frame-src控制当前文档能加载谁，不是同一方向。frame-ancestors必须以HTTP响应头部署，meta不能替代；多层祖先和实际代理响应也需核对。X-Frame-Options旧式ALLOW-FROM不作为现代跨浏览器伙伴白名单方案。\n\n本例只在本地两端口测试允许/拒绝嵌入，不改浏览器安全设置，不声称支付/登录UI已通过完整攻防评审。",
+      "example": "4504同时嵌入4503的allowed-frame与protected。允许页能postMessage确认加载，protected被浏览器frame-ancestors拒绝且未执行其脚本，HTTP头另行核实。",
+      "exercise": "把frame-ancestors写进meta，观察HTTP头为空与嵌入仍可能成功；修正到实际服务响应后用同一父页面复验。",
+      "practice": "核对Nuxt主响应的frame-ancestors子策略，并在独立lab用真实父iframe检验拒绝/允许对照；主目录不需要第三方嵌入。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.2.4",
+    "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.4.source-map.md",
+    "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.4.source-map-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.4.source-map.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "客户端可下载的JS、HTML、payload和公开配置都由用户控制，不能把API私钥、长期服务凭据或可信授权判断放进去。VITE_或Nuxt public是公开约定，不是加密；混淆、压缩和把字符串拆开也不是保密措施。\n\nSource Map帮助错误定位，hidden通常只是生成外部map而不写sourceMappingURL；文件如果公开托管仍可下载，sourcesContent可能含被摇掉代码和注释。生成、上传私有错误平台、静态托管路径和访问控制需分开决定，不能用hidden等同私有。\n\n本例合成server-only canary只演示导入边界和资产检查，不是真密钥；扫描未命中仅覆盖定义的检查，不能证明整个应用没有秘密。生产泄露还需撤销/轮换凭据并处理缓存，不只删当前文件。",
+      "example": "实际构建JS没有sourceMappingURL，但map里仍能找到SOURCE_ONLY_PUBLIC_DEMO注释；未导入的server-only合成canary没有进入JS/map。两项产物检查均实际执行。",
+      "exercise": "误将server-only标记导入客户端模块，扫描应失败；移回真正服务端边界重新build，修复路径而非删掉检测器。",
+      "practice": "主项目按公开目录配置和资产检查，独立lab演示hidden map；不为证明扫描而写入真实密钥。",
+      "source": "https://vite.dev/config/build-options#build-sourcemap",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.2.5",
+    "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.5.npm-audit.md",
+    "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.5.npm-audit-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.5.npm-audit.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "audit把解析依赖与已知漏洞数据库比较，不证明未知漏洞不存在，也不证明应用的可达路径一定受影响。区分生产依赖、开发/构建链、可选平台包与实际部署环境，记录日期、命令、退出码和范围。服务不可达时应写无法获取，不能说0漏洞。\n\n读取公告的受影响范围、修复版本、攻击前提与传递路径，结合可达性和升级回归决定处理；不要为了清数字盲目audit fix force、删锁或大版本乱升。无公告的包也需评估维护、来源、发布和权限；完整性哈希锁住内容，不等于内容安全。\n\npnpm11的发布年龄/依赖脚本策略在YAML，具体例外应审阅，不抄全局放行模板。最小固定依赖、锁文件复核和有针对性的构建/行为回归共同提供证据，本节不要求每次运行都重复外网审计。",
+      "example": "本lab在2026-11-25实际pnpm audit --prod返回0项已知公告，metadata生产依赖总量31；这不含开发依赖，不代表全知识库或所有平台安全。保留该有日期的快照和固定锁。",
+      "exercise": "把--prod快照当全工程安全结论；找出其排除的开发链，修正报告范围。若网络失败，保留错误并区分待查与已知安全。",
+      "practice": "核对Nuxt主工程锁与部署依赖范围；本独立lab的生产依赖快照不能代替Nuxt全树审计，新增依赖需按其风险另验。",
+      "source": "https://pnpm.io/cli/audit",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.2.6",
+    "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.6.cors.md",
+    "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.6.cors-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.6.cors.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "CORS是浏览器跨源读取授权，不是身份验证或服务端对象授权。反射任意Origin并配合credentials，可能让不可信站点读取浏览器自动携带Cookie后取得的私有数据；单纯没有通配星号不代表安全。\n\n精确白名单、按用途选择credentials、正确Vary:Origin、最小方法/头与适合的缓存组成策略。通配Origin与凭据不兼容，但把它改成反射Origin会从“浏览器拒绝”变成真正泄露。null origin、多子域与origin/site差别须按实际客户端盘点，不能随意放行。\n\n服务器间请求不受浏览器CORS保护；服务端仍验证会话、资源所有权与输入。不能为了开发调试关闭浏览器安全策略，开发代理只改变两跳形态，不提供生产授权。",
+      "example": "4504页面带演示Cookie请求cors-wrong，实际读到ONLY_LOCAL_FIXTURE；cors-correct只允许4503，因此跨源脚本读取失败。计数写操作另受CSRF校验，读取策略和业务授权分开。",
+      "exercise": "通配+credentials被阻止后，为“修复”而改成反射所有Origin，真实读取反而成功；恢复精确白名单再测恶意源与合法源。",
+      "practice": "Nuxt主目录保持同源公开API；跨源误配用独立lab的合成私有值验证，不引入真实账号数据或外网攻击。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.2.7",
+    "theory": "learning/1-notes/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview.md",
+    "example": "learning/2-examples/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.2-web-security/6.2.7.web-xss-rn-webview.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-2-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "XSS是Web可执行上下文中的信任边界问题，不能用“React Native较少”推出原生应用没有注入风险。浏览器DOM、React Native原生宿主与Flutter渲染机制不同；但WebView里运行网页会重新引入Web脚本、导航、来源和存储边界。\n\n如果WebView暴露原生bridge，不可信页面或脚本可能调用更高权限能力；因此导航/资源来源、消息schema、允许操作、会话与最低权限都要单独设计。不要把任意字符串eval、任意消息当命令，postMessage本身不是认证。\n\n本阶段只运行浏览器安全fixture，未构建Android/iOS/WebView或真实原生桥；对照用于分析，不能冒称移动安全认证或按名字直接搬库。",
+      "example": "本地iframe消息只接受4503且source属于实际子窗口；XSS文本/净化对照显示Web风险。这里只能证明Web侧行为，没有测试移动bridge。",
+      "exercise": "只检查消息type不检查origin/source，伪造来自其他窗口的同形对象；恢复来源与实例/schema验证，拒绝未授权操作。",
+      "practice": "对Nuxt iframe/dialog/外链方案画权限边界；原生WebView集成不在主项目，明确作为迁移分析而非已实现能力。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.4.1",
+    "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.1.item-6-4-1.md",
+    "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.1.item-6-4-1-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.1.item-6-4-1.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "把文案作为有上下文的数据管理，键表达用途而非简单用中文句子拼接。参数应由翻译模板决定位置，避免“前缀+名字+后缀”固定语序；同一英文词在不同场景不一定同译。语言、地区、货币与时区分开，不从一种推断另一种。\n\n数量规则因语言而异，不能统一count===1否则复数。Vue-i18n支持消息选择与自定义pluralRules，本lab用Intl.PluralRules映射阿语zero/one/two/few/many/other；真实产品文案仍需母语/上下文审校。回退使缺项有可解释结果，但不应隐藏持续遗漏；翻译完整性可以加入检查。\n\n动态参数作为文本输出，不能因为字符串来自翻译文件就随意v-html。主Nuxt样例阿语采用中性数量标签，避免把简化英语复数机制误套成阿语语法。",
+      "example": "真实Vue-i18n参数Ada、英语0/1/3、中文缺项回退英语、阿语2分支与Intl many分类均测试；不存在的locale被拒绝。",
+      "exercise": "直接拼接count+English单词再套所有语言，使用阿语2/11等变体暴露错误；改为经审校模板和适用复数规则后复验。",
+      "practice": "在已有三语Nuxt目录补一个参数/数量消息与回退用例；不改变默认阿语中性标签却声称已经覆盖完整阿语语法。",
+      "source": "https://vue-i18n.intlify.dev/guide/essentials/pluralization",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately.",
+      "sharedRuntime": "Read root final 6/6 Playwright JSON and flow/inspection tests: concurrent en/ar/zh-CN raw SSR200/lang-dir/title separation, route navigation updates Arabic title/description/lang/dir, zero hydration/pageerror, Intl/UTC/currency/plural unit checks. Executed by main agent, inspected by this author."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.4.2",
+    "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.2.i18next.md",
+    "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.2.i18next-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.2.i18next.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Vue-i18n的global scope是一个Vue应用内的作用域，不等于Node进程全局。Nuxt SSR要按请求/应用创建实例，不能把可变locale保存在模块顶层单例；否则并发用户可能串语言。\n\n当前样例从已验证的URL locale决定语言，在页面渲染前设置对应实例，服务端/客户端用同一规则。不要服务端默认英文、浏览器初始化又按navigator/localStorage改中文导致接管不一致。若采用Nuxt i18n模块，其路由/懒加载/SEO能力与配置要按版本核对，本lab不冒称安装该模块。\n\n组件组合式useI18n要在正确setup上下文调用，区分局部/全局消息与返回ref；i18next作为React分支对照，不要求两套库都装进Vue项目。",
+      "example": "独立lab创建两份Vue-i18n，改变A语言不改变B；浏览器en→ar→en真实更新。Nuxt SSR并发与导航由主工程另验，不把纯实例测试当真实SSR证明。",
+      "exercise": "在插件文件顶层export一个可变i18n实例，两个请求反复改locale；在隔离副本重现后移回每应用创建，并用并发两语响应验证。",
+      "practice": "核对Nuxt主插件每请求实例、三语路径与中间件顺序；独立lab用于消息API，SSR真实证明以主项目记录为准。",
+      "source": "https://vue-i18n.intlify.dev/guide/advanced/composition",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately.",
+      "sharedRuntime": "Read root final 6/6 Playwright JSON and flow/inspection tests: concurrent en/ar/zh-CN raw SSR200/lang-dir/title separation, route navigation updates Arabic title/description/lang/dir, zero hydration/pageerror, Intl/UTC/currency/plural unit checks. Executed by main agent, inspected by this author."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.4.3",
+    "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.3.intl.md",
+    "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.3.intl-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.3.intl.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Intl格式化表示，不做汇率换算或业务时区决策。locale决定语言/地区格式，timeZone决定一个时间瞬间显示在哪个地区，calendar与numberingSystem也可能影响输出。货币代码需要业务明确，不因语言猜用户的钱种。\n\nISO带Z/offset的时间点与纯日期是不同数据；不要随意把生日/账期当UTC时间点再转换。SSR与浏览器至少应共享明确locale/timeZone和同一数据语义，避免午夜跨日或接管差异。ICU/运行时版本仍可能影响空格和样式，应按目标环境核对或用formatToParts验证语义，不把所有输出写成手工模板。\n\n本lab固定2026-11-25T23:30:00Z与UTC，展示en/zh-CN/ar数字/货币；主Nuxt显式gregory/UTC。它证明参数与当前运行结果，不表示所有时区/历法均认证。",
+      "example": "Node真实UTC日为25、英文11/25/2026和货币1,234.50检查通过；浏览器切语种后日期/货币随实例locale变化。",
+      "exercise": "SSR默认服务器时区而浏览器用系统时区，跨午夜出现不同日期；用同一时间点复现后显式timeZone，并区分纯日期需求。",
+      "practice": "核对主目录日期UTC/gregory和价格USD明确配置；副本比较另一时区但不要改变原始课程时间/金额。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately.",
+      "sharedRuntime": "Read root final 6/6 Playwright JSON and flow/inspection tests: concurrent en/ar/zh-CN raw SSR200/lang-dir/title separation, route navigation updates Arabic title/description/lang/dir, zero hydration/pageerror, Intl/UTC/currency/plural unit checks. Executed by main agent, inspected by this author."
+    },
+    "issues": []
+  },
+  {
+    "id": "6.4.4",
+    "theory": "learning/1-notes/06-performance-security/6.4-i18n/6.4.4.rtl.md",
+    "example": "learning/2-examples/06-performance-security/6.4-i18n/6.4.4.rtl-demo.md",
+    "exercise": "learning/3-exercises/06-performance-security/6.4-i18n/6.4.4.rtl.md",
+    "practice": "learning/4-practice/06-performance-security/tasks.md#p-6-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "dir=rtl是文档/区域的文字方向语义，lang是内容语言，不是同一属性。阿语/希伯来语等场景需要方向与排版一起验证；不要对整页scaleX(-1)，那会镜像文字和非方向图标。\n\n用margin-inline/padding-inline/inset-inline等逻辑属性表达起止边，与必要的方向性图标配合；品牌、照片、数字/代码不应机械镜像。混排账号/URL可用bdi或合适dir隔离，不能把字符串字符顺序反转来“支持RTL”。\n\n视觉顺序和DOM/键盘顺序要同时考虑。direction影响flex起始侧不表示所有自定义组件已可用；表单、菜单、焦点、溢出和长文案应实测，屏幕阅读器/母语审校仍是独立验证。",
+      "example": "独立浏览器实验en→ar后html lang/dir同时更新，START实际盒子位于END右侧；390/1440无横向溢出，再切英文恢复。",
+      "exercise": "用margin-left硬编码起始侧，切RTL后留白方向错误；改margin-inline-start，并核对焦点顺序与实际盒子位置。",
+      "practice": "主三语Nuxt已用html dir/逻辑属性，副本核对混排与组件；独立lab盒子断言不是完整RTL语言/辅助技术认证。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/dir",
+      "boundary": "Local synthetic fixtures; actual Nuxt SSR and public metadata verified separately.",
+      "sharedRuntime": "Read root final 6/6 Playwright JSON and flow/inspection tests: concurrent en/ar/zh-CN raw SSR200/lang-dir/title separation, route navigation updates Arabic title/description/lang/dir, zero hydration/pageerror, Intl/UTC/currency/plural unit checks. Executed by main agent, inspected by this author."
+    },
+    "issues": []
+  }
+]
