@@ -1,0 +1,66 @@
+[
+  {
+    "id": "10.2.1",
+    "task": "在副本为编辑需求增加一个允许标签，分别写文本/HTML/URL策略；加入净化后再拼原始字符串的故障，再恢复最终输入只净化一次。",
+    "acceptance": [
+      "给定payload及再解析无执行属性/意外节点，富文本保留需求明确；不是只断言字符串不含script。",
+      "说明白名单与真实上下文，未知mXSS/不同浏览器不能由一个fixture证明全部防住。"
+    ]
+  },
+  {
+    "id": "10.2.2",
+    "task": "将固定nonce作为错误副本，对比每响应随机值；再只启Report-Only，记录同一受控inline是否被阻止。",
+    "acceptance": [
+      "相同请求连续响应nonce不同，只有明确可信脚本拿到nonce；不在后处理里给全部标签补。",
+      "报告模式/强制模式行为分开，报告字段最小化/限额；生产report-to/Reporting-Endpoints未部署不记成功。"
+    ]
+  },
+  {
+    "id": "10.2.3",
+    "task": "先在副本使用仅比较cookie/header的错误版本，用新会话重放旧token，再恢复会话绑定HMAC+Origin；只用合成匿名会话。",
+    "acceptance": [
+      "不同sid的token重放失败，缺/错header、cookie和Origin不能改变状态。",
+      "GET不执行业务变更，方法/JSON/schema/体积明确；HttpOnly和SameSite不被说成完整CSRF防线。"
+    ]
+  },
+  {
+    "id": "10.2.4",
+    "task": "产品要允许一个伙伴嵌入，写精确祖先策略并评估XFO冲突；在隔离副本比较允许/拒绝父源。",
+    "acceptance": [
+      "真实目标iframe拒绝且允许control正常；记录浏览器控制台/Frame状态，不只看HTTP200。",
+      "说明frame-ancestors与frame-src方向和meta限制，合法嵌入不会被矛盾头误伤。"
+    ]
+  },
+  {
+    "id": "10.2.5",
+    "task": "需求允许两个带固定query的内部目的地，用不可控target ID映射完整路径；新增旧路径变更和回退，不开放任意URL。",
+    "acceptance": [
+      "绝对/protocol-relative/编码/额外query被拒绝，已允许目标语义明确。",
+      "重定向状态/Location可观察，返回目标仍检查身份/授权，不能用跳转当访问控制。"
+    ]
+  },
+  {
+    "id": "10.2.6",
+    "task": "在隔离副本增加嵌套偏好，先设计每层白名单和深度/键数限制，再写constructor.prototype/__proto__与未知键负例。",
+    "acceptance": [
+      "拒绝危险/未知结构并保持全局原型未改，返回值不偷偷继承权限字段。",
+      "说明parse/merge/lookup的不同阶段，嵌套层也验证；不靠hasOwnProperty可能被覆盖的方法。"
+    ]
+  },
+  {
+    "id": "10.2.7",
+    "task": "固定一个本地版本资源并生成sha384；改一个字节且保持旧hash复现拒绝，再按审核更新资源/hash而非删除integrity。",
+    "acceptance": [
+      "好字节执行、坏字节拒绝、缺CORS失败，三者环境与预期分开。",
+      "哈希来源可信且版本/更新流程可追溯，CSP/HTTPS不能被误当相同功能。"
+    ]
+  },
+  {
+    "id": "10.2.8",
+    "task": "新增一个已声明message类型与可选字段，拒绝未知属性/超限值/错版本；在卸载时移除监听，说明消息重放/顺序如何处理。",
+    "acceptance": [
+      "错origin/source/version/schema拒绝，合法消息仍可工作；sender不使用*发送敏感内容。",
+      "保持数据验证和权限检查，不将跨窗口通信/Shadow DOM称为认证或安全沙箱。"
+    ]
+  }
+]

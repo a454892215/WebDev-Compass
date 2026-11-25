@@ -22,3 +22,5 @@
 - [阶段8：Vue/Nuxt模块、状态与渲染选型](./08-architecture/README.md)：39点四部分资料、模块化工作台及隔离实验。
 
 - [阶段9：Web Vitals、加载与交互性能优化](./09-performance/README.md)：30点四部分资料、真实归因/预算/heap与Nuxt实践。
+
+- [阶段10：XSS/CSRF、认证安全与隐私](./10-security/README.md)：29点四部分资料、匿名安全笔记及隔离实验。

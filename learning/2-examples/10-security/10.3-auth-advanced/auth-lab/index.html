@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>认证边界实验</title>
+  </head>
+  <body>
+    <main>
+      <h1>认证与Cookie边界实验</h1>
+      <p>
+        公开Alice fixture可由任何访问者创建，非真实登录。本地HTTP
+        Cookie未启Secure；上线必须HTTPS。
+      </p>
+      <button type="button" id="create">创建公开演示会话</button
+      ><button type="button" id="read">读取合成资料</button
+      ><button type="button" id="logout">撤销演示会话</button>
+      <p id="state" role="status">尚无会话</p>
+      <p id="cookie"></p>
+      <p><a href="./README.md">运行说明</a></p>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "stage": 10,
+  "executedBy": "root",
+  "recordedAt": "2026-11-25T10:19:15.832939+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "vue": "3.5.46",
+    "typescript": "6.0.3",
+    "nuxt-security": "2.7.0",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenInstall": "passed",
+    "typecheck": "passed",
+    "eslint": "passed",
+    "unit": 5,
+    "productionSSRBuild": "passed",
+    "playwright": {
+      "startTime": "2026-11-25T10:14:23.336Z",
+      "duration": 3802.3669999999997,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "cases": [
+    "two viewport anonymous session/safe text/HttpOnly/SSR reload/navigation/axe/logout",
+    "two viewport nonce uniqueness/TT sink rejection/parser probe control+block+minimalreport204",
+    "HTTP owner read/delete404+unchanged owner data,anonymous401,missing/wrong Origin/CSRF403,massassign400,declared+truechunked6000B413,parallelSSR,no cookie inHTML,revokedCookie401"
+  ],
+  "testSource": [
+    "learning/4-practice/10-security/tests/e2e/flow.spec.ts",
+    "learning/4-practice/10-security/tests/e2e/http.spec.ts",
+    "learning/4-practice/10-security/tests/unit/store.test.ts",
+    "learning/4-practice/10-security/tests/unit/reports.test.ts"
+  ],
+  "findingsClosed": [
+    "CSP DevTools dynamic trustedscript assumption replaced with fixed parser probe;not policy relaxation",
+    "Nuxt-security2.7 regex nonce postprocessing risk documented;main puretext only",
+    "Explicit chunked header/write avoids automaticContentLength false coverage",
+    "TTL physical deletion statement corrected to lazy pruning;rebuild5E2Epassed"
+  ],
+  "limitations": [
+    "Anonymous localHTTP,Securefalse,in-memory state;not real identity/production authentication",
+    "Module nonce stamping cannot rescue untrusted renderedHTML;styleunsafeinline and specified disabled middlewares explicit",
+    "Body deadline/huge-stream client disconnect not fully tested,not completeDoS prevention",
+    "No main full dependency audit,realIdP,passkey,CMP,productionreport-to or security/legal certification",
+    "No realmobile/multibrowser/screenreader/humanlearnertrial"
+  ]
+}

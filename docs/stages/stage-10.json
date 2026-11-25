@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "stage": 10,
+  "project": "learning/4-practice/10-security/nuxt.config.ts",
+  "points": [
+    {
+      "id": "10.1.1",
+      "theory": "learning/1-notes/10-security/10.1-security-baseline/10.1.1.checklist.md",
+      "example": "learning/2-examples/10-security/10.1-security-baseline/10.1.1.checklist-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.1-security-baseline/10.1.1.checklist.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-1-1"
+    },
+    {
+      "id": "10.1.2",
+      "theory": "learning/1-notes/10-security/10.1-security-baseline/10.1.2.owasp-top.md",
+      "example": "learning/2-examples/10-security/10.1-security-baseline/10.1.2.owasp-top-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.1-security-baseline/10.1.2.owasp-top.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-1-2"
+    },
+    {
+      "id": "10.1.3",
+      "theory": "learning/1-notes/10-security/10.1-security-baseline/10.1.3.item-10-1-3.md",
+      "example": "learning/2-examples/10-security/10.1-security-baseline/10.1.3.item-10-1-3-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.1-security-baseline/10.1.3.item-10-1-3.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-1-3"
+    },
+    {
+      "id": "10.1.4",
+      "theory": "learning/1-notes/10-security/10.1-security-baseline/10.1.4.security-review.md",
+      "example": "learning/2-examples/10-security/10.1-security-baseline/10.1.4.security-review-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.1-security-baseline/10.1.4.security-review.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-1-4"
+    },
+    {
+      "id": "10.2.1",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.1.xss.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.1.xss-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.1.xss.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-1"
+    },
+    {
+      "id": "10.2.2",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.2.csp.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.2.csp-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.2.csp.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-2"
+    },
+    {
+      "id": "10.2.3",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.3.csrf.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.3.csrf-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.3.csrf.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-3"
+    },
+    {
+      "id": "10.2.4",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.4.clickjacking.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.4.clickjacking-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.4.clickjacking.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-4"
+    },
+    {
+      "id": "10.2.5",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.5.open-redirect.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.5.open-redirect-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.5.open-redirect.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-5"
+    },
+    {
+      "id": "10.2.6",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.6.prototype-pollution.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.6.prototype-pollution-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.6.prototype-pollution.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-6"
+    },
+    {
+      "id": "10.2.7",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.7.sri-subresource-integrity.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.7.sri-subresource-integrity-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.7.sri-subresource-integrity.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-7"
+    },
+    {
+      "id": "10.2.8",
+      "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.8.postmessage.md",
+      "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.8.postmessage-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.8.postmessage.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-2-8"
+    },
+    {
+      "id": "10.3.1",
+      "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.1.oauth-oidc.md",
+      "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.1.oauth-oidc-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.1.oauth-oidc.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-3-1"
+    },
+    {
+      "id": "10.3.2",
+      "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.2.refresh-token.md",
+      "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.2.refresh-token-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.2.refresh-token.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-3-2"
+    },
+    {
+      "id": "10.3.3",
+      "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.3.token.md",
+      "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.3.token-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.3.token.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-3-3"
+    },
+    {
+      "id": "10.3.4",
+      "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.4.webauthn-passkey.md",
+      "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.4.webauthn-passkey-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.4.webauthn-passkey.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-3-4"
+    },
+    {
+      "id": "10.3.5",
+      "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.5.rbac-abac.md",
+      "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.5.rbac-abac-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.5.rbac-abac.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-3-5"
+    },
+    {
+      "id": "10.3.6",
+      "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.6.jwt.md",
+      "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.6.jwt-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.6.jwt.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-3-6"
+    },
+    {
+      "id": "10.3.7",
+      "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn.md",
+      "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-3-7"
+    },
+    {
+      "id": "10.4.1",
+      "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.1.npm.md",
+      "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.1.npm-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.1.npm.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-4-1"
+    },
+    {
+      "id": "10.4.2",
+      "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.2.dependabot-renovate.md",
+      "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.2.dependabot-renovate-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.2.dependabot-renovate.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-4-2"
+    },
+    {
+      "id": "10.4.3",
+      "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.3.sbom.md",
+      "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.3.sbom-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.3.sbom.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-4-3"
+    },
+    {
+      "id": "10.4.4",
+      "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.4.secrets.md",
+      "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.4.secrets-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.4.secrets.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-4-4"
+    },
+    {
+      "id": "10.4.5",
+      "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.5.source-map.md",
+      "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.5.source-map-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.5.source-map.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-4-5"
+    },
+    {
+      "id": "10.5.1",
+      "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.1.gdpr.md",
+      "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.1.gdpr-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.1.gdpr.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-5-1"
+    },
+    {
+      "id": "10.5.2",
+      "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.2.cookie-consent.md",
+      "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.2.cookie-consent-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.2.cookie-consent.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-5-2"
+    },
+    {
+      "id": "10.5.3",
+      "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.3.pii.md",
+      "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.3.pii-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.3.pii.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-5-3"
+    },
+    {
+      "id": "10.5.4",
+      "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp.md",
+      "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-5-4"
+    },
+    {
+      "id": "10.5.5",
+      "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.5.soc2-pci.md",
+      "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.5.soc2-pci-demo.md",
+      "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.5.soc2-pci.md",
+      "practice": "learning/4-practice/10-security/tasks.md#p-10-5-5"
+    }
+  ]
+}

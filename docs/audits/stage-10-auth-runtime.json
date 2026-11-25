@@ -1,0 +1,80 @@
+{
+  "stage": 10,
+  "group": "10.3-auth-advanced",
+  "startedAt": "2026-11-25T10:01:34Z",
+  "recordedAt": "2026-11-25T10:10:09.124755+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "jose": "6.2.18",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "nodeTests": {
+      "passed": 4,
+      "failed": 0,
+      "cases": [
+        "PKCE/state/redirect/codeSingleUse model",
+        "refresh strictrotation/familyreuse/concurrentrevocation/expiry",
+        "jose alg/signature/key/iss/aud/exp/typ/kid/claimschema/jtirevocation",
+        "role/owner/tenant/action/defaultdeny"
+      ]
+    },
+    "http": "Origin403,session201,ownread200,foreignowner403,othertenant403,roledelete403,logout204,stolenOldCookie401",
+    "browserGroups": [
+      {
+        "width": 390,
+        "cookieHttpOnly": true,
+        "javascriptCookieEmpty": true,
+        "readBefore401": true,
+        "readAfter200": true,
+        "revoked401": true,
+        "pageErrors": []
+      },
+      {
+        "width": 1440,
+        "cookieHttpOnly": true,
+        "javascriptCookieEmpty": true,
+        "readBefore401": true,
+        "readAfter200": true,
+        "revoked401": true,
+        "pageErrors": []
+      }
+    ],
+    "syntax": [
+      "core.mjs",
+      "server.mjs",
+      "verify.mjs"
+    ],
+    "format": "Existing Prettier; no semantic change after final execution",
+    "htmlResourcePath": "Changed src/href to relative paths;re-ran affected HTTP+two browser groups passed",
+    "schemaRefinement": "Final subject/tenant/jti nonempty and missingtenant/defaultdeny negatives added;four Node groups rerun. Valid browserfixture unchanged;two browser groups reused from this turn."
+  },
+  "mainSourceReview": [
+    "bounded backend session store,request-derived identity and owner-onlynotes",
+    "Origin/FetchMetadata+sessionCSRF onwrite,logout revocation",
+    "No OAuth/JWT/WebAuthn main integration claimed"
+  ],
+  "cleanup": "4523 and backgroundChrome closed;session memory cleared;no persistedkeys/tokens",
+  "limitations": [
+    "OAuth is in-memory controlledmodel,not realIdP or completeOIDC validation",
+    "No WebAuthn realorvirtualauthenticator execution",
+    "PublicAlice fixture issuance is not realuserauthentication",
+    "LocalHTTP Secure=false;no fullSameSite/HTTPS/crossbrowser/realmobile test",
+    "No distributed refreshstore/JWKS/KMS/productionidentity/humantrial"
+  ],
+  "sharedMainEvidence": {
+    "executor": "root",
+    "reviewer": "stage10_auth",
+    "playwright": {
+      "passed": 5,
+      "failed": 0
+    },
+    "readSources": [
+      "main config/store/guards/reports/session/notes/workspace/index",
+      "main flow/http specs and final sharedlog"
+    ],
+    "scope": "Actual nonce/TT/parser probe,anonymous per-session notes,CSRF/owner/413,SSR and logout as implemented;no main OAuth/JWT/passkey implied"
+  }
+}

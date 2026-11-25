@@ -1,0 +1,15 @@
+{
+  "name": "@compass/stage10-privacy-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test tests/unit.test.mjs",
+    "verify": "node verify.mjs"
+  },
+  "devDependencies": {
+    "vite": "8.3.8",
+    "@playwright/test": "1.65.1"
+  }
+}

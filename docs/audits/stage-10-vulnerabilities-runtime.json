@@ -1,0 +1,91 @@
+{
+  "stage": 10,
+  "group": "10.2-vulnerabilities",
+  "startedAt": "2026-11-25T10:01:22Z",
+  "recordedAt": "2026-11-25T10:09:00.033184+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "dompurify": "3.5.0",
+    "playwright": "1.65.1"
+  },
+  "registry": {
+    "dompurifyVersion": "3.5.0",
+    "integrity": "sha512-LYC0ZkE8P1V42JsRYTwMdme/2ET8SpOc5AA2eOFjP/IadvRd2fwiT4TVz5vkfy0XUx12aS2UaRkTnfVPNOv9vw==",
+    "retrieved": "2026-11-25"
+  },
+  "commands": [
+    "pnpm install --frozen-lockfile --offline",
+    "pnpm test",
+    "pnpm verify",
+    "node --check server.mjs/app.mjs/verify.mjs"
+  ],
+  "checks": {
+    "frozenInstall": "passed",
+    "nodeTests": {
+      "passed": 3,
+      "failed": 0
+    },
+    "browser": {
+      "results": [
+        {
+          "viewportWidth": 390,
+          "passed": true,
+          "checks": [
+            "DOMPurify/reparse and clobber fixture",
+            "nonce trusted/untrusted execution",
+            "validchange200/tokenmissing403/origin403/realcrosssiteopaque unchanged",
+            "frameancestors block with allowed control",
+            "reportonly executes",
+            "SRI good1,bad/noCORS blocked",
+            "message origin/source/version and later-valid barrier"
+          ]
+        },
+        {
+          "viewportWidth": 1440,
+          "passed": true,
+          "checks": [
+            "DOMPurify/reparse and clobber fixture",
+            "nonce trusted/untrusted execution",
+            "validchange200/tokenmissing403/origin403/realcrosssiteopaque unchanged",
+            "frameancestors block with allowed control",
+            "reportonly executes",
+            "SRI good1,bad/noCORS blocked",
+            "message origin/source/version and later-valid barrier"
+          ]
+        }
+      ],
+      "httpChecks": [
+        "nonce fresh per response",
+        "exactredirect rejects protocolrelative/absolute/encoded/query",
+        "prototype key400/safepreferences200",
+        "README200"
+      ]
+    },
+    "extraHTTP": "5000byte preferences body413;protocol/encoded/query redirect400,allowed302;prototypekey400;validpreferences200;README200",
+    "syntax": "passed",
+    "redirectTargetFollowup": {
+      "passed": true,
+      "checks": [
+        "allowed/account302 follows actual local fixed target200",
+        "protocol-relative external target400"
+      ],
+      "scope": "Only new fixed target route,not a rerun of all browser mechanisms"
+    }
+  },
+  "sources": [
+    "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+    "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+    "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity",
+    "https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage"
+  ],
+  "limitations": [
+    "Local anonymous synthetic session/counter,not authentication/production authorization",
+    "HTTP Secure=false and two ports same-site;no realHTTPS cross-siteCookie test",
+    "Given sanitization/reparse regressions,not exhaustive/unknownmXSS certification",
+    "No globalTrustedTypes/report-to productiondelivery",
+    "No externaltargets/users/multibrowser/realmobile/assistive/humantrial"
+  ],
+  "cleanup": "Chrome and4522/4525finallyclosed;no settings changed;raw results ignored"
+}

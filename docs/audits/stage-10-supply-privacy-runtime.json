@@ -1,0 +1,81 @@
+{
+  "stage": 10,
+  "group": "10.4-supply-chain/10.5-privacy-compliance",
+  "recordedAt": "2026-11-25T10:10:10.989176+00:00",
+  "versions": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "vite": "8.3.8",
+    "playwright": "1.65.1"
+  },
+  "checks": {
+    "frozenOfflineInstall": "passed",
+    "productionBuild": "passed: hidden sourcemap with actual build environment injection",
+    "nodeTests": {
+      "passed": 3,
+      "failed": 0
+    },
+    "browserGroups": [
+      {
+        "width": 390,
+        "consentDefaultNoOptional": true,
+        "rejectedNoOptional": true,
+        "acceptedEvent204": true,
+        "withdrawCleared": true,
+        "extraPII400": true,
+        "hiddenMap200": true,
+        "isolation": {
+          "crossOriginIsolated": true,
+          "naturalAllowed": 20,
+          "naturalBlocked": 0
+        },
+        "externalRequests": 0
+      },
+      {
+        "width": 1440,
+        "consentDefaultNoOptional": true,
+        "rejectedNoOptional": true,
+        "acceptedEvent204": true,
+        "withdrawCleared": true,
+        "extraPII400": true,
+        "hiddenMap200": true,
+        "isolation": {
+          "crossOriginIsolated": true,
+          "naturalAllowed": 20,
+          "naturalBlocked": 0
+        },
+        "externalRequests": 0
+      }
+    ],
+    "dependabotYaml": "Ruby Psych syntax passed;not remoteexecution"
+  },
+  "audit": {
+    "command": "pnpm audit --json",
+    "actualResponse": {
+      "advisories": {},
+      "metadata": {
+        "vulnerabilities": {
+          "info": 0,
+          "low": 0,
+          "moderate": 0,
+          "high": 0,
+          "critical": 0
+        },
+        "dependencies": 0,
+        "devDependencies": 50,
+        "optionalDependencies": 34,
+        "totalDependencies": 50
+      }
+    },
+    "scope": "Only this lab locked dependency tree,all devDependencies;categories may overlap;not whole knowledgebase or permanent safety"
+  },
+  "source": "learning/2-examples/10-security/10.5-privacy-compliance/privacy-lab/README.md",
+  "cleanup": "4524/4526+headlessChrome closed in finally;records cleared;no external runtime requests",
+  "limitations": [
+    "No real PII/payment/accounts/legal assessment/SOC2 or PCI attestation",
+    "No commercial CMP/Replay/SCA,SBOMgeneration,remote updater or production deploy",
+    "Slow-load withdrawal race has source epoch guard but not injected in this run",
+    "Known canary exclusion not proof of all unknown secrets",
+    "Two desktopChrome viewports not realmobile/assistivetechnology/crossbrowser/learnertrial"
+  ]
+}

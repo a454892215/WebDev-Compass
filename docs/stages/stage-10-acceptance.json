@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 10,
+  "status": "passed",
+  "reviewedAt": "2026-11-25T10:27:29.428835+00:00",
+  "sourceFingerprint": "21491304b6ac52efe5de20ee085bf52ac35db2989a6a1a981c07fea51b618b21",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "29点编号和四部分契约完整，不重复充数。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "前置与推荐顺序明确，先模型/机制再实验和独立变体。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "核对MWG与一手规范/版本，OWASP2025、匿名身份和nonce信任边界准确。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "主Nuxt与三组lab实际运行，官方观察和扩展不冒称已实装。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "每点具体变体、两项标准、可复现故障与纠正参考。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "29任务对应现有主项目、独立lab或明确新增/观察。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "安全术语、所有权/SSR/清理/实际配置前后一致。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "必达发现关闭并受影响复验通过，未测路径如实列明。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "正文454/590、76.9%，下一阶段11，学习者勾选未变。",
+      "evidence": [
+        "docs/audits/STAGE_10_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-10-baseline-points.json",
+    "docs/audits/stage-10-vulnerabilities-points.json",
+    "docs/audits/stage-10-auth-points.json",
+    "docs/audits/stage-10-supply-privacy-points.json"
+  ],
+  "findings": [
+    {
+      "id": "csp-probe-premise",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "错误动态trusted上下文测试改独立parser探针，保留TT/CSP，实际两视口通过。"
+    },
+    {
+      "id": "module-nonce-boundary",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "阅读实际模块源码，记录后处理风险，主项目纯文本且探针范围独立。"
+    },
+    {
+      "id": "raw-request-body",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "实际字节guard与显式chunked负例413，未测超时/大流不扩大结论。"
+    },
+    {
+      "id": "ttl-cleanup",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "明确惰性清理而非后台定时删除，UI修正后重建及5E2E。"
+    },
+    {
+      "id": "auth-default-deny",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "subject/tenant/jti缺失空值拒绝负例，4Node复验。"
+    },
+    {
+      "id": "resources-response-order",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "相对资源与预注册响应等待，相关实验实际复验。"
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-10-baseline-runtime.json",
+    "docs/audits/stage-10-vulnerabilities-runtime.json",
+    "docs/audits/stage-10-auth-runtime.json",
+    "docs/audits/stage-10-supply-privacy-runtime.json",
+    "docs/audits/stage-10-practice-runtime.json"
+  ],
+  "limitations": [
+    "本地匿名/fixture/HTTP/内存Map，不是生产身份系统或多节点持久化。",
+    "模块nonce后处理不能兜底不可信SSR HTML，样式unsafe-inline与部分禁用中间件明确。",
+    "无真实IdP/Passkey/CMP/SBOM/法律审计/生产渗透或容量；超时/超大流断连未全部实测。",
+    "依赖audit仅隐私lab当日锁树，未覆盖全部工程或未知漏洞。",
+    "无真机、多浏览器、屏幕阅读器或真实学习者试学。"
+  ]
+}

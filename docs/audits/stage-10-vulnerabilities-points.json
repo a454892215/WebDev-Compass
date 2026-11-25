@@ -1,0 +1,162 @@
+[
+  {
+    "id": "10.2.1",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.1.xss.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.1.xss-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.1.xss.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "文本、富HTML、URL、属性与脚本上下文需要不同控制。Vue插值/textContent用于文本，确需HTML时采用持续更新的净化器和最小白名单；不能把TypeScript类型、正则删script或CSP当作净化替代。mXSS关注解析/变异后结构改变，DOM Clobbering则可仅靠id/name影响window/document命名访问；模板编译不可信输入又是不同边界。",
+      "example": "lab把同一合成payload分别送textContent和DOMPurify3.5.0，仅允许p/b/em、无属性、SANITIZE_NAMED_PROPS，再把净化DOM序列化重解析。实际保留b但无img/script/form/input，onerror标记未出现。独立创建无害form id，window命名引用真实出现；业务不从该全局取配置。",
+      "exercise": "故障：净化后用clean + rawInput写innerHTML，或把window.appConfig当可信配置。用合成输入定位新sink/命名访问，移除拼接或采用局部显式对象后复验。",
+      "practice": "在副本为编辑需求增加一个允许标签，分别写文本/HTML/URL策略；加入净化后再拼原始字符串的故障，再恢复最终输入只净化一次。",
+      "source": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+        "https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.2.2",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.2.csp.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.2.csp-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.2.csp.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "nonce每响应使用CSPRNG生成，只放开发者可信模板脚本；strict-dynamic将信任沿可信脚本动态加载传播，不能消除可信loader的输入验证。绝不能对渲染后的所有script做regex加nonce，否则注入脚本也获得授权。Report-Only只观察不阻止；生产策略还需审计依赖、匹配nonce/hash与收集最小报告。",
+      "example": "lab主页明确给两个静态开发者脚本和可信inline nonce，另一合成inline不带nonce；Chrome可信标记1、不可信未执行，两个响应nonce不同。/report-only使用script-src none但inline仍执行，证明报告与执行不同；report-uri仅本地兼容演示，接收后只留固定种类，不保存原始URL/代码。",
+      "exercise": "故障：为解决CSP报错加入unsafe-inline或regex授权所有script。先找真实框架初始化标签和动态loader，使用框架原生nonce/hash集成并验证功能和拒绝，不用宽松规则隐藏错误。",
+      "practice": "将固定nonce作为错误副本，对比每响应随机值；再只启Report-Only，记录同一受控inline是否被阻止。",
+      "source": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy-Report-Only"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.2.3",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.3.csrf.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.3.csrf-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.3.csrf.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Cookie可被浏览器自动携带，CORS主要控制脚本读取，不等于写操作拒绝。Double-submit的朴素cookie=header不能防cookie注入；签名必须绑定每次登录/会话变化的数据，HMAC服务端key不能给客户端。SameSite按site而非端口origin，HttpOnly阻止读取Cookie但不消除CSRF。真实身份、对象授权与CSRF又各自独立。",
+      "example": "lab生成匿名sid HttpOnly和可读csrf cookie，token为随机nonce+HMAC(session framing)，header/cookie相同且签名绑定当前sid，同时检查配置的精确Origin。合法POST计数+1；缺token403、错误Origin403，4525真正no-cors简单POST响应opaque且计数不变。两个127.0.0.1端口不同源但同站，未伪装跨站HTTPS。",
+      "exercise": "故障：对token签名但只绑定固定邮箱或用户ID，跨登录仍有效。把HMAC输入改为会话独有值并做明确长度 framing；旧会话token不能授权新会话。",
+      "practice": "先在副本使用仅比较cookie/header的错误版本，用新会话重放旧token，再恢复会话绑定HMAC+Origin；只用合成匿名会话。",
+      "source": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.2.4",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.4.clickjacking.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.4.clickjacking-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.4.clickjacking.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "frame-ancestors控制谁能嵌入当前页面，frame-src控制当前页面能嵌入谁，两者方向不同。X-Frame-Options兼容值DENY/SAMEORIGIN不表达任意伙伴白名单，ALLOW-FROM已过时。CSP frame-ancestors须HTTP响应头，meta不生效；阻止祖先不替代接口授权或CSRF。",
+      "example": "跨源父页同时加载blocked-frame和allowed-frame；前者HTTP frame-ancestors none/XFO DENY被Chrome拒绝，后者正常显示，避免把所有iframe未加载误判防护成功。受保护资源自身可直接访问，不冒充身份保护。",
+      "exercise": "故障：只在meta设置frame-ancestors并以响应200当成功。移至HTTP头，在相同父页面复验实际嵌入；伙伴白名单场景不能同时DENY。",
+      "practice": "产品要允许一个伙伴嵌入，写精确祖先策略并评估XFO冲突；在隔离副本比较允许/拒绝父源。",
+      "source": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.2.5",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.5.open-redirect.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.5.open-redirect-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.5.open-redirect.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "用户可控returnUrl会把可信域链接变为钓鱼跳板，可能影响OAuth跳转链。相对URL、protocol-relative、反斜线、编码、用户名/host解析都有差异；字符串startsWith域名不等于同源。最简单安全方案是目标ID映射或精确允许路径，返回后仍做目标页面授权。",
+      "example": "lab只允许/和/account两个精确字符串，其他输入400；真实HTTP测试拒绝绝对、//、编码分隔和附加查询，只允许/account返回302 Location。它没有通用URL解析器或OAuth回调验证，不宣称任意相对路径都安全。",
+      "exercise": "故障：value.startsWith(\"https://trusted.example\")接受trusted.example.evil。先写反例再用URL解析后的精确origin/路径白名单或固定映射，限制协议与凭据字段。",
+      "practice": "需求允许两个带固定query的内部目的地，用不可控target ID映射完整路径；新增旧路径变更和回退，不开放任意URL。",
+      "source": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html",
+        "https://developer.mozilla.org/en-US/docs/Web/API/URL"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.2.6",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.6.prototype-pollution.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.6.prototype-pollution-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.6.prototype-pollution.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "不可信键进入递归merge、路径setter或对象查找，会把__proto__/constructor/prototype等路径变为继承修改。JSON.parse本身不等于污染Object.prototype，危险通常发生在后续赋值/合并。使用严格schema、键白名单、Map或null-prototype字典并核对Own属性；浅freeze或禁__proto__不是全部解决。",
+      "example": "preferences仅接收theme/density两个枚举，输出Object.create(null)；JSON自有__proto__字段被400拒绝，Node验证结果无原型且{}.admin未出现。没有故意污染全局内建原型，不把一个平面schema当安全递归merge库。",
+      "exercise": "故障：Object.assign到普通目标导致__proto__ setter更换局部原型，或从继承属性读admin。仅在局部fixture复现，再改schema映射+Own/Map/null字典，不污染真实全局。",
+      "practice": "在隔离副本增加嵌套偏好，先设计每层白名单和深度/键数限制，再写constructor.prototype/__proto__与未知键负例。",
+      "source": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.html",
+        "https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.2.7",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.7.sri-subresource-integrity.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.7.sri-subresource-integrity-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.7.sri-subresource-integrity.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SRI用可信渠道获得的哈希校验脚本/样式响应字节，资源改变就拒绝；和CSP来源/执行策略、HTTPS传输保护职责不同。跨源SRI依赖CORS可读响应，crossorigin=anonymous并不让对方自动发许可。哈希固定不是完整供应链审计，也不适合静默变化的第三方URL。",
+      "example": "/sri页面故意不套主页script CSP以隔离SRI机制：跨源good脚本正确sha384+ACAO执行一次；bad脚本字节不同被拒绝；同正确字节但无CORS的no-cors脚本也被阻止。测试load之后检查good=1、bad未定义，避免只看到Network200就称执行。",
+      "exercise": "故障：为让变动SDK运行直接去掉integrity，或忘记跨源ACAO。先看控制台完整性/CORS原因，选择固定版本或明确其他治理，不静默放宽。",
+      "practice": "固定一个本地版本资源并生成sha384；改一个字节且保持旧hash复现拒绝，再按审核更新资源/hash而非删除integrity。",
+      "source": [
+        "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity",
+        "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/crossorigin"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.2.8",
+    "theory": "learning/1-notes/10-security/10.2-vulnerabilities/10.2.8.postmessage.md",
+    "example": "learning/2-examples/10-security/10.2-vulnerabilities/10.2.8.postmessage-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.2-vulnerabilities/10.2.8.postmessage.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-2-8",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "任何持有窗口引用的页面都可能发消息；只看origin不能区分同源兄弟frame，只看source也不能防同WindowProxy已导航到另一源。接收端检查精确origin+预期source+版本/类型/字段，发送端明确targetOrigin；origin是发送时来源，不保证窗口现在/未来仍在该源。数据不是可信HTML/URL，业务授权仍须服务端。",
+      "example": "lab receiver有两个来自4525的iframe，仅信任trusted.contentWindow。合法v1接受7/8；同源sibling99、版本2的88被拒绝；将trusted WindowProxy导航到4522后发送55也被拒绝。后续合法消息作为顺序屏障，避免用固定sleep猜未执行。",
+      "exercise": "故障：event.origin.includes(\"trusted\")或不验source，兄弟frame可伪造。保留同源错误source和导航错误origin真实反例，恢复精确校验后复验。",
+      "practice": "新增一个已声明message类型与可选字段，拒绝未知属性/超限值/错版本；在卸载时移除监听，说明消息重放/顺序如何处理。",
+      "source": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ],
+      "runtime": "docs/audits/stage-10-vulnerabilities-runtime.json"
+    },
+    "issues": []
+  }
+]

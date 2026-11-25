@@ -1,0 +1,19 @@
+{
+  "stage": 10,
+  "group": "10.1",
+  "reviewedAt": "2026-11-25T10:24:53.301574+00:00",
+  "points": 4,
+  "review": "逐点四部分与主项目交叉审查；认证代理独立只读复审",
+  "sharedExecutedEvidence": "docs/audits/stage-10-practice-runtime.json",
+  "checks": {
+    "unit": 5,
+    "playwright": 5,
+    "typecheck": "passed",
+    "lint": "passed",
+    "productionBuild": "passed"
+  },
+  "limits": [
+    "匿名本地教学，无真实身份或生产安全认证",
+    "独立复审不冒充额外测试运行或人类试学"
+  ]
+}

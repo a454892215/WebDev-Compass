@@ -1,0 +1,182 @@
+[
+  {
+    "id": "10.4.1",
+    "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.1.npm.md",
+    "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.1.npm-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.1.npm.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "锁文件记录解析版本/来源与完整性，帮助可复现，但不能证明维护者可信、包代码安全或没有恶意安装脚本。CI冻结安装，审核新增依赖和transitive变化、registry来源/名称、维护状态与执行权限；私有registry不自动安全。pnpm11配置按本项目YAML和版本核对，不把未来12配置默认行为照搬。",
+      "example": "独立privacy-lab用固定Vite8.3.8/Playwright1.65.1、pnpm11.4及pnpm-lock.yaml，冻结安装；最低发布年龄与allowBuilds esbuild:false明确。先读lockfile，再构建/测试；没有npm访问令牌或真实私库。",
+      "exercise": "故障：CI使用普通install并提交漂移lock，或把包名相似的未知包加入。还原冻结模式、对照实际diff/来源与脚本，恢复后跑功能/构建。",
+      "practice": "副本改package版本而不改锁文件，运行frozen install观察失败；再按审核流程更新而不盲删lock。",
+      "source": "https://pnpm.io/settings",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.4.2",
+    "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.2.dependabot-renovate.md",
+    "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.2.dependabot-renovate-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.2.dependabot-renovate.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Dependabot/Renovate负责发现和提议依赖更新，不替代维护者判断、兼容回归或风险评估。按生产暴露、利用条件和可用修复排序，检查直接/传递变化、行为与打包结果。紧急补丁也需记录影响/验证/恢复，不因为audit提示就force破坏升级；降级可能重新暴露漏洞。",
+      "example": "读取本章示例目录templates/dependabot.yml.example（不在privacy-lab目录内），目录与npm生态用于pnpm项目；只是配置观察和语法检查，不放真实仓库配置或运行远端更新机器人。用真实audit快照和lockdiff拟一张补丁PR，实际没有漏洞也不虚构公告。",
+      "exercise": "故障：使用audit fix --force后应用API不兼容。先读版本变化/锁文件，按影响面恢复兼容方案并复验，不无条件退回已知脆弱版本。",
+      "practice": "将一条dev工具公告与可触达运行依赖公告分开，写修复/临时缓解/升级回退决策，明确未运行的生产影响。",
+      "source": "https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.4.3",
+    "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.3.sbom.md",
+    "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.3.sbom-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.3.sbom.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SBOM是带版本/来源/依赖关系的组件库存，CycloneDX/SPDX是常见表达；它不是漏洞扫描或安全认证。audit把依赖匹配当前公告数据库，有时间/registry/生态/开发与生产范围；网络或权限失败不能当零。Socket/Snyk等有额外信号/服务依赖，也不代替人工和功能检查。",
+      "example": "本轮在lab真实运行pnpm audit --json，成功返回50个total依赖的当前公告快照；dependencies0、devDependencies50（含optional34）是该工具口径。只对这个小lab依赖树，不是主Nuxt、全知识库或永久结论。原始响应存ignored/tmp，摘要写runtime；没有生成SBOM或调用商业服务。",
+      "exercise": "故障：audit DNS失败但脚本catch后输出vulnerabilities:0。保留真实退出/错误，恢复registry访问再获取快照；无权访问则写未测，不能造安全结论。",
+      "practice": "从锁文件挑一个传递包，设计SBOM最小记录与可追踪关系；若实际使用npm sbom先确认支持的lock格式，不把pnpm lock当npm package-lock直接喂工具。",
+      "source": "https://docs.npmjs.com/about-audit-reports/",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.4.4",
+    "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.4.secrets.md",
+    "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.4.secrets-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.4.secrets.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "前端构建期变量会进入可下载JS/HTML，换名字或压缩不保密。Vite VITE_公开前缀、Nuxt runtimeConfig.public等设计为浏览器可读；非public变量也可能被代码显式返回/内联，因此不能只靠变量名。真实秘密通过受控运行环境注入服务端，严禁日志、URL、source map或DTO泄露。",
+      "example": "lab build.mjs真正给构建进程注入STAGE10_PRIVATE_CANARY与VITE_PUBLIC_LABEL。app只读取公开label，真实产物含PUBLIC_LABEL，不含已知server-only标记；server.mjs独立读取私有配置且只提供configured布尔观察。扫描还检查map，没有真实密钥。",
+      "exercise": "故障：把环境文件不提交Git当作前端密钥安全，却在客户端引用。定位构建注入与网络产物，撤掉前端秘密；真实泄露需另做撤销/轮换而非只删文件。",
+      "practice": "副本把合成canary改VITE_前缀并在app引用，观察产物可读；恢复服务端边界，保留已知标记负例，禁止用真实Token实验。",
+      "source": "https://vite.dev/guide/env-and-mode",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.4.5",
+    "theory": "learning/1-notes/10-security/10.4-supply-chain/10.4.5.source-map.md",
+    "example": "learning/2-examples/10-security/10.4-supply-chain/10.4.5.source-map-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.4-supply-chain/10.4.5.source-map.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Source map把压缩产物映射到原始源，可能包含sourcesContent、文件名和注释。hidden通常只是不给JS添加sourceMappingURL，map文件仍生成；公开目录里的文件可被猜测/列举/其他线索访问。选择公开、受限私有上传或不生成时，需同时考虑调试、发布链、错误平台权限和保留。",
+      "example": "Vite build.sourcemap=hidden，Node检验JS无sourceMappingURL，但.map确实含STAGE10_SOURCE_COMMENT，浏览器HTTP直接请求map为200。说明真正访问策略由部署决定，不把hidden当加密/授权。",
+      "exercise": "故障：设置hidden后把整个dist上传静态站，却宣称源码不可下载。直接GET已知map证明，再调整发布白名单或认证并复验404/403。",
+      "practice": "副本从公开目录排除map或放受控上传流程；验证错误平台调试与公开HTTP状态，而非只看构建选项。",
+      "source": "https://vite.dev/config/build-options.html#build-sourcemap",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.5.1",
+    "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.1.gdpr.md",
+    "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.1.gdpr-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.1.gdpr.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-5-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先识别数据类别、目的、接收方、保留/删除和用户权利，再选采集实现。GDPR个人数据处理有多种法律基础，consent不是一切处理的唯一依据；Cookie/终端存储还可能受当地电子通信规则等约束。适用法域/角色/目的和例外与法务/安全团队确认，技术教程不作个案法律结论。",
+      "example": "lab不采真实个人数据，可选事件只允许kind:opened；日志只route模板/status/kind，拒绝多余email字段。allowlist不收query/headers/任意表单；真实生产还需审代理/CDN/IP、存储、备份和供应商，lab清内存不是完整权利请求系统。",
+      "exercise": "故障：把含邮箱和token的原URL发送日志；检查实际请求与存储字段，改用允许列表route模板，不只是展示时星号遮盖。",
+      "practice": "为“课程学习统计”写目的/最小字段/接收方/保留/删除表，比较完全不收集与聚合统计，注明需要业务/法律确认处。",
+      "source": "https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/legal-grounds-processing-data_en",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.5.2",
+    "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.2.cookie-consent.md",
+    "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.2.cookie-consent-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.2.cookie-consent.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-5-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "在确认适用规则和产品方案后，将可选能力按目的分组，默认不启用未获允许的可选处理；必要功能和可选分析分开，不能用预选框/误导按钮制造选择。CMP是管理信号和供应商协调的工具，不自动保证每个SDK停止、第三方删除或法律合规。拒绝/撤回要像允许一样可操作。",
+      "example": "lab默认/拒绝不请求可选模块/事件；允许才dynamic import并POST本地合成事件，撤回中止controller且清stage10:optional-id。刷新默认未选；下载过的JS不能撤回下载。epoch阻止允许加载途中撤回后又启动。没有真实CMP、Cookie横幅平台或供应商。",
+      "exercise": "故障：SDK先在head加载，再等按钮决定是否显示统计UI。看Network就能发现提前请求；把初始化/请求放在信号之后，并验证拒绝路径。",
+      "practice": "在副本让optional import慢到可观察，先允许立即撤回，验证迟到模块不会启动；增加另一个目的时分别选择，不盲复制全选按钮。",
+      "source": "https://commission.europa.eu/cookies-policy_en",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.5.3",
+    "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.3.pii.md",
+    "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.3.pii-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.3.pii.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-5-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "展示掩码不会删除后台原值，正则也无法识别所有PII。优先字段/事件允许列表、路由模板、去查询、限制大小/保留和接收权限；错误对象、DOM、输入、剪贴板、网络body与Session Replay均可能含内容。敏感路由/字段应默认不录或使用经验证屏蔽，供应商与基础设施日志要一并审查。",
+      "example": "safeLog只提取允许route/status/kind；未知个人化路径变other，query token/email/header不进入记录。eventBody拒绝多余字段400，Node真实反例；没有安装Replay SDK，也不能因此声称任何真实Replay配置已通过。",
+      "exercise": "故障：日志显示为***但请求payload仍带完整表单。抓取真实POST和落盘字段，修复源头采集/序列化再用同一输入复验。",
+      "practice": "提供含邮箱路径、Authorization、password和任意错误message的合成输入，先列允许字段再输出；检查存储记录而非只看UI。",
+      "source": "https://developer.chrome.com/docs/modern-web-guidance/guides/privacy/privacy",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.5.4",
+    "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp.md",
+    "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.4.csp-coop-coep-corp.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-5-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "CSP约束页面资源/执行/嵌入等，COOP影响顶层窗口组与opener，COEP require-corp要求跨源嵌入适当CORP或CORS，CORP由资源响应声明跨源no-cors使用边界。它们不是认证授权，也不应无条件同时加最严值：OAuth弹窗、支付、iframe和第三方资源可能受损。先盘点真实依赖和能力，再报告/试验/逐步执行。",
+      "example": "/isolation用COOP same-origin+COEP require-corp，在Chrome loopback跨源4526图片中，带CORP cross-origin的allowed.svg有naturalWidth20，无CORP blocked.svg被阻挡naturalWidth0；crossOriginIsolated为true。不是所有浏览器/真实OAuth兼容证明，主Nuxt策略另验。",
+      "exercise": "故障：开启COEP后无CORP的外部图片失效，却放宽script-src试图修复。根据浏览器阻挡原因与资源响应头定位正确策略，按服务控制权选CORP/CORS/替代资源。",
+      "practice": "副本移除某一头并比较资源/窗口关系，写需要SharedArrayBuffer能力时为何可能需要隔离；不为了头越多越好破坏产品。",
+      "source": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  },
+  {
+    "id": "10.5.5",
+    "theory": "learning/1-notes/10-security/10.5-privacy-compliance/10.5.5.soc2-pci.md",
+    "example": "learning/2-examples/10-security/10.5-privacy-compliance/10.5.5.soc2-pci-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.5-privacy-compliance/10.5.5.soc2-pci.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-5-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SOC是CPA提供的控制鉴证服务体系；SOC2报告关注适用范围内控制设计/运行等，不能通过装SDK或头扫描自动获得。PCI涉及支付数据与相关系统/页面的适用范围和实际要求，托管支付能改变边界但不能自行断言无责任。以适用标准、业务范围及专业评估为准，不处理真实卡号或伪造审计结论。",
+      "example": "阅读AICPA SOC官方服务说明与PCI SSC标准入口，为合成支付页面列脚本清单/变更、最小数据、访问权限、发布和事件响应证据。只做观察/证据清单；lab无支付、卡号或正式审计。AICPA页面显示未来征求意见也不能当已经生效规范。",
+      "exercise": "故障：工具报安全头全绿就宣布SOC2/PCI合规。回到范围、标准、控制运行证据与评估人，撤销未经支持的结论而不是再加几条header。",
+      "practice": "将“第三方托管支付”与“自有页面处理敏感输入”两方案列数据流和责任边界，标记需法务/安全/合格评估确认的问题。",
+      "source": "https://www.pcisecuritystandards.org/standards/",
+      "runtime": "docs/audits/stage-10-supply-privacy-runtime.json",
+      "review": "docs/audits/stage-10-supply-privacy-review.md"
+    },
+    "issues": []
+  }
+]

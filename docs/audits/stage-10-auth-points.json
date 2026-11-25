@@ -1,0 +1,121 @@
+[
+  {
+    "id": "10.3.1",
+    "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.1.oauth-oidc.md",
+    "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.1.oauth-oidc-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.1.oauth-oidc.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "OAuth让客户端在授权范围内访问资源，不独自定义用户登录身份；OIDC在其上增加ID Token和身份语义，JWT只是可能采用的令牌格式。授权码+PKCE流程先生成高熵verifier和S256 challenge，发起请求时绑定注册redirect_uri和客户端事务，再由回调核对state/事务，兑换时验证code、redirect与verifier；本例同时检查state和PKCE，不把二者作用简单等同。\n\n真实OIDC还要按提供商元数据验证ID Token的签名、issuer、audience、时间、nonce等适用要求，不把ID Token当API access token。浏览器公共客户端不能保守client_secret；BFF可在服务端保存令牌但仍须认证、CSRF与授权。避免隐式流/资源所有者密码授权作为新项目默认，不把URL日志里的code/token当普通诊断数据。",
+      "example": "运行auth-lab的第一组Node测试，检查错误state、错误S256 verifier、错误redirect_uri及已消费code被拒绝，正确组合只通过一次。这是受控内存协议模型，未建立真实授权服务器、用户认证、OIDC签名ID Token或外部provider联调；SHA256仅实现标准PKCE计算，不手写JWT签验。",
+      "exercise": "故障：只decode ID Token就认为登录完成，或把state正确当作可以忽略签名/issuer/audience。列出每个未验证信任边界；先在本lab区分state/PKCE，再用成熟OIDC客户端在专用provider测试，不向真实账号试错。",
+      "practice": "在隔离副本将注册redirect_uri改成另一地址，并把回调state与兑换verifier分别改错。画出客户端回调与授权服务器兑换各自校验位置，不把一个complete函数当真实系统只有一个角色。",
+      "source": "https://www.rfc-editor.org/rfc/rfc9700.html",
+      "boundary": "Local synthetic fixtures;no real IdP/passkey/production identity,main Nuxt implementation reviewed separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "10.3.2",
+    "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.2.refresh-token.md",
+    "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.2.refresh-token-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.2.refresh-token.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "刷新令牌通常比access token长寿，需要绑定客户端/会话、限制作用域与保留窗口。轮换令牌只能用一次；检测旧令牌再次出现时，严格策略撤销相关family，不能仅返回错误却让攻击者持有的新token继续有效。刷新令牌是高价值bearer，存储/日志不可随意暴露；本模型存哈希索引、过期时间和历史used状态。\n\n并发刷新和网络超时会使合法请求看似复用。客户端single-flight降低竞争，服务端共享store仍需事务/CAS和明确定义的幂等/短宽限策略，不能靠前端锁保护所有实例。本lab采用严格策略：第二个并发请求触发family撤销，第一个已返回的新token也失效；这是一项教学取舍，不是所有系统唯一做法。",
+      "example": "第二组Node测试真实执行轮换、旧令牌复用、family撤销、两个Promise并发刷新与时钟过期；断言并发一个成功/一个拒绝后family已撤销。compare-and-consume在单Node同步函数内没有await，仅表示本进程原子顺序；不构成Redis/数据库跨进程事务或完整OAuth token endpoint。",
+      "exercise": "故障：先await签名/数据库调用，再把旧token标记used，两个请求都可能看到未使用。用受控gate让两请求都读旧值，再改成共享store原子消费；不能只给测试加sleep或串行调用掩盖。",
+      "practice": "改变为两个独立调用方同时刷新，同一family分别观察第一结果返回与后续可用性；再设计一个有明确operation id和期限的幂等恢复协议，说明牺牲了什么检测信号。",
+      "source": "https://www.rfc-editor.org/rfc/rfc9700.html",
+      "boundary": "Local synthetic fixtures;no real IdP/passkey/production identity,main Nuxt implementation reviewed separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "10.3.3",
+    "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.3.token.md",
+    "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.3.token-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.3.token.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "HttpOnly限制页面JavaScript读取Cookie，不阻止浏览器携带它发请求，也不阻止XSS以用户身份调用API。Secure约束HTTPS传输，SameSite按站点而非端口源判断，Path不是权限边界。Cookie+BFF把access/refresh保留在服务端，仍需服务端身份/对象授权和适用CSRF防线。\n\nlocalStorage/sessionStorage能被同源脚本读取；内存减少持久化残留却仍可被活动XSS利用。没有一种客户端存储自动解决整站安全。选择应依据威胁、刷新与跨标签/退出行为；不要把原生Keystore/Keychain等同浏览器Storage或承诺HttpOnly永不泄漏。",
+      "example": "运行verify，浏览器创建公开Alice fixture会话后，context.cookies可见httpOnly=true而document.cookie为空；随后fetch仍能读取合成资料200，撤销后同一旧Cookie401。Node实际核对恶意Origin403。localhost不同端口可同站，不用此实验冒充真实跨站SameSite全矩阵或HTTPS Secure验证。",
+      "exercise": "故障：退出仅删除localStorage，却保留服务端有效refresh/session。保存旧Cookie在Node客户端重放，确认它仍可访问；实现服务端撤销再重放401，不能仅靠按钮消失。",
+      "practice": "在副本给页面增加一个本地无害脚本，比较HttpOnly Cookie不可读但同源fetch仍可调用API；只使用公开fixture，不复制真实凭据。再列退出后的服务端撤销、UI清理、跨标签通知与缓存失效。",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+      "boundary": "Local synthetic fixtures;no real IdP/passkey/production identity,main Nuxt implementation reviewed separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "10.3.4",
+    "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.4.webauthn-passkey.md",
+    "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.4.webauthn-passkey-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.4.webauthn-passkey.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "WebAuthn使用绑定Relying Party范围的公钥凭据。注册时服务端生成短期一次challenge并发送可信RP/user参数，浏览器/认证器在用户介入下创建凭据，服务端验证clientData、challenge、origin、RP ID hash、适用flags和attestation政策后存公钥；认证时再用新challenge验证assertion签名和用户验证要求。私钥不应由网页导出。\n\nPasskey是围绕可发现公钥凭据的产品/生态概念，不等于任何页面调用get()就完成安全登录。同步凭据、设备绑定、备份状态、计数器行为和账户恢复需按实际认证器与策略处理，不能把signCount不增加一概称克隆。WebAuthn Level3在本轮已是W3C Recommendation，但支持仍按目标浏览器与认证器核对。",
+      "example": "类型：W3C/MDN官方流程与服务器契约观察，不调用navigator.credentials、不使用用户passkey，也未建立CDP virtual authenticator。按注册/认证列出挑战存储与一次性、origin/RP ID/flags/签名和恢复路径；真正集成应使用成熟服务端WebAuthn验证库及专用测试账号。",
+      "exercise": "故障：服务端只检查客户端返回的credential id就登录，未验challenge/origin/签名。指出可伪造的客户端字段并恢复成熟库的完整验证；不能用截图证明服务端验签成功。",
+      "practice": "为同一用户两个tab并行认证设计各自challenge事务，列出错challenge、重放、错误origin、RP ID和缺少所要求UV的失败表。可在独立测试项目选虚拟认证器，不能标成本轮已经跑过。",
+      "source": "https://www.w3.org/TR/webauthn-3/",
+      "boundary": "Local synthetic fixtures;no real IdP/passkey/production identity,main Nuxt implementation reviewed separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "10.3.5",
+    "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.5.rbac-abac.md",
+    "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.5.rbac-abac-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.5.rbac-abac.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "前端权限数据用于可用交互和解释，不构成访问控制。RBAC以角色组织能力，ABAC/关系条件可把主体、资源、tenant、owner与情景一起判断；角色足够宽时仍可能越权访问他人对象。策略应默认拒绝，服务端每次读取/写入均验证当前可信身份与资源关系，不能从请求body接收owner/role并直接信任。\n\n本例read需要reader且owner一致、tenant一致；delete还需admin且owner/tenant一致。业务可能有合法跨租户管理员，但必须显式设计，不以“admin就全部放行”为默认。403/404如何减少对象枚举取决于契约，本lab返回403但数据全是公开合成fixture。",
+      "example": "第四组Node验证owner、tenant、role、未知action与坏roles类型拒绝。真实HTTP再验证同一会话own note200、note-b他人owner403、note-c其他tenant403、reader DELETE403；不是只隐藏按钮。会话由任何访问者可创建公开Alice fixture，不是真实身份认证。",
+      "exercise": "故障：API只验证JWT有效就根据传入id返回任意对象。用两个合成owner复现，再把资源归属纳入服务端策略；客户端过滤或猜不到id不算修复。",
+      "practice": "在隔离副本新增“审核员可读同tenant对象但不可删除”政策，先写owner/tenant/role/action矩阵再实现；不要通过客户端传role升级。",
+      "source": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "boundary": "Local synthetic fixtures;no real IdP/passkey/production identity,main Nuxt implementation reviewed separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "10.3.6",
+    "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.6.jwt.md",
+    "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.6.jwt-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.6.jwt.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-3-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "JWT decode只是解析不可信payload，不证明签名或声明。使用维护中的jose等库，固定允许算法与可信key来源，校验iss/aud/exp/nbf等适用声明、subject/用途和所需claim类型。ID Token与access token需按不同上下文验证，typ只是补充上下文；kid/jku不能变成任意网络URL或文件读取。签名不提供内容保密，浏览器收到payload就应视为可见。\n\n短期JWT不会自动立即撤销；服务端可用会话/版本/denylist等在线条件，明确保存期限和传播策略。令牌轮换、用户退出与角色更改分别考虑；不要自己拼base64或手写加密算法作为生产实现。",
+      "example": "jose6.2.18由本轮官方registry固定。第三组Node真实生成临时ES256 keypair并签验，拒绝错误算法HS256、其他签名key/被改签名、issuer/audience、过期、错误typ/kid、坏roles；撤销jti后拒绝。私钥只在进程内，未导出真实密钥，未建立远程JWKS轮换或生产KMS。",
+      "exercise": "故障：从token header读取alg并把它原样传给允许列表，或从jku直接下载key。改为受控算法/可信固定来源，网络轮换另加issuer绑定与缓存/失败策略，不通过关闭verify排错。",
+      "practice": "分别改audience、过期时间、签名和roles类型，写清每个失败来自库的协议验证还是应用政策；给key轮换设计双key接受窗口与unknown-kid失败行为。",
+      "source": "https://github.com/panva/jose/blob/main/docs/jwt/verify/functions/jwtVerify.md",
+      "boundary": "Local synthetic fixtures;no real IdP/passkey/production identity,main Nuxt implementation reviewed separately."
+    },
+    "issues": []
+  },
+  {
+    "id": "10.3.7",
+    "theory": "learning/1-notes/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn.md",
+    "example": "learning/2-examples/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn-demo.md",
+    "exercise": "learning/3-exercises/10-security/10.3-auth-advanced/10.3.7.web-httponly-cookie-session-rn.md",
+    "practice": "learning/4-practice/10-security/tasks.md#p-10-3-7",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "原生Keychain/Keystore可降低静态密钥/凭据的特定存储风险，浏览器HttpOnly Cookie解决的是脚本读取边界，两者不等价。Web还受同源脚本、Cookie自动请求、CSRF、页面/文档生命周期与浏览器扩展影响；原生应用也有设备、进程、桥接与服务端授权风险。不能用“放安全存储”概括整个认证系统。\n\nSSR进一步区分客户端可见payload与服务端上下文；全局currentUser/缓存可能跨请求混用。复用移动端架构规范与接口契约，Web技术方案仍采用Web适配的会话、CSP、CSRF和request-scoped状态，真实后台每请求授权。",
+      "example": "对照本lab HttpOnly不可读但fetch成功、logout后旧Cookie401，与主Nuxt将来的每会话owner-only notes源码核对。此处只执行Web本地fixture，不安装Android/Flutter/RN、不测试Keychain/Keystore，也不把原生安全存储称能抵御所有XSS或服务端越权。",
+      "exercise": "故障：将原生进程单例直接变成Node模块currentUser，让匿名SSR回退上个用户。仅在隔离副本新增确定性lastUser反例并复现，恢复请求内读取与明确401；原主工程不存在此功能时必须先说明新增。",
+      "practice": "把一份移动端“refresh保存在安全存储、全局登录单例、退出清本地”的方案迁移到Nuxt，逐项改写浏览器存储/SSR隔离/CSRF/后台撤销与多标签状态。",
+      "source": "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+      "boundary": "Local synthetic fixtures;no real IdP/passkey/production identity,main Nuxt implementation reviewed separately."
+    },
+    "issues": []
+  }
+]

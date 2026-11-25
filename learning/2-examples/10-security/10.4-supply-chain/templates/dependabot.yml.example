@@ -1,0 +1,8 @@
+# Observation template only; not installed or run remotely.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /learning/2-examples/10-security/10.5-privacy-compliance/privacy-lab
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3

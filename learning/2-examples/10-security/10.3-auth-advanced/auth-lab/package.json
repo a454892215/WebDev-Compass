@@ -1,0 +1,16 @@
+{
+  "name": "@compass/stage10-auth-lab",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.4.0",
+  "scripts": {
+    "test": "node --test tests/unit.test.mjs",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "jose": "6.2.18"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

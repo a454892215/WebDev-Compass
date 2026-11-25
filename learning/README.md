@@ -26,3 +26,5 @@
 阶段8：[架构理论](./1-notes/08-architecture/README.md)、[模块化工作台](./4-practice/08-architecture/README.md)，共39点四部分资料。下一阶段9。
 
 阶段9：[性能理论](./1-notes/09-performance/README.md)、[Nuxt首屏/水合](./4-practice/09-performance/README.md)，共30点。下一阶段10。
+
+阶段10：[安全理论](./1-notes/10-security/README.md)、[实验入口](./2-examples/10-security/README.md)、[独立练习](./3-exercises/10-security/README.md)、[Nuxt安全笔记与29任务](./4-practice/10-security/README.md)。下一阶段11。
