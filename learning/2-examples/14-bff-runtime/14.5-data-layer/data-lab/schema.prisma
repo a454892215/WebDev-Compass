@@ -1,0 +1,7 @@
+// Prisma ORM 7 schema reading fixture, not executed by this lab.
+// Connection config is deliberately omitted; do not point this at real data.
+model User {
+  id          Int     @id @default(autoincrement())
+  legacyName  String
+  displayName String?
+}

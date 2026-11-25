@@ -1,0 +1,145 @@
+[
+  {
+    "id": "14.4.1",
+    "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node.md",
+    "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Edge 描述计算靠近访问者的部署方式；Node 描述 JavaScript 运行时，两者不是完全相反的分类。CDN 在边缘缓存静态内容，也不等于整套 SSR 已经运行在边缘。端到端耗时还包括冷启动、函数到数据库往返、聚合、序列化和响应传输；靠近用户却远离数据库，可能增加总耗时。",
+      "example": "运行命名含 14.4.1 的测试，观察实际 Request 到 Response JSON；随后列出主 BFF 的 Node 依赖和数据库区域。 本地返回200和公开商品，平台兼容性保持“待部署验证”；把 Node 能力、部署位置、数据位置分栏，不混成“Edge快/Node慢”。",
+      "exercise": "故障设定：团队声称“Request/Response 在 Node 跑过，所以 Workers 的 node:fs 持久上传也已验证”。检查 policy.mjs 的导入和平台绑定；修复判据是把本地契约与真实平台写入寿命分开，保存待验项，取消该上线结论。",
+      "practice": "为主 Nuxt BFF 编写一份可复核的运行时决定记录。现有项目仍是 Node/Nitro；迁移适配器和真实平台基准属于新增扩展。",
+      "sources": [
+        "https://developers.cloudflare.com/workers/runtime-apis/nodejs/",
+        "https://vercel.com/docs/functions/runtimes/edge",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Edge 与 Node：按平台、数据位置和 API 选运行时",
+      "task": "为主 Nuxt BFF 编写一份可复核的运行时决定记录。现有项目仍是 Node/Nitro；迁移适配器和真实平台基准属于新增扩展。",
+      "criteria": [
+        "每个候选都标来源、核对日期和至少一个会改变决定的限制。",
+        "明确不把本地 Node 测试或隔离实例内存当生产持久化/跨区域证据。"
+      ]
+    }
+  },
+  {
+    "id": "14.4.2",
+    "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers.md",
+    "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "地图保留 Vercel Edge Functions 历史名称以保护链接。当前 Vercel 文档将其纳入 Functions，并推荐 Node.js 运行时。该页还明确 Next.js 16.3 起页面/路由不再支持 runtime='edge'；这属于 Next 分支的版本约束，不是 Nuxt 的配置方式。不要将旧 App Router 片段当通用部署脚手架。",
+      "example": "运行含14.4.2的固定路径/方法测试，再阅读本组README的平台核对卡，对照选择的Nitro版本和目标平台入口。 GET公开路径200、POST405、未知404；无客户端任意URL代理，也无真实云发布。",
+      "exercise": "故障设定：照抄旧Next页面 export const runtime=\"edge\" 到Nuxt配置，以为改变了部署。查实际Nuxt/Nitro构建配置和产物；移除无效配置，按目标preset重新规划，只有真实目标预览通过后才能写部署成功。",
+      "practice": "给主项目补一份独立Edge部署提案，明确当前Node产物不变；如未来实施，验证目标平台产物与撤销，不把纯策略lab当Worker宿主。",
+      "sources": [
+        "https://vercel.com/docs/functions/runtimes/edge",
+        "https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/",
+        "https://nuxt.com/deploy/cloudflare",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Vercel Functions 与 Cloudflare Workers：入口、适配与部署核对",
+      "task": "给主项目补一份独立Edge部署提案，明确当前Node产物不变；如未来实施，验证目标平台产物与撤销，不把纯策略lab当Worker宿主。",
+      "criteria": [
+        "区分Nuxt/Nitro部署与Next运行时配置，未复制runtime=edge到Nuxt。",
+        "预览验证列200/404/405、私有响应隔离、平台日志和回滚；没有账号时保持待验。"
+      ]
+    }
+  },
+  {
+    "id": "14.4.3",
+    "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.3.edge-middleware.md",
+    "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.3.edge-middleware-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.3.edge-middleware.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "客户端可以构造 x-user-id、x-country 等Header。Geo信息必须来自已验证的平台元数据或受信代理清洗后的上下文，不能把任意同名请求头当平台事实。Geo也只能用于合法的体验/区域策略，不是用户身份、权限或精确位置证明；需要回退区域并考虑隐私。",
+      "example": "运行含14.4.3的三项测试，查看伪造Header返回401、两个fixture身份并发隔离、同主体稳定A/B；修改可信country回调再比较地区。 客户端x-country=CN不影响可信JP映射；重复主体同桶，桶值A或B；没有真实登录或真实Geo定位。",
+      "exercise": "故障注入：把resolveSession替换成读取x-user-id并直接构造user，原先伪造Header测试应失败。恢复可信会话解析并保留回归；不得通过删除伪造测试或把header改名来修复。",
+      "practice": "审查主BFF身份来源及源站授权，再新增可撤销的实验分组任务。现有Edge实验只验证本地注入，真实Geo和平台中间件属于后续部署验证。",
+      "sources": [
+        "https://developers.cloudflare.com/workers/runtime-apis/request/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Edge 中间件：可信身份、Geo 路由与稳定 A/B 分组",
+      "task": "审查主BFF身份来源及源站授权，再新增可撤销的实验分组任务。现有Edge实验只验证本地注入，真实Geo和平台中间件属于后续部署验证。",
+      "criteria": [
+        "未登录401、已登录访问别人的资源403或统一404，服务端检查owner而非按钮或实验桶。",
+        "私有/实验响应不能污染公开目录缓存，记录缓存绕过或有界键策略。"
+      ]
+    }
+  },
+  {
+    "id": "14.4.4",
+    "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.4.kv-d1-edge-config.md",
+    "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.4.kv-d1-edge-config-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.4.kv-d1-edge-config.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Workers KV适合读多写少、可接受延迟传播的键值配置。它是最终一致存储：其他位置可能继续看到旧值，连“不存在”的负查找也可能被缓存。官方描述传播可达60秒或更久，这不是严格60秒上限；同位置读到新值也不应当作保证。不要用普通get再put组合实现全局原子计数、立即注销或库存扣减。需要更强协调时评估Durable Objects或合适的数据库，而不是增加一个本地Map。",
+      "example": "运行含14.4.4的stale replica测试，先预测主存更新后region-b的读值；再查看KV一致性、D1 batch与Sessions官方正文完成选型卡。 刷新前false、刷新后true，断言证明模型旧读；未连接真实KV或D1，传播时间不来自测试。",
+      "exercise": "故障设定：将全局限流写成KV get(count)后put(count+1)，两个并发请求读到同值。列出丢更新时序并用并发变体复现本地模型；修复判据是采用有原子保证的服务端操作/协调，而不是声称加await就会串行全球请求。",
+      "practice": "对主BFF单进程教学会话/限流提出多实例迁移方案，标明权威校验、一致性、过期和失败策略；KV/D1/Global Config接入均为新增，不声称主已连接。",
+      "sources": [
+        "https://developers.cloudflare.com/kv/concepts/how-kv-works/",
+        "https://developers.cloudflare.com/d1/worker-api/d1-database/",
+        "https://developers.cloudflare.com/d1/best-practices/read-replication/",
+        "https://vercel.com/docs/global-config",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Workers KV、D1 与 Global Config：一致性决定用途",
+      "task": "对主BFF单进程教学会话/限流提出多实例迁移方案，标明权威校验、一致性、过期和失败策略；KV/D1/Global Config接入均为新增，不声称主已连接。",
+      "criteria": [
+        "至少指出KV普通读改写不满足库存原子性和立即撤销，给出服务端权威校验或强协调替代。",
+        "D1事务范围、读副本会话书签与登录session分清；Global Config不被当任意业务写库。"
+      ]
+    }
+  },
+  {
+    "id": "14.4.5",
+    "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.5.edge.md",
+    "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.5.edge-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.5.edge.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "HTTP Cache-Control的max-age面向客户端/共享缓存，s-maxage专门控制共享缓存；stale-while-revalidate允许在指定过期窗口内先返回旧值并后台更新。它不是“永远返回旧值”，过了fresh+stale边界仍需获取或按明确失败策略报错。no-cache表示可存但使用前需要验证，no-store表示不存；private阻止共享缓存存储，并非加密。CDN供应商可能覆盖/忽略某些指令，必须核对具体路由规则与响应头。",
+      "example": "运行含14.4.5的四项测试：9999/10000毫秒fresh切换、40000过期重取、失败不无限续旧、并发miss合并与有凭据绕过。 10秒旧值先返回、settle后新版本；30秒后失败抛错；相同公开键并发只load一次，语言隔离且凭据请求不读公共Map。",
+      "exercise": "故障注入：删除credential bypass，让带Cookie请求读公共缓存；对应回归应失败。恢复绕过及private,no-store，再将过期失败时返回旧值改成无上限，确认时间边界测试失败，恢复有限窗口。",
+      "practice": "为主BFF公开目录设计缓存接入任务，保持用户聚合响应私有；先用独立lab证明键与窗口，再新增真实CDN部署验证，不将Node Map当已接入的CDN。",
+      "sources": [
+        "https://developers.cloudflare.com/workers/runtime-apis/cache/",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "CDN 缓存与 SWR：公开内容、键和过期边界",
+      "task": "为主BFF公开目录设计缓存接入任务，保持用户聚合响应私有；先用独立lab证明键与窗口，再新增真实CDN部署验证，不将Node Map当已接入的CDN。",
+      "criteria": [
+        "币种不同响应不串值，非法维度拒绝，已完成缓存数有上限并解释pending仍需生产限流。",
+        "fresh/stale/expired与上游失败均有可控时钟断言；Cookie/Authorization不产生共享命中。"
+      ]
+    }
+  }
+]

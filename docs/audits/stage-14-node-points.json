@@ -1,0 +1,145 @@
+[
+  {
+    "id": "14.1.1",
+    "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.1.node-event-loop.md",
+    "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.1.node-event-loop-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.1.node-event-loop.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "浏览器的任务、微任务与渲染机会不能直接替换成Node阶段图。Node通过libuv驱动I/O，JavaScript回调通常在当前隔离实例的主线程运行；异步I/O还可能由操作系统或libuv线程池完成。简化阶段包括timers、pending callbacks、idle/prepare、poll、check、close callbacks；这是一张循环示意图，不能拿画图起点推导所有代码的绝对顺序。Node20/libuv1.45起，每次循环的timer处理位置调整到poll之后，同时保留进入循环前的兼容处理。定时器阈值是最早可调度条件，不是准点承诺。 process.nextTick不是一个libuv phase，递归填充会推迟I/O。Promise.then与queueMicrotask进入微任务队列。在本lab的CJS顶层，nextTick先于Promise微任务；ESM模块求值自身处于异步加载/微任务上下文，本例Promise和queueMicrotask先于nextTick。不能背成nextTick永远最先。I/O回调内安排setImmediate和setTimeout(0)，本例check阶段的immediate先执行；顶层同时安排两者不作稳定先后承诺。",
+      "example": "先预测loop.cjs与loop.mjs的前四项，再运行总验证。CJS得到sync→nextTick→promise→queueMicrotask；ESM得到sync→promise→queueMicrotask→nextTick。CJS读取本文件成功后的immediate-in-io在timeout-in-io之前。测试只断言这些有上下文的关系，不断言poll全局耗时或顶层timer竞速。",
+      "exercise": "把verify.mjs对loop.mjs输出的esm断言改为nextTick必在promise之前，运行应失败。定位模块求值上下文，恢复只适用于该入口的断言；不要用增加sleep掩盖顺序。 先画同步栈，再写nextTick/微任务及触发位置；阶段是调度机制，日志先后是特定上下文的观察。递归nextTick属于额外故障演练，应设置次数上限，避免永久饿死进程。",
+      "practice": "检查主Nuxt BFF实际路由中有没有同步CPU循环或递归nextTick；把本lab两种模块日志与请求路径分开记录。新增扩展：在隔离副本加入有界CPU工作并观察并发请求受影响，再提出worker或分块方案；主项目未默认包含这项负载实验。",
+      "sources": [
+        "https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick",
+        "https://nodejs.org/api/process.html#when-to-use-queuemicrotask-vs-processnexttick",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Node.js事件循环：I/O阶段、nextTick与ESM差异",
+      "task": "检查主Nuxt BFF实际路由中有没有同步CPU循环或递归nextTick；把本lab两种模块日志与请求路径分开记录。新增扩展：在隔离副本加入有界CPU工作并观察并发请求受影响，再提出worker或分块方案；主项目未默认包含这项负载实验。",
+      "criteria": [
+        "给出实际路由文件和CPU/I/O分类，不能仅凭async关键字判定不会阻塞。",
+        "附CJS/ESM本地输出与适用边界，额外请求压测只有真实执行后才标实测。"
+      ]
+    }
+  },
+  {
+    "id": "14.1.2",
+    "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.2.stream.md",
+    "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.2.stream-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.2.stream.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Readable产生数据，Writable消费数据，Duplex有双向通道，Transform在读写之间转换。背压让快生产者等待慢消费者，避免把全部输入堆入队列。普通字节模式highWaterMark以字节计，objectMode以对象计；它是触发暂停请求/返回false的阈值，不是整个进程的严格内存上限。单块过大、其他缓存、实现细节都能超出它。 Writable.write返回false表示该块已被接收，但继续生产应等待drain；不能误以为写入失败而重发该块。end只表示不再写入，finished或pipeline的Promise完成后才能确认收尾。生产代码优先stream/promises.pipeline连接源、变换和目标，错误会传播并清理参与的流；HTTP响应等资源要另外考虑头已发出时无法再改状态。Node Stream和浏览器WHATWG ReadableStream是不同接口，跨边界要使用相应适配器，不能把getReader放到Node Writable上。",
+      "example": "stream.mjs向延迟回调的Writable写32块各1024字节，阈值2048。尊重背压时16次等待，writableLength峰值2048；忽略false时峰值32768。两者最终字节数都32768，所以只看输出文件相同发现不了内存风险。另一用例让sink在写入时callback(Error)，验证pipeline拒绝且源和目标均destroyed。峰值只指本例Writable队列长度，不是RSS或真实网络吞吐基准。",
+      "exercise": "把copy(true)中的await once(sink, drain)删除但继续返回成功，原bytes检查仍绿、peak检查应红。修复生产等待，再恢复完整验证；不能仅把highWaterMark调得巨大让错误暂时不显现。 先确认false不是丢弃，再看生产速度与消费速度。用pipeline处理完整链的错误传播；手动write模式还须处理error/abort/close，lab慢sink成功路径不是可直接复制的通用上传器。",
+      "practice": "给主BFF或上传扩展写出“来源→大小限制→可选变换→目标”的流链，并运行本lab的成功/故障对照。需要在主路由新增流式代理时先确认实际H3适配器、响应头和客户端取消清理；现有JSON聚合不自动变成流式传输。",
+      "sources": [
+        "https://nodejs.org/api/stream.html",
+        "https://nodejs.org/learn/modules/backpressuring-in-streams",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Node Stream背压：write返回值、drain与pipeline清理",
+      "task": "给主BFF或上传扩展写出“来源→大小限制→可选变换→目标”的流链，并运行本lab的成功/故障对照。需要在主路由新增流式代理时先确认实际H3适配器、响应头和客户端取消清理；现有JSON聚合不自动变成流式传输。",
+      "criteria": [
+        "给出真实队列峰值对比和pipeline拒绝证据，不把它称为HTTP性能测试。",
+        "扩展设计包含总量上限、并发、超时和取消，说明头部提交后失败的恢复方式。"
+      ]
+    }
+  },
+  {
+    "id": "14.1.3",
+    "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.3.worker-threads.md",
+    "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.3.worker-threads-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.3.worker-threads.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "worker_threads在同一进程中创建有独立V8隔离实例和事件循环的线程，可以并行执行CPU密集JavaScript。它不是libuv内部I/O线程池，也不等于child_process独立进程。异步网络/文件I/O通常先用Node现成异步API；给每个普通HTTP请求创建worker可能因启动、序列化、内存开销而更慢。 本例用workerData传有界整数，worker计算1到n之和，再parentPort.postMessage返回数字。默认消息采用结构化克隆；ArrayBuffer可转移所有权、SharedArrayBuffer可共享，但后者需要Atomics等同步设计。父级要同时处理message、error和exit，并对请求设截止时间和容量上限。终止worker是生命周期操作，不能当作回滚外部副作用；重复结算必须避免。",
+      "example": "verify真实启动worker得到5000050000。负数输入在创建线程前拒绝；crash模式抛出fixture-worker-crash由父级收到error；hang模式保持定时器，父级100ms截止后terminate并拒绝worker-timeout。cpu.mjs正常、错误和超时都等待terminate完成，不留下教学线程。该用例验证控制流程，不宣称比同步求和更快。",
+      "exercise": "删去cpu.mjs的error监听，运行crash变体，子进程会产生未处理worker错误；只监听message会把失败路径漏掉。恢复error/exit与单次结算，再验证hang能终止。故障应在隔离副本进程运行。 同时看数据输入、消息序列化、容量和结束条件。message到达不代表可以忽略后续资源，exit不等于业务成功；用settled保护只完成一次。",
+      "practice": "为主BFF选择一个真实需要CPU处理的新增场景，先说明为什么异步I/O不足；复用本lab的正确/非法/异常/超时测试设计，再规划有界线程池。主聚合接口默认只是I/O，不为完成课程强行放入worker。",
+      "sources": [
+        "https://nodejs.org/api/worker_threads.html",
+        "https://nodejs.org/learn/asynchronous-work/dont-block-the-event-loop",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Worker Threads：CPU卸载、输入上限与生命周期",
+      "task": "为主BFF选择一个真实需要CPU处理的新增场景，先说明为什么异步I/O不足；复用本lab的正确/非法/异常/超时测试设计，再规划有界线程池。主聚合接口默认只是I/O，不为完成课程强行放入worker。",
+      "criteria": [
+        "场景明确区分CPU与I/O，给出输入/队列上限和过载响应。",
+        "附四条真实worker用例证据，并明确尚未在主BFF实现生产线程池。"
+      ]
+    }
+  },
+  {
+    "id": "14.1.4",
+    "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.4.item-14-1-4.md",
+    "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.4.item-14-1-4-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.4.item-14-1-4.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "环境变量在Node里以字符串形式读取。Boolean(\"false\")为true、parseInt(\"12x\")为12，都不适合严格配置验证。启动时把未知字符串转换为经过范围校验的配置，再传给使用者；缺少必需项应尽早失败，不在日志里打印秘密值。配置与代码分离是12-factor的一项原则，不意味着所有环境变量都适合送入浏览器。 Node内建--env-file可加载dotenv格式；dotenv包是另一种可选加载器，要核其版本与override选项，不能默认两者语义完全一致。本lab使用Node内建功能，不安装dotenv。已有进程环境优先于同名env-file值，多个文件的覆盖细节按所用Node版本核对。Nuxt runtimeConfig私有键和public子树有明确边界，生产运行读取环境也不同于构建期替换；不能因为键名含TOKEN就假设框架会自动保密。",
+      "example": "verify临时生成dist/config-fixture.env，内容明确为公开fixture，调用node --env-file加载后得到port4562/debugfalse；同名宿主LAB_PORT=4569覆盖文件。配置函数拒绝12x、0、65536、yes和缺token；publicConfig不含token。临时文件验证后删除，报告只保存公开投影。没有读取、输出或修改用户真实凭据。",
+      "exercise": "把rawDebug === 'true'字符串比较改为Boolean(rawDebug)，false字符串会被当成开启；现有debug断言应失败。另一故障是用parseInt接受12x。修复严格转换，不以“开发机没问题”跳过启动校验。 先确定注入时机和优先级，再校验类型/范围，最后明确哪个字段能公开。不要提交真实.env；fixture数据也应命名清楚，教学日志只写安全投影。",
+      "practice": "核主Nuxt的runtimeConfig与实际server消费位置，列出私有/公开字段以及构建期/运行期。用本lab演示严格校验与覆盖；新增扩展是在主应用启动路径加入缺配置失败门禁，先查看已有实现再决定是否需要。",
+      "sources": [
+        "https://nodejs.org/api/environment_variables.html",
+        "https://nodejs.org/api/cli.html#--env-filefile",
+        "https://12factor.net/config",
+        "https://nuxt.com/docs/4.x/guide/going-further/runtime-config",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "环境变量与配置：字符串校验、加载优先级和公开边界",
+      "task": "核主Nuxt的runtimeConfig与实际server消费位置，列出私有/公开字段以及构建期/运行期。用本lab演示严格校验与覆盖；新增扩展是在主应用启动路径加入缺配置失败门禁，先查看已有实现再决定是否需要。",
+      "criteria": [
+        "配置表对应实际文件和调用，不把服务端token放public或SSR payload。",
+        "保留至少一个无效配置与一个覆盖验证证据，日志不包含私密值。"
+      ]
+    }
+  },
+  {
+    "id": "14.1.5",
+    "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.5.item-14-1-5.md",
+    "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.5.item-14-1-5-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.5.item-14-1-5.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "cluster创建多个Node子进程，各自有独立堆与事件循环，可在支持的服务器场景共享监听端口；worker_threads是同进程线程，两者不能混称。PM2是可选进程管理器，可做重启、cluster配置、日志和reload；容器或平台已有进程监管时不必叠加第二套管理器。CPU核数不是无限开实例的理由，还要核内存、数据库连接和上游配额。 进程级Map适合存只读配置或可丢失的局部缓存，但单机多进程和多副本之间不共享。会话、限流和任务去重若要求全局一致，需要合适外部存储或平台机制，不靠sticky路由修复所有一致性问题。优雅退出通常先标为未就绪、停止接新请求、排空在途请求与队列、关闭外部连接，最后退出；应有最长截止时间和强制结束兜底。崩溃重启要退避与上限，避免坏配置触发无穷重启风暴。",
+      "example": "processes.mjs真实cluster.fork两个进程，通过IPC各自increment一次；报告有两个不同pid且count均为1，证明局部变量没有合并为全局2。收到shutdown后各自disconnect，主进程观察两个exit且code0，设置4秒失败兜底。实验没有监听HTTP端口、连接数据库或运行PM2，因此不能把IPC正常退出当成生产无损reload证据。",
+      "exercise": "把两个子进程计数断言改成每个都等于2，必然失败，根因是把进程内变量当共享存储。另一故障是删去shutdown消息，4秒兜底应失败并结束子进程；恢复关闭协议后正常退出。 先画进程边界与状态归属，再谈横向扩展。PM2 reload需要应用配合优雅关闭，平台接入和长连接真实负载才可证明无损；本地IPC只覆盖生命周期的一小部分。",
+      "practice": "为主Nuxt BFF写单实例教学状态到多实例部署的差异清单：会话/限流/连接归属、外部存储、健康检查和排空。运行cluster局部计数实验支持状态结论；新增生产部署方案应根据目标平台选择PM2或平台监管，不能默认二者叠加。",
+      "sources": [
+        "https://nodejs.org/api/cluster.html",
+        "https://pm2.keymetrics.io/docs/usage/cluster-mode/",
+        "https://pm2.keymetrics.io/docs/usage/signals-clean-restart/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/performance"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "进程管理与cluster：状态边界、优雅退出和PM2取舍",
+      "task": "为主Nuxt BFF写单实例教学状态到多实例部署的差异清单：会话/限流/连接归属、外部存储、健康检查和排空。运行cluster局部计数实验支持状态结论；新增生产部署方案应根据目标平台选择PM2或平台监管，不能默认二者叠加。",
+      "criteria": [
+        "清单指出实际应用中的进程内状态，并说明重启/副本切换的影响和替代存储。",
+        "保留真实双pid和正常退出证据，PM2/HTTP排空/滚动发布未运行范围写清楚。"
+      ]
+    }
+  }
+]

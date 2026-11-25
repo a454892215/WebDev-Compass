@@ -1,0 +1,145 @@
+[
+  {
+    "id": "14.5.1",
+    "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.1.graphql.md",
+    "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.1.graphql-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.1.graphql.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "GraphQL由schema定义字段及参数类型，执行器验证操作并调用resolver。一次HTTP请求可以触发很多数据读取，不能把“只发一次请求”误认为“只访问一次数据库”。N+1常见于列表每个元素单独查关联对象；DataLoader收集同一调度批次的load并对重复key去重。批量返回数组必须与输入key一一对应，查无数据按契约返回null或Error，不能直接返回数据库随意排序的rows。",
+      "example": "运行pnpm test，第一项真实graphql-js执行同一操作：原始路径3次作者读取，DataLoader路径1个批量，输出相同且作者顺序1、2、1正确。第二项并发执行A/B请求，名字分别带A/B，stats独立。第三项拒绝未知hash。修改lab.mjs中loader为模块级共享后，用A先请求再B的变体观察泄漏；仅在隔离副本实验。",
+      "exercise": "故障：把batch函数结尾改为return rows，上游逆序后1的作者变成2。先断言请求keys与输出位置；恢复keys.map查找并为缺失key保留位置。另把loader提到模块顶层可复现跨请求缓存污染。",
+      "practice": "在主BFF旁提出可选GraphQL网关扩展，复用其已验证身份边界，先在data-lab完成关联查询批处理与预注册操作；主项目现有接口不声称已改为GraphQL。",
+      "sources": [
+        "https://www.graphql-js.org/docs/n1-dataloader/",
+        "https://the-guild.dev/graphql/stitching/docs/approaches/schema-extensions",
+        "https://www.apollographql.com/docs/react/api/link/apollo-link-persisted-queries"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "GraphQL：Schema、N+1、DataLoader 与持久化操作",
+      "task": "在主BFF旁提出可选GraphQL网关扩展，复用其已验证身份边界，先在data-lab完成关联查询批处理与预注册操作；主项目现有接口不声称已改为GraphQL。",
+      "criteria": [
+        "四篇文章原始路径4次读取；批量路径仅1次且重复2去重，missing作者为null而不串位。",
+        "A/B相同id返回各自数据；未知persisted hash拒绝，不能退回执行调用者提供的任意全文。"
+      ]
+    }
+  },
+  {
+    "id": "14.5.2",
+    "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.2.apollo-client-urql.md",
+    "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.2.apollo-client-urql-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.2.apollo-client-urql.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "查询客户端维护操作状态与结果缓存。Apollo InMemoryCache把对象按__typename和标识字段规范化，再由查询根引用；不同查询可指向同一实体。身份字段若只在租户内唯一，keyFields要纳入tenant等真实业务标识。fetchPolicy决定先读缓存还是网络；cache-first、network-only、no-cache并不等义，network-only通常仍写缓存，no-cache不写入结果。",
+      "example": "第四项测试使用真实@apollo/client/core的InMemoryCache/gql，A/B分别写入id=1的Person并读取自己的name；extract只含本身份。将A快照restore到新浏览器cache后可读，restore({})后原查询变null。这里没有实际发送GraphQL HTTP，也没有执行React SSR。",
+      "exercise": "故障：两个SSR请求复用一个模块级cache，先写A再读B会读出A-private。通过extract定位ROOT_QUERY.viewer引用和实体key，改为每请求创建。仅增加tenant key不能清掉ROOT_QUERY上的旧viewer。",
+      "practice": "审查主Nuxt请求边界，给可选GraphQL客户端写每请求创建与安全hydrate/登出清理方案；用真实Apollo缓存测试证明生命周期，不给主项目宣称已经安装GraphQL适配。",
+      "sources": [
+        "https://www.apollographql.com/docs/react/performance/server-side-rendering",
+        "https://www.apollographql.com/docs/react/caching/cache-configuration",
+        "https://www.apollographql.com/docs/react/networking/authentication",
+        "https://github.com/urql-graphql/urql/blob/main/docs/advanced/server-side-rendering.md",
+        "https://github.com/urql-graphql/urql/blob/main/docs/basics/document-caching.md"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Apollo / urql：规范化缓存、SSR 隔离与登出清理",
+      "task": "审查主Nuxt请求边界，给可选GraphQL客户端写每请求创建与安全hydrate/登出清理方案；用真实Apollo缓存测试证明生命周期，不给主项目宣称已经安装GraphQL适配。",
+      "criteria": [
+        "同id不同tenant的实体key不同，两个SSR请求快照不混入对方name或凭据。",
+        "明确区分network-only/no-cache与clearStore/resetStore；登出变体不让旧响应覆盖新身份状态。"
+      ]
+    }
+  },
+  {
+    "id": "14.5.3",
+    "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.3.redis.md",
+    "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.3.redis-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.3.redis.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Redis是独立数据服务，多个BFF副本可访问共享的会话状态与计数。会话cookie携带随机不可猜的session id，服务端以它查询身份、有效期和撤销状态；Redis连接凭据留在服务器。TTL限制存活时间，但滑动过期、最长绝对时限和主动撤销需业务定义。缓存不自动成为身份真相源，访问控制仍在每次请求执行。",
+      "example": "第五项实际运行ExpiringStoreModel，在可控时钟100/109/110验证session过期、撤销；同一A限流key前2次通过第3次拒绝，B不受A计数影响，窗口到期恢复。这是明确的单进程模型，不发送Redis命令，也不能证明脚本原子性、故障转移或集群行为。",
+      "exercise": "故障：在每次请求新建Map限流器，计数永远为1；移到进程范围只能修复单副本。另遗漏首次计数TTL会永久拒绝，用固定时钟推进并检查过期字段定位，最终跨副本仍需共享原子存储。",
+      "practice": "对主BFF教学内存会话与限流标记单进程限制，写可选Redis替换接口、故障策略和跨副本集成测试清单；不把尚未接入的Redis描述为主工程功能。",
+      "sources": [
+        "https://redis.io/docs/latest/commands/expire/",
+        "https://redis.io/docs/latest/commands/incr/",
+        "https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Redis 的协作边界：会话、TTL、原子限流与故障策略",
+      "task": "对主BFF教学内存会话与限流标记单进程限制，写可选Redis替换接口、故障策略和跨副本集成测试清单；不把尚未接入的Redis描述为主工程功能。",
+      "criteria": [
+        "会话撤销立即不可用，闲置续期不突破绝对寿命；TTL边界不依赖真实等待。",
+        "限流key隔离tenant/主体，解释Redis不可用时不同接口降级策略；不把Map测试称Redis集成通过。"
+      ]
+    }
+  },
+  {
+    "id": "14.5.4",
+    "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.4.item-14-5-4.md",
+    "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.4.item-14-5-4-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.4.item-14-5-4.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "关系数据库schema定义列类型、主键、唯一约束、可空、索引和关联；ORM模型是应用映射，不等于公开API。Prisma ORM 7示例中String?表示可空，@id标识主键，@unique表示唯一；关系字段与实际外键标量分工要区分。数据库约束可能使写入失败，客户端类型检查无法代替服务器校验，也无法解释已部署旧客户端的行为。",
+      "example": "阅读schema.prisma和migration-plan.md，再运行第六项测试：displayName=null时严格DTO拒绝，回填后映射为{id,name}且passwordHash不会外露。测试证明DTO切换前置条件，不是Prisma生成、SQL执行或真实数据库迁移。",
+      "exercise": "故障：先把前端name:string替换为displayName:string，数据库旧行仍为null，页面崩溃。用第六项失败输入定位后，先兼容旧字段/回填再收紧；不能用非空断言消除真实数据问题。",
+      "practice": "对主BFF公开DTO建立版本化迁移评审，引用data-lab可空字段与投影测试，产出数据库→BFF→旧/新前端发布矩阵；主工程fixture不声称已接Prisma。",
+      "sources": [
+        "https://www.prisma.io/docs/guides/upgrade-prisma-orm/v7",
+        "https://www.prisma.io/docs/orm/migrations/applying-a-migration",
+        "https://www.prisma.io/docs/orm/prisma-schema/data-model/models"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Prisma schema 与迁移：读懂约束，保护 API 兼容性",
+      "task": "对主BFF公开DTO建立版本化迁移评审，引用data-lab可空字段与投影测试，产出数据库→BFF→旧/新前端发布矩阵；主工程fixture不声称已接Prisma。",
+      "criteria": [
+        "能说明主键、唯一、可空的不同约束及前端错误体验；字段类型不直接等同公开API。",
+        "计划先查数据再加约束并保留旧版本兼容窗口，指出删列回滚需数据恢复而非仅git revert。"
+      ]
+    }
+  },
+  {
+    "id": "14.5.5",
+    "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.5.websocket-sse.md",
+    "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.5.websocket-sse-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.5.websocket-sse.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "SSE是服务器到客户端的UTF-8文本事件流，Content-Type为text/event-stream，事件以空行结束；冒号注释可作心跳，id可作为恢复游标。浏览器EventSource通常自动重连并携带Last-Event-ID，手工fetch读取则要自己处理分帧/重连。WebSocket是双向消息连接，浏览器原生API不能发送协议ping帧，应用心跳与服务端协议ping/pong应区分。",
+      "example": "第七项确定性测试backoff范围和A/B游标过滤。第八项真实Node回环HTTP SSE：发送心跳、Last-Event-ID=1时只收到A-two/id=3，读取真实Response.body直到目标事件，再cancel并验证服务端close清理心跳。身份A在测试服务器固定，仅用于协议fixture，不是认证接口。",
+      "exercise": "故障：在EventSource.onerror里新建实例却不close旧实例，会同时保留自动重连和新连接，消息重复。给连接编号与创建/关闭计数定位，再明确单一重连责任方；实验中的Node fetch不会自动复现浏览器该行为，应另写浏览器变体。",
+      "practice": "为主BFF的可选实时通知提出SSE扩展计划，先运行本lab真实回环协议测试，再新增身份校验、快照恢复及有界慢消费者；主项目不声称已经具备生产消息总线。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events",
+        "https://developer.mozilla.org/en-US/docs/Web/API/WebSocket",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_streams"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "WebSocket / SSE：心跳、重连、游标与连接资源",
+      "task": "为主BFF的可选实时通知提出SSE扩展计划，先运行本lab真实回环协议测试，再新增身份校验、快照恢复及有界慢消费者；主项目不声称已经具备生产消息总线。",
+      "criteria": [
+        "同租户重放且不越权，重复id去重；过旧cursor有可解释的快照恢复路径而不是静默漏消息。",
+        "重试有抖动/上限且鉴权失败可终止，关闭最后订阅后清理timer/连接；不混淆EventSource自动retry与自定义算法。"
+      ]
+    }
+  }
+]

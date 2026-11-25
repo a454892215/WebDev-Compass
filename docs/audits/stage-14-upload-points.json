@@ -1,0 +1,85 @@
+[
+  {
+    "id": "14.6.1",
+    "theory": "learning/1-notes/14-bff-runtime/14.6-file-upload/14.6.1.item-14-6-1.md",
+    "example": "learning/2-examples/14-bff-runtime/14.6-file-upload/14.6.1.item-14-6-1-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.6-file-upload/14.6.1.item-14-6-1.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-6-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "上传任务需要身份、uploadId、文件总长、分片大小、整体摘要、已收分片集合和状态。uploadId是资源标识，不能代替鉴权。每次列举、写分片、完成、取消都按服务端会话解析出的owner查所有权。分片可乱序传输，完成时必须按序组装，核对总长和整体摘要；每片hash只证明传输一致，不能代替整个文件或权限验证。",
+      "example": "10项测试中，resume用已存在第0片开始，实际await delay让两个任务同时在途，断言peak=2、sent不含0；失败恢复测试保留第0片并只补其余片，complete先进入quarantine。ownership、missing-parts、part-size、part-checksum、object-checksum和abort均有反例。",
+      "exercise": "在独立副本把complete中的索引排序删除，用逆序写片再完成。定位拼接顺序导致object-checksum；修复后逆序写片仍可得到原始字节。不要把失败误判为网络错误。",
+      "practice": "以现有upload-lab为上传子实验，为主Nuxt BFF新增上传任务路由设计或隔离副本实现：服务端会话→owner→init/list/put/complete/abort，不把主项目尚无的上传API说成现有功能。扩展37字节/6字节片/并发3与断网恢复证据。",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+        "https://developer.mozilla.org/en-US/docs/Web/API/Blob/slice"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "分片上传：断点续传、并发与最终完整性",
+      "task": "以现有upload-lab为上传子实验，为主Nuxt BFF新增上传任务路由设计或隔离副本实现：服务端会话→owner→init/list/put/complete/abort，不把主项目尚无的上传API说成现有功能。扩展37字节/6字节片/并发3与断网恢复证据。",
+      "criteria": [
+        "首轮峰值不超过3，恢复不重传服务端已确认的第1片，最终字节与原文件完全一致。",
+        "缺任意片或整体摘要不符不能complete；bob无法查询或取消alice的uploadId。"
+      ]
+    }
+  },
+  {
+    "id": "14.6.2",
+    "theory": "learning/1-notes/14-bff-runtime/14.6-file-upload/14.6.2.url.md",
+    "example": "learning/2-examples/14-bff-runtime/14.6-file-upload/14.6.2.url-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.6-file-upload/14.6.2.url.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-6-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "直传拆成控制通道和数据通道：浏览器先向受信BFF申请指定对象/分片的限时权限，再把原始文件字节PUT到对象存储，最后向BFF确认完成。服务端保存长期凭据并验证用户和对象归属；浏览器只拿短期能力。预签名URL通常是持有即有权限的bearer能力，并不天然绑定当前登录用户或一次性使用。",
+      "example": "LocalGrants实际测试method/id/part/checksum/size任一变化均scope失败，达到expires时expired，伪造签名被拒绝，超过60秒授权期限被拒绝。该token不是HTTP URL，不请求AWS/OSS。本轮没有云账号、网络直传、Bucket CORS或官方SDK签名验证。",
+      "exercise": "在副本移除verify的method比较，原PUT grant被当作GET能力接受；加一个变体测试定位再修复。云端排错推演：签发时Content-Type为image/png、请求发application/octet-stream，先核对签名字段而非关闭鉴权。",
+      "practice": "在主BFF的新增上传设计中列清init/sign/confirm权限与数据直传路径。以LocalGrants的purpose变体补验证；另提交云端接入检查单，明确真实S3/OSS/CORS仍待受控环境验证，不假称主项目已接云存储。",
+      "sources": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html",
+        "https://help.aliyun.com/zh/oss/user-guide/upload-files-using-presigned-urls",
+        "https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "预签名URL：S3/OSS直传与最小授权",
+      "task": "在主BFF的新增上传设计中列清init/sign/confirm权限与数据直传路径。以LocalGrants的purpose变体补验证；另提交云端接入检查单，明确真实S3/OSS/CORS仍待受控环境验证，不假称主项目已接云存储。",
+      "criteria": [
+        "purpose被签名并在verify检查；把upload能力用于download时测试失败。",
+        "表中明确URL非一次性、bucket CORS不等于授权、PUT发送Blob原始字节；完成必须经BFF校验。"
+      ]
+    }
+  },
+  {
+    "id": "14.6.3",
+    "theory": "learning/1-notes/14-bff-runtime/14.6-file-upload/14.6.3.item-14-6-3.md",
+    "example": "learning/2-examples/14-bff-runtime/14.6-file-upload/14.6.3.item-14-6-3-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.6-file-upload/14.6.3.item-14-6-3.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-6-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "文件名扩展、客户端File.type和Content-Type均由不受信输入影响，只能作为声明。服务端先限制请求/任务/用户资源，再按允许类型检查字节特征并使用受控解析器验证内容；完成传输与允许公开是不同状态。扫描失败、超时或未知应留在quarantine，只有受信扫描结果才能迁移到ready。",
+      "example": "实际测试伪造image/png但无PNG字节头被type拒绝；PNG字节头但声明text/html同样拒绝；complete后read被隔离阻断，timeout结果保持quarantine，infected→rejected，clean→ready后只返回原始副本，complete后再写片被state拒绝。fixture不是有效图片、扫描是状态模型。",
+      "exercise": "在副本将未知扫描结果默认设为ready，重跑现有scanner unavailable测试应失败。修复为保持quarantine后通过；解释为何“杀毒服务挂了先放行”会失去隔离保证。",
+      "practice": "为主BFF拟新增上传模块的状态/授权表，沿用upload-lab隔离策略；增加受信扫描回调摘要验证的隔离副本实现和失败测试。明确现有主项目未实现上传/杀毒；列上线前解析、隔离域、大小流控与真实扫描验收。",
+      "sources": [
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security",
+        "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "上传安全：类型、大小、隔离与扫描完成态",
+      "task": "为主BFF拟新增上传模块的状态/授权表，沿用upload-lab隔离策略；增加受信扫描回调摘要验证的隔离副本实现和失败测试。明确现有主项目未实现上传/杀毒；列上线前解析、隔离域、大小流控与真实扫描验收。",
+      "criteria": [
+        "timeout或摘要不符不能把quarantine迁成ready；clean只对对应不可变对象生效。",
+        "错误MIME、错误magic、超限和越权分别被拒绝；扫描前后读取策略有明确测试。"
+      ]
+    }
+  }
+]

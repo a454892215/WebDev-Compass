@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "stage": 14,
+  "project": "learning/4-practice/14-bff-runtime/nuxt.config.ts",
+  "points": [
+    {
+      "id": "14.1.1",
+      "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.1.node-event-loop.md",
+      "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.1.node-event-loop-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.1.node-event-loop.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-1"
+    },
+    {
+      "id": "14.1.2",
+      "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.2.stream.md",
+      "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.2.stream-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.2.stream.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-2"
+    },
+    {
+      "id": "14.1.3",
+      "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.3.worker-threads.md",
+      "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.3.worker-threads-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.3.worker-threads.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-3"
+    },
+    {
+      "id": "14.1.4",
+      "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.4.item-14-1-4.md",
+      "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.4.item-14-1-4-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.4.item-14-1-4.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-4"
+    },
+    {
+      "id": "14.1.5",
+      "theory": "learning/1-notes/14-bff-runtime/14.1-node-runtime/14.1.5.item-14-1-5.md",
+      "example": "learning/2-examples/14-bff-runtime/14.1-node-runtime/14.1.5.item-14-1-5-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.1-node-runtime/14.1.5.item-14-1-5.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-1-5"
+    },
+    {
+      "id": "14.2.1",
+      "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express.md",
+      "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-1"
+    },
+    {
+      "id": "14.2.2",
+      "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2.md",
+      "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-2"
+    },
+    {
+      "id": "14.2.3",
+      "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.3.item-14-2-3.md",
+      "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.3.item-14-2-3-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.3.item-14-2-3.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-3"
+    },
+    {
+      "id": "14.2.4",
+      "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.4.rate-limiting.md",
+      "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.4.rate-limiting-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.4.rate-limiting.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-4"
+    },
+    {
+      "id": "14.2.5",
+      "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.5.item-14-2-5.md",
+      "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.5.item-14-2-5-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.5.item-14-2-5.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-5"
+    },
+    {
+      "id": "14.2.6",
+      "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.6.openapi.md",
+      "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.6.openapi-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.6.openapi.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-6"
+    },
+    {
+      "id": "14.3.1",
+      "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router.md",
+      "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-1"
+    },
+    {
+      "id": "14.3.2",
+      "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro.md",
+      "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-2"
+    },
+    {
+      "id": "14.3.3",
+      "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.3.item-14-3-3.md",
+      "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.3.item-14-3-3-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.3.item-14-3-3.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-3"
+    },
+    {
+      "id": "14.3.4",
+      "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header.md",
+      "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-4"
+    },
+    {
+      "id": "14.3.5",
+      "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming.md",
+      "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-5"
+    },
+    {
+      "id": "14.4.1",
+      "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node.md",
+      "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.1.edge-vs-node.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-1"
+    },
+    {
+      "id": "14.4.2",
+      "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers.md",
+      "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.2.vercel-edge-functions-cloudflare-workers.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-2"
+    },
+    {
+      "id": "14.4.3",
+      "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.3.edge-middleware.md",
+      "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.3.edge-middleware-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.3.edge-middleware.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-3"
+    },
+    {
+      "id": "14.4.4",
+      "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.4.kv-d1-edge-config.md",
+      "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.4.kv-d1-edge-config-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.4.kv-d1-edge-config.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-4"
+    },
+    {
+      "id": "14.4.5",
+      "theory": "learning/1-notes/14-bff-runtime/14.4-edge-runtime/14.4.5.edge.md",
+      "example": "learning/2-examples/14-bff-runtime/14.4-edge-runtime/14.4.5.edge-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.4-edge-runtime/14.4.5.edge.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-4-5"
+    },
+    {
+      "id": "14.5.1",
+      "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.1.graphql.md",
+      "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.1.graphql-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.1.graphql.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-1"
+    },
+    {
+      "id": "14.5.2",
+      "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.2.apollo-client-urql.md",
+      "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.2.apollo-client-urql-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.2.apollo-client-urql.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-2"
+    },
+    {
+      "id": "14.5.3",
+      "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.3.redis.md",
+      "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.3.redis-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.3.redis.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-3"
+    },
+    {
+      "id": "14.5.4",
+      "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.4.item-14-5-4.md",
+      "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.4.item-14-5-4-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.4.item-14-5-4.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-4"
+    },
+    {
+      "id": "14.5.5",
+      "theory": "learning/1-notes/14-bff-runtime/14.5-data-layer/14.5.5.websocket-sse.md",
+      "example": "learning/2-examples/14-bff-runtime/14.5-data-layer/14.5.5.websocket-sse-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.5-data-layer/14.5.5.websocket-sse.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-5-5"
+    },
+    {
+      "id": "14.6.1",
+      "theory": "learning/1-notes/14-bff-runtime/14.6-file-upload/14.6.1.item-14-6-1.md",
+      "example": "learning/2-examples/14-bff-runtime/14.6-file-upload/14.6.1.item-14-6-1-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.6-file-upload/14.6.1.item-14-6-1.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-6-1"
+    },
+    {
+      "id": "14.6.2",
+      "theory": "learning/1-notes/14-bff-runtime/14.6-file-upload/14.6.2.url.md",
+      "example": "learning/2-examples/14-bff-runtime/14.6-file-upload/14.6.2.url-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.6-file-upload/14.6.2.url.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-6-2"
+    },
+    {
+      "id": "14.6.3",
+      "theory": "learning/1-notes/14-bff-runtime/14.6-file-upload/14.6.3.item-14-6-3.md",
+      "example": "learning/2-examples/14-bff-runtime/14.6-file-upload/14.6.3.item-14-6-3-demo.md",
+      "exercise": "learning/3-exercises/14-bff-runtime/14.6-file-upload/14.6.3.item-14-6-3.md",
+      "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-6-3"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-25T13:00:33.224456+00:00",
+  "runtime": "v26.0.0",
+  "command": "node --test learning/2-examples/14-bff-runtime/14.4-edge-runtime/edge-lab/policy.test.mjs",
+  "result": "passed",
+  "tests": 10,
+  "failures": 0,
+  "output": "✔ 14.4.1 portable Request/Response contract, not platform compatibility proof (24.894334ms)\n✔ 14.4.2 fixed routes and methods; no arbitrary URL proxy (0.271625ms)\n✔ 14.4.3 forged user/geo headers do not grant access or choose trusted region (0.274166ms)\n✔ 14.4.3 two fixture sessions isolate projection and forbid shared caching (0.2705ms)\n✔ 14.4.3 cohort is deterministic but never authorization (3.05425ms)\n✔ 14.4.4 stale replica illustrates unsafe immediate revocation (0.094167ms)\n✔ 14.4.5 fresh, stale/background refresh and expired boundaries (0.147709ms)\n✔ 14.4.5 expired upstream failure does not return arbitrarily old data (0.25775ms)\n✔ 14.4.5 concurrent misses deduplicate; memory entries are bounded (0.098541ms)\n✔ 14.4.5 credentials bypass public cache; query key dimensions explicit (0.664875ms)\nℹ tests 10\nℹ suites 0\nℹ pass 10\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 95.87325\n",
+  "mutationChecks": [
+    {
+      "mutation": "credential-cache-bypass",
+      "expectedFailureObserved": true,
+      "exitCode": 1,
+      "failedTests": [
+        "✖ 14.4.5 credentials bypass public cache; query key dimensions explicit (1.416708ms)",
+        "✖ failing tests:",
+        "✖ 14.4.5 credentials bypass public cache; query key dimensions explicit (1.416708ms)"
+      ]
+    },
+    {
+      "mutation": "trust-client-identity",
+      "expectedFailureObserved": true,
+      "exitCode": 1,
+      "failedTests": [
+        "✖ 14.4.3 forged user/geo headers do not grant access or choose trusted region (0.747583ms)",
+        "✖ failing tests:",
+        "✖ 14.4.3 forged user/geo headers do not grant access or choose trusted region (0.747583ms)"
+      ]
+    },
+    {
+      "mutation": "unbounded-stale",
+      "expectedFailureObserved": true,
+      "exitCode": 1,
+      "failedTests": [
+        "✖ 14.4.5 fresh, stale/background refresh and expired boundaries (0.67525ms)",
+        "✖ 14.4.5 expired upstream failure does not return arbitrarily old data (0.209417ms)",
+        "✖ failing tests:",
+        "✖ 14.4.5 fresh, stale/background refresh and expired boundaries (0.67525ms)",
+        "✖ 14.4.5 expired upstream failure does not return arbitrarily old data (0.209417ms)"
+      ]
+    }
+  ],
+  "scope": "Node Web API Request/Response and deterministic models; no server/listen, cloud deploy, real account, KV/D1/Global Config binding or CDN measured."
+}

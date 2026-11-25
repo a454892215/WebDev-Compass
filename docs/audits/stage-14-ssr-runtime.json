@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-25",
+  "node": "v26.0.0",
+  "command": "node --test test.mjs",
+  "cwd": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/runtime-lab",
+  "tests": 6,
+  "passed": 6,
+  "failed": 0,
+  "actual": [
+    "Node请求局部模型交错隔离",
+    "出站头白名单模型",
+    "Promise调度闸门",
+    "真实loopback HTTP首块与done",
+    "提交头前503与提交后200+error",
+    "客户端断开取消待执行计时器并释放请求"
+  ],
+  "notRun": [
+    "Next安装/构建",
+    "生产CDN/代理",
+    "Nuxt组件HTML Streaming",
+    "多浏览器/真机/读屏"
+  ],
+  "mainNuxt": "独立Node模型不替代主Nuxt集成验证；主代理另记录"
+}

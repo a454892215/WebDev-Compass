@@ -1,0 +1,77 @@
+{
+  "checkedAt": "2026-11-25T12:57:06.313Z",
+  "node": "v26.0.0",
+  "eventLoop": {
+    "cjs": [
+      "sync",
+      "nextTick",
+      "promise",
+      "queueMicrotask",
+      "io",
+      "immediate-in-io",
+      "timeout-in-io"
+    ],
+    "esm": [
+      "sync",
+      "promise",
+      "queueMicrotask",
+      "nextTick"
+    ]
+  },
+  "stream": {
+    "good": {
+      "bytes": 32768,
+      "peak": 2048,
+      "waits": 16
+    },
+    "bad": {
+      "bytes": 32768,
+      "peak": 32768,
+      "waits": 0
+    },
+    "failed": {
+      "message": "fixture-write-failed",
+      "sourceDestroyed": true,
+      "sinkDestroyed": true
+    }
+  },
+  "worker": {
+    "sum": 5000050000,
+    "invalid": "rejected",
+    "crash": "rejected",
+    "timeout": "terminated"
+  },
+  "config": {
+    "loaded": {
+      "port": 4562,
+      "debug": false
+    },
+    "overridden": {
+      "port": 4569,
+      "debug": false
+    },
+    "invalid": "rejected",
+    "publicProjection": "token omitted"
+  },
+  "processes": {
+    "rows": [
+      {
+        "kind": "count",
+        "count": 1,
+        "pid": 33696
+      },
+      {
+        "kind": "count",
+        "count": 1,
+        "pid": 33697
+      }
+    ],
+    "exits": 2,
+    "graceful": true
+  },
+  "limitations": [
+    "No PM2 installation, HTTP load balancing or production reload was performed.",
+    "Synthetic chunks and one-shot workers; no throughput or memory benchmark.",
+    "Node 26.0.0 local runtime; official current docs may show newer 26.x."
+  ]
+}

@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font:
+    1rem/1.7 system-ui,
+    sans-serif;
+  color: #16283b;
+  background: #f3f6fa;
+}
+main {
+  max-width: 56rem;
+  margin: auto;
+  padding: 1.5rem;
+}
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+form {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+label {
+  display: inline-block;
+  margin: 0.5rem;
+}
+button,
+select {
+  font: inherit;
+  padding: 0.5rem;
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+}
+:focus-visible {
+  outline: 3px solid #005fba;
+  outline-offset: 3px;
+}
+section {
+  background: white;
+  padding: 1rem;
+  margin-block: 1rem;
+  border: 1px solid #b8c4d1;
+  min-height: 12rem;
+}
+.trace {
+  overflow-wrap: anywhere;
+  font-size: 0.875rem;
+}
+a {
+  color: #0059a7;
+}

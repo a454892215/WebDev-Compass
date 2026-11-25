@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "stage": 14,
+  "group": "14.5",
+  "checkedAt": "2026-11-25T13:02:13.250630+00:00",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "graphql": "16.11.0",
+    "dataloader": "2.2.3",
+    "apollo": "4.0.9"
+  },
+  "commands": [
+    {
+      "command": "pnpm install",
+      "cwd": "learning/2-examples/14-bff-runtime/14.5-data-layer/data-lab",
+      "result": "passed",
+      "notes": "Exact dependency versions and generated pnpm-lock.yaml."
+    },
+    {
+      "command": "pnpm test",
+      "result": "passed",
+      "tests": 8,
+      "failed": 0,
+      "notes": "Actual Node test output: duration316ms; loopback SSE uses temporary ephemeral port and closes."
+    },
+    {
+      "command": "pnpm install --frozen-lockfile --offline",
+      "result": "passed",
+      "notes": "Post-format lockfile reproducibility check; then pnpm test passed again 8/8 (324ms)."
+    }
+  ],
+  "actual": [
+    "graphql-js resolver execution N+1 and batching order",
+    "Concurrent request-context tenant isolation",
+    "Persisted operation allowlist",
+    "Apollo InMemoryCache extract/restore/clear",
+    "Loopback HTTP SSE headers/framing/Last-Event-ID/socket close"
+  ],
+  "models": [
+    "Redis session expiry/revocation/rate-window semantics, single process",
+    "Prisma7 schema reading and DTO contract boundary",
+    "Deterministic full jitter and replay filtering"
+  ],
+  "notRun": [
+    "Redis process",
+    "Prisma CLI/database SQL",
+    "Remote schema stitching",
+    "APQ registration protocol",
+    "urql runtime",
+    "Browser EventSource",
+    "WebSocket protocol",
+    "Production CDN or cloud deployment",
+    "Real learner trial"
+  ]
+}

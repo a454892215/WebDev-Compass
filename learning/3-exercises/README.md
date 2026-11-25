@@ -30,3 +30,5 @@
 - [阶段12：自动化测试、Storybook与Vue组件库](./12-testing-design-system/README.md)：24点四部分、组件包/Nuxt宿主及真实策略/专项/故事实验。
 
 - [阶段13：pnpm多包管理、版本发布与CI流水线](./13-platform/README.md)：28点四部分、多应用workspace及发布/构建/兼容/DX实验。
+
+- [阶段14：Node.js、Nuxt Nitro 与 BFF 接口开发](./14-bff-runtime/README.md)：29点独立练习及配套运行边界。

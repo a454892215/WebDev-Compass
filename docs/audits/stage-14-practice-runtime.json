@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "stage": 14,
+  "checkedAt": "2026-11-25T13:08:04.682994+00:00",
+  "environment": {
+    "node": "26.0.0",
+    "pnpm": "11.4.0",
+    "nuxt": "4.7.0",
+    "nitro": "2.14.0",
+    "vue": "3.5.46"
+  },
+  "commands": [
+    {
+      "command": "CI=true pnpm install --frozen-lockfile --prefer-offline",
+      "result": "passed",
+      "notes": "明确allowBuilds.esbuild=false，postinstall Nuxt prepare完成。"
+    },
+    {
+      "command": "pnpm check",
+      "result": "passed",
+      "checks": [
+        "Nuxt typecheck",
+        "ESLint",
+        "Prettier",
+        "Vitest 3/3",
+        "Nuxt node-server production build"
+      ]
+    },
+    {
+      "command": "pnpm test:e2e",
+      "result": "passed",
+      "tests": 4,
+      "failed": 0,
+      "duration": "6.0s",
+      "notes": "桌面1440/手机视口390两流程+两HTTP专项；最终server-errors.log为空。"
+    }
+  ],
+  "actual": [
+    "真实双会话8并发HTTP响应各自身份与唯一trace/no-store",
+    "同会话SSR首页HTML身份隔离与无另一用户姓名",
+    "无session401、非法Origin403、无效字段/数组用户400、超限413、限流429+Retry-After",
+    "profile超时504、形状/依赖失败502、items失败200+warnings、恢复ok",
+    "实际GET OpenAPI Schema检查真实HTTP DTO，额外字段/数字id负例",
+    "两视口加载/降级/错误/恢复/键盘focus/无横向溢出/无pageerror"
+  ],
+  "findingsClosed": [
+    "async iterator超限提前return导致Nitro finish空socket，改有界保留+排空后413，重跑无后台异常",
+    "user必须string后再允许列表，数组伪装负例400",
+    "Retry-After按锁定类型使用数字",
+    "明确esbuild安装脚本策略，冻结锁文件成功"
+  ],
+  "limitations": [
+    "本地公开合成身份选择不是生产认证；内存会话/限流不跨实例。",
+    "会话读取最多保留256字节但排空完整输入，生产慢速/超大入口防护另需限制；上游JSON仅小fixture，未测生产大响应上限。",
+    "主API关闭监听不构成SSR父请求全链路取消证明；独立Node lab实测HTTP取消。",
+    "未运行Next/PM2/urql、云Edge/KV/D1/CDN、Redis/Prisma数据库、S3/OSS SDK或真实扫描。",
+    "上传HMAC是局部能力模型非云签名，PNG签名字节fixture非有效图片，扫描只是受信结果状态模型。",
+    "无生产/CDN/高并发/长时、多引擎、真机、读屏或真实学习者试学；手机为Chrome视口模拟。"
+  ]
+}

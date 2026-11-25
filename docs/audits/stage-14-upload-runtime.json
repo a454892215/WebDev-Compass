@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "stage": 14,
+  "group": "14.6",
+  "verifiedAt": "2026-11-25T13:00:05Z",
+  "runtime": "Node.js v26.0.0",
+  "command": "node --test learning/2-examples/14-bff-runtime/14.6-file-upload/upload-lab/upload.test.mjs",
+  "result": "passed",
+  "tests": 11,
+  "passed": 11,
+  "failed": 0,
+  "durationMs": 105.398959,
+  "mechanisms": [
+    "actual asynchronous concurrency peak=2 and resume skips existing part0",
+    "allSettled drains in-flight transfers before failure returns",
+    "all operation owner checks",
+    "part length/hash/idempotency/conflict and complete overall checksum",
+    "quarantine ready rejected fail-closed state transitions",
+    "local HMAC capability scope expiry canonical signature checks"
+  ],
+  "fixedIssues": [
+    "Buffer hex decoder accepted trailing invalid character; require exact64 lowercasehex before constant-time compare",
+    "Promise.all early rejection could overlap retries with in-flight writers; drain workers using allSettled"
+  ],
+  "limitations": [
+    "in-memory single-process 1MiB model; no HTTP or durable storage",
+    "local HMAC token is not AWS SigV4 or OSS protocol; no account SDK or bucket CORS test",
+    "synthetic PNG signature+text is not a valid decoded PNG",
+    "scanner verdict state model only; no antivirus engine or authenticated scanner callback",
+    "no production deployment or learner trial"
+  ],
+  "snippetVerification": {
+    "result": "passed",
+    "command": "extract each theory ~~~js block and execute node --input-type=module in upload-lab",
+    "outputs": {
+      "14.6.1": [
+        "[ 0, 1, 2 ]",
+        "quarantine"
+      ],
+      "14.6.2": [
+        "PUT"
+      ],
+      "14.6.3": [
+        "quarantine"
+      ]
+    }
+  }
+}

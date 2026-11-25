@@ -1,0 +1,140 @@
+[
+  {
+    "id": "14.3.1",
+    "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router.md",
+    "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.1.next.js-app-router.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "本点是 React/Next.js 分支选修。主线读者先完成阶段4的 Vue 3/Nuxt 和本节14.3.2–14.3.5，再作机制对照，不要求为了学 Nitro 安装 React。Next App Router 的 layout/page 默认是 Server Component；Server Component 的代码执行和输出协议不等同于 Vue 的通用组件 SSR。需要事件、状态或浏览器 API 的交互边界使用 Client Component。\n\nServer Component 可以在服务端读数据，但其输出、传入 Client Component 的 props 和响应仍可能被浏览器看到。服务端运行不代表返回值自动保密。`'use client'` 标记客户端模块边界，会影响其依赖图；不宜把整个根布局都标成 client。Client Component 初次加载也可能参与服务端预渲染，不能因名字而在模块顶层随意访问 window。\n\nRoute Handler 是 HTTP 接口边界，负责方法、输入校验、身份、权限、状态码和响应。页面能调用数据库不代表所有外部调用都应先绕回自己的 Route Handler；服务端内部可复用数据访问函数。敏感接口仍必须独立鉴权，不能只依赖页面隐藏按钮。框架缓存默认行为会随版本变化，个性化数据先核具体版本的缓存/动态策略，并以双用户请求验证隔离。",
+      "example": "官方观察步骤：阅读 Server and Client Components 的 first load、subsequent navigation 和 composition；画出“数据访问→Server Component→可序列化 DTO→Client Component”。在已有 Next 项目中再检查 app/api 下 Route Handler 的独立鉴权。本仓库没有安装或执行 Next，以下是静态边界示意，不是可直接运行项目：\n\n~~~text\nserver data function -> page (Server Component)\n                    -> {title, likes} -> LikeButton (Client Component)\nexternal HTTP       -> Route Handler -> authenticate + authorize + data function\n~~~\n\n观察结果应指出 props 属于可见输出；服务端密钥留在数据访问边界。Nuxt 通用组件与 Next RSC 不能只替换目录名互迁。",
+      "exercise": "故障：把名为 serverSecret 的公开 fixture 字符串作为 Client Component prop，误认为 Server Component 包装后不可见。检查 props 和网络 payload；修复为只返回展示 DTO。若没有 Next 环境，提交标注“静态审查”的前后数据流图，不捏造运行日志。",
+      "practice": "画出可见输出与服务端代码边界，把误放入 Client props 的 fixtureServiceToken 移出 DTO；只使用公开占位字符串。",
+      "sources": [
+        "https://nextjs.org/docs/app/getting-started/server-and-client-components",
+        "https://nextjs.org/docs/app/getting-started/route-handlers"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Next.js App Router：Server Components 与路由边界（选修）",
+      "task": "画出可见输出与服务端代码边界，把误放入 Client props 的 fixtureServiceToken 移出 DTO；只使用公开占位字符串。",
+      "criteria": [
+        "边界图同时包含页面、交互组件、HTTP Route Handler；标出每处谁负责鉴权。",
+        "列出至少两个浏览器可见输出（HTML/RSC props等），并解释服务端运行不能阻止主动返回的泄漏。"
+      ]
+    }
+  },
+  {
+    "id": "14.3.2",
+    "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro.md",
+    "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.2.nuxt-nitro.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "前置是14.1的进程与14.2的请求鉴权。Nuxt 的 Nitro 负责服务器端请求处理；server/api 文件映射到 /api，server/routes 不加该前缀。server/middleware 在服务器路由前执行，适合校验请求和扩展 event.context；它与 app/middleware 的页面导航守卫职责不同。页面守卫不能保护别人直接调用的 API。Nitro plugin 用于运行时钩子，初始化通常属于进程/实例生命周期，不能当作“每用户登录一次”。\n\n一次请求有自己的 event 和 context，身份校验后把最小 principal 放在该 context，异步调用显式传递它。模块顶层可保存不可变配置、连接池或经过设计的共享存储客户端；不能保存 currentUser、某用户 token 或一个会被覆盖的全局 ref。单个 Node 实例会交错处理多个用户，await 不是事务锁。请求 A 挂起时 B 改了模块变量，A 恢复就可能读到 B 的身份。\n\n页面用 useState 在 Nuxt 上下文中创建 SSR 友好状态，但它会序列化到 payload；密钥和完整 Session 不能放进去。服务端 runtimeConfig 的私有字段留在 server，public 字段可发送给浏览器。部署环境变量覆盖需符合 Nuxt 的 runtimeConfig 命名约定，不能将“变量名没写 public”当作任何代码都不会泄露的保证。连接池共享与用户状态共享要分别分析。",
+      "example": "本节 runtime-lab 的 requestView 使用函数调用内 context，并用人为闸门使 A/B 交错：A 暂停、B 完成、A 恢复。断言两次输出各自身份，展示请求局部数据原则；它是 Node 模型，不是 Nitro 实际路由验证。主 Nuxt 综合项目另做真实双会话 HTTP/SSR 验证。\n\n在 Nuxt server API 中，可采用以下最小模式；authenticate 是上下文依赖，示意不等于本仓库已存在的函数：\n\n~~~ts\nexport default defineEventHandler(async (event) => {\n  const principal = await authenticate(event) // 必须先实现 Session/权限校验\n  event.context.principal = principal\n  return { displayName: principal.displayName } // 最小可见 DTO\n})\n~~~\n\n完整运行入口以阶段14综合实践 README 为准；不要把上面未定义的 authenticate 原样粘入并声称可运行。",
+      "exercise": "故障：模块顶层 let currentUser，在 await 前赋值、await 后返回。使用可控 Promise 闸门稳定复现，不靠随机并发碰运气。定位共享变量作用域，修复为 event.context 或调用参数；模块级连接池不必一并删除。",
+      "practice": "将 requestView 的局部 context 故意改为模块级 currentIdentity，并保持 A/B 闸门顺序，观察身份串线后恢复；再审查主 Nuxt 的事件上下文和配置输出。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/directory-structure/server",
+        "https://nuxt.com/docs/4.x/getting-started/state-management",
+        "https://nuxt.com/docs/4.x/guide/going-further/runtime-config"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Nuxt Nitro：请求生命周期、配置和用户隔离",
+      "task": "将 requestView 的局部 context 故意改为模块级 currentIdentity，并保持 A/B 闸门顺序，观察身份串线后恢复；再审查主 Nuxt 的事件上下文和配置输出。",
+      "criteria": [
+        "故障变体确实让 A 错读 B；恢复局部 context 后同一断言通过。",
+        "记录主项目双用户响应各自的展示字段，并确认 HTML/payload 不包含会话凭据；不只检查浏览器按钮。"
+      ]
+    }
+  },
+  {
+    "id": "14.3.3",
+    "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.3.item-14-3-3.md",
+    "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.3.item-14-3-3-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.3.item-14-3-3.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先画数据依赖图。两个请求无依赖时先发起两个 Promise，再统一 await；如果订单查询依赖身份中的 userId，则身份校验必须在前，不能为了并行而先请求任意用户订单。SSR 的 waterfall 可能来自页面串行 await、父子组件串行加载、BFF 聚合或数据库 N+1；只把两个组件放在同一页面不会自动证明消除了链路。\n\nNuxt useFetch/useAsyncData 把服务端结果装入 payload，使 hydration 可复用；在 setup 直接裸用 $fetch 容易服务端和客户端各请求一次。处理函数应返回可序列化、非 null/undefined 的有效结果，参数、key 和客户端状态应匹配实际页面语义。key 相同的调用可能共享状态，不能依赖任意 key 隐藏跨用户缓存问题；服务端响应缓存必须独立设计。\n\nPromise.all 适合任一必要分支失败就整体失败；Promise.allSettled 或分支捕获适合允许可选模块降级，返回结构要标明 partial 状态。取消不会由 Promise.all 自动传给另一个网络请求，必须把 AbortSignal 传入实际 fetch，并为整个预算、单分支预算和客户端断开制定策略。并行不能无限放大：有上游限流和连接池时应限并发；还要减少非必要数据和序列化体积。",
+      "example": "runtime-lab 的 aggregate 测试让两个 loader 都在同一个 gate 等待，并在放行前断言两者已经启动。该方法验证调度关系，不靠“总耗时恰好小于100ms”等易抖阈值。实验只演示调度，不声称模拟真实服务器吞吐。\n\n~~~js\nconst profilePromise = loadProfile()\nconst catalogPromise = loadCatalog()\nconst [profile, catalog] = await Promise.all([profilePromise, catalogPromise])\n~~~\n\nNuxt 页面应在 setup 中结合 useAsyncData 包装真实 BFF 入口；不要把需保密的上游 token 放在 handler 返回值。真实故障/预算由主 BFF 的接口测试验证。",
+      "exercise": "故障：loader 内先 await loadProfile 再调用 loadCatalog，导致 catalog 在 profile gate 放行前没有开始。看 started 事件而非只看网络截图；恢复先发起再汇合。另解释 Promise.all 失败时其他请求为何可能仍在运行。",
+      "practice": "把 aggregate 改为先 await profile 再启动 catalog，用闸门断言发现串行；恢复独立分支并行，再为必选身份和可选推荐模块画不同失败策略。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://nuxt.com/docs/4.x/api/composables/use-async-data"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "SSR 数据获取：识别 waterfall 与安全并行",
+      "task": "把 aggregate 改为先 await profile 再启动 catalog，用闸门断言发现串行；恢复独立分支并行，再为必选身份和可选推荐模块画不同失败策略。",
+      "criteria": [
+        "放行 gate 前两个独立 loader 已启动，返回 DTO 与输入一致。",
+        "依赖身份的请求仍在身份校验后执行；明确可选分支失败的 UI 和错误类型。"
+      ]
+    }
+  },
+  {
+    "id": "14.3.4",
+    "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header.md",
+    "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.4.cookie-header.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "有三段不同的传播：浏览器到 Nuxt、Nuxt SSR 到本地 API、BFF 到外部上游。浏览器依据 Cookie 的域/路径/SameSite/Secure 策略发送 Cookie；SSR 中普通 $fetch 并不自动代表浏览器当前用户。Nuxt useFetch 访问相对本地路径会使用请求上下文；useRequestFetch 专门帮助 SSR 转发当前请求，避免硬编码整站绝对 URL导致身份丢失。绝对 URL 的转发限制必须核当前 Nuxt 版本，不把通用 fetch 当透明代理。\n\n对外部 API 则明确允许哪些头。不能直接展开全部入站 headers：Cookie、Authorization、Host、Connection、X-Forwarded-* 等有不同信任边界；用户传入的 X-User-Id 或代理头不能替代服务端身份校验。固定上游地址来自服务器配置，而不是任意 query URL，减少 SSRF；重定向也可能改变目标，需单独限制。服务端验证 Session 后，根据需求换成面向目标服务、权限受限的凭据，发送最小 DTO。\n\n上游 Set-Cookie 不会因服务器 fetch 自动安全地进入浏览器。若确有代理登录需求，应专门处理每条 Set-Cookie 的域、路径、安全属性和允许来源；本课默认不把外部 Cookie透传。HttpOnly 防止 JavaScript直接读 Cookie，不阻止浏览器发送；SameSite/CORS 也都不等于完整授权。生产 Cookie 用 HTTPS/Secure，单域适用时优先 __Host- 前缀；本地HTTP实验的命名/标志例外必须明确。",
+      "example": "runtime-lab 的 upstreamHeaders 丢弃入站 cookie、authorization 和 x-forwarded-for，只接受有长度/字符边界的 accept-language，并使用函数参数中的服务端 fixture token。测试输入包含伪造授权和 CRLF；结果不得包含这些入站值。fixture token 是公开测试字符串，不是生产密钥。\n\n~~~ts\n// Nuxt app setup 中，只请求固定相对路径的本地 API。\nconst requestFetch = useRequestFetch()\nconst { data } = await useAsyncData('account-summary', () => requestFetch('/api/summary'))\n~~~\n\n这个片段说明官方上下文传播用法，不承诺主项目必定用相同路由名。切换登录用户时，应按主项目的明确动作清理/刷新旧状态；仅改 key 不能替代 Session 校验。",
+      "exercise": "故障：把 upstreamHeaders 改成 {...requestHeaders, authorization: serviceToken}，用户 Cookie/代理声明也被带走。断言真实输出头发现额外字段，修复为逐字段允许；不要只把日志中 Cookie 隐去而保留实际转发。",
+      "practice": "为上游转发列一个显式表：输入头、是否允许、由谁重建、测试证据；加入伪造cookie、authorization、Host和换行字符，保证结果只含白名单。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/api/composables/use-request-fetch",
+        "https://nuxt.com/docs/4.x/getting-started/data-fetching",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "SSR Cookie/Header：入站身份与上游转发白名单",
+      "task": "为上游转发列一个显式表：输入头、是否允许、由谁重建、测试证据；加入伪造cookie、authorization、Host和换行字符，保证结果只含白名单。",
+      "criteria": [
+        "入站用户 cookie/authorization/代理声明不会原样出现在外部上游头；服务凭据来自服务器受信参数。",
+        "解释相对本地 API 与任意绝对外部 URL的区别，并给出 Session 丢失时的排查步骤。"
+      ]
+    }
+  },
+  {
+    "id": "14.3.5",
+    "theory": "learning/1-notes/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming.md",
+    "example": "learning/2-examples/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.3-ssr-runtime/14.3.5.streaming.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-3-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "Streaming 是逐段交付响应；HTTP数据流、框架组件的HTML流和 RSC 是不同协议。Nuxt/Nitro 能提供流式 API，不代表本仓库使用的 Nuxt 版本自动拥有 Next式组件分段流。MWG 的原生 out-of-order HTML方案属于 volatile 能力，本项目未启用；本节采用稳定的 HTTP/NDJSON教学实验，不能把它称为该新HTML能力的实现。\n\n响应头在 writeHead/flushHeaders/首次发送正文时提交。提交前可以返回503等状态与完整错误DTO；提交后不能再把已经发送的200改成500，也不能把第二个JSON对象直接接进原JSON文档。NDJSON按行 framing，每行独立JSON，客户端必须缓冲跨chunk的半行；网络chunk不保证与一次write或一行对应。协议要定义 start/data/done/error，只有收到终结消息才能知道应用层成功，HTTP200并不足够。\n\n客户端主动离开时取消读取并中止请求；服务器监听响应提前 close 并取消待执行的上游/计时器。正常 finish 与提前 close 区分，不把请求body读完触发的事件误当断连。生产代理/CDN可能缓冲，压缩也会改变首块时机；本地首块通过不能代替整条部署链路验证。恢复仅对可重试、幂等操作进行，必要时携带受服务端校验的游标；写操作没有幂等键不能盲目重放。",
+      "example": "runtime-lab 用真实 node:http 在随机 loopback端口提供 /stream、/partial、/before-error、/cancel。测试读取 first chunk 时断言已有 start 而没有 done，随后再读 done；partial 路径保持HTTP200并发送协议error；before-error在提交头前返回503；cancel在首块后关闭客户端连接，断言服务器活动请求归零且未发送第二块。\n\n每次 reader.read 的 value 都只是字节分片。测试专门用 text()收集完整partial再按行解析，不把一次read当一条NDJSON。真正的浏览器增量客户端还需 TextDecoder 的流式解码、半行缓冲、错误/完成状态与取消按钮，这些列为扩展任务，不声称lab已有UI。",
+      "exercise": "故障：在 /partial 已 flushHeaders 后调用 setHeader 或 writeHead(500)，会违反已提交响应头状态。保留测试夹具的协议error分支；客户端把error显示成可重试失败。如果错误破坏字节流，应中断并呈现不完整状态，不能假补done。",
+      "practice": "在现有Node实验新增一个故意把JSON行拆为两次write的路径，编写有半行缓冲的增量消费者；新增“未收到done就断线”的状态，不把200直接当成功。",
+      "sources": [
+        "https://nodejs.org/api/http.html#responseheaderssent",
+        "https://nodejs.org/api/http.html#event-close_2",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/performance/out-of-order-html-streaming"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "HTTP Streaming：首块、已发送头、取消与恢复",
+      "task": "在现有Node实验新增一个故意把JSON行拆为两次write的路径，编写有半行缓冲的增量消费者；新增“未收到done就断线”的状态，不把200直接当成功。",
+      "criteria": [
+        "拆行/合并chunk都能还原消息，partial错误不会显示成功；收到done才确认完成。",
+        "取消后服务器活动请求归零；解释503与200+协议error的不同恢复入口。"
+      ]
+    }
+  }
+]

@@ -1,0 +1,164 @@
+[
+  {
+    "id": "14.2.1",
+    "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express.md",
+    "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.1.fastify-hono-express.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-1",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "BFF（Backend for Frontend）是服务于特定前端体验的接口层，不是所有 Web 项目必备。已有适用 API 的静态站可以直接调用，不为目录分层新增网络跳数。需要隐藏服务凭据、聚合多服务、输出适合页面的 DTO 时，Nuxt 已有 Nitro server 能力；只有独立部署、独立团队或运行时要求成立时才选独立 Fastify/Hono/Express 服务。",
+      "example": "检查 server/middleware/context.ts 与 server/api/dashboard.get.ts，连续两次 GET，比较响应头和 JSON 的追踪编号。",
+      "exercise": "把 API 写成 dashboard.post.ts 后仍发 GET，实际得到方法/路由不匹配；核对文件路径和请求方法，再恢复 .get.ts。",
+      "practice": "在隔离副本新增 GET /api/version，仅返回公开版本号与当前请求追踪编号，并说明为什么不额外启动 Express。",
+      "sources": [
+        "https://nuxt.com/docs/4.x/directory-structure/server",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "Nuxt Nitro 路由与中间件边界",
+      "task": "在隔离副本新增 GET /api/version，仅返回公开版本号与当前请求追踪编号，并说明为什么不额外启动 Express。",
+      "criteria": [
+        "GET /api/version 返回最小公开字段，不暴露 env。",
+        "两次请求有不同追踪编号，单次头部与DTO一致。"
+      ]
+    }
+  },
+  {
+    "id": "14.2.2",
+    "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2.md",
+    "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.2.item-14-2-2.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-2",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "先画依赖图：profile 与 items 都只依赖已验证身份，因此可以同时启动；若 items 必须先得到 profile 中的组织编号，则存在真实依赖，不能为了“并行”猜组织值。串行总等待接近各耗时之和，独立并行接近最慢分支加处理开销；这里是模型，不承诺固定性能倍数。",
+      "example": "运行 ok、optional-fail、timeout；确认可选失败为200带warning，必需profile超时为504，恢复ok可再次成功。",
+      "exercise": "把 AbortSignal 从 fetch 选项删掉，再让上游延迟600ms；观察请求不再按250ms期限退出，恢复signal后验证504。",
+      "practice": "把第三个独立通知服务加入聚合，定义它的可选降级和总期限；不得把服务URL暴露为输入。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "并行聚合、完整请求期限与部分失败",
+      "task": "把第三个独立通知服务加入聚合，定义它的可选降级和总期限；不得把服务URL暴露为输入。",
+      "criteria": [
+        "三个独立任务先启动再await，明确必需与可选字段。",
+        "超时可恢复，降级有warnings，失败不返回上游私有正文。"
+      ]
+    }
+  },
+  {
+    "id": "14.2.3",
+    "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.3.item-14-2-3.md",
+    "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.3.item-14-2-3-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.3.item-14-2-3.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-3",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "认证回答“是谁”，授权回答“是否能操作此资源”。Session Cookie 是携带随机、不透明会话标识的一种方案；服务端查找有效期与用户，再执行资源权限。JWT方案则需要使用维护良好的验证库核对签名、允许算法、issuer、audience、exp/nbf和密钥轮换，decode/base64解析不是verify。主例只实现随机会话，不实现JWT，不用手写签名替代生产身份系统。",
+      "example": "分别建立两个独立请求上下文选择alice/bob，并发请求dashboard与SSR首页，核对没有混入另一用户数据。",
+      "exercise": "把event.context.fixtureUser改成模块级currentUser后并发两个用户，会产生竞争风险；恢复请求局部变量，用并发隔离测试确认。不要在正式教材中保留泄漏实现。",
+      "practice": "在隔离副本给合成会话增加退出接口和服务端撤销，写接口遵守同源校验。",
+      "sources": [
+        "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "会话校验、JWT验证与请求级身份",
+      "task": "在隔离副本给合成会话增加退出接口和服务端撤销，写接口遵守同源校验。",
+      "criteria": [
+        "退出后旧SID实际401，另一个用户会话仍有效。",
+        "说明本地身份选择非生产登录、JWT解析非校验及Map跨实例限制。"
+      ]
+    }
+  },
+  {
+    "id": "14.2.4",
+    "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.4.rate-limiting.md",
+    "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.4.rate-limiting-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.4.rate-limiting.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-4",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "限流限定某个主体在窗口内的请求成本。主体可能是已验证账号、API key或可信代理解析出的IP，不能随便相信X-Forwarded-For。固定窗口简单但边界可突发；滑动窗口或token bucket改善不同场景，所有方案都需确定拒绝行为、成本及共享一致性。",
+      "example": "运行限流HTTP测试：新会话20次成功，第21次429；另外会话仍可成功，响应无跨源允许头。",
+      "exercise": "将所有会话都用常量bucket-key计数，A耗尽会误伤B；恢复按验证后的SID分桶，分别测试两个身份。",
+      "practice": "把额度改为5次/10秒，使用可注入时间的函数编写窗口切换测试，给出共享Redis实现所需的原子操作方案。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "按身份限流、CORS与CSRF的不同职责",
+      "task": "把额度改为5次/10秒，使用可注入时间的函数编写窗口切换测试，给出共享Redis实现所需的原子操作方案。",
+      "criteria": [
+        "明确429、等待建议、窗口边界及不同主体隔离。",
+        "CORS不代替认证/CSRF，不用任意反射Origin+credentials。"
+      ]
+    }
+  },
+  {
+    "id": "14.2.5",
+    "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.5.item-14-2-5.md",
+    "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.5.item-14-2-5-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.5.item-14-2-5.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-5",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "BFF负责把依赖服务的协议转成前端可依赖的契约。不要把上游stack、SQL、内部域名或token原样返回，也不要所有失败都200。状态码用于HTTP层语义，error.code用于客户端稳定分支，message面向用户，traceId关联服务端排查。主例返回{error:{code,message,traceId}}，客户端不能用一段中文文案判断是否重试。",
+      "example": "对照三种错误情景和页面恢复测试，观察invalid/denied均502且上游secret/debug不会出现在JSON；timeout504后ok恢复。",
+      "exercise": "把上游响应text直接放message会暴露private stack；用固定code/message映射修复，加入敏感字段不存在的断言。",
+      "practice": "实现一个仅对网络或503启用的可取消手动重试按钮；401转身份选择、429显示等待，不自动无限重试。",
+      "sources": [
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "稳定错误DTO、HTTP状态与前端恢复",
+      "task": "实现一个仅对网络或503启用的可取消手动重试按钮；401转身份选择、429显示等待，不自动无限重试。",
+      "criteria": [
+        "不将所有错误变200，traceId能与当前请求头关联。",
+        "键盘可重试、错误有文本，可选降级不掩盖必需数据失败。"
+      ]
+    }
+  },
+  {
+    "id": "14.2.6",
+    "theory": "learning/1-notes/14-bff-runtime/14.2-bff-impl/14.2.6.openapi.md",
+    "example": "learning/2-examples/14-bff-runtime/14.2-bff-impl/14.2.6.openapi-demo.md",
+    "exercise": "learning/3-exercises/14-bff-runtime/14.2-bff-impl/14.2.6.openapi.md",
+    "practice": "learning/4-practice/14-bff-runtime/tasks.md#p-14-2-6",
+    "result": "passed",
+    "evidence": {
+      "mechanism": "OpenAPI是机器可读接口描述，可生成文档、类型或客户端，但描述存在不会自动验证运行数据。TypeScript类型在运行期擦除，不能防止上游发数字id。先决定设计优先/代码优先来源，再确定输入校验、输出投影、版本策略与CI漂移门禁。",
+      "example": "打开/api/openapi查看200 Schema，再运行contracts.test.ts：正常DTO通过，新增secret或数字id失败；HTTP响应使用同一源对象。",
+      "exercise": "仅改TypeScript把id改number而忘记Schema会造成500 CONTRACT或测试失败；检查实际DTO/schema来源，恢复契约一致，不能删除校验。",
+      "practice": "给DTO添加可选公开版本字段，在schema、实现、测试中同步；另写新增必需字段对旧消费者的兼容评审。",
+      "sources": [
+        "https://spec.openapis.org/oas/v3.1.1.html",
+        "https://developer.chrome.com/docs/modern-web-guidance/guides/security/security"
+      ]
+    },
+    "issues": [],
+    "integrationCase": {
+      "title": "OpenAPI与实际响应共用Schema",
+      "task": "给DTO添加可选公开版本字段，在schema、实现、测试中同步；另写新增必需字段对旧消费者的兼容评审。",
+      "criteria": [
+        "证明正常和漂移负例都经过实际运行校验，保留额外字段拒绝。",
+        "说明文档范围/Schema子集/未运行SDK生成器，不能以类型检查替代网络数据验证。"
+      ]
+    }
+  }
+]

@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "ruleVersion": 1,
+  "stage": 14,
+  "status": "passed",
+  "reviewedAt": "2026-11-25T13:10:06.144961+00:00",
+  "sourceFingerprint": "c81198643943569be235fdad7fc9e7d40facea9d6fd11244e7c23cc6e43b6dab",
+  "criteria": [
+    {
+      "id": "R01",
+      "status": "passed",
+      "summary": "29稳定编号与四部分契约齐全：5+6+5+5+5+3，练习/综合任务逐点可核。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "passed",
+      "summary": "Node→Nuxt BFF→SSR主线，Next/Edge/数据按需，前置与新增扩展清晰。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "passed",
+      "summary": "核MWG及一手资料、实际Nuxt/H3版本；缓存/身份/配置/迁移/签名边界区分。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "passed",
+      "summary": "主Nuxt真实构建/HTTP/SSR与两视口流程；五组独立实验实际运行，官方观察不冒称实装。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "passed",
+      "summary": "29练习均有具体变体、至少两验收、故障输入/定位/恢复与参考；修正Node断言实际文件名。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R06",
+      "status": "passed",
+      "summary": "29任务锚点对应真实主源码、独立lab或明确学习者新增，未把云/GraphQL/上传称主已有。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R07",
+      "status": "passed",
+      "summary": "传头每跳、必需/可选、HTTP数据流/组件流、原子存储/Map模型、粗类型/解析扫描一致。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R08",
+      "status": "passed",
+      "summary": "安装/类型/输入生命周期/用户名类型等已关闭复验，最终后台日志为空，结构/资源/回归通过。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    },
+    {
+      "id": "R09",
+      "status": "passed",
+      "summary": "正文556/590、四部分556/556、下一阶段15与限制同步，学习者勾选未变。",
+      "evidence": [
+        "docs/audits/STAGE_14_ACCEPTANCE.md"
+      ]
+    }
+  ],
+  "pointReviews": [
+    "docs/audits/stage-14-node-points.json",
+    "docs/audits/stage-14-bff-points.json",
+    "docs/audits/stage-14-ssr-points.json",
+    "docs/audits/stage-14-edge-points.json",
+    "docs/audits/stage-14-data-points.json",
+    "docs/audits/stage-14-upload-points.json"
+  ],
+  "findings": [
+    {
+      "id": "input-stream-lifecycle",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "有界保留并排空后拒绝，4E2E与后台异常空复验。"
+    },
+    {
+      "id": "strict-identity-input",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "string检查先于允许列表，数组400回归。"
+    },
+    {
+      "id": "installed-version-types",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "明确安装策略、冻结锁、Retry-After数字，类型/构建通过。"
+    },
+    {
+      "id": "teaching-source-location",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "核实际verify断言文件、Prisma DSL、SSR下拉语义和模型/主功能归属。"
+    },
+    {
+      "id": "upload-capability-and-drain",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "严格hex签名与在途排空，11测试证据。"
+    },
+    {
+      "id": "task-criteria-alignment",
+      "blocking": true,
+      "status": "closed",
+      "resolution": "综合任务明确继承独立变体；version任务明确公开版本号与traceId，与头/DTO标准一致。"
+    }
+  ],
+  "verification": [
+    "docs/audits/stage-14-practice-runtime.json",
+    "docs/audits/stage-14-node-runtime.json",
+    "docs/audits/stage-14-ssr-runtime.json",
+    "docs/audits/stage-14-edge-runtime.json",
+    "docs/audits/stage-14-data-runtime.json",
+    "docs/audits/stage-14-upload-runtime.json"
+  ],
+  "limitations": [
+    "本地公开合成身份选择不是生产认证；内存会话/限流不跨实例。",
+    "会话读取最多保留256字节但排空完整输入，生产慢速/超大入口防护另需限制；上游JSON仅小fixture，未测生产大响应上限。",
+    "主API关闭监听不构成SSR父请求全链路取消证明；独立Node lab实测HTTP取消。",
+    "未运行Next/PM2/urql、云Edge/KV/D1/CDN、Redis/Prisma数据库、S3/OSS SDK或真实扫描。",
+    "上传HMAC是局部能力模型非云签名，PNG签名字节fixture非有效图片，扫描只是受信结果状态模型。",
+    "无生产/CDN/高并发/长时、多引擎、真机、读屏或真实学习者试学；手机为Chrome视口模拟。"
+  ]
+}
